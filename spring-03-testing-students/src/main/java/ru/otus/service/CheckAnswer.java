@@ -22,9 +22,9 @@ public class CheckAnswer {
      * @param readingQuestionsFile
      */
     @Autowired
-    public CheckAnswer(@Value("${answerOptionOne}") String answerOptionOne,
-                       @Value("${answerOptionTwo}") String answerOptionTwo,
-                       @Value("${answerOptionThree}") String answerOptionThree,
+    public CheckAnswer(@Value("${answerOption.One}") String answerOptionOne,
+                       @Value("${answerOption.Two}") String answerOptionTwo,
+                       @Value("${answerOption.Three}") String answerOptionThree,
                        @Value("${numberCorrectAnswers}") String numberCorrectAnswers,
                        ReadingQuestionsFile readingQuestionsFile) {
         this.answerOptionOne = Integer.parseInt(answerOptionOne);

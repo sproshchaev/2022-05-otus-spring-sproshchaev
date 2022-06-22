@@ -30,9 +30,9 @@ public class TextToConsole {
      * @param checkAnswer
      */
     @Autowired
-    public TextToConsole(@Value("${answerOptionOne}") int answerOptionOne,
-                         @Value("${answerOptionTwo}") int answerOptionTwo,
-                         @Value("${answerOptionThree}") int answerOptionThree,
+    public TextToConsole(@Value("${answerOption.One}") int answerOptionOne,
+                         @Value("${answerOption.Two}") int answerOptionTwo,
+                         @Value("${answerOption.Three}") int answerOptionThree,
                          @Value("${totalQuestionsInTest}") int totalQuestionsInTest,
                          IoСonsole ioСonsole,
                          ReadingQuestionsFile readingQuestionsFile,

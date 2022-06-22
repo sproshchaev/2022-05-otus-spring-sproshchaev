@@ -90,3 +90,4 @@ c) Отсутствие необходимости аннотации @Component
 
 ### Статьи по теме
 1. Spring: @Value aннотация https://bit.ly/3tT6ZzL
+2. Внешние данные конфигурации в Spring: Файлы форматов YAML и .properties https://bit.ly/3bp3Lh2
