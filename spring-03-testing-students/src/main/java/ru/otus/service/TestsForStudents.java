@@ -11,15 +11,26 @@ import org.springframework.stereotype.Component;
 @Component
 public class TestsForStudents implements Tests {
     private String studentsName;
-    @Value("${totalQuestionsInTest}")
+    // @Value("${totalQuestionsInTest}")
     private int totalQuestionsInTest;
     private int countCorrectAnswers;
-    @Autowired
+    //@Autowired
     TextToConsole textToConsole;
-    @Autowired
+    //@Autowired
     ReadFromConsole readFromConsole;
-    @Autowired
+    //@Autowired
     CheckAnswer checkAnswer;
+
+    @Autowired
+    public TestsForStudents(@Value("${totalQuestionsInTest}") int totalQuestionsInTest,
+                            TextToConsole textToConsole,
+                            ReadFromConsole readFromConsole,
+                            CheckAnswer checkAnswer) {
+        this.totalQuestionsInTest = totalQuestionsInTest;
+        this.textToConsole = textToConsole;
+        this.readFromConsole = readFromConsole;
+        this.checkAnswer = checkAnswer;
+    }
 
     /**
      * Метод runTest() выполняет тестирование студента

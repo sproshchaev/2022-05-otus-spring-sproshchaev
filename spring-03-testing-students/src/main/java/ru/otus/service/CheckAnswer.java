@@ -10,16 +10,39 @@ import ru.otus.dao.ReadingQuestionsFile;
  */
 @Component
 public class CheckAnswer {
-    @Value("${answerOptionOne}")
+    //@Value("${answerOptionOne}")
     private int answerOptionOne;
-    @Value("${answerOptionTwo}")
+    // @Value("${answerOptionTwo}")
     private int answerOptionTwo;
-    @Value("${answerOptionThree}")
+    // @Value("${answerOptionThree}")
     private int answerOptionThree;
-    @Value("${numberCorrectAnswers}")
+    // @Value("${numberCorrectAnswers}")
     private int numberCorrectAnswers;
+    //@Autowired
+    private ReadingQuestionsFile readingQuestionsFile;
+
+    /**
+     * Конструктор класса с параметрами
+     * @param readingQuestionsFile
+     */
     @Autowired
-    ReadingQuestionsFile readingQuestionsFile;
+    public CheckAnswer(@Value("${answerOptionOne}") String answerOptionOne,
+                       @Value("${answerOptionTwo}") String answerOptionTwo,
+                       @Value("${answerOptionThree}") String answerOptionThree,
+                       @Value("${numberCorrectAnswers}") String numberCorrectAnswers,
+                       ReadingQuestionsFile readingQuestionsFile) {
+        this.answerOptionOne = Integer.parseInt(answerOptionOne);
+        this.answerOptionTwo = Integer.parseInt(answerOptionTwo);
+        this.answerOptionThree = Integer.parseInt(answerOptionThree);
+        this.numberCorrectAnswers = Integer.parseInt(numberCorrectAnswers);
+        this.readingQuestionsFile = readingQuestionsFile;
+    }
+
+    /**
+     * Конструктор класса без параметров
+     */
+    public CheckAnswer() {
+    }
 
     /**
      * Метод сheckСorrectnessAnswer выполняет проверку правильности ответа по номеру теста

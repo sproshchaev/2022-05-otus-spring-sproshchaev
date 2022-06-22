@@ -1,5 +1,6 @@
 package ru.otus.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import ru.otus.pojo.Question;
@@ -15,8 +16,23 @@ public class ReadingQuestionsFile implements ReadingFile {
     /**
      * Поле класса fileCsvName содержит имя файла \resources\questions.csv
      */
-    @Value("${fileCsvName}")
+    //@Value("${fileCsvName}")
     private String fileCsvName;
+
+    /**
+     * Конструктор класса с параметрами
+     * @param fileCsvName
+     */
+    @Autowired
+    public ReadingQuestionsFile(@Value("${fileCsvName}") String fileCsvName) {
+        this.fileCsvName = fileCsvName;
+    }
+
+    /**
+     * Конструктор класса без параметров
+     */
+    public ReadingQuestionsFile() {
+    }
 
     /**
      * Метод setFileCsvName

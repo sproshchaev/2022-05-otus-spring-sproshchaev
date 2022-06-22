@@ -10,20 +10,53 @@ import ru.otus.dao.ReadingQuestionsFile;
  */
 @Component
 public class TextToConsole {
-    @Value("${answerOptionOne}")
+    // @Value("${answerOptionOne}")
     private int answerOptionOne;
-    @Value("${answerOptionTwo}")
+    // @Value("${answerOptionTwo}")
     private int answerOptionTwo;
-    @Value("${answerOptionThree}")
+    // @Value("${answerOptionThree}")
     private int answerOptionThree;
-    @Value("${totalQuestionsInTest}")
+    // @Value("${totalQuestionsInTest}")
     private int totalQuestionsInTest;
-    @Autowired
+    //@Autowired
     IoСonsole ioСonsole;
-    @Autowired
+    //@Autowired
     ReadingQuestionsFile readingQuestionsFile;
-    @Autowired
+    //@Autowired
     CheckAnswer checkAnswer;
+
+    /**
+     * Конструктор класса с параметрами
+     * @param answerOptionOne
+     * @param answerOptionTwo
+     * @param answerOptionThree
+     * @param totalQuestionsInTest
+     * @param ioСonsole
+     * @param readingQuestionsFile
+     * @param checkAnswer
+     */
+    @Autowired
+    public TextToConsole(@Value("${answerOptionOne}") int answerOptionOne,
+                         @Value("${answerOptionTwo}") int answerOptionTwo,
+                         @Value("${answerOptionThree}") int answerOptionThree,
+                         @Value("${totalQuestionsInTest}") int totalQuestionsInTest,
+                         IoСonsole ioСonsole,
+                         ReadingQuestionsFile readingQuestionsFile,
+                         CheckAnswer checkAnswer) {
+        this.answerOptionOne = answerOptionOne;
+        this.answerOptionTwo = answerOptionTwo;
+        this.answerOptionThree = answerOptionThree;
+        this.totalQuestionsInTest = totalQuestionsInTest;
+        this.ioСonsole = ioСonsole;
+        this.readingQuestionsFile = readingQuestionsFile;
+        this.checkAnswer = checkAnswer;
+    }
+
+    /**
+     * Конструктор класса без параметров
+     */
+    public TextToConsole() {
+    }
 
     /**
      * Метод doWelcome выводит в консоль строку с приглашением тестирования

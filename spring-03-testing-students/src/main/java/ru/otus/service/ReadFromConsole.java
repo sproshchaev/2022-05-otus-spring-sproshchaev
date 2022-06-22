@@ -8,12 +8,22 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ReadFromConsole {
-    @Autowired
+    //@Autowired
     IoСonsole ioСonsole;
-    @Autowired
+    //@Autowired
     TextToConsole textToConsole;
-    @Autowired
+    //@Autowired
     CheckAnswer checkAnswer;
+
+    @Autowired
+    public ReadFromConsole(IoСonsole ioСonsole, TextToConsole textToConsole, CheckAnswer checkAnswer) {
+        this.ioСonsole = ioСonsole;
+        this.textToConsole = textToConsole;
+        this.checkAnswer = checkAnswer;
+    }
+
+    public ReadFromConsole() {
+    }
 
     /**
      * Метод readStudentsName считывает имя студента из консоли
