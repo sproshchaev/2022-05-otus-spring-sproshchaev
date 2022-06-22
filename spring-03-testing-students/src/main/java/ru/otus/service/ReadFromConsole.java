@@ -8,13 +8,17 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ReadFromConsole {
-    //@Autowired
     IoСonsole ioСonsole;
-    //@Autowired
     TextToConsole textToConsole;
-    //@Autowired
     CheckAnswer checkAnswer;
 
+    /**
+     * Конструктор класса с параметрами
+     *
+     * @param ioСonsole
+     * @param textToConsole
+     * @param checkAnswer
+     */
     @Autowired
     public ReadFromConsole(IoСonsole ioСonsole, TextToConsole textToConsole, CheckAnswer checkAnswer) {
         this.ioСonsole = ioСonsole;
@@ -22,6 +26,9 @@ public class ReadFromConsole {
         this.checkAnswer = checkAnswer;
     }
 
+    /**
+     * Конструктор класса без параметров
+     */
     public ReadFromConsole() {
     }
 

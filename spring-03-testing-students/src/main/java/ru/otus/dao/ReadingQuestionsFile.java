@@ -16,11 +16,11 @@ public class ReadingQuestionsFile implements ReadingFile {
     /**
      * Поле класса fileCsvName содержит имя файла \resources\questions.csv
      */
-    //@Value("${fileCsvName}")
     private String fileCsvName;
 
     /**
      * Конструктор класса с параметрами
+     *
      * @param fileCsvName
      */
     @Autowired

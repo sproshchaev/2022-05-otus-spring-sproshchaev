@@ -10,19 +10,15 @@ import ru.otus.dao.ReadingQuestionsFile;
  */
 @Component
 public class CheckAnswer {
-    //@Value("${answerOptionOne}")
     private int answerOptionOne;
-    // @Value("${answerOptionTwo}")
     private int answerOptionTwo;
-    // @Value("${answerOptionThree}")
     private int answerOptionThree;
-    // @Value("${numberCorrectAnswers}")
     private int numberCorrectAnswers;
-    //@Autowired
     private ReadingQuestionsFile readingQuestionsFile;
 
     /**
      * Конструктор класса с параметрами
+     *
      * @param readingQuestionsFile
      */
     @Autowired

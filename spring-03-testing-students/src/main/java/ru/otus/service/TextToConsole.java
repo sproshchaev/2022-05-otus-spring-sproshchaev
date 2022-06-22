@@ -10,23 +10,17 @@ import ru.otus.dao.ReadingQuestionsFile;
  */
 @Component
 public class TextToConsole {
-    // @Value("${answerOptionOne}")
     private int answerOptionOne;
-    // @Value("${answerOptionTwo}")
     private int answerOptionTwo;
-    // @Value("${answerOptionThree}")
     private int answerOptionThree;
-    // @Value("${totalQuestionsInTest}")
     private int totalQuestionsInTest;
-    //@Autowired
     IoСonsole ioСonsole;
-    //@Autowired
     ReadingQuestionsFile readingQuestionsFile;
-    //@Autowired
     CheckAnswer checkAnswer;
 
     /**
      * Конструктор класса с параметрами
+     *
      * @param answerOptionOne
      * @param answerOptionTwo
      * @param answerOptionThree

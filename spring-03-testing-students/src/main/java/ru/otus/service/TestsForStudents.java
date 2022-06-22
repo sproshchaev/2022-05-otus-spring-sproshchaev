@@ -11,16 +11,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class TestsForStudents implements Tests {
     private String studentsName;
-    // @Value("${totalQuestionsInTest}")
     private int totalQuestionsInTest;
     private int countCorrectAnswers;
-    //@Autowired
     TextToConsole textToConsole;
-    //@Autowired
     ReadFromConsole readFromConsole;
-    //@Autowired
     CheckAnswer checkAnswer;
 
+    /**
+     * Конструктор класса с параметрами
+     *
+     * @param totalQuestionsInTest
+     * @param textToConsole
+     * @param readFromConsole
+     * @param checkAnswer
+     */
     @Autowired
     public TestsForStudents(@Value("${totalQuestionsInTest}") int totalQuestionsInTest,
                             TextToConsole textToConsole,
