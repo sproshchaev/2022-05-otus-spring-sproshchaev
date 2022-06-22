@@ -49,8 +49,6 @@ Development on the Spring Framework
 решение = 1 + 0 + 4 (+4 а не 5) = 5 - не принимается. Если всё работает, но стилю не соответствует (публичные поля, 
 классы капсом) = 1 + 4 + 0 = 5 - не принимается
 
-### Статьи по теме
-
 ### Параметры создания проекта Spring Initializr
 1. https://start.spring.io/
 2. Project: Maven Project
@@ -65,3 +63,31 @@ Development on the Spring Framework
 6. Packaging: Jar
 7. Java: 11
 8. Dependencies: No dependency selected
+
+### Изменения в проекте после переноса логики 
+1. Изменения в "точке входа" (в spring-03-testing-students по сравнению с spring-02-testing-students):
+
+a) Изменяется порядок вызова контекста приложения
+
+   В spring-02-testing-students поднятие контекста:
+   public static void main(String[] args) {
+       AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
+       TestsForStudents testsForStudents = context.getBean(TestsForStudents.class);
+       testsForStudents.runTest();
+   }
+
+   В spring-03-testing-students поднятие контекста::
+   public static void main(String[] args) {
+       ApplicationContext context = SpringApplication.run(Main.class, args);
+       TestsForStudents testsForStudents = context.getBean(TestsForStudents.class);
+       testsForStudents.runTest();
+   }
+
+b) Отсутствие необходимости аннотации @PropertySource("classpath:application.properties") для application.properties (файла)
+Spring сам находит файл application.properties и читает из него настройки автоматически
+
+c) Отсутствие необходимости аннотации @ComponentScan(basePackages = "ru.otus")
+   
+
+
+### Статьи по теме

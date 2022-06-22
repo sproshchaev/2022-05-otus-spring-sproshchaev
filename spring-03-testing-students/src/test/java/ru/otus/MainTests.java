@@ -1,10 +1,10 @@
-package ru.otus.spring03testingstudents;
+package ru.otus;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Spring03TestingStudentsApplicationTests {
+class MainTests {
 
 	@Test
 	void contextLoads() {
