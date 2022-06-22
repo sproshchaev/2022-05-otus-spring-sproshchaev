@@ -87,7 +87,6 @@ b) Отсутствие необходимости аннотации @PropertyS
 Spring сам находит файл application.properties и читает из него настройки автоматически
 
 c) Отсутствие необходимости аннотации @ComponentScan(basePackages = "ru.otus")
-   
-
 
 ### Статьи по теме
+1. Spring: @Value aннотация https://bit.ly/3tT6ZzL
