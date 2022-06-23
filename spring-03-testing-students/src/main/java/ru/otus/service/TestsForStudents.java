@@ -13,9 +13,9 @@ public class TestsForStudents implements Tests {
     private String studentsName;
     private int totalQuestionsInTest;
     private int countCorrectAnswers;
-    TextToConsole textToConsole;
-    ReadFromConsole readFromConsole;
-    CheckAnswer checkAnswer;
+    private TextToConsole textToConsole;
+    private ReadFromConsole readFromConsole;
+    private CheckAnswer checkAnswer;
 
     /**
      * Конструктор класса с параметрами

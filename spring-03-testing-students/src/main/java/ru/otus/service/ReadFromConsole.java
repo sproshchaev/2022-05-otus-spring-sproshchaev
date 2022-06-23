@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ReadFromConsole {
-    IoСonsole ioСonsole;
-    TextToConsole textToConsole;
-    CheckAnswer checkAnswer;
+    private IoСonsole ioСonsole;
+    private TextToConsole textToConsole;
+    private CheckAnswer checkAnswer;
 
     /**
      * Конструктор класса с параметрами

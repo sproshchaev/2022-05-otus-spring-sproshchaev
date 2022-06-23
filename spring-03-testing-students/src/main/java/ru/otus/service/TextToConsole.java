@@ -2,8 +2,11 @@ package ru.otus.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import ru.otus.dao.ReadingQuestionsFile;
+
+import java.util.Locale;
 
 /**
  * Класс TextToConsole содержит методы вывода в консоль информации при проведении тестирования
@@ -14,9 +17,10 @@ public class TextToConsole {
     private int answerOptionTwo;
     private int answerOptionThree;
     private int totalQuestionsInTest;
-    IoСonsole ioСonsole;
-    ReadingQuestionsFile readingQuestionsFile;
-    CheckAnswer checkAnswer;
+    private IoСonsole ioСonsole;
+    private ReadingQuestionsFile readingQuestionsFile;
+    private CheckAnswer checkAnswer;
+    private ApplicationContext context;
 
     /**
      * Конструктор класса с параметрами
@@ -28,6 +32,7 @@ public class TextToConsole {
      * @param ioСonsole
      * @param readingQuestionsFile
      * @param checkAnswer
+     * @param context
      */
     @Autowired
     public TextToConsole(@Value("${answerOption.One}") int answerOptionOne,
@@ -36,7 +41,8 @@ public class TextToConsole {
                          @Value("${totalQuestionsInTest}") int totalQuestionsInTest,
                          IoСonsole ioСonsole,
                          ReadingQuestionsFile readingQuestionsFile,
-                         CheckAnswer checkAnswer) {
+                         CheckAnswer checkAnswer,
+                         ApplicationContext context) {
         this.answerOptionOne = answerOptionOne;
         this.answerOptionTwo = answerOptionTwo;
         this.answerOptionThree = answerOptionThree;
@@ -44,6 +50,7 @@ public class TextToConsole {
         this.ioСonsole = ioСonsole;
         this.readingQuestionsFile = readingQuestionsFile;
         this.checkAnswer = checkAnswer;
+        this.context = context;
     }
 
     /**
@@ -53,11 +60,11 @@ public class TextToConsole {
     }
 
     /**
-     * Метод doWelcome выводит в консоль строку с приглашением тестирования
+     * Метод doWelcome выводит в консоль строку с приглашением тестирования и локализацией текста
      */
     public void doPrintWelcomeAndWaitGetYouName() {
-        ioСonsole.writeLnString("Testing on the basics of Java");
-        ioСonsole.writeString("Please enter your name: ");
+        ioСonsole.writeLnString(context.getMessage("heading.testsname", null, Locale.getDefault()));
+        ioСonsole.writeString(context.getMessage("heading.welcome", null, Locale.getDefault()));
     }
 
     /**
@@ -77,7 +84,10 @@ public class TextToConsole {
      * Метод doPrintExpectedInput() выводит ожидаемые для ввода данные от студента
      */
     public void doPrintExpectedInput() {
-        ioСonsole.writeString("Enter " + answerOptionOne + ", " + answerOptionTwo + " or " + answerOptionThree + ": ");
+        ioСonsole.writeString(getLocalization("waitingresponse.enter") + " "
+                + answerOptionOne + ", " + answerOptionTwo + " "
+                + getLocalization("waitingresponse.or")
+                + " " + answerOptionThree + ": ");
     }
 
     /**
@@ -91,12 +101,24 @@ public class TextToConsole {
      * Метод doPrintTestResults выводит результаты прохождения теста студентом
      */
     public void doPrintTestResults(String studentsName, int countCorrectAnswers) {
-        ioСonsole.writeLnString("Dear " + studentsName + ", your result: " + countCorrectAnswers + " out of " + totalQuestionsInTest);
+        ioСonsole.writeLnString(getLocalization("result.dear") + " " + studentsName + ", "
+                + getLocalization("result.yourresult") + " " + countCorrectAnswers
+                + " " + getLocalization("result.outof") + " " + totalQuestionsInTest);
         if (checkAnswer.testPassed(countCorrectAnswers)) {
-            ioСonsole.writeLnString("Test passed successfully!");
+            ioСonsole.writeLnString(getLocalization("result.passed"));
         } else {
-            ioСonsole.writeLnString("Test failed!");
+            ioСonsole.writeLnString(getLocalization("result.failed"));
         }
+    }
+
+    /**
+     * Метод getLocalization
+     *
+     * @param code
+     * @return
+     */
+    private String getLocalization(String code) {
+        return context.getMessage(code, null, Locale.getDefault());
     }
 
 }
