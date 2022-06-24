@@ -63,8 +63,8 @@ public class TextToConsole {
      * Метод doWelcome выводит в консоль строку с приглашением тестирования и локализацией текста
      */
     public void doPrintWelcomeAndWaitGetYouName() {
-        ioСonsole.writeLnString(context.getMessage("heading.testsname", null, Locale.getDefault()));
-        ioСonsole.writeString(context.getMessage("heading.welcome", null, Locale.getDefault()));
+        ioСonsole.writeLnString(context.getMessage("heading.testsname", null, Locale.ENGLISH));
+        ioСonsole.writeString(context.getMessage("heading.welcome", null, Locale.getDefault()) + " ");
     }
 
     /**
@@ -84,40 +84,39 @@ public class TextToConsole {
      * Метод doPrintExpectedInput() выводит ожидаемые для ввода данные от студента
      */
     public void doPrintExpectedInput() {
-        ioСonsole.writeString(getLocalization("waitingresponse.enter") + " "
-                + answerOptionOne + ", " + answerOptionTwo + " "
-                + getLocalization("waitingresponse.or")
-                + " " + answerOptionThree + ": ");
+        ioСonsole.writeString(getLocalString("waitingresponse.enter") + " " + answerOptionOne + ", "
+                + answerOptionTwo + " " + getLocalString("waitingresponse.or") + " " + answerOptionThree + ": ");
     }
 
     /**
      * Метод doPrintInvalidInput выводит сообщение о том, что ввод данных выполнен неверно
      */
     public void doPrintInvalidInput() {
-        ioСonsole.writeString("Incorrect input, try again.");
+        ioСonsole.writeString(getLocalString("waitingresponse.incorrectinput"));
     }
 
     /**
      * Метод doPrintTestResults выводит результаты прохождения теста студентом
      */
     public void doPrintTestResults(String studentsName, int countCorrectAnswers) {
-        ioСonsole.writeLnString(getLocalization("result.dear") + " " + studentsName + ", "
-                + getLocalization("result.yourresult") + " " + countCorrectAnswers
-                + " " + getLocalization("result.outof") + " " + totalQuestionsInTest);
+        ioСonsole.writeLnString(getLocalString("result.dear") + " " + studentsName + ", "
+                + getLocalString("result.yourresult") + " " + countCorrectAnswers
+                + " " + getLocalString("result.outof") + " " + totalQuestionsInTest);
         if (checkAnswer.testPassed(countCorrectAnswers)) {
-            ioСonsole.writeLnString(getLocalization("result.passed"));
+            ioСonsole.writeLnString(getLocalString("result.passed"));
         } else {
-            ioСonsole.writeLnString(getLocalization("result.failed"));
+            ioСonsole.writeLnString(getLocalString("result.failed"));
         }
     }
 
     /**
-     * Метод getLocalization
+     * Метод getLocalString возвращает локализованную строку для вывода в консоль
      *
      * @param code
      * @return
      */
-    private String getLocalization(String code) {
+    private String getLocalString(String code) {
+        // Здесь надо Locale выбирать в зависимости от выбора языка
         return context.getMessage(code, null, Locale.getDefault());
     }
 

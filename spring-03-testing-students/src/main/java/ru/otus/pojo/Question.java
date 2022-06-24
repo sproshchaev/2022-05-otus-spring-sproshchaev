@@ -76,7 +76,7 @@ public class Question {
     }
 
     /**
-     * Переопределение метода toString()
+     * Метод toString() выводит знечения полей класса
      *
      * @return
      */
