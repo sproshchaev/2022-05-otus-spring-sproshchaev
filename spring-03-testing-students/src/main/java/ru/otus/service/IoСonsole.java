@@ -1,23 +1,25 @@
 package ru.otus.service;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.PrintStream;
 import java.util.Scanner;
 
 /**
  * Класс IoСonsole осуществляет ввод текста в консоль, чтение данных из консоли
+ * Для корректной работы в Spring Boot с консолью из разных классов используется аннотация @Scope("prototype"), без нее идет
+ * некорректное чтение данных, вводимых пользователем
  */
-@Component
+@Service
+@Scope("prototype")
 public class IoСonsole implements IoService {
     private final PrintStream output;
     private final Scanner input;
 
     /**
      * Конструктор класса IoСonsole
-     *
-     * @param output
-     * @param input
      */
     public IoСonsole() {
         this.output = System.out;

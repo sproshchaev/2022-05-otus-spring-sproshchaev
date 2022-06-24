@@ -3,12 +3,13 @@ package ru.otus.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.otus.dao.ReadingQuestionsFile;
 
 /**
  * Класс CheckAnswer содержит методы контроля ввода данных из консоли
  */
-@Component
+@Service
 public class CheckAnswer {
     private int answerOptionOne;
     private int answerOptionTwo;
@@ -56,7 +57,7 @@ public class CheckAnswer {
     }
 
     /**
-     * Метод isCorrectInput проверяет корректность введенных данных из консоли
+     * Метод isCorrectInput проверяет корректность введенных данных из консоли при ответе на вопрос теста
      *
      * @param selectedAnswerId
      * @return
@@ -65,6 +66,16 @@ public class CheckAnswer {
         if ((selectedAnswerId == answerOptionOne)
                 || (selectedAnswerId == answerOptionTwo)
                 || (selectedAnswerId == answerOptionThree)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //
+    public boolean isCorrectInputLanguage(int selectedAnswerId) {
+        if ((selectedAnswerId == 1)
+                || (selectedAnswerId == 2)) {
             return true;
         } else {
             return false;

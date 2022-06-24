@@ -3,15 +3,17 @@ package ru.otus.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.otus.dao.ReadingQuestionsFile;
+import ru.otus.pojo.Language;
+import ru.otus.pojo.Student;
 
 import java.util.Locale;
 
 /**
  * Класс TextToConsole содержит методы вывода в консоль информации при проведении тестирования
  */
-@Component
+@Service
 public class TextToConsole {
     private int answerOptionOne;
     private int answerOptionTwo;
@@ -21,6 +23,8 @@ public class TextToConsole {
     private ReadingQuestionsFile readingQuestionsFile;
     private CheckAnswer checkAnswer;
     private ApplicationContext context;
+    private Language language;
+    private Student student;
 
     /**
      * Конструктор класса с параметрами
@@ -42,7 +46,9 @@ public class TextToConsole {
                          IoСonsole ioСonsole,
                          ReadingQuestionsFile readingQuestionsFile,
                          CheckAnswer checkAnswer,
-                         ApplicationContext context) {
+                         ApplicationContext context,
+                         Language language,
+                         Student student) {
         this.answerOptionOne = answerOptionOne;
         this.answerOptionTwo = answerOptionTwo;
         this.answerOptionThree = answerOptionThree;
@@ -51,6 +57,8 @@ public class TextToConsole {
         this.readingQuestionsFile = readingQuestionsFile;
         this.checkAnswer = checkAnswer;
         this.context = context;
+        this.language = language;
+        this.student = student;
     }
 
     /**
@@ -60,11 +68,18 @@ public class TextToConsole {
     }
 
     /**
+     * Метод doPrintSelectLanguage выводит сообщение о выборе языка
+     */
+    public void doPrintSelectLanguage() {
+        ioСonsole.writeLnString("Please select a language 1-English, 2-Russian:");
+    }
+
+    /**
      * Метод doWelcome выводит в консоль строку с приглашением тестирования и локализацией текста
      */
     public void doPrintWelcomeAndWaitGetYouName() {
-        ioСonsole.writeLnString(context.getMessage("heading.testsname", null, Locale.ENGLISH));
-        ioСonsole.writeString(context.getMessage("heading.welcome", null, Locale.getDefault()) + " ");
+        ioСonsole.writeLnString(context.getMessage("heading.testsname", null, Locale.forLanguageTag(language.getIsoCode().toString())));
+        ioСonsole.writeString(context.getMessage("heading.welcome", null, Locale.forLanguageTag(language.getIsoCode().toString())) + " ");
     }
 
     /**
@@ -85,8 +100,16 @@ public class TextToConsole {
      */
     public void doPrintExpectedInput() {
         ioСonsole.writeString(getLocalString("waitingresponse.enter") + " " + answerOptionOne + ", "
-                + answerOptionTwo + " " + getLocalString("waitingresponse.or") + " " + answerOptionThree + ": ");
+                + answerOptionTwo + " " + " " + answerOptionThree + ": ");
     }
+
+    /**
+     * Метод doPrintExpectedInput() выводит ожидаемые для ввода данные от студента (язык)
+     */
+    public void doPrintExpectedInput2() {
+        ioСonsole.writeString("Please enter " + 1 + ", " + 2 + ": ");
+    }
+
 
     /**
      * Метод doPrintInvalidInput выводит сообщение о том, что ввод данных выполнен неверно
@@ -98,8 +121,9 @@ public class TextToConsole {
     /**
      * Метод doPrintTestResults выводит результаты прохождения теста студентом
      */
-    public void doPrintTestResults(String studentsName, int countCorrectAnswers) {
-        ioСonsole.writeLnString(getLocalString("result.dear") + " " + studentsName + ", "
+//    public void doPrintTestResults() {
+    public void doPrintTestResults(int countCorrectAnswers) {
+        ioСonsole.writeLnString(getLocalString("result.dear") + " " + student.getName() + ", "
                 + getLocalString("result.yourresult") + " " + countCorrectAnswers
                 + " " + getLocalString("result.outof") + " " + totalQuestionsInTest);
         if (checkAnswer.testPassed(countCorrectAnswers)) {
@@ -116,8 +140,7 @@ public class TextToConsole {
      * @return
      */
     private String getLocalString(String code) {
-        // Здесь надо Locale выбирать в зависимости от выбора языка
-        return context.getMessage(code, null, Locale.getDefault());
+        return context.getMessage(code, null, Locale.forLanguageTag(language.getIsoCode().toString()));
     }
 
 }

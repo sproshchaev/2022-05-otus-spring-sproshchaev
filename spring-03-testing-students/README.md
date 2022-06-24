@@ -95,3 +95,4 @@ c) Отсутствие необходимости аннотации @Component
 4. Создание веб-приложения с несколькими языками с помощью Spring Boot https://bit.ly/3OhwqD6
 5. Русские имена фамилии по-английски. Перевод русских букв в английские https://bit.ly/3HL1Vmq
 6. ISO 639-2 Language Code List https://bit.ly/3OC8BWj
+7. Перечисления Enum в Java https://bit.ly/3Nh6nuA

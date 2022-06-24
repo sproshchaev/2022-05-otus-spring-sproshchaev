@@ -3,19 +3,20 @@ package ru.otus.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * Класс TestsForStudents содержит методы для тестирования студентов
  */
-@Component
+@Service
 public class TestsForStudents implements Tests {
-    private String studentsName;
     private int totalQuestionsInTest;
     private int countCorrectAnswers;
     private TextToConsole textToConsole;
     private ReadFromConsole readFromConsole;
     private CheckAnswer checkAnswer;
+    private Localization localization;
+    private Identification identification;
 
     /**
      * Конструктор класса с параметрами
@@ -29,11 +30,15 @@ public class TestsForStudents implements Tests {
     public TestsForStudents(@Value("${totalQuestionsInTest}") int totalQuestionsInTest,
                             TextToConsole textToConsole,
                             ReadFromConsole readFromConsole,
-                            CheckAnswer checkAnswer) {
+                            CheckAnswer checkAnswer,
+                            Localization localization,
+                            Identification identification) {
         this.totalQuestionsInTest = totalQuestionsInTest;
         this.textToConsole = textToConsole;
         this.readFromConsole = readFromConsole;
         this.checkAnswer = checkAnswer;
+        this.localization = localization;
+        this.identification = identification;
     }
 
     /**
@@ -41,8 +46,8 @@ public class TestsForStudents implements Tests {
      */
     @Override
     public void runTest() {
-        textToConsole.doPrintWelcomeAndWaitGetYouName();
-        studentsName = readFromConsole.readStudentsName();
+        localization.setLanguage();
+        identification.getStudentName();
         int selectedAnswerId;
         for (int testNumber = 1; testNumber <= totalQuestionsInTest; testNumber++) {
             textToConsole.doPrintQuestionAndAnswers(testNumber);
@@ -51,7 +56,7 @@ public class TestsForStudents implements Tests {
                 countCorrectAnswers++;
             }
         }
-        textToConsole.doPrintTestResults(studentsName, countCorrectAnswers);
+        textToConsole.doPrintTestResults(countCorrectAnswers);
     }
 
 }

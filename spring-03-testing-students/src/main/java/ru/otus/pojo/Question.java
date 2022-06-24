@@ -76,7 +76,7 @@ public class Question {
     }
 
     /**
-     * Метод toString() выводит знечения полей класса
+     * Метод toString() выводит значения полей класса
      *
      * @return
      */

@@ -1,12 +1,14 @@
 package ru.otus.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 /**
  * Класс ReadFromConsole содержит методы для чтения данных с консоли
  */
-@Component
+@Service
+@Scope("prototype")
 public class ReadFromConsole {
     private IoСonsole ioСonsole;
     private TextToConsole textToConsole;
@@ -42,6 +44,26 @@ public class ReadFromConsole {
     }
 
     /**
+     * Метод readLanguageNumber считывает номер выбранного языка из консоли
+     *
+     * @return answer number
+     */
+    public int readLanguageNumber() {
+        int selectedLanguageId = 0;
+        boolean inputIsCorrect = false;
+        while (!inputIsCorrect) {
+            textToConsole.doPrintExpectedInput2();
+            selectedLanguageId = ioСonsole.readInt();
+            if (checkAnswer.isCorrectInputLanguage(selectedLanguageId)) {
+                inputIsCorrect = true;
+            } else {
+                textToConsole.doPrintInvalidInput();
+            }
+        }
+        return selectedLanguageId;
+    }
+
+    /**
      * Метод readAnswerNumber считывает номер ответа из консоли
      *
      * @return answer number
@@ -72,4 +94,5 @@ public class ReadFromConsole {
     public void setTextToConsole(TextToConsole textToConsole) {
         this.textToConsole = textToConsole;
     }
+
 }
