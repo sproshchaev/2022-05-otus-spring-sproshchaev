@@ -41,12 +41,13 @@ public class Localization {
 
     }
 
-    //
+    /**
+     * Метод setRu устанавливает RU язык по умолчанию (отрефакторить)
+     */
     private void setRu() {
         language.setId(2);
         language.setIsoCode(IsoCode.ru);
         language.setLanguageEnglishName(LanguageEnglishName.Russian);
     }
-
 
 }

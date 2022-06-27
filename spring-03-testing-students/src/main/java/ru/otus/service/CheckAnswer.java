@@ -2,7 +2,6 @@ package ru.otus.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ru.otus.dao.ReadingQuestionsFile;
 
@@ -72,7 +71,12 @@ public class CheckAnswer {
         }
     }
 
-    //
+    /**
+     * Метод isCorrectInputLanguage проверяет корректность ответа по выбору языка
+     *
+     * @param selectedAnswerId
+     * @return
+     */
     public boolean isCorrectInputLanguage(int selectedAnswerId) {
         if ((selectedAnswerId == 1)
                 || (selectedAnswerId == 2)) {

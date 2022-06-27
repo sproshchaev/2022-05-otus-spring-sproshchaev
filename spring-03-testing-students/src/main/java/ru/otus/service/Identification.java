@@ -13,6 +13,12 @@ public class Identification {
     private ReadFromConsole readFromConsole;
     private Student student;
 
+    /**
+     * Конструктор класса
+     * @param textToConsole
+     * @param readFromConsole
+     * @param student
+     */
     @Autowired
     public Identification(TextToConsole textToConsole, ReadFromConsole readFromConsole, Student student) {
         this.textToConsole = textToConsole;
@@ -20,6 +26,9 @@ public class Identification {
         this.student = student;
     }
 
+    /**
+     * Метод getStudentName получает из консоли имя студента и записывает в поля экземпляра класса Student
+     */
     public void getStudentName() {
         textToConsole.doPrintWelcomeAndWaitGetYouName();
         student.setName(readFromConsole.readStudentsName());

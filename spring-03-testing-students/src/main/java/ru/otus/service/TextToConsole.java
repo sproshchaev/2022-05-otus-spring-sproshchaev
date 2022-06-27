@@ -110,7 +110,6 @@ public class TextToConsole {
         ioСonsole.writeString("Please enter " + 1 + ", " + 2 + ": ");
     }
 
-
     /**
      * Метод doPrintInvalidInput выводит сообщение о том, что ввод данных выполнен неверно
      */
@@ -121,7 +120,6 @@ public class TextToConsole {
     /**
      * Метод doPrintTestResults выводит результаты прохождения теста студентом
      */
-//    public void doPrintTestResults() {
     public void doPrintTestResults(int countCorrectAnswers) {
         ioСonsole.writeLnString(getLocalString("result.dear") + " " + student.getName() + ", "
                 + getLocalString("result.yourresult") + " " + countCorrectAnswers
