@@ -8,8 +8,8 @@ import ru.otus.service.TestsForStudents;
 /**
  * Приложение по проведению тестирования студентов - вывод вопросов и получение вариантов ответа
  * В ресурсах хранятся вопросы и различные ответы к ним в виде CSV файла (5 вопросов)
- * В application.properties содержаться:
- * - имя CSV файла (fileCsvName)
+ * В application.yml содержатся:
+ * - имя CSV файла (fileCsvName) с локализацией языка
  * - число успешных ответов, необходимых для прохождения теста (numberCorrectAnswers)
  */
 @SpringBootApplication
