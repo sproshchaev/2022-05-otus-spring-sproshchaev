@@ -14,17 +14,18 @@ import java.io.*;
 public class ReadingQuestionsFile implements ReadingFile {
 
     /**
-     * Поле класса fileCsvName содержит имя файла \resources\questions.csv
+     * Поле класса fileCsvName содержит имя файла с вопросами тестов на выбранном языке
      */
     private String fileCsvName;
 
     /**
-     * Конструктор класса с параметрами
+     * Конструктор класса с параметрами по умолчанию создает экземпляр класса с чтением вопросов из файла
+     * на первом языке из IsoCode
      *
      * @param fileCsvName
      */
     @Autowired
-    public ReadingQuestionsFile(@Value("${fileCsvName}") String fileCsvName) {
+    public ReadingQuestionsFile(@Value("${fileCsvName.One}") String fileCsvName) {
         this.fileCsvName = fileCsvName;
     }
 

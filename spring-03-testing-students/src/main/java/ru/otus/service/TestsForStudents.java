@@ -27,11 +27,8 @@ public class TestsForStudents implements Tests {
      * @param checkAnswer
      */
     @Autowired
-    public TestsForStudents(@Value("${totalQuestionsInTest}") int totalQuestionsInTest,
-                            TextToConsole textToConsole,
-                            ReadFromConsole readFromConsole,
-                            CheckAnswer checkAnswer,
-                            Localization localization,
+    public TestsForStudents(@Value("${totalQuestionsInTest}") int totalQuestionsInTest, TextToConsole textToConsole,
+                            ReadFromConsole readFromConsole, CheckAnswer checkAnswer, Localization localization,
                             Identification identification) {
         this.totalQuestionsInTest = totalQuestionsInTest;
         this.textToConsole = textToConsole;

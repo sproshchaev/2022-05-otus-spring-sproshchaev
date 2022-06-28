@@ -40,7 +40,7 @@ public class ReadFromConsole {
      * @return student's name
      */
     public String readStudentsName() {
-        return ioСonsole.readString().toUpperCase();
+        return ioСonsole.readString();
     }
 
     /**

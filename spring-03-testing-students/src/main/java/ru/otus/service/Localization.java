@@ -1,9 +1,11 @@
 package ru.otus.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import ru.otus.dao.ReadingQuestionsFile;
 import ru.otus.enums.IsoCode;
-import ru.otus.enums.LanguageEnglishName;
+import ru.otus.enums.LanguageName;
 import ru.otus.pojo.Language;
 
 /**
@@ -14,6 +16,8 @@ public class Localization {
     private TextToConsole textToConsole;
     private ReadFromConsole readFromConsole;
     private Language language;
+    private String fileCsvNameTwo;
+    private ReadingQuestionsFile readingQuestionsFile;
 
     /**
      * Конструктор класса
@@ -21,33 +25,36 @@ public class Localization {
      * @param textToConsole
      */
     @Autowired
-    public Localization(TextToConsole textToConsole, ReadFromConsole readFromConsole, Language language) {
+    public Localization(TextToConsole textToConsole, ReadFromConsole readFromConsole, Language language,
+                        ReadingQuestionsFile readingQuestionsFile,
+                        @Value("${fileCsvName.Two}") String fileCsvNameTwo) {
         this.textToConsole = textToConsole;
         this.readFromConsole = readFromConsole;
         this.language = language;
+        this.readingQuestionsFile = readingQuestionsFile;
+        this.fileCsvNameTwo = fileCsvNameTwo;
     }
 
     /**
      * Метод setLanguage устанавливает язык вывода информации студенту
      */
     public void setLanguage() {
-
         textToConsole.doPrintSelectLanguage();
         int selectedLanguageId = readFromConsole.readLanguageNumber();
-
         if (selectedLanguageId == 2) {
-            setRu(); // сделать set langopt1 и 2
+            setLanguageTwo();
         }
-
     }
 
     /**
-     * Метод setRu устанавливает RU язык по умолчанию (отрефакторить)
+     * Метод setLanguageTwo устанавливает второй язык из IsoCode для прохождения теста
      */
-    private void setRu() {
+    private void setLanguageTwo() {
         language.setId(2);
-        language.setIsoCode(IsoCode.ru);
-        language.setLanguageEnglishName(LanguageEnglishName.Russian);
+        language.setIsoCode(IsoCode.values()[1]);
+        language.setLanguageName(LanguageName.values()[1]);
+        language.setFileCsvName(fileCsvNameTwo);
+        readingQuestionsFile.setFileCsvName(fileCsvNameTwo);
     }
 
 }

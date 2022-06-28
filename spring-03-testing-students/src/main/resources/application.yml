@@ -1,10 +1,12 @@
-fileCsvName: questions.csv
+languageOption:
+  One: 1
+  Two: 2
+fileCsvName:
+  One: questions.csv
+  Two: questions_ru.csv
 totalQuestionsInTest: 5
 numberCorrectAnswers: 3
 answerOption:
   One: 1
   Two: 2
   Three: 3
-languageOption:
-  One: 1
-  Two: 2
