@@ -65,8 +65,11 @@ Development on the Spring Framework
 11. Открыть проект в IDE
 12. Актуализировать файл .gitignore
 13. Актуализировать файл README.md
+14. Проверить в pom.xml наличие зависимостей: spring-boot-starter, spring-shell-starter
 
 ### Изменения в проекте после переноса логики 
 
 ### Статьи по теме
-
+1. SpringShell среда для сборки https://bit.ly/3OenD47
+2. Пользовательская команда SpringShell - @ShellMethod https://russianblogs.com/article/1616998653/
+3. Параметры команды SpringShell - @ShellOption https://russianblogs.com/article/9298998646/
