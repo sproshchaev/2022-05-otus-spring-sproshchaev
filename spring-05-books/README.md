@@ -62,11 +62,8 @@ NamedParametersJdbcTemplate
 13. Актуализировать файл README.md
 14. Проверить в pom.xml наличие зависимостей: spring-boot-starter, spring-shell-starter, spring-boot-starter-data-jdbc
 15. Добавить в pom.xml зависимость H2: artifactId h2 
+16. Добавить файл 
 
 ### Изменения в проекте после переноса логики 
 
 ### Статьи по теме
-1. SpringShell среда для сборки https://bit.ly/3OenD47
-2. Пользовательская команда SpringShell - @ShellMethod https://russianblogs.com/article/1616998653/
-3. Параметры команды SpringShell - @ShellOption https://russianblogs.com/article/9298998646/
-4. Написание тестов @SpringBootTest при ипользовании Spring Shell в приложении https://habr.com/ru/post/502204/
