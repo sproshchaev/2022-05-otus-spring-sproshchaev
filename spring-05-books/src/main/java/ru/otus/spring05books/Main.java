@@ -3,11 +3,14 @@ package ru.otus.spring05books;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * Класс Main - точка входа в приложение
+ */
 @SpringBootApplication
-public class Spring05BooksApplication {
+public class Main {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Spring05BooksApplication.class, args);
+		SpringApplication.run(Main.class, args);
 	}
 
 }

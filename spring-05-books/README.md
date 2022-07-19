@@ -61,6 +61,7 @@ NamedParametersJdbcTemplate
 12. Актуализировать файл .gitignore
 13. Актуализировать файл README.md
 14. Проверить в pom.xml наличие зависимостей: spring-boot-starter, spring-shell-starter, spring-boot-starter-data-jdbc
+15. Добавить в pom.xml зависимость H2: artifactId h2 
 
 ### Изменения в проекте после переноса логики 
 
