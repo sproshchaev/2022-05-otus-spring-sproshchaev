@@ -6,11 +6,9 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.service.TestsForStudents;
-import ru.otus.service.TextToConsole;
 
 /**
  * Класс ApplicationEventsCommands содержит набор методов-команд (аннотация @ShellComponent)
- *
  */
 @ShellComponent
 public class AppEventsCommands {
@@ -26,14 +24,13 @@ public class AppEventsCommands {
      * в нем была зафиксирована ошибка при которой параметры в строке Spring Shell корректно принимаются
      * только если задается "--параметр"
      * (см. https://github.com/spring-projects/spring-shell/commit/5ba8e185bca0390d702b52d715d5561d98645ac2)
+     *
      * @return
      */
     @ShellMethod(value = "Run tests", key = {"r", "run"})
     public String runTest(@ShellOption(defaultValue = "AnyUser") String name) {
-
         TestsForStudents testsForStudents = context.getBean(TestsForStudents.class);
         testsForStudents.runTest();
-
         return String.format("Good luck %s", name);
     }
 

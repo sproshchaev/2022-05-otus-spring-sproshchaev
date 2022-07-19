@@ -73,3 +73,4 @@ Development on the Spring Framework
 1. SpringShell среда для сборки https://bit.ly/3OenD47
 2. Пользовательская команда SpringShell - @ShellMethod https://russianblogs.com/article/1616998653/
 3. Параметры команды SpringShell - @ShellOption https://russianblogs.com/article/9298998646/
+4. Написание тестов @SpringBootTest при ипользовании Spring Shell в приложении https://habr.com/ru/post/502204/
