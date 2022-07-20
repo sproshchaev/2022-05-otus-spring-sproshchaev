@@ -67,3 +67,9 @@ NamedParametersJdbcTemplate
 ### Изменения в проекте после переноса логики 
 
 ### Статьи по теме
+1. Связи между таблицами базы данных https://habr.com/ru/post/488054/
+2. КЛЮЧИ и ЦЕЛОСТНОСТЬ БАЗЫ ДАННЫХ https://bit.ly/3aXKuTL
+3. EntityFramework: (анти)паттерн Repository https://bit.ly/3cs0gXE
+4. Паттерн «Репозиторий» https://bit.ly/3PKMptP
+5. Проблема с N+1 запросами в JPA и Hibernate https://bit.ly/3OfAdju
+6. Типы данных H2 и соответствие Java https://bit.ly/3RYgDvk

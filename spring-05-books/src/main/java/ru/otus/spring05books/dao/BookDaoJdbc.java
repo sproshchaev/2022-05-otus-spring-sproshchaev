@@ -2,6 +2,7 @@ package ru.otus.spring05books.dao;
 
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.stereotype.Repository;
+import ru.otus.spring05books.domain.Book;
 
 /**
  *
@@ -13,6 +14,7 @@ public class BookDaoJdbc implements BookDao {
 
     /**
      * Конструктор класса
+     *
      * @param jdbc
      */
     public BookDaoJdbc(JdbcOperations jdbc) {
@@ -20,11 +22,11 @@ public class BookDaoJdbc implements BookDao {
     }
 
     /**
-     * Создать книгу
+     * Метод createBook создает книгу
      */
     @Override
-    public void createBook() {
-
+    public void createBook(Book book) {
+        jdbc.update("insert into book(title, author_id, genre_id) values (?, ?, ?)", book.getTitle(), 1, 1);
     }
 
     /**
@@ -59,5 +61,14 @@ public class BookDaoJdbc implements BookDao {
     @Override
     public String getAllBooks() {
         return null;
+    }
+
+    /**
+     * Получить число книг
+     */
+    @Override
+    public Long getCountOfBook() {
+        Long countsOfBook = jdbc.queryForObject("select count(*) from book", Long.class);
+        return countsOfBook;
     }
 }

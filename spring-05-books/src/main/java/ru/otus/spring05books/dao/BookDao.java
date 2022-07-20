@@ -1,5 +1,7 @@
 package ru.otus.spring05books.dao;
 
+import ru.otus.spring05books.domain.Book;
+
 /**
  *
  */
@@ -8,7 +10,7 @@ public interface BookDao {
     /**
      * Создать книгу
      */
-    void createBook();
+    void createBook(Book book);
 
     /**
      * Обновить книгу
@@ -27,8 +29,14 @@ public interface BookDao {
 
     /**
      * Получить все книги
+     *
      * @return
      */
     String getAllBooks();
+
+    /**
+     * Получить число книг
+     */
+    Long getCountOfBook();
 
 }
