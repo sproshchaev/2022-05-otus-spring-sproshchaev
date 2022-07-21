@@ -4,38 +4,41 @@ package ru.otus.spring05books.domain;
  * Класс Книга
  */
 public class Book {
-    // private final long id;
+
+    private long id;
     private final String title;
-    private final String authorFullName;
-    private final String genreName;
+    private final Author author;
+    private final Genre genre;
 
     /**
      * Конструктор класса
-     * @param id
      * @param title
-     * @param authorFullName
-     * @param genreName
+     * @param author
+     * @param genre
      */
-    public Book(/*long id,*/ String title, String authorFullName, String genreName) {
-        //this.id = id;
+    public Book(String title, Author author, Genre genre) {
         this.title = title;
-        this.authorFullName = authorFullName;
-        this.genreName = genreName;
+        this.author = author;
+        this.genre = genre;
     }
 
-    /*public long getId() {
+    public long getId() {
         return id;
-    }*/
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
     }
 
-    public String getAuthorFullName() {
-        return authorFullName;
+    public Author getAuthor() {
+        return author;
     }
 
-    public String getGenreName() {
-        return genreName;
+    public Genre getGenre() {
+        return genre;
     }
 }

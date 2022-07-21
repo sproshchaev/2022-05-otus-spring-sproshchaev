@@ -2,41 +2,43 @@ package ru.otus.spring05books.dao;
 
 import ru.otus.spring05books.domain.Book;
 
+import java.util.List;
+
 /**
  *
  */
 public interface BookDao {
 
     /**
-     * Создать книгу
+     * Создать новую книгу
      */
     void createBook(Book book);
 
     /**
-     * Обновить книгу
+     * Обновить сведения о книге
      */
-    void updateBook();
+    void updateBook(Book book);
 
     /**
-     * Удалить книгу
+     * Удалить сведения о книге из библиотеки
      */
-    void deleteBook();
+    void deleteBook(Book book);
 
     /**
-     * Получить книгу по Id
+     * Получить сведения о книге книгу по ее id
      */
-    String getBookById();
+    Book getBookById(long id);
 
     /**
-     * Получить все книги
+     * Получить все книги, имеющиеся в библиотеке
      *
      * @return
      */
-    String getAllBooks();
+    List<Book> getAllBooks();
 
     /**
-     * Получить число книг
+     * Получить число всех книг, имеющихся в библиотеке
      */
-    Long getCountOfBook();
+    long getCountOfBooks();
 
 }

@@ -6,7 +6,9 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.spring05books.dao.BookDaoJdbc;
+import ru.otus.spring05books.domain.Author;
 import ru.otus.spring05books.domain.Book;
+import ru.otus.spring05books.domain.Genre;
 
 import java.sql.SQLException;
 
@@ -26,7 +28,7 @@ public class AppEventsCommands {
      */
     @ShellMethod(value = "Info", key = {"i", "info"})
     public String getInfo() {
-        Long countOfBooks = bookDaoJdbc.getCountOfBook();
+        long countOfBooks = bookDaoJdbc.getCountOfBooks();
         return "Welcome to the library! We have " + countOfBooks + " books";
     }
 
@@ -49,9 +51,9 @@ public class AppEventsCommands {
     @ShellMethod(value = "Create book", key = {"cr", "create"})
     public String createBook(@ShellOption(defaultValue = "New_book") String title,
                              @ShellOption(defaultValue = "1") int author_id,
-                             @ShellOption(defaultValue = "1") int genre_id) throws SQLException {
+                             @ShellOption(defaultValue = "1") int genre_id) {
 
-        bookDaoJdbc.createBook(new Book(title, "1", "1"));
+        bookDaoJdbc.createBook(new Book(title, new Author("1"), new Genre("1")));
         return "Book " + title + " " + author_id + " " + genre_id + " added!";
     }
 
