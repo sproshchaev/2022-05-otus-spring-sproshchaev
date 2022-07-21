@@ -11,6 +11,9 @@ public interface GenreDao {
 
     /**
      * Создать внести новый жанр в библиотеку
+     *
+     * @param genre
+     * @return
      */
     long createGenre(Genre genre);
 

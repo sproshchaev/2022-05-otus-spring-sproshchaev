@@ -11,8 +11,11 @@ public interface AuthorDao {
 
     /**
      * Создать автора в библиотеке
+     *
+     * @param author
+     * @return
      */
-    void createAuthor(Author author);
+    long createAuthor(Author author);
 
     /**
      * Обновить сведения об авторе в библиотеке

@@ -22,18 +22,19 @@ public class BookDaoJdbc implements BookDao {
         this.jdbc = jdbc;
     }
 
-
     /**
      * Создать новую книгу
      *
      * @param book
+     * @return
      */
     @Override
-    public void createBook(Book book) {
+    public long createBook(Book book) {
         // Создали в БД
         jdbc.update("insert into book(title, author_id, genre_id) values (?, ?, ?)", book.getTitle(), 1, 1);
         // Получили id этой книги
         // Внесли через сеттер в экземпляр этой книги
+        return 0;
     }
 
     /**

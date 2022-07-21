@@ -26,6 +26,7 @@ public class GenreDaoJdbc implements GenreDao {
      * Создать внести новый жанр в библиотеку
      *
      * @param genre
+     * @return
      */
     @Override
     public long createGenre(Genre genre) {

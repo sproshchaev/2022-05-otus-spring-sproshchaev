@@ -11,8 +11,10 @@ public interface BookDao {
 
     /**
      * Создать новую книгу
+     * @param book
+     * @return
      */
-    void createBook(Book book);
+    long createBook(Book book);
 
     /**
      * Обновить сведения о книге

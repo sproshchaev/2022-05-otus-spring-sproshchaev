@@ -48,26 +48,54 @@ public class AppEventsCommands {
     @ShellMethod(value = "Information about the library", key = {"a", "about"})
     public String aboutLibrary() {
         long countOfBooks = bookDaoJdbc.getCountOfBooks();
-        return "Welcome to the library! We have " + countOfBooks + " books";
+        long countOfAuthors = 0;
+        long countOfGenres = 0;
+        return "Welcome to our library! We have more than " + countOfBooks
+                + " books by " + countOfAuthors + " authors and " + countOfGenres + " genres in our library";
     }
 
     /**
-     * Метод createGenre - создает новый наименование нового жанра книг в библиотеке
+     * Метод createNewGenre - создает новый наименование нового жанра книг в библиотеке
      * Сокращенный вызов: "cg", "creategenre" --name genre_name
      * Пример: cg --name Novel
      */
     @ShellMethod(value = "Create a new genre of books in the library", key = {"cg", "creategenre"})
-    public String createGenre(@ShellOption(defaultValue = "New_Genre") String name) {
+    public String createNewGenre(@ShellOption(defaultValue = "New_Genre") String name) {
         long id = genreDaoJdbc.createGenre(new Genre(name));
         return "New genre (" + id + ") " + name + " has been successfully created!";
     }
+
+    /**
+     * Метод createNewAuthor
+     * Сокращенный вызов: "cg", "creategenre" --name author_fullname
+     * Пример: cg --name 'Arthur Conan Doyle'
+     */
+    @ShellMethod(value = "Create a new Author of books in the library", key = {"ca", "createauthor"})
+    public String createNewAuthor(@ShellOption(defaultValue = "New_Author") String fullName) {
+        long id = authorDaoJdbc.createAuthor(new Author(fullName));
+        return "New author (" + id + ") " + fullName + " has been successfully created!";
+    }
+
+    /**
+     * Метод createNewBook
+     * Сокращенный вызов: "cb", "createbook" --title title_book --author author --genre genre
+     * Пример: cb --title 'A Life in Letters' --author 'Arthur Conan Doyle' --genre autobiography
+     */
+    @ShellMethod(value = "Add information about a new book, author, genre to the library", key = {"cb", "createbook"})
+    public String createNewBook(@ShellOption(defaultValue = "New_book") String title,
+                                @ShellOption(defaultValue = "New_Author") String author,
+                                @ShellOption(defaultValue = "New_Genre") String genre) {
+        long id = bookDaoJdbc.createBook(new Book(title, new Author(author), new Genre(genre)));
+        return "The book (" + id + ") " + title + ", " + author + " (" + genre + ") has been successfully entered!";
+    }
+
 
     //
 
     /**
      * Метод ...
-     * Сокращенный вызов:
-     *
+     * Сокращенный вызов: "cg", "creategenre" --name author_fullname
+     * Пример: cg --name 'Arthur Conan Doyle'
      */
 
     /**
@@ -80,20 +108,5 @@ public class AppEventsCommands {
     public void startConsoleH2() throws SQLException {
         Console.main();
     }
-
-    /**
-     * Метод createBook создает книгу: наименование, автор, жанр
-     *
-     * @throws SQLException
-     */
-    @ShellMethod(value = "Create book", key = {"cr", "create"})
-    public String createBook(@ShellOption(defaultValue = "New_book") String title,
-                             @ShellOption(defaultValue = "1") int author_id,
-                             @ShellOption(defaultValue = "1") int genre_id) {
-
-        bookDaoJdbc.createBook(new Book(title, new Author("1"), new Genre("1")));
-        return "Book " + title + " " + author_id + " " + genre_id + " added!";
-    }
-
 
 }

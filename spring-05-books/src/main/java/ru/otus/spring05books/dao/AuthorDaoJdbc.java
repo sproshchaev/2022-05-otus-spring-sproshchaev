@@ -15,6 +15,7 @@ public class AuthorDaoJdbc implements AuthorDao {
 
     /**
      * Конструктор класса
+     *
      * @param jdbc
      */
     public AuthorDaoJdbc(JdbcOperations jdbc) {
@@ -27,8 +28,8 @@ public class AuthorDaoJdbc implements AuthorDao {
      * @param author
      */
     @Override
-    public void createAuthor(Author author) {
-
+    public long createAuthor(Author author) {
+        return 0;
     }
 
     /**
