@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import ru.otus.spring05books.dao.AuthorDaoJdbc;
 import ru.otus.spring05books.dao.BookDaoJdbc;
+import ru.otus.spring05books.dao.GenreDaoJdbc;
 import ru.otus.spring05books.domain.Author;
 import ru.otus.spring05books.domain.Book;
 import ru.otus.spring05books.domain.Genre;
@@ -17,23 +19,59 @@ import java.sql.SQLException;
  */
 @ShellComponent
 public class AppEventsCommands {
-
-    @Autowired
-    private BookDaoJdbc bookDaoJdbc;
+    private final GenreDaoJdbc genreDaoJdbc;
+    private final AuthorDaoJdbc authorDaoJdbc;
+    private final BookDaoJdbc bookDaoJdbc;
 
     /**
-     * Метод getInfo выводит пользователю строку с приглашением и числом книг в библиотеке
+     * Конструктор класса AppEventsCommands
+     * Примечание: классы GenreDaoJdbc, AuthorDaoJdbc, BookDaoJdbc для возможности применения @Autowired отмечены аннотацией
+     *
+     * @param genreDaoJdbc
+     * @param authorDaoJdbc
+     * @param bookDaoJdbc
+     * @Repository
+     */
+    @Autowired
+    public AppEventsCommands(GenreDaoJdbc genreDaoJdbc, AuthorDaoJdbc authorDaoJdbc, BookDaoJdbc bookDaoJdbc) {
+        this.genreDaoJdbc = genreDaoJdbc;
+        this.authorDaoJdbc = authorDaoJdbc;
+        this.bookDaoJdbc = bookDaoJdbc;
+    }
+
+    /**
+     * Метод aboutLibrary выводит пользователю строку с приглашением и числом книг в библиотеке
+     * Сокращенный вызов: "a", "about"
      *
      * @return
      */
-    @ShellMethod(value = "Info", key = {"i", "info"})
-    public String getInfo() {
+    @ShellMethod(value = "Information about the library", key = {"a", "about"})
+    public String aboutLibrary() {
         long countOfBooks = bookDaoJdbc.getCountOfBooks();
         return "Welcome to the library! We have " + countOfBooks + " books";
     }
 
     /**
-     * Метод startConsoleH2 выводит консоль
+     * Метод createGenre - создает новый наименование нового жанра книг в библиотеке
+     * Сокращенный вызов: "cg", "creategenre" --name genre_name
+     * Пример: cg --name Novel
+     */
+    @ShellMethod(value = "Create a new genre of books in the library", key = {"cg", "creategenre"})
+    public String createGenre(@ShellOption(defaultValue = "New_Genre") String name) {
+        long id = genreDaoJdbc.createGenre(new Genre(name));
+        return "New genre (" + id + ") " + name + " has been successfully created!";
+    }
+
+    //
+
+    /**
+     * Метод ...
+     * Сокращенный вызов:
+     *
+     */
+
+    /**
+     * Метод startConsoleH2 запускает консоль
      *
      * @return
      * @throws SQLException

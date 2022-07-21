@@ -1,6 +1,7 @@
 package ru.otus.spring05books.dao;
 
 import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.stereotype.Repository;
 import ru.otus.spring05books.domain.Genre;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 /**
  * Класс GenreDaoJdbc реализует интерфейс GenreDao для JDBC
  */
+@Repository
 public class GenreDaoJdbc implements GenreDao {
     private final JdbcOperations jdbc;
 
@@ -26,8 +28,10 @@ public class GenreDaoJdbc implements GenreDao {
      * @param genre
      */
     @Override
-    public void createGenre(Genre genre) {
-
+    public long createGenre(Genre genre) {
+        // Создать
+        // Получить id
+        return 0;
     }
 
     /**

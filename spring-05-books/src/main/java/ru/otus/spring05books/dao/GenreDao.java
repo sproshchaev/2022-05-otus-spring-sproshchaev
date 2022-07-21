@@ -12,7 +12,7 @@ public interface GenreDao {
     /**
      * Создать внести новый жанр в библиотеку
      */
-    void createGenre(Genre genre);
+    long createGenre(Genre genre);
 
     /**
      * Обновить сведения о жанре
