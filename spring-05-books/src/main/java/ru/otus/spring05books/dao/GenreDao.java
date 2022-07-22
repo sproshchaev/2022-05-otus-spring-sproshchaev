@@ -10,7 +10,7 @@ import java.util.List;
 public interface GenreDao {
 
     /**
-     * Создать внести новый жанр в библиотеку
+     * Метод createGenre создает новый жанр в библиотеке
      *
      * @param genre
      * @return
@@ -18,29 +18,47 @@ public interface GenreDao {
     long createGenre(Genre genre);
 
     /**
-     * Обновить сведения о жанре
+     * Метод updateGenre обновляет сведения о жанре в библиотеке
+     *
+     * @param genre
+     * @return
      */
-    void updateGenre(Genre genre);
+    boolean updateGenre(Genre genre);
 
     /**
-     * Удалить сведения об жанре из библиотеки
+     * Метод deleteGenre удаляет сведения об жанре из библиотеки
+     *
+     * @param genre
+     * @return
      */
-    void deleteGenre(Genre genre);
+    boolean deleteGenre(Genre genre);
 
     /**
-     * Получить сведения о жанре по id
+     * Метод getGenreById формирует сведения о жанре по id
+     *
+     * @param id
+     * @return
      */
-    String getGenreById(long id);
+    Genre getGenreById(long id);
 
     /**
-     * Получить сведения по всем жанрам из библиотеки
+     * Метод getIdByGenre возвращает id передаваемого жанра
+     * @param genre
+     * @return
+     */
+    long getIdByGenre(Genre genre);
+
+    /**
+     * Метод getAllGenres формирует сведения по всем жанрам из библиотеки
      *
      * @return
      */
     List<Genre> getAllGenres();
 
     /**
-     * Получить число жанров, которые есть в библиотеке
+     * Метод getCountOfGenres возвращает число жанров, которые есть в библиотеке
+     *
+     * @return
      */
     long getCountOfGenres();
 

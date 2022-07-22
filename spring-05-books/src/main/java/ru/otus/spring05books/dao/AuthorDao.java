@@ -10,7 +10,7 @@ import java.util.List;
 public interface AuthorDao {
 
     /**
-     * Создать автора в библиотеке
+     * Метод createAuthor создает нового автора в библиотеке
      *
      * @param author
      * @return
@@ -18,31 +18,44 @@ public interface AuthorDao {
     long createAuthor(Author author);
 
     /**
-     * Обновить сведения об авторе в библиотеке
+     * Метод updateAuthor обновляет сведения об авторе в библиотеке
+     * @param author
+     * @return
      */
-    void updateAuthor(Author author);
+    boolean updateAuthor(Author author);
 
     /**
-     * Удалить сведения об авторе из библиотеки
+     * Метод deleteAuthor удаляет сведения об авторе из библиотеки
+     * @param author
+     * @return
      */
-    void deleteAuthor(Author author);
+    boolean deleteAuthor(Author author);
 
     /**
-     * Получить сведения об авторе по Id
+     * Метод getAuthorById получает сведения об авторе по Id
+     * @param id
+     * @return
      */
-    String getAuthorById();
+    Author getAuthorById(long id);
 
     /**
-     * Получить сведения по всем авторам из библиотеки
+     * Метод getIdByAuthor получает id автора
+     * @param author
+     * @return
+     */
+    long getIdByAuthor(Author author);
+
+    /**
+     * Метод getAllAuthors получает сведения по всем авторам из библиотеки
      *
      * @return
      */
     List<Author> getAllAuthors();
 
     /**
-     * Получить число авторов, чьи сведения есть в библиотеке
+     * Метод getCountOfAuthors получает число авторов, чьи сведения есть в библиотеке
+     * @return
      */
     long getCountOfAuthors();
-
 
 }

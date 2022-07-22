@@ -55,7 +55,7 @@ public class AppEventsCommands {
     }
 
     /**
-     * Метод createNewGenre - создает новый наименование нового жанра книг в библиотеке
+     * Метод createNewGenre - создает наименование нового жанра книг в библиотеке
      * Сокращенный вызов: "cg", "creategenre" --name genre_name
      * Пример: cg --name Novel
      *
@@ -66,6 +66,17 @@ public class AppEventsCommands {
     public String createNewGenre(@ShellOption(defaultValue = "New_Genre") String name) {
         long id = genreDaoJdbc.createGenre(new Genre(name));
         return "New genre (" + id + ") " + name + " has been successfully created!";
+    }
+
+    /**
+     * Метод getIdByGenre возвращает id для жанра, если он есть в библиотеке
+     * Сокращенный вызов: "gibg", "getidbygenre" --name genre_name
+     * Пример: gibg --name 'History'
+     */
+    @ShellMethod(value = "Getting a genre id", key = {"gibg", "getidbygenre"})
+    public String getIdByGenre(@ShellOption(defaultValue = "History") String name) {
+        long id = genreDaoJdbc.getIdByGenre(new Genre(name));
+        return id == 0 ? "Genre '" + name + "' not found in the library!" : "Genre '" + name + "' has an id=" + id;
     }
 
     /**
@@ -80,6 +91,17 @@ public class AppEventsCommands {
     public String createNewAuthor(@ShellOption(defaultValue = "New_Author") String fullName) {
         long id = authorDaoJdbc.createAuthor(new Author(fullName));
         return "New author (" + id + ") " + fullName + " has been successfully created!";
+    }
+
+    /**
+     * Метод getIdByAuthor возвращает id для полного имени данного автора, если он есть в библиотеке
+     * Сокращенный вызов: "giba", "getidbyauthor" --fullName author_fullname
+     * Пример: giba --fullName 'Daniel Defoe'
+     */
+    @ShellMethod(value = "Getting an id by author", key = {"giba", "getidbyauthor"})
+    public String getIdByAuthor(@ShellOption(defaultValue = "Daniel Defoe") String fullName) {
+        long id = authorDaoJdbc.getIdByAuthor(new Author(fullName));
+        return id == 0 ? "Author '" + fullName + "' not found in the library!" : "Author '" + fullName + "' has an id=" + id;
     }
 
     /**
@@ -157,6 +179,18 @@ public class AppEventsCommands {
     @ShellMethod(value = "Get a list of all library books", key = {"gab", "getallbook"})
     public String getAllBook() {
         return bookDaoJdbc.getAllBooks().toString();
+    }
+
+    /**
+     * Метод getIdByBook возвращает id для книги, если она есть в библиотеке.
+     * Поиск выполняется только по названию без учета автора и жанра
+     * Сокращенный вызов: "gibb", "getidbybook" --title title
+     * Пример: gibb --title 'Robinson Crusoe'
+     */
+    @ShellMethod(value = "Getting an id by book", key = {"gibb", "getidbybook"})
+    public String getIdByBook(@ShellOption(defaultValue = "Robinson Crusoe") String title) {
+        long id = bookDaoJdbc.getIdByBook(new Book(title, new Author(""), new Genre("")));
+        return id == 0 ? "Book '" + title + "' not found in the library!" : "Book '" + title + "' has an id=" + id;
     }
 
     /**

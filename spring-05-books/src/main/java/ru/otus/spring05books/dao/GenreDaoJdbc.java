@@ -1,9 +1,12 @@
 package ru.otus.spring05books.dao;
 
 import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring05books.domain.Genre;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -23,48 +26,71 @@ public class GenreDaoJdbc implements GenreDao {
     }
 
     /**
-     * Создать внести новый жанр в библиотеку
+     * Метод createGenre создает новый жанр в библиотеке
      *
      * @param genre
      * @return
      */
     @Override
     public long createGenre(Genre genre) {
-        // Создать
-        // Получить id
-        return 0;
+        Long id = getIdByGenre(genre);
+        if (id == 0) {
+            jdbc.update("insert into genre(name) values(?)", genre.getName());
+            id = getIdByGenre(genre);
+        }
+        return id;
     }
 
     /**
-     * Обновить сведения о жанре
+     * Метод updateGenre обновляет сведения о жанре в библиотеке
      *
      * @param genre
+     * @return
      */
     @Override
-    public void updateGenre(Genre genre) {
-
+    public boolean updateGenre(Genre genre) {
+        return false;
     }
 
     /**
-     * Удалить сведения об жанре из библиотеки
+     * Метод deleteGenre удаляет сведения об жанре из библиотеки
      *
      * @param genre
+     * @return
      */
     @Override
-    public void deleteGenre(Genre genre) {
-
+    public boolean deleteGenre(Genre genre) {
+        return false;
     }
 
     /**
-     * Получить сведения о жанре по id
+     * Метод getGenreById формирует сведения о жанре по id
+     *
+     * @param id
+     * @return
      */
     @Override
-    public String getGenreById(long id) {
+    public Genre getGenreById(long id) {
+
         return null;
     }
 
     /**
-     * Получить сведения по всем жанрам из библиотеки
+     * Метод getIdByGenre возвращает id передаваемого жанра
+     * Метод query использует jdbc.query, так как возможно получение как 0, так и 1, а jdbc.queryForObject выбрасывает
+     * исключение если результат 0
+     * @param genre
+     * @return
+     */
+    @Override
+    public long getIdByGenre(Genre genre) {
+        List<Long> listId;
+        listId = jdbc.query("select id from genre where name = ?", new IdMapper(), genre.getName());
+        return listId.size() == 0 ? 0 : listId.get(0);
+    }
+
+    /**
+     * Метод getAllGenres формирует сведения по всем жанрам из библиотеки
      *
      * @return
      */
@@ -74,10 +100,22 @@ public class GenreDaoJdbc implements GenreDao {
     }
 
     /**
-     * Получить число жанров, которые есть в библиотеке
+     * Метод getCountOfGenres возвращает число жанров, которые есть в библиотеке
+     *
+     * @return
      */
     @Override
     public long getCountOfGenres() {
         return 0;
+    }
+
+    /**
+     * Класс IdMapper формирует набор для получаемого результата из jdbc.query
+     */
+    private static class IdMapper implements RowMapper<Long> {
+        @Override
+        public Long mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return new Long(rs.getLong("id"));
+        }
     }
 }

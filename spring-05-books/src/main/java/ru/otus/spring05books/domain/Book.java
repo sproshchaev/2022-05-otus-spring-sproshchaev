@@ -13,12 +13,26 @@ public class Book {
     private final Genre genre;
 
     /**
-     * Конструктор класса
+     * Конструктор класса без id
      * @param title
      * @param author
      * @param genre
      */
     public Book(String title, Author author, Genre genre) {
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+    }
+
+    /**
+     * Конструктор класса с id книги
+     * @param id
+     * @param title
+     * @param author
+     * @param genre
+     */
+    public Book(long id, String title, Author author, Genre genre) {
+        this.id = id;
         this.title = title;
         this.author = author;
         this.genre = genre;

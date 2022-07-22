@@ -5,19 +5,21 @@ import ru.otus.spring05books.domain.Book;
 import java.util.List;
 
 /**
- *
+ * Интерфейс BookDao
  */
 public interface BookDao {
 
     /**
-     * Создать новую книгу
+     * Метод createBook создает новую книгу в библиотеке
+     *
      * @param book
      * @return
      */
     long createBook(Book book);
 
     /**
-     * Обновить сведения о книге
+     * Метод updateBookById обновляет сведения о книге в библиотеке
+     *
      * @param id
      * @param book
      * @return
@@ -25,26 +27,39 @@ public interface BookDao {
     boolean updateBookById(long id, Book book);
 
     /**
-     * Удалить сведения о книге из библиотеки
+     * Метод deleteBookById удаляет сведения о книге из библиотеки
+     *
      * @param id
      * @return
      */
     boolean deleteBookById(long id);
 
     /**
-     * Получить сведения о книге по ее id
+     * Метод getBookById возвращает сведения о книге по ее id
+     *
+     * @param id
+     * @return
      */
     Book getBookById(long id);
 
     /**
-     * Получить все книги, имеющиеся в библиотеке
+     * Метод getIdByBook возвращает id переданной ему книги
+     * @param book
+     * @return
+     */
+    long getIdByBook(Book book);
+
+    /**
+     * Метод getAllBooks возвращает коллекцию из всех книг, имеющиеся в библиотеке
      *
      * @return
      */
     List<Book> getAllBooks();
 
     /**
-     * Получить число всех книг, имеющихся в библиотеке
+     * Метод getCountOfBooks возвращает число всех книг, имеющихся в библиотеке
+     *
+     * @return
      */
     long getCountOfBooks();
 
