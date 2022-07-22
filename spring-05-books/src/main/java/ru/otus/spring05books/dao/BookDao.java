@@ -18,16 +18,21 @@ public interface BookDao {
 
     /**
      * Обновить сведения о книге
+     * @param id
+     * @param book
+     * @return
      */
-    void updateBook(Book book);
+    boolean updateBookById(long id, Book book);
 
     /**
      * Удалить сведения о книге из библиотеки
+     * @param id
+     * @return
      */
-    void deleteBook(Book book);
+    boolean deleteBookById(long id);
 
     /**
-     * Получить сведения о книге книгу по ее id
+     * Получить сведения о книге по ее id
      */
     Book getBookById(long id);
 

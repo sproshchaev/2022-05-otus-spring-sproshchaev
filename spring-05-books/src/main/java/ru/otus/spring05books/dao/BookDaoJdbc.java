@@ -2,8 +2,11 @@ package ru.otus.spring05books.dao;
 
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.stereotype.Repository;
+import ru.otus.spring05books.domain.Author;
 import ru.otus.spring05books.domain.Book;
+import ru.otus.spring05books.domain.Genre;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,21 +43,24 @@ public class BookDaoJdbc implements BookDao {
     /**
      * Обновить сведения о книге
      *
+     * @param id
      * @param book
+     * @return
      */
     @Override
-    public void updateBook(Book book) {
-
+    public boolean updateBookById(long id, Book book) {
+        return true;
     }
 
     /**
      * Удалить сведения о книге из библиотеки
      *
-     * @param book
+     * @param id
+     * @return
      */
     @Override
-    public void deleteBook(Book book) {
-
+    public boolean deleteBookById(long id) {
+        return true;
     }
 
     /**
@@ -64,7 +70,7 @@ public class BookDaoJdbc implements BookDao {
      */
     @Override
     public Book getBookById(long id) {
-        return null;
+        return new Book("1", new Author("1"), new Genre("1"));
     }
 
     /**
@@ -74,7 +80,9 @@ public class BookDaoJdbc implements BookDao {
      */
     @Override
     public List<Book> getAllBooks() {
-        return null;
+        List<Book> bookList = new ArrayList<>();
+        bookList.add(new Book("1", new Author("1"), new Genre("1")));
+        return bookList;
     }
 
     /**

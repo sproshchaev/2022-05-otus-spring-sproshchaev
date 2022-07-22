@@ -1,5 +1,7 @@
 package ru.otus.spring05books.domain;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Класс Книга
  */
@@ -41,4 +43,14 @@ public class Book {
     public Genre getGenre() {
         return genre;
     }
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author=" + author +
+                ", genre=" + genre +
+                '}';
+    }
+
 }
