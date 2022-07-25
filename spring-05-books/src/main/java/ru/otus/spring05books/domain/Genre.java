@@ -15,6 +15,16 @@ public class Genre {
         this.name = name;
     }
 
+    /**
+     * Конструктор класса
+     * @param id
+     * @param name
+     */
+    public Genre(long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public long getId() {
         return id;
     }

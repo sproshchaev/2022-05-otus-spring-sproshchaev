@@ -105,8 +105,9 @@ public class GenreDaoJdbc implements GenreDao {
      * @return
      */
     @Override
-    public long getCountOfGenres() {
-        return 0;
+    public int getCountOfGenres() {
+        Integer count = jdbc.queryForObject("select count(*) from genre", Integer.class);
+        return count == null? 0: count;
     }
 
     /**

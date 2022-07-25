@@ -5,9 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
-import ru.otus.spring05books.dao.AuthorDaoJdbc;
-import ru.otus.spring05books.dao.BookDaoJdbc;
-import ru.otus.spring05books.dao.GenreDaoJdbc;
+import ru.otus.spring05books.dao.*;
 import ru.otus.spring05books.domain.Author;
 import ru.otus.spring05books.domain.Book;
 import ru.otus.spring05books.domain.Genre;
@@ -20,8 +18,11 @@ import java.sql.SQLException;
 @ShellComponent
 public class AppEventsCommands {
     private final GenreDaoJdbc genreDaoJdbc;
-    private final AuthorDaoJdbc authorDaoJdbc;
-    private final BookDaoJdbc bookDaoJdbc;
+    private final AuthorDaoJdbc authorDaoJdbc; // убрать
+    private final AuthorDaoJdbc2 authorDaoJdbc2; // заменить
+
+    private final BookDaoJdbc bookDaoJdbc;  // убрать
+    private final BookDaoJdbc2 bookDaoJdbc2; // заменить
 
     /**
      * Конструктор класса AppEventsCommands
@@ -29,14 +30,18 @@ public class AppEventsCommands {
      *
      * @param genreDaoJdbc
      * @param authorDaoJdbc
+     * @param authorDaoJdbc2
      * @param bookDaoJdbc
+     * @param bookDaoJdbc2
      * @Repository
      */
     @Autowired
-    public AppEventsCommands(GenreDaoJdbc genreDaoJdbc, AuthorDaoJdbc authorDaoJdbc, BookDaoJdbc bookDaoJdbc) {
+    public AppEventsCommands(GenreDaoJdbc genreDaoJdbc, AuthorDaoJdbc authorDaoJdbc, AuthorDaoJdbc2 authorDaoJdbc2, BookDaoJdbc bookDaoJdbc, BookDaoJdbc2 bookDaoJdbc2) {
         this.genreDaoJdbc = genreDaoJdbc;
         this.authorDaoJdbc = authorDaoJdbc;
-        this.bookDaoJdbc = bookDaoJdbc;
+        this.authorDaoJdbc2 = authorDaoJdbc2;
+        this.bookDaoJdbc = bookDaoJdbc; // убрать
+        this.bookDaoJdbc2 = bookDaoJdbc2; // заменить
     }
 
     /**
@@ -47,9 +52,9 @@ public class AppEventsCommands {
      */
     @ShellMethod(value = "Information about the library", key = {"a", "about"})
     public String aboutLibrary() {
-        long countOfBooks = bookDaoJdbc.getCountOfBooks();
-        long countOfAuthors = 0;
-        long countOfGenres = 0;
+        long countOfBooks = bookDaoJdbc2.getCountOfBooks();
+        long countOfAuthors = authorDaoJdbc.getCountOfAuthors();
+        long countOfGenres = genreDaoJdbc.getCountOfGenres();
         return "Welcome to our library! We have more than " + countOfBooks
                 + " books by " + countOfAuthors + " authors and " + countOfGenres + " genres in our library";
     }
@@ -81,16 +86,16 @@ public class AppEventsCommands {
 
     /**
      * Метод createNewAuthor
-     * Сокращенный вызов: "cg", "creategenre" --name author_fullname
-     * Пример: cg --name 'Arthur Conan Doyle'
+     * Сокращенный вызов: "ca", "createauthor" --name author_fullname
+     * Пример: ca --fullName 'Stephen Edwin King'
      *
      * @param fullName
      * @return
      */
     @ShellMethod(value = "Create a new Author of books in the library", key = {"ca", "createauthor"})
-    public String createNewAuthor(@ShellOption(defaultValue = "New_Author") String fullName) {
-        long id = authorDaoJdbc.createAuthor(new Author(fullName));
-        return "New author (" + id + ") " + fullName + " has been successfully created!";
+    public String createNewAuthor(@ShellOption(defaultValue = "Stephen Edwin King") String fullName) {
+        long id = authorDaoJdbc2.createAuthor(new Author(fullName));
+        return id != 0 ? "New author (" + id + ") " + fullName + " has been successfully created!" : "Error: Something went wrong!";
     }
 
     /**
@@ -100,7 +105,7 @@ public class AppEventsCommands {
      */
     @ShellMethod(value = "Getting an id by author", key = {"giba", "getidbyauthor"})
     public String getIdByAuthor(@ShellOption(defaultValue = "Daniel Defoe") String fullName) {
-        long id = authorDaoJdbc.getIdByAuthor(new Author(fullName));
+        long id = authorDaoJdbc2.getIdByAuthor(new Author(fullName));
         return id == 0 ? "Author '" + fullName + "' not found in the library!" : "Author '" + fullName + "' has an id=" + id;
     }
 
@@ -118,7 +123,7 @@ public class AppEventsCommands {
     public String createNewBook(@ShellOption(defaultValue = "Title") String title,
                                 @ShellOption(defaultValue = "Author") String author,
                                 @ShellOption(defaultValue = "Genre") String genre) {
-        long id = bookDaoJdbc.createBook(new Book(title, new Author(author), new Genre(genre)));
+        long id = bookDaoJdbc2.createBook(new Book(title, new Author(author), new Genre(genre)));
         return "The book (" + id + ") " + title + ", " + author + " (" + genre + ") has been successfully entered!";
     }
 
@@ -132,11 +137,11 @@ public class AppEventsCommands {
      */
     @ShellMethod(value = "Get book data by its id", key = {"gb", "getbook"})
     public String getBookById(@ShellOption(defaultValue = "1") long id) {
-        return bookDaoJdbc.getBookById(id).toString();
+        return bookDaoJdbc2.getBookById(id).toString();
     }
 
     /**
-     * Метод updateBookById (crUd)
+     * Метод updateBookById (crUd) обновляет данные по книге: название, автора, жанр
      * Сокращенный вызов: "ub", "updatebook" --id id --title new_title --author new_author --genre new_genre
      * Пример: ub --id 1 --title 'New title' --author 'New Author' --genre 'New Genre'
      *
@@ -151,7 +156,7 @@ public class AppEventsCommands {
                                  @ShellOption(defaultValue = "New_Title") String title,
                                  @ShellOption(defaultValue = "New_Author") String author,
                                  @ShellOption(defaultValue = "New_Genre") String genre) {
-        return bookDaoJdbc.updateBookById(id, new Book(title, new Author(author), new Genre(genre))) ? "The book id="
+        return bookDaoJdbc2.updateBookById(id, new Book(title, new Author(author), new Genre(genre))) ? "The book id="
                 + id + " has " + "been updated!" : "Error: Something went wrong";
     }
 
@@ -165,8 +170,8 @@ public class AppEventsCommands {
      */
     @ShellMethod(value = "Deleting the selected book by id", key = {"db", "deletebook"})
     public String deleteBookById(@ShellOption(defaultValue = "1") long id) {
-        return bookDaoJdbc.deleteBookById(id) ? "The book id=" + id + " has been deleted" : "Error: Something went " +
-                "wrong";
+        return bookDaoJdbc2.deleteBookById(id) ? "The book id=" + id + " has been deleted" : "Error: Something went " +
+                "wrong!";
     }
 
     /**
@@ -178,19 +183,22 @@ public class AppEventsCommands {
      */
     @ShellMethod(value = "Get a list of all library books", key = {"gab", "getallbook"})
     public String getAllBook() {
-        return bookDaoJdbc.getAllBooks().toString();
+        return bookDaoJdbc2.getAllBooks().toString();
     }
 
     /**
      * Метод getIdByBook возвращает id для книги, если она есть в библиотеке.
-     * Поиск выполняется только по названию без учета автора и жанра
-     * Сокращенный вызов: "gibb", "getidbybook" --title title
-     * Пример: gibb --title 'Robinson Crusoe'
+     * Поиск выполняется только по названию, автору и жанру книги
+     * Сокращенный вызов: "gibb", "getidbybook" --title title --fullName fullName --genre name
+     * Пример: gibb --title 'The Pilgrim’s Progress' --fullName 'John Bunyan' --name 'History'
      */
     @ShellMethod(value = "Getting an id by book", key = {"gibb", "getidbybook"})
-    public String getIdByBook(@ShellOption(defaultValue = "Robinson Crusoe") String title) {
-        long id = bookDaoJdbc.getIdByBook(new Book(title, new Author(""), new Genre("")));
-        return id == 0 ? "Book '" + title + "' not found in the library!" : "Book '" + title + "' has an id=" + id;
+    public String getIdByBook(@ShellOption(defaultValue = "The Pilgrim’s Progress") String title,
+                              @ShellOption(defaultValue = "John Bunyan") String fullName,
+                              @ShellOption(defaultValue = "History") String name) {
+        String fullNameBook = title + " " + fullName + " (" + name + ")";
+        long id = bookDaoJdbc2.getIdByBook(new Book(title, new Author(fullName), new Genre(name)));
+        return id == 0 ? "Book '" + fullNameBook + "' not found in the library!" : "Book '" + fullNameBook + "' has an id=" + id;
     }
 
     /**

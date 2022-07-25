@@ -60,6 +60,6 @@ public interface GenreDao {
      *
      * @return
      */
-    long getCountOfGenres();
+    int getCountOfGenres();
 
 }

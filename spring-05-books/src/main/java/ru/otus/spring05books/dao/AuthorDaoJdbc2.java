@@ -2,43 +2,56 @@ package ru.otus.spring05books.dao;
 
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring05books.domain.Author;
+import ru.otus.spring05books.domain.Book;
+import ru.otus.spring05books.domain.Genre;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Класс AuthorDaoJdbc реализует интерфейс AuthorDao для JDBC
  */
 @Repository
-public class AuthorDaoJdbc implements AuthorDao {
-    private final JdbcOperations jdbc;
+public class AuthorDaoJdbc2 implements AuthorDao {
+    private final NamedParameterJdbcOperations jdbc;
 
     /**
      * Конструктор класса
      *
      * @param jdbc
      */
-    public AuthorDaoJdbc(JdbcOperations jdbc) {
+    public AuthorDaoJdbc2(NamedParameterJdbcOperations jdbc) {
         this.jdbc = jdbc;
     }
 
     /**
      * Метод createAuthor создает нового автора в библиотеке
+     * Если такой автор (fullName) уже есть, то возвращается его id
      *
      * @param author
      * @return
      */
     @Override
     public long createAuthor(Author author) {
-        long id = getIdByAuthor(author);
-        if (id == 0) {
-            jdbc.update("insert into author (fullname) values (?)", author.getFullName());
-            id = getIdByAuthor(author);
+        long authorId = getIdByAuthor(author);
+        if (authorId == 0) {
+            MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("fullname", author.getFullName());
+            KeyHolder keyHolder = new GeneratedKeyHolder();
+            jdbc.update("insert into author (fullname) values (:fullname)",
+                    params, keyHolder);
+            return keyHolder.getKey().longValue();
+        } else {
+            return authorId;
         }
-        return id;
     }
 
     /**
@@ -84,9 +97,12 @@ public class AuthorDaoJdbc implements AuthorDao {
      */
     @Override
     public long getIdByAuthor(Author author) {
-        List<Long> listId;
-        listId = jdbc.query("select id from author where fullname = ?", new IdMapper(), author.getFullName());
-        return listId.size() == 0 ? 0 : listId.get(0);
+        List<Author> authorList = jdbc.query("select id, fullname " +
+                        "from author " +
+                        "where fullname = :fullname",
+                Map.of("fullname", author.getFullName()),
+                new AuthorMapper());
+        return authorList.size() == 0 ? 0 : authorList.get(0).getId();
     }
 
     /**
@@ -106,10 +122,25 @@ public class AuthorDaoJdbc implements AuthorDao {
      */
     @Override
     public int getCountOfAuthors() {
+/*
         Integer count = jdbc.queryForObject("select count(*) from author", Integer.class);
         return count == null? 0: count;
+*/
+    return 0;
     }
 
+    /**
+     * AuthorMapper - результирующий запрос для Автора: id, fullname
+     */
+    private static class AuthorMapper implements RowMapper<Author> {
+        @Override
+        public Author mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return new Author(rs.getLong("id"), rs.getString("fullname"));
+        }
+    }
+
+
+    //!! Удалить
     /**
      * Класс IdMapper формирует набор для получаемого результата из jdbc.query
      */

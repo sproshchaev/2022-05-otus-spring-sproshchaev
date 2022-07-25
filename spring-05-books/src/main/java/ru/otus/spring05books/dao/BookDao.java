@@ -61,6 +61,6 @@ public interface BookDao {
      *
      * @return
      */
-    long getCountOfBooks();
+    int getCountOfBooks();
 
 }

@@ -56,6 +56,6 @@ public interface AuthorDao {
      * Метод getCountOfAuthors получает число авторов, чьи сведения есть в библиотеке
      * @return
      */
-    long getCountOfAuthors();
+    int getCountOfAuthors();
 
 }

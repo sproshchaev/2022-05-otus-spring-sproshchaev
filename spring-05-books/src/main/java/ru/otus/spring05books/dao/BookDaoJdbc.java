@@ -2,6 +2,7 @@ package ru.otus.spring05books.dao;
 
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring05books.domain.Author;
 import ru.otus.spring05books.domain.Book;
@@ -10,13 +11,19 @@ import ru.otus.spring05books.domain.Genre;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Класс BookDaoJdbc реализует интерфейс BookDao для JDBC
  */
 @Repository
 public class BookDaoJdbc implements BookDao {
+    // Это первый вариант
     private final JdbcOperations jdbc;
+
+    // Второй вариант
+    // private final NamedParameterJdbcOperations jdbc2;
+
     private final GenreDaoJdbc genreDaoJdbc;
     private final AuthorDaoJdbc authorDaoJdbc;
 
@@ -41,16 +48,12 @@ public class BookDaoJdbc implements BookDao {
      */
     @Override
     public long createBook(Book book) {
-        // Проверить - есть ли такая книга
         long id = getIdByBook(book);
-
-        // Если нет - то вставляем
         if (id == 0) {
             jdbc.update("insert into book(title, author_id, genre_id) values (?, ?, ?)",
                     book.getTitle(),
                     authorDaoJdbc.createAuthor(book.getAuthor()),
                     genreDaoJdbc.createGenre(book.getGenre()));
-            // Запрашиваем id
             id = getIdByBook(book);
         }
         return id;
@@ -65,6 +68,7 @@ public class BookDaoJdbc implements BookDao {
      */
     @Override
     public boolean updateBookById(long id, Book book) {
+
         return false;
     }
 
@@ -76,7 +80,8 @@ public class BookDaoJdbc implements BookDao {
      */
     @Override
     public boolean deleteBookById(long id) {
-        return false;
+        jdbc.update("delete from book where id = :id", Map.of(":id", id));
+        return true; // result == 1 ? true : false;
     }
 
     /**
@@ -87,7 +92,8 @@ public class BookDaoJdbc implements BookDao {
      */
     @Override
     public Book getBookById(long id) {
-        return null;
+        // jdbc.query("select id from book where title = ?", new IdMapper(), book.getTitle());
+        return null; // jdbc.query("select id, title,  from book where id = :id", new BookMapper(), Map.of("id", id));
     }
 
     /**
@@ -99,18 +105,10 @@ public class BookDaoJdbc implements BookDao {
      */
     @Override
     public long getIdByBook(Book book) {
-//        long id = jdbc.queryForObject("select id from book where (title = ?) and (author_id = ?) and (genre_id = ?) ", Long.class,
-//                book.getTitle(),
-//                0 /* authorDaoJdbc.getIdByAuthor(book.getAuthor()) */,
-//                0 /* genreDaoJdbc.getIdByGenre(book.getGenre()) */ );
-//        return id;
-
-        // добавить поиск по автору и жанру
         List<Long> listId;
         listId = jdbc.query("select id from book where title = ?", new IdMapper(), book.getTitle());
         return listId.size() == 0 ? 0 : listId.get(0);
     }
-
 
 
     /**
@@ -129,13 +127,13 @@ public class BookDaoJdbc implements BookDao {
      * @return
      */
     @Override
-    public long getCountOfBooks() {
-        return 0;
+    public int getCountOfBooks() {
+        Integer count = jdbc.queryForObject("select count(*) from book", Integer.class);
+        return count == null? 0: count;
     }
 
-
     /**
-     *
+     * BookMapper - результирующий запрос для Книги: id, title, author, genre
      */
     private static class BookMapper implements RowMapper<Book> {
         @Override
