@@ -1,22 +1,22 @@
-DROP TABLE IF EXISTS AUTHOR;
-CREATE TABLE AUTHOR
+drop table if exists author;
+create table author
 (
-    ID   BIGINT AUTO_INCREMENT PRIMARY KEY,
-    FULLNAME VARCHAR(255)
+    id       bigint auto_increment primary key,
+    fullname varchar(255)
 );
-DROP TABLE IF EXISTS GENRE;
-CREATE TABLE GENRE
+drop table if exists genre;
+create table genre
 (
-    ID   BIGINT AUTO_INCREMENT PRIMARY KEY,
-    NAME VARCHAR(255)
+    id   bigint auto_increment primary key,
+    name varchar(255)
 );
-DROP TABLE IF EXISTS BOOK;
-CREATE TABLE BOOK
+drop table if exists book;
+create table book
 (
-    ID        BIGINT AUTO_INCREMENT PRIMARY KEY,
-    TITLE      VARCHAR(255),
-    AUTHOR_ID BIGINT,
-    GENRE_ID  BIGINT,
-    FOREIGN KEY (AUTHOR_ID) REFERENCES AUTHOR (ID),
-    FOREIGN KEY (GENRE_ID) REFERENCES GENRE (ID)
+    id        bigint auto_increment primary key,
+    title     varchar(255),
+    author_id bigint,
+    genre_id  bigint,
+    foreign key (AUTHOR_ID) references author (ID),
+    foreign key (GENRE_ID) references genre (ID)
 );

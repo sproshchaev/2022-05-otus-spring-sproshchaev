@@ -63,6 +63,7 @@ NamedParametersJdbcTemplate
 14. Проверить в pom.xml наличие зависимостей: spring-boot-starter, spring-shell-starter, spring-boot-starter-data-jdbc
 15. Добавить в pom.xml зависимость H2: artifactId h2 
 16. Добавить файлы application.yml, data.sql, schema.sql
+17. Добавить в файл application.yml: url, username, password, driver-class-name
 
 ### Примечания
 1. Если в полях БД H2 включить генерацию "ID BIGINT AUTO_INCREMENT", то использовать ручные вставки 
@@ -104,3 +105,4 @@ NamedParametersJdbcTemplate
 4. Паттерн «Репозиторий» https://bit.ly/3PKMptP
 5. Проблема с N+1 запросами в JPA и Hibernate https://bit.ly/3OfAdju
 6. Типы данных H2 и соответствие Java https://bit.ly/3RYgDvk
+7. Spring Boot With H2 Database https://www.baeldung.com/spring-boot-h2-database
