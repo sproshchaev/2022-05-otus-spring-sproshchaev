@@ -5,7 +5,7 @@ package ru.otus.spring05books.domain;
  */
 public class Genre {
     private long id;
-    private final String name;
+    private String name;
 
     /**
      * Конструктор класса

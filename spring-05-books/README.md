@@ -98,6 +98,12 @@ NamedParametersJdbcTemplate
 "ub" - Update book data by id (crUd)
 "db" - Deleting the selected book by id (cruD)
 
+### Тестирование
+1. Отключить Spring Shell в application.yml: spring.shell.interactive.enabled=false
+2. Добавить для тестирования Spring Shell в application.yml: spring.main.allow-circular-references=true
+3. В ресурсы тестов необходимо скопировать только: application.yml и data.sql. (файл schema.sql в ресурсы тестов 
+переносить нельзя иначе тесты будут тестировать не то, что находится в базе!)   
+
 ### Статьи по теме
 1. Связи между таблицами базы данных https://habr.com/ru/post/488054/
 2. Ключи и целостность базы данных https://bit.ly/3aXKuTL

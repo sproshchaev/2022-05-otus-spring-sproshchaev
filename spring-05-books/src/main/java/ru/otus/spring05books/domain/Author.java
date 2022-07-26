@@ -4,9 +4,8 @@ package ru.otus.spring05books.domain;
  * Класс Автор
  */
 public class Author {
-
     private long id;
-    private final String fullName;
+    private String fullName;
 
     /**
      * Конструктор класса

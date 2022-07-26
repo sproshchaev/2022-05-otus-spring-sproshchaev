@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 public class Book {
 
     private long id;
-    private final String title;
-    private final Author author;
-    private final Genre genre;
+    private String title;
+    private Author author;
+    private Genre genre;
 
     /**
      * Конструктор класса без id
