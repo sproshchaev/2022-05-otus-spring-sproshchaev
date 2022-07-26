@@ -1,8 +1,10 @@
 package ru.otus.spring05books.dao;
 
-import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring05books.domain.Author;
 import ru.otus.spring05books.domain.Book;
@@ -18,12 +20,7 @@ import java.util.Map;
  */
 @Repository
 public class BookDaoJdbc implements BookDao {
-    // Это первый вариант
-    private final JdbcOperations jdbc;
-
-    // Второй вариант
-    // private final NamedParameterJdbcOperations jdbc2;
-
+    private final NamedParameterJdbcOperations jdbc;
     private final GenreDaoJdbc genreDaoJdbc;
     private final AuthorDaoJdbc authorDaoJdbc;
 
@@ -34,7 +31,7 @@ public class BookDaoJdbc implements BookDao {
      * @param genreDaoJdbc
      * @param authorDaoJdbc
      */
-    public BookDaoJdbc(JdbcOperations jdbc, GenreDaoJdbc genreDaoJdbc, AuthorDaoJdbc authorDaoJdbc) {
+    public BookDaoJdbc(NamedParameterJdbcOperations jdbc, GenreDaoJdbc genreDaoJdbc, AuthorDaoJdbc authorDaoJdbc) {
         this.jdbc = jdbc;
         this.genreDaoJdbc = genreDaoJdbc;
         this.authorDaoJdbc = authorDaoJdbc;
@@ -42,21 +39,27 @@ public class BookDaoJdbc implements BookDao {
 
     /**
      * Метод createBook создает новую книгу
+     * Если такая книга уже есть, то возвращается ее id
      *
      * @param book
      * @return
+     * @see BookDaoJdbc#getIdByBook
      */
     @Override
     public long createBook(Book book) {
-        long id = getIdByBook(book);
-        if (id == 0) {
-            jdbc.update("insert into book(title, author_id, genre_id) values (?, ?, ?)",
-                    book.getTitle(),
-                    authorDaoJdbc.createAuthor(book.getAuthor()),
-                    genreDaoJdbc.createGenre(book.getGenre()));
-            id = getIdByBook(book);
+        long bookId = getIdByBook(book);
+        if (bookId == 0) {
+            MapSqlParameterSource params = new MapSqlParameterSource();
+            params.addValue("title", book.getTitle());
+            params.addValue("author_id", authorDaoJdbc.createAuthor(book.getAuthor()));
+            params.addValue("genre_id", genreDaoJdbc.createGenre(book.getGenre()));
+            KeyHolder keyHolder = new GeneratedKeyHolder();
+            jdbc.update("insert into book (title, author_id, genre_id) values (:title, :author_id, :genre_id)",
+                    params, keyHolder);
+            return keyHolder.getKey().longValue();
+        } else {
+            return bookId;
         }
-        return id;
     }
 
     /**
@@ -68,8 +71,12 @@ public class BookDaoJdbc implements BookDao {
      */
     @Override
     public boolean updateBookById(long id, Book book) {
-
-        return false;
+        long authorId = authorDaoJdbc.createAuthor(book.getAuthor());
+        long genreId = genreDaoJdbc.createGenre(book.getGenre());
+        int result = jdbc.update("update book set title = :title, author_id = :author_id, genre_id = :genre_id " +
+                        "where id = :id",
+                Map.of("id", id, "title", book.getTitle(), "author_id", authorId, "genre_id", genreId));
+        return result == 1 ? true : false;
     }
 
     /**
@@ -80,34 +87,46 @@ public class BookDaoJdbc implements BookDao {
      */
     @Override
     public boolean deleteBookById(long id) {
-        jdbc.update("delete from book where id = :id", Map.of(":id", id));
-        return true; // result == 1 ? true : false;
+        int result = jdbc.update("delete from book where id = :id", Map.of("id", id));
+        return result == 1 ? true : false;
     }
 
     /**
      * Метод getBookById возвращает сведения о книге по ее id
+     * SQL: select book.id, book.title, book.author_id, author.fullname, book.genre_id, genre.name from book, author, genre where book.id = 1 and book.author_id = author.id and book.genre_id = genre.id
      *
      * @param id
      * @return
      */
     @Override
     public Book getBookById(long id) {
-        // jdbc.query("select id from book where title = ?", new IdMapper(), book.getTitle());
-        return null; // jdbc.query("select id, title,  from book where id = :id", new BookMapper(), Map.of("id", id));
+        List<Book> bookList = jdbc.query("select book.id, book.title, book.author_id, author.fullname, book.genre_id, genre.name " +
+                        "from book, author, genre " +
+                        "where book.id = :id and book.author_id = author.id and book.genre_id = genre.id",
+                Map.of("id", id),
+                new BookMapper());
+        return bookList.size() == 0 ? null : bookList.get(0);
     }
 
     /**
-     * Метод getIdByBook возвращает id переданной ему книги
-     * Метод query использует jdbc.query, так как возможно получение как 0, так и 1, а jdbc.queryForObject выбрасывает
+     * Метод getIdByBook возвращает id переданной ему книги, проверяя по названию книги, автору (полное имя), жанру
+     * <p>
+     * SQL select book.id, book.title, book.author_id, author.fullname, book.genre_id, genre.name from book, author, genre where book.title = 'The Pilgrim’s Progress' and author.fullname = 'John Bunyan' and genre.name = 'History'
+     * <p>
+     * Примечание: метод query использует jdbc.query, так как возможно получение как 0, так и 1, а jdbc.queryForObject выбрасывает
      * исключение если результат 0
+     *
      * @param book
      * @return
      */
     @Override
     public long getIdByBook(Book book) {
-        List<Long> listId;
-        listId = jdbc.query("select id from book where title = ?", new IdMapper(), book.getTitle());
-        return listId.size() == 0 ? 0 : listId.get(0);
+        List<Book> bookList = jdbc.query("select book.id, book.title, book.author_id, author.fullname, book.genre_id, genre.name " +
+                        "from book, author, genre " +
+                        "where book.title = :title and author.fullname = :fullname and genre.name = :name",
+                Map.of("title", book.getTitle(), "fullname", book.getAuthor().getFullName(), "name", book.getGenre().getName()),
+                new BookMapper());
+        return bookList.size() == 0 ? 0 : bookList.get(0).getId();
     }
 
 
@@ -118,41 +137,37 @@ public class BookDaoJdbc implements BookDao {
      */
     @Override
     public List<Book> getAllBooks() {
-        return null;
+        List<Book> bookList = jdbc.query("select book.id, book.title, book.author_id, author.fullname, book.genre_id, genre.name " +
+                        "from book, author, genre " +
+                        "where book.author_id = author.id and book.genre_id = genre.id",
+                Map.of("", ""),
+                new BookMapper());
+        return bookList;
     }
 
     /**
      * Метод getCountOfBooks возвращает число всех книг, имеющихся в библиотеке
+     * В методе используется конструкция jdbc.getJdbcOperations().queryForObject() для исключения внедрения поля класса
+     * private final JdbcOperations jdbc;
      *
      * @return
      */
     @Override
     public int getCountOfBooks() {
-        Integer count = jdbc.queryForObject("select count(*) from book", Integer.class);
-        return count == null? 0: count;
+        Integer count = jdbc.getJdbcOperations().queryForObject("select count(*) from book", Integer.class);
+        return count == null ? 0 : count;
     }
 
     /**
-     * BookMapper - результирующий запрос для Книги: id, title, author, genre
+     * BookMapper - результирующий запрос для Книги: id, title, author_id, fullname, genre_id, name
      */
     private static class BookMapper implements RowMapper<Book> {
         @Override
         public Book mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new Book(rs.getLong("id"), rs.getString("title"),
-                    new Author(rs.getString("author")),
-                    new Genre(rs.getString("genre")));
+                    new Author(rs.getLong("author_id"), rs.getString("fullname")),
+                    new Genre(rs.getLong("genre_id"), rs.getString("name")));
         }
     }
-
-    /**
-     * Класс IdMapper формирует набор для получаемого результата из jdbc.query
-     */
-    private static class IdMapper implements RowMapper<Long> {
-        @Override
-        public Long mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return new Long(rs.getLong("id"));
-        }
-    }
-
 
 }

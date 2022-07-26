@@ -72,10 +72,34 @@ NamedParametersJdbcTemplate
 при результате 0 и 2 в queryForObject будет исключение (ожидает 1 и не null), а в query пустой список (при 0) и список 
 с числом записей. Использование jdbc.query - это лучший вариант. 
 
+### Вызов методов (@ShellMethod)
+"a" - Information about the library
+"c" - Start console H2
+#### CRUD for Genres
+"cg" - Create a new genre of books in the library (Crud)
+"gibg" - Getting a genre id (cRud)
+"ggbi" - Getting information about the author from the library by id (cRud)
+"ug" - Updating information about the genre (crUd)
+"dg" - Deleting genre data from the library (cruD)
+#### CRUD for Authors
+"ca" - Create a new Author of books in the library (Crud)
+"giba" - Getting an id by author (cRud)
+"gabi" - Getting information about the author from the library by id (cRud)
+"gaa" - Getting a list of all authors from the library (cRud)
+"gag" - Getting a list of all genres from the library (cRud)
+"ua" - Updating information about the author (crUd)
+"da" - Deleting author data from the library (cruD)
+#### CRUD for Books
+"cb" - Add information about a new book, author, genre to the library (Crud)
+"gbbi" - Get book data by its id (cRud)
+"gab" - Get a list of all library books (cRud)
+"gibb" - Getting an id by book (cRud)
+"ub" - Update book data by id (crUd)
+"db" - Deleting the selected book by id (cruD)
 
 ### Статьи по теме
 1. Связи между таблицами базы данных https://habr.com/ru/post/488054/
-2. КЛЮЧИ и ЦЕЛОСТНОСТЬ БАЗЫ ДАННЫХ https://bit.ly/3aXKuTL
+2. Ключи и целостность базы данных https://bit.ly/3aXKuTL
 3. EntityFramework: (анти)паттерн Repository https://bit.ly/3cs0gXE
 4. Паттерн «Репозиторий» https://bit.ly/3PKMptP
 5. Проблема с N+1 запросами в JPA и Hibernate https://bit.ly/3OfAdju
