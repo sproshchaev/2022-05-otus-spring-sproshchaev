@@ -1,16 +1,13 @@
 package ru.otus.spring06books.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Класс Книга
  */
 @Entity
 public class Book {
-
     @Id
     private long id;
     private String title;
@@ -20,6 +17,9 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "genre_id")
     private Genre genre;
+    @OneToMany
+    @JoinColumn(name = "book_id")
+    private List<Comment> comments;
 
     /**
      * Конструктор класса без параметров
@@ -60,6 +60,14 @@ public class Book {
         this.genre = genre;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
@@ -67,7 +75,7 @@ public class Book {
                 ", title='" + title + '\'' +
                 ", author=" + author +
                 ", genre=" + genre +
+                ", comments=" + comments +
                 '}';
     }
-
 }

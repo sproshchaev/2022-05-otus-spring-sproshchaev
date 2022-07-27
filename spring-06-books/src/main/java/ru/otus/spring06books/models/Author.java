@@ -1,5 +1,6 @@
 package ru.otus.spring06books.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 public class Author {
     @Id
     private long id;
+    @Column(name = "fullname")
     private String fullName;
 
     /**
