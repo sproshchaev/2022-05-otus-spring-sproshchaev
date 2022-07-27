@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
 import ru.otus.spring05books.domain.Author;
+import ru.otus.spring05books.domain.Genre;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,8 @@ class AuthorDaoJdbcTest {
     void shouldCreateNewAuthor() {
         Author expectedAuthor = new Author("New_author");
         authorDaoJdbc.createAuthor(expectedAuthor);
-        Author actualAuthor = new Author(authorDaoJdbc.getAuthorById(4).getFullName());
+        long idExpectedAuthor = authorDaoJdbc.getIdByAuthor(expectedAuthor);
+        Author actualAuthor = new Author(authorDaoJdbc.getAuthorById(idExpectedAuthor).getFullName());
         assertThat(actualAuthor).usingRecursiveComparison().isEqualTo(expectedAuthor);
     }
 
@@ -106,11 +108,11 @@ class AuthorDaoJdbcTest {
     }
 
     /**
-     * Метод shouldCountOfAuthors тестирует getCountOfAuthors
+     * Метод shouldGetCountOfAuthors тестирует getCountOfAuthors
      */
     @DisplayName("return the expected number of authors from the library")
     @Test
-    void shouldCountOfAuthors() {
+    void shouldGetCountOfAuthors() {
         long actualAuthorsCount = authorDaoJdbc.getCountOfAuthors();
         assertThat(actualAuthorsCount).isEqualTo(EXPECTED_AUTHORS_COUNT);
     }
