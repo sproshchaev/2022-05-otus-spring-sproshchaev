@@ -1,10 +1,15 @@
 package ru.otus.spring06books.models;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  * Класс Жанр
  */
+@Entity
 public class Genre {
 
+    @Id
     private long id;
     private String name;
 

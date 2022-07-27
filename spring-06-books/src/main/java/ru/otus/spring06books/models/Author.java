@@ -1,9 +1,14 @@
 package ru.otus.spring06books.models;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  * Класс Автор
  */
+@Entity
 public class Author {
+    @Id
     private long id;
     private String fullName;
 

@@ -17,6 +17,14 @@ create table book
     title     varchar(255),
     author_id bigint,
     genre_id  bigint,
-    foreign key (AUTHOR_ID) references author (ID),
-    foreign key (GENRE_ID) references genre (ID)
+    foreign key (author_id) references author (id),
+    foreign key (genre_id) references genre (id)
+);
+drop table if exists comment;
+create table comment
+(
+    id             bigint auto_increment primary key,
+    comment_text varchar(255),
+    book_id bigint,
+    foreign key (book_id) references book (id)
 );

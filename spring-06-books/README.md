@@ -23,6 +23,15 @@ Development on the Spring Framework
 6. @Transactional рекомендуется ставить только на методы сервиса. 
 Это домашнее задание будет использоваться в качестве основы для других ДЗ Данная работа не засчитывает предыдущую!
 
+Дополнение из Вебинара 11 по ДЗ:
+1) Библиотеку перевести на ORM framework
+2) Вместо JDBC и JDBCTemplate использовать Jpa и EntytyManager
+3) Для исключения проблемы N+1 использовать @Fetch и @BathSize
+4) Добавить сущность "Комментарий к книге" (у одной книги много комментариев), реализовать CRUD
+5) Тесты реализовать через DataJpaTest, покрыть репозитории
+6) Отключить DDL через Hibernate, использовать data.sql, schema.sql
+7) @Transactional ставим на методы сервиса. На репозитории не ставим
+
 ### Критерии оценки:
 Факт сдачи:
 0 - задание не сдано
@@ -73,7 +82,7 @@ Development on the Spring Framework
       sql.init.schema-locations=schema.sql,
       h2.console.path=/h2-console,
       h2.console.settings.web-allow-others=true
-18. Создать классы сущностей и разметить их аннотациями @Entity и @Id
+18. Создать классы сущностей и разметить их аннотациями @Entity, @Id, @ManyToOne
 
 ### Примечания
 
