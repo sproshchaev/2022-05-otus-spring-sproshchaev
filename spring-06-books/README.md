@@ -59,9 +59,21 @@ Development on the Spring Framework
 12. Актуализировать файл .gitignore
 13. Актуализировать файл README.md
 14. Проверить в pom.xml наличие зависимостей: spring-shell-starter, spring-boot-starter-data-jpa
-15. Добавить в pom.xml зависимость H2: artifactId h2 
+15. Добавить в pom.xml зависимость H2: artifactId h2 (version>2.1.212) 
 16. Добавить файлы application.yml, data.sql, schema.sql
-17. Добавить в файл application.yml: url, username, password, driver-class-name
+17. Добавить в файл application.yml: 
+      url=jdbc:h2:mem:books, 
+      username=sa, password, 
+      driver-class-name=org.h2.Driver, 
+      gpa.generate-ddl=false, 
+      gpa.hibernate.ddl-auto=none, 
+      gpa.show-sql=true, 
+      sql.init.mode=always,
+      sql.init.data-locations=data.sql,
+      sql.init.schema-locations=schema.sql,
+      h2.console.path=/h2-console,
+      h2.console.settings.web-allow-others=true
+18. Создать классы сущностей и разметить их аннотациями @Entity и @Id
 
 ### Примечания
 
