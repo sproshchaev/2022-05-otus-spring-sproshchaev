@@ -15,9 +15,24 @@ public interface AuthorRepository {
     Author createAuthor(Author author);
 
     /**
-     * Метод findById
+     * Метод getAuthorById
      * @param id
      * @return
      */
-    Author findById(long id);
+    Author getAuthorById(long id);
+
+    /**
+     * Метод getIdByAuthor получает id автора
+     * @param author
+     * @return
+     */
+    long getIdByAuthor(Author author);
+
+    /**
+     * Метод updateAuthor обновляет сведения об авторе в библиотеке
+     * @param author
+     * @return
+     */
+    boolean updateAuthor(Author author);
+
 }

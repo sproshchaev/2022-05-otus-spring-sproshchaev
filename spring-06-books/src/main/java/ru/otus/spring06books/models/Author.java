@@ -28,6 +28,16 @@ public class Author {
         this.fullName = fullName;
     }
 
+    /**
+     * Конструктор класса с параметрами id, fullName
+     * @param id
+     * @param fullName
+     */
+    public Author(long id, String fullName) {
+        this.id = id;
+        this.fullName = fullName;
+    }
+
     public long getId() {
         return id;
     }

@@ -48,13 +48,46 @@ public class AppEventsCommands {
      * Метод getAuthorById получает данные об авторе по его id (cRud)
      * Сокращенный вызов: "gabi", "getauthorbyid" --id id
      * Пример: gabi --id 2
+     * Метод не подразумевает изменения данных в БД, используется рекомендуемая аннотация @Transactional(readOnly = true)
      */
+    @Transactional(readOnly = true)
     @ShellMethod(value = "Getting information about the author from the library by id", key = {"gabi", "getAuthorById"})
     public String getAuthorById(
             @ShellOption(defaultValue = "2") long id) {
-        Author result = authorRepositoryJpa.findById(1);
+        Author result = authorRepositoryJpa.getAuthorById(1);
         return result == null ? "Author not found!" : result.toString();
     }
+
+    /**
+     * Метод getIdByAuthor возвращает id для полного имени данного автора, если он есть в библиотеке
+     * Сокращенный вызов: "giba", "getidbyauthor" --fullName author_fullname
+     * Пример: giba --fullName 'Daniel Defoe'
+     * Метод не подразумевает изменения данных в БД, используется рекомендуемая аннотация @Transactional(readOnly = true)
+     */
+    @Transactional(readOnly = true)
+    @ShellMethod(value = "Getting an id by author", key = {"giba", "getidbyauthor"})
+    public String authorRepositoryJpa(@ShellOption(defaultValue = "Daniel Defoe") String fullName) {
+        long id = authorRepositoryJpa.getIdByAuthor(new Author(fullName));
+        return id == 0 ? "Author '" + fullName + "' not found in the library!" : "Author '" + fullName + "' has an id=" + id;
+    }
+
+    /**
+     * Метод updateAuthor обновляет данные об авторе в библиотеке (crUd)
+     * Сокращенный вызов: "ua", "updateauthor" --id id --fullName full_name
+     * Пример: ua --id 1 --fullName 'Gianni Rodari'
+     */
+    @Transactional
+    @ShellMethod(value = "Updating information about the author", key = {"ua", "updateauthor"})
+    public String updateAuthor(
+            @ShellOption(defaultValue = "1") long id,
+            @ShellOption(defaultValue = "Gianni Rodari") String fullName) {
+        boolean result = authorRepositoryJpa.updateAuthor(new Author(id, fullName));
+        return result ? "Information about the author (" + "id=" + id + " " + fullName + ") has been updated!"
+                : "Update error: Something went wrong!";
+    }
+
+
+    // ----------------------
 
     /**
      * Метод startConsoleH2 запускает консоль
