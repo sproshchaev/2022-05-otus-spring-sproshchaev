@@ -6,6 +6,7 @@ import org.springframework.shell.standard.ShellMethod;
 
 import org.h2.tools.Console;
 import org.springframework.shell.standard.ShellOption;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring06books.models.Author;
 import ru.otus.spring06books.repositories.AuthorRepositoryJpa;
 
@@ -26,6 +27,21 @@ public class AppEventsCommands {
     @Autowired
     public AppEventsCommands(AuthorRepositoryJpa authorRepositoryJpa) {
         this.authorRepositoryJpa = authorRepositoryJpa;
+    }
+
+    /**
+     * Метод createNewAuthor (Crud)
+     * Сокращенный вызов: "ca", "createauthor" --name author_fullname
+     * Пример: ca --fullName 'Stephen Edwin King'
+     *
+     * @param fullName
+     * @return
+     */
+    @Transactional
+    @ShellMethod(value = "Create a new Author of books in the library", key = {"ca", "createauthor"})
+    public String createNewAuthor(@ShellOption(defaultValue = "Stephen Edwin King") String fullName) {
+        long id = authorRepositoryJpa.createAuthor(new Author(fullName)).getId();
+        return id != 0 ? "New author (" + id + ") " + fullName + " has been successfully created!" : "Error: Something went wrong!";
     }
 
     /**

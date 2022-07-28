@@ -9,6 +9,7 @@ import java.util.List;
 @Entity
 public class Book {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String title;
     @ManyToOne

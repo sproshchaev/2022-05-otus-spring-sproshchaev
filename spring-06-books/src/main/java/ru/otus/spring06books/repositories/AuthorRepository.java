@@ -8,11 +8,11 @@ import ru.otus.spring06books.models.Author;
 public interface AuthorRepository {
 
     /**
-     * Метод save
+     * Метод createAuthor
      * @param author
      * @return
      */
-    Author save(Author author);
+    Author createAuthor(Author author);
 
     /**
      * Метод findById

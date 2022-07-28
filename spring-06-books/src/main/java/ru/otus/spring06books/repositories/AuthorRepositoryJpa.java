@@ -1,6 +1,7 @@
 package ru.otus.spring06books.repositories;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring06books.models.Author;
 
 import javax.persistence.EntityManager;
@@ -27,13 +28,13 @@ public class AuthorRepositoryJpa implements AuthorRepository {
     }
 
     /**
-     * Метод save
+     * Метод createAuthor
      *
      * @param author
      * @return
      */
     @Override
-    public Author save(Author author) {
+    public Author createAuthor(Author author) {
         if (author.getId() == 0) {
             entityManager.persist(author);
         }

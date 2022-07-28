@@ -82,7 +82,12 @@ Development on the Spring Framework
       sql.init.schema-locations=schema.sql,
       h2.console.path=/h2-console,
       h2.console.settings.web-allow-others=true
-18. Создать классы сущностей и разметить их аннотациями @Entity, @Id, @ManyToOne
+18. Создать классы сущностей и разметить их аннотациями 
+      @Entity, 
+      @Id, 
+      @GeneratedValue(strategy = GenerationType.IDENTITY) - если id формируется на уровне БД (через 
+create table t (id bigint auto_increment primary key,...), то эта опция все-равно необходима!
+      @ManyToOne
 
 ### Примечания
 
@@ -98,7 +103,7 @@ Development on the Spring Framework
 #### CRUD for Authors
 "ca" - Create a new Author of books in the library (Crud)
 "giba" - Getting an id by author (cRud)
-"gabi" - Getting information about the author from the library by id (cRud)
++ "gabi" - Getting information about the author from the library by id (cRud)
 "gaa" - Getting a list of all authors from the library (cRud)
 "gag" - Getting a list of all genres from the library (cRud)
 "ua" - Updating information about the author (crUd)
@@ -110,6 +115,7 @@ Development on the Spring Framework
 "gibb" - Getting an id by book (cRud)
 "ub" - Update book data by id (crUd)
 "db" - Deleting the selected book by id (cruD)
+#### CRUD for Comment
 
 ### Тестирование
 1. Отключить Spring Shell в application.yml: spring.shell.interactive.enabled=false

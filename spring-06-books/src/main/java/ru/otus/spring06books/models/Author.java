@@ -1,8 +1,6 @@
 package ru.otus.spring06books.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Класс Автор
@@ -10,6 +8,7 @@ import javax.persistence.Id;
 @Entity
 public class Author {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(name = "fullname")
     private String fullName;
@@ -19,6 +18,14 @@ public class Author {
      */
     public Author() {
 
+    }
+
+    /**
+     * Конструктор класса с параметром fullName
+     * @param fullName
+     */
+    public Author(String fullName) {
+        this.fullName = fullName;
     }
 
     public long getId() {

@@ -1,9 +1,6 @@
 package ru.otus.spring06books.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * Класс Комментарий к книге
@@ -11,6 +8,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Comment {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String commentText;
     @ManyToOne
