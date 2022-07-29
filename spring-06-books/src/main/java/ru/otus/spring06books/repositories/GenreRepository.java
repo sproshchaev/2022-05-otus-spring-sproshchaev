@@ -1,6 +1,5 @@
 package ru.otus.spring06books.repositories;
 
-import ru.otus.spring06books.models.Author;
 import ru.otus.spring06books.models.Genre;
 
 import java.util.List;
@@ -44,6 +43,7 @@ public interface GenreRepository {
 
     /**
      * Метод getIdByGenre возвращает id передаваемого жанра
+     *
      * @param genre
      * @return
      */

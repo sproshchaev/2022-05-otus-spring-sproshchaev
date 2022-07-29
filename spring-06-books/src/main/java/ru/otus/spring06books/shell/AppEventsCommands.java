@@ -1,14 +1,15 @@
 package ru.otus.spring06books.shell;
 
+import org.h2.tools.Console;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-
-import org.h2.tools.Console;
 import org.springframework.shell.standard.ShellOption;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring06books.models.Author;
+import ru.otus.spring06books.models.Genre;
 import ru.otus.spring06books.repositories.AuthorRepositoryJpa;
+import ru.otus.spring06books.repositories.GenreRepositoryJpa;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -19,19 +20,24 @@ import java.util.List;
 @ShellComponent
 public class AppEventsCommands {
 
-    private AuthorRepositoryJpa authorRepositoryJpa;
+    private final AuthorRepositoryJpa authorRepositoryJpa;
+    private final GenreRepositoryJpa genreRepositoryJpa;
 
     /**
      * Конструктор класса
+     *
      * @param authorRepositoryJpa
+     * @param genreRepositoryJpa
      */
     @Autowired
-    public AppEventsCommands(AuthorRepositoryJpa authorRepositoryJpa) {
+    public AppEventsCommands(AuthorRepositoryJpa authorRepositoryJpa, GenreRepositoryJpa genreRepositoryJpa) {
         this.authorRepositoryJpa = authorRepositoryJpa;
+        this.genreRepositoryJpa = genreRepositoryJpa;
     }
 
     /**
      * Метод aboutLibrary выводит пользователю строку с приглашением и числом книг в библиотеке
+     * Аннотация @Transactional - метод изменяет данные
      * Сокращенный вызов: "a", "about"
      *
      * @return
@@ -39,15 +45,16 @@ public class AppEventsCommands {
     @Transactional
     @ShellMethod(value = "Information about the library", key = {"a", "about"})
     public String aboutLibrary() {
-        long countOfBooks = 0 ; // todo: bookDaoJdbc.getCountOfBooks();
+        long countOfBooks = 0; // todo: bookDaoJdbc.getCountOfBooks();
         long countOfAuthors = authorRepositoryJpa.getCountOfAuthors();
-        long countOfGenres = 0; // todo: genreDaoJdbc.getCountOfGenres();
+        long countOfGenres = genreRepositoryJpa.getCountOfGenres();
         return "Welcome to our library! We have more than " + countOfBooks
                 + " books by " + countOfAuthors + " authors and " + countOfGenres + " genres in our library";
     }
 
     /**
      * Метод createNewAuthor (Crud)
+     * Аннотация @Transactional - метод изменяет данные
      * Сокращенный вызов: "ca", "createauthor" --name author_fullname
      * Пример: ca --fullName 'Stephen Edwin King'
      *
@@ -63,6 +70,7 @@ public class AppEventsCommands {
 
     /**
      * Метод getAuthorById получает данные об авторе по его id (cRud)
+     * Аннотация @Transactional(readOnly = true) - метод не изменяет данные
      * Сокращенный вызов: "gabi", "getauthorbyid" --id id
      * Пример: gabi --id 2
      * Метод не подразумевает изменения данных в БД, используется рекомендуемая аннотация @Transactional(readOnly = true)
@@ -77,6 +85,7 @@ public class AppEventsCommands {
 
     /**
      * Метод getIdByAuthor возвращает id для полного имени данного автора, если он есть в библиотеке
+     * Аннотация @Transactional(readOnly = true) - метод не изменяет данные
      * Сокращенный вызов: "giba", "getidbyauthor" --fullName author_fullname
      * Пример: giba --fullName 'Daniel Defoe'
      * Метод не подразумевает изменения данных в БД, используется рекомендуемая аннотация @Transactional(readOnly = true)
@@ -90,7 +99,8 @@ public class AppEventsCommands {
 
     /**
      * Метод updateAuthor обновляет данные об авторе в библиотеке (crUd)
-         * Сокращенный вызов: "ua", "updateauthor" --id id --fullName full_name
+     * Аннотация @Transactional - метод изменяет данные
+     * Сокращенный вызов: "ua", "updateauthor" --id id --fullName full_name
      * Пример: ua --id 1 --fullName 'Gianni Rodari'
      */
     @Transactional
@@ -105,6 +115,7 @@ public class AppEventsCommands {
 
     /**
      * Метод deleteAuthor удаляет данные об авторе в библиотеке (cruD)
+     * Аннотация @Transactional - метод изменяет данные
      * Сокращенный вызов: "da", "deleteauthor" --id id --fullName full_name
      * Пример: da --id 3 --fullName 'Gianni Rodari'
      */
@@ -120,6 +131,7 @@ public class AppEventsCommands {
 
     /**
      * Метод getAllAuthors получает список всех авторов из библиотеки (cRud)
+     * Аннотация @Transactional(readOnly = true) - метод не изменяет данные
      * Сокращенный вызов: "gaa", "getallauthors"
      * Пример: getallauthors
      */
@@ -129,6 +141,95 @@ public class AppEventsCommands {
         List<Author> result = authorRepositoryJpa.getAllAuthors();
         return result.size() == 0 ? "Authors not found!" : result.toString();
     }
+
+    /**
+     * Метод createGenre - создает наименование нового жанра книг в библиотеке
+     * Аннотация @Transactional - метод изменяет данные
+     * Сокращенный вызов: "cg", "creategenre" --name genre_name
+     * Пример: cg --name Novel
+     *
+     * @param name
+     * @return
+     */
+    @Transactional
+    @ShellMethod(value = "Create a new genre of books in the library", key = {"cg", "creategenre"})
+    public String createGenre(@ShellOption(defaultValue = "Novel") String name) {
+        long id = genreRepositoryJpa.createGenre(new Genre(name));
+        return "New genre (" + id + ") " + name + " has been successfully created!";
+    }
+
+    /**
+     * Метод getIdByGenre возвращает id для жанра, если он есть в библиотеке
+     * Аннотация @Transactional(readOnly = true) - метод не изменяет данные
+     * Сокращенный вызов: "gibg", "getidbygenre" --name genre_name
+     * Пример: gibg --name 'History'
+     */
+    @Transactional(readOnly = true)
+    @ShellMethod(value = "Getting a genre id", key = {"gibg", "getidbygenre"})
+    public String getIdByGenre(@ShellOption(defaultValue = "History") String name) {
+        long id = genreRepositoryJpa.getIdByGenre(new Genre(name));
+        return id == 0 ? "Genre '" + name + "' not found in the library!" : "Genre '" + name + "' has an id=" + id;
+    }
+
+    /**
+     * Метод updateGenre обновляет данные о жанре в библиотеке
+     * Аннотация @Transactional - метод изменяет данные
+     * Сокращенный вызов: "ug", "updategenre" --id id --name name
+     * Пример: ug --id 1 --name 'Politics'
+     */
+    @Transactional
+    @ShellMethod(value = "Updating information about the genre", key = {"ug", "updategenre"})
+    public String updateGenre(
+            @ShellOption(defaultValue = "1") long id,
+            @ShellOption(defaultValue = "Politics") String name) {
+        boolean result = genreRepositoryJpa.updateGenre(new Genre(id, name));
+        return result ? "Information about the genre (" + "id=" + id + " " + name + ") has been updated!"
+                : "Update error: Something went wrong!";
+    }
+
+    /**
+     * Метод deleteGenre удаляет данные о жанре в библиотеке
+     * Аннотация @Transactional - метод изменяет данные
+     * Сокращенный вызов: "dg", "deletegenre" --id id --name name
+     * Пример: dg --id 5 --name 'Fiction'
+     */
+    @Transactional
+    @ShellMethod(value = "Deleting genre data from the library", key = {"dg", "deletegenre"})
+    public String deleteGenre(
+            @ShellOption(defaultValue = "5") long id,
+            @ShellOption(defaultValue = "Fiction") String name) {
+        boolean result = genreRepositoryJpa.deleteGenre(new Genre(id, name));
+        return result ? "Genre (id=" + id + " " + name + ") removed from the library"
+                : "Delete error: Something went wrong!";
+    }
+
+    /**
+     * Метод getGenreById получает данные о жанре по его id
+     * Аннотация @Transactional(readOnly = true) - метод не изменяет данные
+     * Сокращенный вызов: "ggbi", "getgenrebyid" --id id
+     * Пример: ggbi --id 2
+     */
+    @Transactional(readOnly = true)
+    @ShellMethod(value = "Getting information about the author from the library by id", key = {"ggbi", "getgenrebyid"})
+    public String getGenreById(
+            @ShellOption(defaultValue = "2") long id) {
+        Genre result = genreRepositoryJpa.getGenreById(id);
+        return result == null ? "Genre not found!" : result.toString();
+    }
+
+    /**
+     * Метод getAllGenres получает список всех жанров из библиотеки (cRud)
+     * Аннотация @Transactional(readOnly = true) - метод не изменяет данные
+     * Сокращенный вызов: "gag", "getallgenres"
+     * Пример: getallgenres
+     */
+    @Transactional(readOnly = true)
+    @ShellMethod(value = "Getting a list of all genres from the library", key = {"gag", "getallgenres"})
+    public String getAllGenres() {
+        List<Genre> result = genreRepositoryJpa.getAllGenres();
+        return result.size() == 0 ? "Genres not found!" : result.toString();
+    }
+
     // ----------------------
 
     /**
