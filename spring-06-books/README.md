@@ -88,6 +88,10 @@ Development on the Spring Framework
       @GeneratedValue(strategy = GenerationType.IDENTITY) - если id формируется на уровне БД (через 
 create table t (id bigint auto_increment primary key,...), то эта опция все-равно необходима!
       @ManyToOne
+19. Над сервисами (не в репозитории!) разместить аннотации:
+- @Transactional - если метод изменяет данные (чтение)
+- @Transactional(readOnly = true) - если метод не изменяет данные (чтение) 
+20. В репозитории предпочтительнее использовать TypedQuery
 
 ### Примечания
 
@@ -103,7 +107,7 @@ create table t (id bigint auto_increment primary key,...), то эта опци�
 #### CRUD for Authors
 "ca" - Create a new Author of books in the library (Crud)
 "giba" - Getting an id by author (cRud)
-+ "gabi" - Getting information about the author from the library by id (cRud)
+"gabi" - Getting information about the author from the library by id (cRud)
 "gaa" - Getting a list of all authors from the library (cRud)
 "gag" - Getting a list of all genres from the library (cRud)
 "ua" - Updating information about the author (crUd)

@@ -2,6 +2,8 @@ package ru.otus.spring06books.repositories;
 
 import ru.otus.spring06books.models.Author;
 
+import java.util.List;
+
 /**
  * Интерфейс AuthorRepository
  */
@@ -34,5 +36,25 @@ public interface AuthorRepository {
      * @return
      */
     boolean updateAuthor(Author author);
+
+    /**
+     * Метод deleteAuthor удаляет сведения об авторе из библиотеки
+     * @param author
+     * @return
+     */
+    boolean deleteAuthor(Author author);
+
+    /**
+     * Метод getAllAuthors получает сведения по всем авторам из библиотеки
+     *
+     * @return
+     */
+    List<Author> getAllAuthors();
+
+    /**
+     * Метод getCountOfAuthors получает число авторов, чьи сведения есть в библиотеке
+     * @return
+     */
+    int getCountOfAuthors();
 
 }

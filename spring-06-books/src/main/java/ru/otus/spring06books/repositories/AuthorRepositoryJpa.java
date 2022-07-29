@@ -3,7 +3,10 @@ package ru.otus.spring06books.repositories;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring06books.models.Author;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
@@ -88,7 +91,47 @@ public class AuthorRepositoryJpa implements AuthorRepository {
         query.setParameter("fullname", author.getFullName());
         query.setParameter("id", author.getId());
         int result = query.executeUpdate();
-        return result == 1 ? true : false;
+        return result == 1;
+    }
+
+    /**
+     * Метод deleteAuthor удаляет сведения об авторе из библиотеки
+     *
+     * @param author
+     * @return
+     */
+    @Override
+    public boolean deleteAuthor(Author author) {
+        Query query = entityManager.createQuery("delete " +
+                "from Author a " +
+                "where a.id = :id");
+        query.setParameter("id", author.getId());
+        int result = query.executeUpdate();
+        return result == 1;
+    }
+
+    /**
+     * Метод getAllAuthors получает сведения по всем авторам из библиотеки
+     *
+     * @return
+     */
+    @Override
+    public List<Author> getAllAuthors() {
+        TypedQuery<Author> query = entityManager.createQuery("select a " +
+                "from Author a ", Author.class);
+        List<Author> authorList = query.getResultList();
+        return authorList;
+    }
+
+    /**
+     * Метод getCountOfAuthors получает число авторов, чьи сведения есть в библиотеке
+     *
+     * @return
+     */
+    @Override
+    public int getCountOfAuthors() {
+        Long result = entityManager.createQuery("select count(a) from Author a", Long.class).getSingleResult();
+        return Math.toIntExact(result);
     }
 
 

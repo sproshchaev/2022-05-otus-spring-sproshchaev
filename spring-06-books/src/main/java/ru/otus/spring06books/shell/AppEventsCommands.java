@@ -11,6 +11,7 @@ import ru.otus.spring06books.models.Author;
 import ru.otus.spring06books.repositories.AuthorRepositoryJpa;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Класс ApplicationEventsCommands содержит набор методов-команд (аннотация @ShellComponent)
@@ -27,6 +28,22 @@ public class AppEventsCommands {
     @Autowired
     public AppEventsCommands(AuthorRepositoryJpa authorRepositoryJpa) {
         this.authorRepositoryJpa = authorRepositoryJpa;
+    }
+
+    /**
+     * Метод aboutLibrary выводит пользователю строку с приглашением и числом книг в библиотеке
+     * Сокращенный вызов: "a", "about"
+     *
+     * @return
+     */
+    @Transactional
+    @ShellMethod(value = "Information about the library", key = {"a", "about"})
+    public String aboutLibrary() {
+        long countOfBooks = 0 ; // todo: bookDaoJdbc.getCountOfBooks();
+        long countOfAuthors = authorRepositoryJpa.getCountOfAuthors();
+        long countOfGenres = 0; // todo: genreDaoJdbc.getCountOfGenres();
+        return "Welcome to our library! We have more than " + countOfBooks
+                + " books by " + countOfAuthors + " authors and " + countOfGenres + " genres in our library";
     }
 
     /**
@@ -73,7 +90,7 @@ public class AppEventsCommands {
 
     /**
      * Метод updateAuthor обновляет данные об авторе в библиотеке (crUd)
-     * Сокращенный вызов: "ua", "updateauthor" --id id --fullName full_name
+         * Сокращенный вызов: "ua", "updateauthor" --id id --fullName full_name
      * Пример: ua --id 1 --fullName 'Gianni Rodari'
      */
     @Transactional
@@ -86,7 +103,32 @@ public class AppEventsCommands {
                 : "Update error: Something went wrong!";
     }
 
+    /**
+     * Метод deleteAuthor удаляет данные об авторе в библиотеке (cruD)
+     * Сокращенный вызов: "da", "deleteauthor" --id id --fullName full_name
+     * Пример: da --id 3 --fullName 'Gianni Rodari'
+     */
+    @Transactional
+    @ShellMethod(value = "Deleting author data from the library", key = {"da", "deleteauthor"})
+    public String deleteAuthor(
+            @ShellOption(defaultValue = "3") long id,
+            @ShellOption(defaultValue = "Gianni Rodari") String fullName) {
+        boolean result = authorRepositoryJpa.deleteAuthor(new Author(id, fullName));
+        return result ? "Author (id=" + id + " " + fullName + ") removed from the library"
+                : "Delete error: Something went wrong!";
+    }
 
+    /**
+     * Метод getAllAuthors получает список всех авторов из библиотеки (cRud)
+     * Сокращенный вызов: "gaa", "getallauthors"
+     * Пример: getallauthors
+     */
+    @Transactional(readOnly = true)
+    @ShellMethod(value = "Getting a list of all authors from the library", key = {"gaa", "getallauthors"})
+    public String getAllAuthors() {
+        List<Author> result = authorRepositoryJpa.getAllAuthors();
+        return result.size() == 0 ? "Authors not found!" : result.toString();
+    }
     // ----------------------
 
     /**
