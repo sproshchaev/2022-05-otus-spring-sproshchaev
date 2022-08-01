@@ -70,7 +70,9 @@ Development on the Spring Framework
 14. Проверить в pom.xml наличие зависимостей: spring-shell-starter, spring-boot-starter-data-jpa
 15. Добавить в pom.xml зависимость H2: artifactId h2 (version>2.1.212) 
 16. Добавить файлы application.yml, data.sql, schema.sql
-17. Добавить в файл application.yml: 
+17. При создании таблицы comment необходимо указать для этого поля каскадное удаление "references book(id) on delete cascade",
+которое будет удалять все комментарии в БД при удалении книги
+18. Добавить в файл application.yml: 
       url=jdbc:h2:mem:books, 
       username=sa, password, 
       driver-class-name=org.h2.Driver, 
@@ -82,16 +84,16 @@ Development on the Spring Framework
       sql.init.schema-locations=schema.sql,
       h2.console.path=/h2-console,
       h2.console.settings.web-allow-others=true
-18. Создать классы сущностей и разметить их аннотациями 
+19. Создать классы сущностей и разметить их аннотациями 
       @Entity, 
       @Id, 
       @GeneratedValue(strategy = GenerationType.IDENTITY) - если id формируется на уровне БД (через 
 create table t (id bigint auto_increment primary key,...), то эта опция все-равно необходима!
       @ManyToOne
-19. Над сервисами (не в репозитории!) разместить аннотации:
+20. Над сервисами (не в репозитории!) разместить аннотации:
 - @Transactional - если метод изменяет данные (чтение)
 - @Transactional(readOnly = true) - если метод не изменяет данные (чтение) 
-20. В репозитории предпочтительнее использовать TypedQuery
+21. В репозитории предпочтительнее использовать TypedQuery
 
 ### Примечания
 

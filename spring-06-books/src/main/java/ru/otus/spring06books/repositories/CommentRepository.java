@@ -1,7 +1,6 @@
 package ru.otus.spring06books.repositories;
 
-import ru.otus.spring06books.models.Book;
-import ru.otus.spring06books.models.Comment;
+import ru.otus.spring06books.entities.Comment;
 
 import java.util.List;
 
@@ -13,11 +12,11 @@ public interface CommentRepository {
     /**
      * Метод createComment
      *
-     * @param commentText
      * @param book
+     * @param commentText
      * @return
      */
-    Comment createComment(String commentText, Book book);
+    long createComment(Comment comment);
 
     /**
      * Метод getCommentById возвращает текст комментария по его id

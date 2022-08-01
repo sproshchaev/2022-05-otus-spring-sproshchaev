@@ -6,9 +6,13 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.spring06books.models.Author;
-import ru.otus.spring06books.models.Genre;
+import ru.otus.spring06books.entities.Author;
+import ru.otus.spring06books.entities.Book;
+import ru.otus.spring06books.entities.Comment;
+import ru.otus.spring06books.entities.Genre;
 import ru.otus.spring06books.repositories.AuthorRepositoryJpa;
+import ru.otus.spring06books.repositories.BookRepositoryJpa;
+import ru.otus.spring06books.repositories.CommentRepositoryJpa;
 import ru.otus.spring06books.repositories.GenreRepositoryJpa;
 
 import java.sql.SQLException;
@@ -22,17 +26,23 @@ public class AppEventsCommands {
 
     private final AuthorRepositoryJpa authorRepositoryJpa;
     private final GenreRepositoryJpa genreRepositoryJpa;
+    private final CommentRepositoryJpa commentRepositoryJpa;
+    private final BookRepositoryJpa bookRepositoryJpa;
 
     /**
      * Конструктор класса
      *
      * @param authorRepositoryJpa
      * @param genreRepositoryJpa
+     * @param commentRepositoryJpa
+     * @param bookRepositoryJpa
      */
     @Autowired
-    public AppEventsCommands(AuthorRepositoryJpa authorRepositoryJpa, GenreRepositoryJpa genreRepositoryJpa) {
+    public AppEventsCommands(AuthorRepositoryJpa authorRepositoryJpa, GenreRepositoryJpa genreRepositoryJpa, CommentRepositoryJpa commentRepositoryJpa, BookRepositoryJpa bookRepositoryJpa) {
         this.authorRepositoryJpa = authorRepositoryJpa;
         this.genreRepositoryJpa = genreRepositoryJpa;
+        this.commentRepositoryJpa = commentRepositoryJpa;
+        this.bookRepositoryJpa = bookRepositoryJpa;
     }
 
     /**
@@ -45,7 +55,7 @@ public class AppEventsCommands {
     @Transactional
     @ShellMethod(value = "Information about the library", key = {"a", "about"})
     public String aboutLibrary() {
-        long countOfBooks = 0; // todo: bookDaoJdbc.getCountOfBooks();
+        long countOfBooks = bookRepositoryJpa.getCountOfBooks();
         long countOfAuthors = authorRepositoryJpa.getCountOfAuthors();
         long countOfGenres = genreRepositoryJpa.getCountOfGenres();
         return "Welcome to our library! We have more than " + countOfBooks
@@ -230,7 +240,119 @@ public class AppEventsCommands {
         return result.size() == 0 ? "Genres not found!" : result.toString();
     }
 
-    // ----------------------
+    /**
+     * Метод createNewBook (Crud)
+     * Аннотация @Transactional - метод изменяет данные
+     * Сокращенный вызов: "cb", "createbook" --title title_book --author author --genre genre
+     * Пример: cb --title 'A Life in Letters' --author 'Arthur Conan Doyle' --genre Autobiography
+     *
+     * @param title
+     * @param author
+     * @param genre
+     * @return
+     */
+    @Transactional
+    @ShellMethod(value = "Add information about a new book, author, genre to the library", key = {"cb", "createbook"})
+    public String createNewBook(@ShellOption(defaultValue = "A Life in Letters") String title,
+                                @ShellOption(defaultValue = "Arthur Conan Doyle") String author,
+                                @ShellOption(defaultValue = "Autobiography") String genre) {
+        long id = bookRepositoryJpa.createBook(new Book(title, new Author(author), new Genre(genre)));
+        return "The book (" + id + ") " + title + ", " + author + " (" + genre + ") has been successfully entered!";
+    }
+
+    /**
+     * Метод deleteBookById (cruD)
+     * Аннотация @Transactional - метод изменяет данные
+     * Сокращенный вызов: "db", "deletebook" --id id
+     * Пример: db --id 1
+     *
+     * @param id
+     * @return
+     */
+    @Transactional
+    @ShellMethod(value = "Deleting the selected book by id", key = {"db", "deletebook"})
+    public String deleteBookById(@ShellOption(defaultValue = "1") long id) {
+        return bookRepositoryJpa.deleteBookById(id) ? "The book id=" + id + " has been deleted" : "Error: Something went " +
+                "wrong!";
+    }
+
+    /**
+     * Метод getIdByBook возвращает id для книги, если она есть в библиотеке (cRud)
+     * Аннотация @Transactional(readOnly = true) - метод не изменяет данные
+     * Поиск выполняется только по названию, автору и жанру книги
+     * Сокращенный вызов: "gibb", "getidbybook" --title title --fullName fullName --genre name
+     * Пример: gibb --title 'The Pilgrim’s Progress' --fullName 'John Bunyan' --name 'History'
+     */
+    @Transactional(readOnly = true)
+    @ShellMethod(value = "Getting an id by book", key = {"gibb", "getidbybook"})
+    public String getIdByBook(@ShellOption(defaultValue = "The Pilgrim’s Progress") String title,
+                              @ShellOption(defaultValue = "John Bunyan") String fullName,
+                              @ShellOption(defaultValue = "History") String name) {
+        String fullNameBook = title + " " + fullName + " (" + name + ")";
+        long id = bookRepositoryJpa.getIdByBook(new Book(title, new Author(fullName), new Genre(name)));
+        return id == 0 ? "Book '" + fullNameBook + "' not found in the library!" : "Book '" + fullNameBook + "' has an id=" + id;
+    }
+
+    /**
+     * Метод getBookById возвращает книгу по ее id (cRud)
+     * Аннотация @Transactional(readOnly = true) - метод не изменяет данные
+     * Сокращенный вызов: "gbbi", "getbookbyid" --id id
+     * Пример: gbbi --id 1
+     *
+     * @param id
+     * @return
+     */
+    @Transactional(readOnly = true)
+    @ShellMethod(value = "Get book data by its id", key = {"gbbi", "getbookbyid"})
+    public String getBookById(@ShellOption(defaultValue = "1") long id) {
+        return bookRepositoryJpa.getBookById(id).toString();
+    }
+
+    /**
+     * Метод updateBookById обновляет данные по книге: название, автора, жанр (crUd)
+     * Аннотация @Transactional - метод изменяет данные
+     * Сокращенный вызов: "ub", "updatebook" --id id --title new_title --author new_author --genre new_genre
+     * Пример: ub --id 1 --title 'New title' --author 'New Author' --genre 'New Genre'
+     *
+     * @param id
+     * @param title
+     * @param author
+     * @param genre
+     * @return
+     */
+    @Transactional
+    @ShellMethod(value = "Update book data by id", key = {"ub", "updatebook"})
+    public String updateBookById(@ShellOption(defaultValue = "1") long id,
+                                 @ShellOption(defaultValue = "New Title") String title,
+                                 @ShellOption(defaultValue = "New Author") String author,
+                                 @ShellOption(defaultValue = "New Genre") String genre) {
+        return bookRepositoryJpa.updateBookById(id, new Book(title, new Author(author), new Genre(genre))) ? "The book id="
+                + id + " has " + "been updated (title: " + title + ", author: " + author + ", genre: " + genre + ")"
+                : "Error: Something went wrong!";
+    }
+
+    //+++++++++++++++++++++++++++
+
+    /**
+     * Метод createComment (Crud) // todo проверить createComment (Crud)
+     * Аннотация @Transactional - метод изменяет данные
+     * Сокращенный вызов: "cc", "createcomment" --idBook idBook --comment commentText
+     * Пример: cc --idBook 1 --comment 'I read the book with pleasure :)'
+     *
+     * @param idBook
+     * @param comment
+     * @return
+     */
+    @Transactional
+    @ShellMethod(value = "Create a new book comment", key = {"cc", "createcomment"})
+    public String createComment(@ShellOption(defaultValue = "1") long idBook,
+                                @ShellOption(defaultValue = "I read the book with pleasure :)") String comment) {
+        long id = commentRepositoryJpa.createComment(new Comment(new Book(idBook), comment));
+        return id != 0 ? "New comment (" + id + ") '" + comment + "' for book id=" + idBook + " has been successfully created!" : "Error: Something went wrong!";
+    }
+
+
+    //----------------------
 
     /**
      * Метод startConsoleH2 запускает консоль

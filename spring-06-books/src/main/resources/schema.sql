@@ -25,6 +25,5 @@ create table comment
 (
     id             bigint auto_increment primary key,
     comment_text varchar(255),
-    book_id bigint,
-    foreign key (book_id) references book (id)
+    book_id bigint references book(id) on delete cascade
 );

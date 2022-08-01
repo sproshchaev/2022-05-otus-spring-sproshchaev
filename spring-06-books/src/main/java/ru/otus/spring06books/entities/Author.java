@@ -1,14 +1,17 @@
-package ru.otus.spring06books.models;
+package ru.otus.spring06books.entities;
 
 import javax.persistence.*;
 
 /**
  * Класс Автор
+ * Использование @Table, @Column - хорошая практика, даже когда устраивает автонейминг!
  */
 @Entity
+@Table(name = "author")
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
     @Column(name = "fullname")
     private String fullName;
@@ -22,6 +25,7 @@ public class Author {
 
     /**
      * Конструктор класса с параметром fullName
+     *
      * @param fullName
      */
     public Author(String fullName) {
@@ -30,6 +34,7 @@ public class Author {
 
     /**
      * Конструктор класса с параметрами id, fullName
+     *
      * @param id
      * @param fullName
      */

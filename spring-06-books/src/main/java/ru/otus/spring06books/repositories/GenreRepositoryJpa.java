@@ -1,8 +1,7 @@
 package ru.otus.spring06books.repositories;
 
 import org.springframework.stereotype.Repository;
-import ru.otus.spring06books.models.Author;
-import ru.otus.spring06books.models.Genre;
+import ru.otus.spring06books.entities.Genre;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

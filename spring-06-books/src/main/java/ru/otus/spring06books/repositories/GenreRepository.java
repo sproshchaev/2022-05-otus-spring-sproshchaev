@@ -1,6 +1,6 @@
 package ru.otus.spring06books.repositories;
 
-import ru.otus.spring06books.models.Genre;
+import ru.otus.spring06books.entities.Genre;
 
 import java.util.List;
 

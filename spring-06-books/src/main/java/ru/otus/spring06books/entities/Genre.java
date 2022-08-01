@@ -1,18 +1,19 @@
-package ru.otus.spring06books.models;
+package ru.otus.spring06books.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Класс Жанр
+ * Использование @Table, @Column - хорошая практика, даже когда устраивает автонейминг!
  */
 @Entity
+@Table(name = "genre")
 public class Genre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
+    @Column(name = "name")
     private String name;
 
     /**
@@ -24,6 +25,7 @@ public class Genre {
 
     /**
      * Конструктор класса с name
+     *
      * @param name
      */
     public Genre(String name) {
@@ -32,6 +34,7 @@ public class Genre {
 
     /**
      * Конструктор класса с полями id, name
+     *
      * @param id
      * @param name
      */

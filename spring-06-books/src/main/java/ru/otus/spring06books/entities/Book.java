@@ -1,24 +1,34 @@
-package ru.otus.spring06books.models;
+package ru.otus.spring06books.entities;
 
 import javax.persistence.*;
 import java.util.List;
 
 /**
  * Класс Книга
+ * Использование @Table, @Column - хорошая практика, даже когда устраивает автонейминг!
  */
 @Entity
+@Table(name = "book")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
+    @Column(name = "title")
     private String title;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id")
     private Author author;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "genre_id")
     private Genre genre;
-    @OneToMany
+    /**
+     * Поле комментарии к книге
+     *
+     * @OneToMany - одна книга (Book.class) имеет множество комментариев
+     * orphanRemoval = true ("удаление сирот") т.е. комментарии не живут без книги
+     */
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "book_id")
     private List<Comment> comments;
 
@@ -27,6 +37,26 @@ public class Book {
      */
     public Book() {
 
+    }
+
+    /**
+     * Конструктор класса c параметром id
+     */
+    public Book(long idBook) {
+
+    }
+
+    /**
+     * Конструктор класса с параметрами title, author, genre
+     *
+     * @param title
+     * @param author
+     * @param genre
+     */
+    public Book(String title, Author author, Genre genre) {
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
     }
 
     public long getId() {
@@ -69,6 +99,12 @@ public class Book {
         this.comments = comments;
     }
 
+    /**
+     * Метод toString()
+     * Выводит первый комментарий к книге
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "Book{" +
@@ -76,7 +112,7 @@ public class Book {
                 ", title='" + title + '\'' +
                 ", author=" + author +
                 ", genre=" + genre +
-                ", comments=" + comments +
+                ", comments=" + ((comments.size() == 0) ? "" : comments.get(0).getCommentText()) +
                 '}';
     }
 }
