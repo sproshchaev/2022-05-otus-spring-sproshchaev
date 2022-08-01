@@ -23,6 +23,7 @@ public class GenreRepositoryJpa implements GenreRepository {
 
     /**
      * Конструктор класса
+     *
      * @param entityManager
      */
     public GenreRepositoryJpa(EntityManager entityManager) {
@@ -31,6 +32,8 @@ public class GenreRepositoryJpa implements GenreRepository {
 
     /**
      * Метод createGenre создает новый жанр в библиотеке
+     * <p>
+     * Метод persist кладет сущность в БД, при этом эта сущность должна быть без id
      *
      * @param genre
      * @return
@@ -81,6 +84,8 @@ public class GenreRepositoryJpa implements GenreRepository {
 
     /**
      * Метод getGenreById формирует сведения о жанре по id
+     * <p>
+     * Метод find осуществляет поиск и загрузку сущности по id
      *
      * @param id
      * @return

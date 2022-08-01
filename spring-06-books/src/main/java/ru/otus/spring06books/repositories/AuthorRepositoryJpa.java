@@ -51,6 +51,8 @@ public class AuthorRepositoryJpa implements AuthorRepository {
 
     /**
      * Метод getAuthorById
+     * <p>
+     * Метод find осуществляет поиск и загрузку сущности по id
      *
      * @param id
      * @return

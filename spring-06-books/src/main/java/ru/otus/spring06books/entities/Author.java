@@ -5,6 +5,7 @@ import javax.persistence.*;
 /**
  * Класс Автор
  * Использование @Table, @Column - хорошая практика, даже когда устраивает автонейминг!
+ * Для полей-классов вместо @Column используется @JoinColumn()
  */
 @Entity
 @Table(name = "author")

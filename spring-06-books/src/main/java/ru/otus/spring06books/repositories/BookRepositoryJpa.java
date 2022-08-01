@@ -44,9 +44,12 @@ public class BookRepositoryJpa implements BookRepository {
     /**
      * Метод createBook создает новую книгу в библиотеке
      * <p>
+     * Метод find осуществляет поиск и загрузку сущности по id
+     * Метод persist кладет сущность в БД, при этом эта сущность должна быть без id
      * Поля сущности Book должны иметь в аннотации @ManyToOne значение cascade: @ManyToOne(cascade = CascadeType.ALL)
      * Метод выполняет поиск автора и жанра - если они уже есть, то добавляются в поля книги,
      * что обеспечивает исключение дублирования авторов и жанров в справочниках библиотеки
+     *
      * @param book
      * @return
      */
@@ -75,6 +78,7 @@ public class BookRepositoryJpa implements BookRepository {
      * Аналогично производится по жанру.
      * Это исключает дублирование в справочниках авторов и жанров
      * После чего производится update книги
+     *
      * @param id
      * @param book
      * @return

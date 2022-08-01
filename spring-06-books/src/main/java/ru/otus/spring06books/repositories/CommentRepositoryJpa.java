@@ -21,6 +21,7 @@ public class CommentRepositoryJpa implements CommentRepository {
 
     /**
      * Конструктор класса
+     *
      * @param entityManager
      */
     public CommentRepositoryJpa(EntityManager entityManager) {
@@ -29,7 +30,10 @@ public class CommentRepositoryJpa implements CommentRepository {
 
     /**
      * Метод createComment
+     * <p>
+     * Метод persist кладет сущность в БД, при этом эта сущность должна быть без id
      * В аннотации поля сущности book необходимо указать @ManyToOne(cascade = CascadeType.ALL)
+     *
      * @param comment
      * @return
      */
