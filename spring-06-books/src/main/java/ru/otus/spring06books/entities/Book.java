@@ -1,5 +1,8 @@
 package ru.otus.spring06books.entities;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -10,9 +13,11 @@ import java.util.List;
  */
 @Entity
 @Table(name = "book")
+/*
 @NamedEntityGraph(name = "book-comments-entity-graph", attributeNodes = @NamedAttributeNode("comments"))
 @NamedEntityGraph(name = "book-author-entity-graph", attributeNodes = @NamedAttributeNode("author"))
 @NamedEntityGraph(name = "book-genre-entity-graph", attributeNodes = @NamedAttributeNode("genre"))
+*/
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +39,7 @@ public class Book {
      */
     @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "book_id")
+    @Fetch(FetchMode.SUBSELECT)
     private List<Comment> comments;
 
     /**
