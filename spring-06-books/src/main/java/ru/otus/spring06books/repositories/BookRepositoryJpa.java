@@ -37,7 +37,6 @@ public class BookRepositoryJpa implements BookRepository {
         this.genreRepositoryJpa = genreRepositoryJpa;
     }
 
-
     /**
      * Метод createBook создает новую книгу в библиотеке
      * <p>
