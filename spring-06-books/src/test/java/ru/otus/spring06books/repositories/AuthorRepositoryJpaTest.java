@@ -112,6 +112,7 @@ class AuthorRepositoryJpaTest {
 
     /**
      * Метод shouldGetCountOfAuthors тестирует getCountOfAuthors
+     * В константе EXPECTED_AUTHORS_COUNT записано число авторов в библиотеке с которым происходит сравнение
      */
     @DisplayName("return the expected number of authors from the library")
     @Test

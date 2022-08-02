@@ -69,6 +69,20 @@ public class Book {
         this.genre = genre;
     }
 
+    /**
+     * Конструктор класса с параметрами id, title, author, genre
+     * @param id
+     * @param title
+     * @param author
+     * @param genre
+     */
+    public Book(long id, String title, Author author, Genre genre) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+    }
+
     public long getId() {
         return id;
     }

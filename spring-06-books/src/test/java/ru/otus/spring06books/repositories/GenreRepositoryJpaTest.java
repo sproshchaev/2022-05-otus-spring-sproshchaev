@@ -114,6 +114,7 @@ class GenreRepositoryJpaTest {
 
     /**
      * Метод shouldGetCountOfGenres тестирует getCountOfGenres
+     * В константе EXPECTED_GENRES_COUNT записано число жанров в библиотеке с которым происходит сравнение
      */
     @DisplayName("gets the number of genres")
     @Test
