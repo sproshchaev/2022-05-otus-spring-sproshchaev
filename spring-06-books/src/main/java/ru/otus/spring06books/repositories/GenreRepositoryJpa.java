@@ -10,7 +10,8 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
- * Класс GenreRepositoryJpa
+ * Класс GenreRepositoryJpa реализует CRUD операции для класса Genre
+ * @see ru.otus.spring06books.entities.Genre
  */
 @Repository
 public class GenreRepositoryJpa implements GenreRepository {

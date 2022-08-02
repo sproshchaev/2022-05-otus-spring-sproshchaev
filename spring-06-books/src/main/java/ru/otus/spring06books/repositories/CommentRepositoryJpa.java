@@ -1,16 +1,19 @@
 package ru.otus.spring06books.repositories;
 
 import org.springframework.stereotype.Repository;
+import ru.otus.spring06books.entities.Author;
 import ru.otus.spring06books.entities.Book;
 import ru.otus.spring06books.entities.Comment;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
- * Класс CommentRepositoryJpa
+ * Класс CommentRepositoryJpa реализует CRUD операции для класса Comment
+ * @see ru.otus.spring06books.entities.Comment
  */
 @Repository
 public class CommentRepositoryJpa implements CommentRepository {
@@ -118,7 +121,10 @@ public class CommentRepositoryJpa implements CommentRepository {
      */
     @Override
     public List<Comment> getAllComment() {
-        return null;
+        TypedQuery<Comment> query = entityManager.createQuery("select c " +
+                "from Comment c ", Comment.class);
+        List<Comment> commentsList = query.getResultList();
+        return commentsList;
     }
 
     /**

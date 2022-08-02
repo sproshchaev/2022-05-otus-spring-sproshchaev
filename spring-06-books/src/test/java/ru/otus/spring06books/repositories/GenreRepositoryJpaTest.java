@@ -15,7 +15,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**
  * Класс GenreRepositoryJpaTest выполняет тестирование методов класса GenreRepositoryJpa
- * Аннотация @DataJpaTest кусок контекста слоя persist, TestEntityManager, транзакцию в начале каждого теста
+ * Аннотация @DataJpaTest создает кусок контекста слоя persist, TestEntityManager, транзакцию в начале каждого теста
  * тесты из JUnit5 (org.junit.jupiter)
  */
 @DisplayName("Repository for working with genres ")
@@ -39,7 +39,7 @@ class GenreRepositoryJpaTest {
 
     /**
      * Метод shouldCreateGenre тестирует метод createGenre
-     * В созданной БД на начальном этапе 5 жанров. Метод создает новый жанр и через getGenreById() получает его по id
+     * В созданной БД на начальном этапе EXPECTED_GENRES_COUNT жанров. Метод создает новый жанр и через getGenreById() получает его по id
      */
     @DisplayName("create a new genre")
     @Test

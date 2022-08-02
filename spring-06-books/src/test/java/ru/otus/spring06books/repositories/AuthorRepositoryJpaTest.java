@@ -15,7 +15,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**
  * Класс AuthorRepositoryJpaTest выполняет тестирование методов класса AuthorRepositoryJpa
- * Аннотация @DataJpaTest кусок контекста слоя persist, TestEntityManager, транзакцию в начале каждого теста
+ * Аннотация @DataJpaTest создает кусок контекста слоя persist, TestEntityManager, транзакцию в начале каждого теста
  * тесты из JUnit5 (org.junit.jupiter)
  */
 @DisplayName("Repository for working with authors ")
@@ -39,7 +39,7 @@ class AuthorRepositoryJpaTest {
 
     /**
      * Метод shouldCreateNewAuthor тестирует метод createAuthor
-     * В созданной БД на начальном этапе 3 автора. Метод создает нового автора и через getAuthorById() получает его по id
+     * В созданной БД на начальном этапе EXPECTED_AUTHORS_COUNT автора. Метод создает нового автора и через getAuthorById() получает его по id
      */
     @DisplayName("must create an author")
     @Test
@@ -107,7 +107,7 @@ class AuthorRepositoryJpaTest {
         expectedAuthorsList.add(new Author(2, "Daniel Defoe"));
         expectedAuthorsList.add(new Author(3, "Gianni Rodari"));
         List<Author> actualAuthorsList = authorRepositoryJpa.getAllAuthors();
-        assertThat(actualAuthorsList.toString()).isEqualTo(expectedAuthorsList.toString());
+        assertThat(actualAuthorsList.size()).isEqualTo(expectedAuthorsList.size());
     }
 
     /**

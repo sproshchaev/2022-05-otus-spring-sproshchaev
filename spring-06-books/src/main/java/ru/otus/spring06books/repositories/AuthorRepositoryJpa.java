@@ -10,7 +10,8 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
- * Класс AuthorRepositoryJpa
+ * Класс AuthorRepositoryJpa реализует CRUD операции для класса Author
+ * @see ru.otus.spring06books.entities.Author
  */
 @Repository
 public class AuthorRepositoryJpa implements AuthorRepository {

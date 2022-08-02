@@ -9,8 +9,6 @@ import org.springframework.context.annotation.Import;
 import ru.otus.spring06books.entities.Author;
 import ru.otus.spring06books.entities.Book;
 import ru.otus.spring06books.entities.Genre;
-import ru.otus.spring06books.entities.Comment;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +17,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 /**
  * Класс BookRepositoryJpaTest выполняет тестирование методов класса BookRepositoryJpa
- * Аннотация @DataJpaTest кусок контекста слоя persist, TestEntityManager, транзакцию в начале каждого теста
+ * Аннотация @DataJpaTest создает кусок контекста слоя persist, TestEntityManager, транзакцию в начале каждого теста
  * тесты из JUnit5 (org.junit.jupiter)
  */
 @DisplayName("Repository for working with books ")
@@ -43,7 +41,7 @@ class BookRepositoryJpaTest {
     /**
      * Метод shouldCreateNewBook тестирует метод createBook
      * В созданной БД на начальном этапе EXPECTED_BOOKS_COUNT книг.
-     * Метод создает нового автора и через getBookById() получает его по id
+     * Метод создает новую книгу и через getBookById() получает его по id
      */
     @DisplayName("create a new book")
     @Test
@@ -59,8 +57,8 @@ class BookRepositoryJpaTest {
     /**
      * Метод shouldUpdateBookById тестирует updateBookById
      * Через инструкцию:
-     *         bookForUpdate.setId(1);
-     *         entityManager.merge(bookForUpdate);
+     * bookForUpdate.setId(1);
+     * entityManager.merge(bookForUpdate);
      * изменения сохраняются и через метод bookRepositoryJpa.getBookById(1) сравниваются две сущности в assertThat
      */
     @DisplayName("update a new book")

@@ -363,8 +363,8 @@ public class AppEventsCommands {
     @ShellMethod(value = "Create a new book comment", key = {"cc", "createcomment"})
     public String createComment(@ShellOption(defaultValue = "1") long idBook,
                                 @ShellOption(defaultValue = "I read the book with pleasure :)") String comment) {
-        Comment comment1 = new Comment(new Book(idBook), comment);
-        long id = commentRepositoryJpa.createComment(comment1);
+        Comment newComment = new Comment(new Book(idBook), comment);
+        long id = commentRepositoryJpa.createComment(newComment);
         return id != 0 ? "New comment (" + id + ") '" + comment + "' for book id=" + idBook + " has been successfully created!" : "Error: Something went wrong!";
     }
 
@@ -418,6 +418,8 @@ public class AppEventsCommands {
         return commentRepositoryJpa.updateComment(new Comment(id, comment, new Book())) ? "The comment id="
                 + id + " has " + "been updated  )" : "Error: Something went wrong!";
     }
+
+    // todo: +getAllComments
 
     /**
      * Метод startConsoleH2 запускает консоль

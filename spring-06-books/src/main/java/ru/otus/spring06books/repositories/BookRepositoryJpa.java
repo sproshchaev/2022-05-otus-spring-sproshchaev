@@ -10,7 +10,8 @@ import javax.persistence.*;
 import java.util.List;
 
 /**
- * Класс BookRepositoryJpa
+ * Класс BookRepositoryJpa реализует CRUD операции для класса Book
+ * @see ru.otus.spring06books.entities.Book
  */
 @Repository
 public class BookRepositoryJpa implements BookRepository {
