@@ -159,7 +159,7 @@ public class BookRepositoryJpa implements BookRepository {
      *
      * @return
      */
-    @Override
+    @Override // todo: оставлять ли здесь EntityGraph, если используется @Fetch(FetchMode.SUBSELECT)?
     public List<Book> getAllBooks() {
 /*
         EntityGraph<?> commentsEntityGraph = entityManager.getEntityGraph("book-comments-entity-graph");
