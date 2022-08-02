@@ -43,12 +43,12 @@ public interface CommentRepository {
     boolean updateComment(Comment comment);
 
     /**
-     * Метод deleteComment удаляет комментарий к книге
+     * Метод deleteCommentById удаляет комментарий к книге
      *
      * @param comment
      * @return
      */
-    boolean deleteComment(Comment comment);
+    boolean deleteCommentById(long id);
 
     /**
      * Метод getAllComment получает все комментарии к книгам из библиотеки

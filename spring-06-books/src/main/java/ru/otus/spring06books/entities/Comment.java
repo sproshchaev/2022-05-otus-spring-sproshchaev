@@ -22,7 +22,7 @@ public class Comment {
      * @ManyToOne - много комментариев (Comment.class) к одной книге
      * При создании таблицы comment необходимо указать для этого поля каскадное удаление "references book(id) on delete cascade"
      */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
     private Book book;
 
@@ -41,6 +41,19 @@ public class Comment {
     public Comment(Book book, String commentText) {
         this.book = book;
         this.commentText = commentText;
+    }
+
+    /**
+     * Конструктор класса с параметрами id, book, commentText
+     *
+     * @param id
+     * @param commentText
+     * @param book
+     */
+    public Comment(long id, String commentText, Book book) {
+        this.id = id;
+        this.commentText = commentText;
+        this.book = book;
     }
 
     public long getId() {

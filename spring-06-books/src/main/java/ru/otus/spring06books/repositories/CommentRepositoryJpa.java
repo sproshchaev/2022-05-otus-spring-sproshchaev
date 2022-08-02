@@ -1,10 +1,12 @@
 package ru.otus.spring06books.repositories;
 
 import org.springframework.stereotype.Repository;
+import ru.otus.spring06books.entities.Book;
 import ru.otus.spring06books.entities.Comment;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 /**
@@ -18,38 +20,40 @@ public class CommentRepositoryJpa implements CommentRepository {
      */
     @PersistenceContext
     private final EntityManager entityManager;
+    private final BookRepositoryJpa bookRepositoryJpa;
 
     /**
      * Конструктор класса
      *
      * @param entityManager
+     * @param bookRepositoryJpa
      */
-    public CommentRepositoryJpa(EntityManager entityManager) {
+    public CommentRepositoryJpa(EntityManager entityManager, BookRepositoryJpa bookRepositoryJpa) {
         this.entityManager = entityManager;
+        this.bookRepositoryJpa = bookRepositoryJpa;
     }
 
     /**
-     * Метод createComment
-     * <p>
-     * Метод persist кладет сущность в БД, при этом эта сущность должна быть без id
-     * В аннотации поля сущности book необходимо указать @ManyToOne(cascade = CascadeType.ALL)
+     * Метод createComment создает новый комментарий к книге
      *
      * @param comment
      * @return
+     * @see ru.otus.spring06books.entities.Comment#Comment(Book, String)
+     * <p>
+     * Метод persist кладет сущность в БД, при этом эта сущность должна быть без id
+     * В аннотации поля сущности book необходимо указать @ManyToOne(cascade = CascadeType.ALL)
      */
     @Override
     public long createComment(Comment comment) {
-        // todo: Найти книгу по id и вставлять комментарий если есть книга
-        // Добавить комментарий
-//        long Id = getIdByAuthor(author);
-
-        if (comment.getId() <= 0) {
-            entityManager.persist(comment);
-            return comment.getId();
-        } else {
-            return entityManager.merge(comment).getId();
-        }
-
+        System.out.println(comment.toString());
+        if (bookRepositoryJpa.getBookById(comment.getBook().getId()) != null) {
+            if (comment.getId() <= 0) {
+                entityManager.persist(comment);
+                return comment.getId();
+            } else {
+                return entityManager.merge(comment).getId();
+            }
+        } else return 0;
     }
 
     /**
@@ -60,7 +64,7 @@ public class CommentRepositoryJpa implements CommentRepository {
      */
     @Override
     public Comment getCommentById(long id) {
-        return null;
+        return entityManager.find(Comment.class, id);
     }
 
     /**
@@ -82,18 +86,29 @@ public class CommentRepositoryJpa implements CommentRepository {
      */
     @Override
     public boolean updateComment(Comment comment) {
-        return false;
+        Query query = entityManager.createQuery("update Comment c " +
+                "set c.commentText = :commentText " +
+                "where c.id = :id");
+        query.setParameter("id", comment.getId());
+        query.setParameter("commentText", comment.getCommentText());
+        int result = query.executeUpdate();
+        return result == 1;
     }
 
     /**
-     * Метод deleteComment удаляет комментарий к книге
+     * Метод deleteCommentById удаляет комментарий к книге
      *
-     * @param comment
+     * @param id
      * @return
      */
     @Override
-    public boolean deleteComment(Comment comment) {
-        return false;
+    public boolean deleteCommentById(long id) {
+        Query query = entityManager.createQuery("delete " +
+                "from Comment c " +
+                "where c.id = :id");
+        query.setParameter("id", id);
+        int result = query.executeUpdate();
+        return result == 1;
     }
 
     /**
@@ -113,6 +128,7 @@ public class CommentRepositoryJpa implements CommentRepository {
      */
     @Override
     public int getCountOfComment() {
-        return 0;
+        Long result = entityManager.createQuery("select count(с) from Comment с", Long.class).getSingleResult();
+        return Math.toIntExact(result);
     }
 }

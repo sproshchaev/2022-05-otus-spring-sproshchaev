@@ -11,6 +11,7 @@ public interface AuthorRepository {
 
     /**
      * Метод createAuthor
+     *
      * @param author
      * @return
      */
@@ -18,6 +19,7 @@ public interface AuthorRepository {
 
     /**
      * Метод getAuthorById
+     *
      * @param id
      * @return
      */
@@ -25,6 +27,7 @@ public interface AuthorRepository {
 
     /**
      * Метод getIdByAuthor получает id автора
+     *
      * @param author
      * @return
      */
@@ -32,6 +35,7 @@ public interface AuthorRepository {
 
     /**
      * Метод updateAuthor обновляет сведения об авторе в библиотеке
+     *
      * @param author
      * @return
      */
@@ -39,6 +43,7 @@ public interface AuthorRepository {
 
     /**
      * Метод deleteAuthor удаляет сведения об авторе из библиотеки
+     *
      * @param author
      * @return
      */
@@ -53,6 +58,7 @@ public interface AuthorRepository {
 
     /**
      * Метод getCountOfAuthors получает число авторов, чьи сведения есть в библиотеке
+     *
      * @return
      */
     int getCountOfAuthors();

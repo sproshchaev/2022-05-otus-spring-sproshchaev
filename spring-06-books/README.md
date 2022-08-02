@@ -122,6 +122,10 @@ create table t (id bigint auto_increment primary key,...), то эта опци�
 "ub" - Update book data by id (crUd)
 "db" - Deleting the selected book by id (cruD)
 #### CRUD for Comment
+"cc" - Create a new book comment (Crud)
+"gcbi" - Get comment by its id (cRud)
+"uc" - Update comment by id (crUd)
+"dc" - Deleting the selected comment by id (cruD)
 
 ### Тестирование
 1. Отключить Spring Shell в application.yml: spring.shell.interactive.enabled=false

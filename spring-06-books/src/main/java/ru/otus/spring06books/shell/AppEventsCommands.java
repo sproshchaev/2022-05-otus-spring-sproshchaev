@@ -58,8 +58,11 @@ public class AppEventsCommands {
         long countOfBooks = bookRepositoryJpa.getCountOfBooks();
         long countOfAuthors = authorRepositoryJpa.getCountOfAuthors();
         long countOfGenres = genreRepositoryJpa.getCountOfGenres();
+        long countOfComment = commentRepositoryJpa.getCountOfComment();
+
         return "Welcome to our library! We have more than " + countOfBooks
-                + " books by " + countOfAuthors + " authors and " + countOfGenres + " genres in our library";
+                + " books by " + countOfAuthors + " authors and " + countOfGenres + " genres in our library. " +
+                "Our readers have left more than " + countOfComment + " comments on the books!";
     }
 
     /**
@@ -331,10 +334,23 @@ public class AppEventsCommands {
                 : "Error: Something went wrong!";
     }
 
-    //+++++++++++++++++++++++++++
+    /**
+     * Метод getAllBook возвращает все книги из библиотеки (cRud)
+     * Аннотация @Transactional(readOnly = true) - метод не изменяет данные
+     * Сокращенный вызов: "gab", "getallbook"
+     * Пример: gab
+     *
+     * @return
+     */
+    @Transactional(readOnly = true)
+    @ShellMethod(value = "Get a list of all library books", key = {"gab", "getallbook"})
+    public String getAllBook() {
+        List<Book> listBook = bookRepositoryJpa.getAllBooks();
+        return "Received " + (listBook == null ? 0 : listBook.size()) + " books:  " + listBook.toString();
+    }
 
     /**
-     * Метод createComment (Crud) // todo проверить createComment (Crud)
+     * Метод createComment создает новый комментарий (Crud)
      * Аннотация @Transactional - метод изменяет данные
      * Сокращенный вызов: "cc", "createcomment" --idBook idBook --comment commentText
      * Пример: cc --idBook 1 --comment 'I read the book with pleasure :)'
@@ -347,12 +363,61 @@ public class AppEventsCommands {
     @ShellMethod(value = "Create a new book comment", key = {"cc", "createcomment"})
     public String createComment(@ShellOption(defaultValue = "1") long idBook,
                                 @ShellOption(defaultValue = "I read the book with pleasure :)") String comment) {
-        long id = commentRepositoryJpa.createComment(new Comment(new Book(idBook), comment));
+        Comment comment1 = new Comment(new Book(idBook), comment);
+        long id = commentRepositoryJpa.createComment(comment1);
         return id != 0 ? "New comment (" + id + ") '" + comment + "' for book id=" + idBook + " has been successfully created!" : "Error: Something went wrong!";
     }
 
+    /**
+     * Метод deleteCommentById удаляет комментарий по id (cruD)
+     * Аннотация @Transactional - метод изменяет данные
+     * Сокращенный вызов: "dc", "deletecomment" --id id
+     * Пример: dc --id 1
+     *
+     * @param id
+     * @return
+     */
+    @Transactional
+    @ShellMethod(value = "Deleting the selected comment by id", key = {"dc", "deletecomment"})
+    public String deleteCommentById(@ShellOption(defaultValue = "1") long id) {
+        return commentRepositoryJpa.deleteCommentById(id) ? "The comment id=" + id + " has been deleted" : "Error: Something went " +
+                "wrong!";
+    }
 
-    //----------------------
+    /**
+     * Метод getCommentById возвращает комментарий к книге по его id (cRud)
+     * Аннотация @Transactional(readOnly = true) - метод не изменяет данные
+     * Сокращенный вызов: "gcbi", "getcommentbyid" --id id
+     * Пример: gcbi --id 1
+     *
+     * @param id
+     * @return
+     */
+    @Transactional(readOnly = true)
+    @ShellMethod(value = "Get comment by its id", key = {"gcbi", "getcommentbyid"})
+    public String getCommentById(@ShellOption(defaultValue = "1") long id) {
+        return commentRepositoryJpa.getCommentById(id).toString();
+    }
+
+    /**
+     * Метод updateCommentById обновляет комментарий к книге по его id (crUd)
+     * Аннотация @Transactional - метод изменяет данные
+     * Сокращенный вызов: "uc", "updatecomment" --id id --comment new_comment
+     * Пример: uc --id 1 --comment 'New comment'
+     *
+     * @param id
+     * @param title
+     * @param author
+     * @param genre
+     * @return
+     */
+    @Transactional
+    @ShellMethod(value = "Update comment by id", key = {"uc", "updatecomment"})
+    public String updateCommentById(@ShellOption(defaultValue = "1") long id,
+                                    @ShellOption(defaultValue = "New comment") String comment) {
+        return commentRepositoryJpa.updateComment(new Comment(id, comment, new Book())) ? "The comment id="
+                + id + " has " + "been updated  )" : "Error: Something went wrong!";
+    }
 
     /**
      * Метод startConsoleH2 запускает консоль

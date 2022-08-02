@@ -10,6 +10,9 @@ import java.util.List;
  */
 @Entity
 @Table(name = "book")
+@NamedEntityGraph(name = "book-comments-entity-graph", attributeNodes = @NamedAttributeNode("comments"))
+@NamedEntityGraph(name = "book-author-entity-graph", attributeNodes = @NamedAttributeNode("author"))
+@NamedEntityGraph(name = "book-genre-entity-graph", attributeNodes = @NamedAttributeNode("genre"))
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,10 +20,10 @@ public class Book {
     private long id;
     @Column(name = "title")
     private String title;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private Author author;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "genre_id")
     private Genre genre;
     /**
@@ -43,8 +46,8 @@ public class Book {
     /**
      * Конструктор класса c параметром id
      */
-    public Book(long idBook) {
-
+    public Book(long id) {
+        this.id = id;
     }
 
     /**
@@ -108,12 +111,18 @@ public class Book {
      */
     @Override
     public String toString() {
+        String commentsStr = "";
+        if (comments != null) {
+            for (int i = 0; i < comments.size(); i++) {
+                commentsStr = commentsStr + (i + 1) + ") " + comments.get(i).getCommentText() + " ";
+            }
+        }
         return "Book{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", author=" + author +
                 ", genre=" + genre +
-                ", comments=" + ((comments.size() == 0) ? "" : comments.get(0).getCommentText()) +
+                ", comments=" + commentsStr +
                 '}';
     }
 }

@@ -44,6 +44,7 @@ public interface BookRepository {
 
     /**
      * Метод getIdByBook возвращает id переданной ему книги
+     *
      * @param book
      * @return
      */

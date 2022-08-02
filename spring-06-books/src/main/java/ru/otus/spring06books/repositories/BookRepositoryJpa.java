@@ -6,10 +6,7 @@ import ru.otus.spring06books.entities.Author;
 import ru.otus.spring06books.entities.Book;
 import ru.otus.spring06books.entities.Genre;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -127,6 +124,7 @@ public class BookRepositoryJpa implements BookRepository {
 
     /**
      * Метод getBookById возвращает сведения о книге по ее id
+     * Здесь не применяется оптимизация для N+1
      *
      * @param id
      * @return
@@ -157,12 +155,20 @@ public class BookRepositoryJpa implements BookRepository {
 
     /**
      * Метод getAllBooks возвращает коллекцию из всех книг, имеющиеся в библиотеке
+     * Проблема N+1 решается с использованием @NamedEntityGraph для комментария, автора и жанра
      *
      * @return
      */
     @Override
     public List<Book> getAllBooks() {
-        return null;
+        EntityGraph<?> commentsEntityGraph = entityManager.getEntityGraph("book-comments-entity-graph");
+        EntityGraph<?> authorEntityGraph = entityManager.getEntityGraph("book-author-entity-graph");
+        EntityGraph<?> genreEntityGraph = entityManager.getEntityGraph("book-genre-entity-graph");
+        TypedQuery<Book> query = entityManager.createQuery("select b from Book b join fetch b.comments", Book.class);
+        query.setHint("javax.persistence.fetchgraph", commentsEntityGraph);
+        query.setHint("javax.persistence.fetchgraph", authorEntityGraph);
+        query.setHint("javax.persistence.fetchgraph", genreEntityGraph);
+        return query.getResultList();
     }
 
     /**
