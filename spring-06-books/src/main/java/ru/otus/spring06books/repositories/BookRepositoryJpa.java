@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * Класс BookRepositoryJpa реализует CRUD операции для класса Book
+ *
  * @see ru.otus.spring06books.entities.Book
  */
 @Repository
@@ -155,23 +156,20 @@ public class BookRepositoryJpa implements BookRepository {
 
     /**
      * Метод getAllBooks возвращает коллекцию из всех книг, имеющиеся в библиотеке
-     * Проблема N+1 решается с использованием @NamedEntityGraph для комментария, автора и жанра
+     * Проблема N+1 решается с использованием @NamedEntityGraph для комментария, автора и жанра.
+     * Оставлять здесь EntityGraph, если используется @Fetch(FetchMode.SUBSELECT)?
      *
      * @return
      */
-    @Override // todo: оставлять ли здесь EntityGraph, если используется @Fetch(FetchMode.SUBSELECT)?
+    @Override
     public List<Book> getAllBooks() {
-/*
         EntityGraph<?> commentsEntityGraph = entityManager.getEntityGraph("book-comments-entity-graph");
         EntityGraph<?> authorEntityGraph = entityManager.getEntityGraph("book-author-entity-graph");
         EntityGraph<?> genreEntityGraph = entityManager.getEntityGraph("book-genre-entity-graph");
-*/
         TypedQuery<Book> query = entityManager.createQuery("select b from Book b join fetch b.comments", Book.class);
-/*
         query.setHint("javax.persistence.fetchgraph", commentsEntityGraph);
         query.setHint("javax.persistence.fetchgraph", authorEntityGraph);
         query.setHint("javax.persistence.fetchgraph", genreEntityGraph);
-*/
         return query.getResultList();
     }
 

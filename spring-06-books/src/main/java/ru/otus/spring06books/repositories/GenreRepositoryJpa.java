@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * Класс GenreRepositoryJpa реализует CRUD операции для класса Genre
+ *
  * @see ru.otus.spring06books.entities.Genre
  */
 @Repository

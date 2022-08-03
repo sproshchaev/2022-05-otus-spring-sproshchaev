@@ -13,11 +13,9 @@ import java.util.List;
  */
 @Entity
 @Table(name = "book")
-/*
 @NamedEntityGraph(name = "book-comments-entity-graph", attributeNodes = @NamedAttributeNode("comments"))
 @NamedEntityGraph(name = "book-author-entity-graph", attributeNodes = @NamedAttributeNode("author"))
 @NamedEntityGraph(name = "book-genre-entity-graph", attributeNodes = @NamedAttributeNode("genre"))
-*/
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,6 +69,7 @@ public class Book {
 
     /**
      * Конструктор класса с параметрами id, title, author, genre
+     *
      * @param id
      * @param title
      * @param author

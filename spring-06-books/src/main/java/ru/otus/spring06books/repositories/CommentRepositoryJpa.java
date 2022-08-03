@@ -1,7 +1,6 @@
 package ru.otus.spring06books.repositories;
 
 import org.springframework.stereotype.Repository;
-import ru.otus.spring06books.entities.Author;
 import ru.otus.spring06books.entities.Book;
 import ru.otus.spring06books.entities.Comment;
 
@@ -13,6 +12,7 @@ import java.util.List;
 
 /**
  * Класс CommentRepositoryJpa реализует CRUD операции для класса Comment
+ *
  * @see ru.otus.spring06books.entities.Comment
  */
 @Repository
