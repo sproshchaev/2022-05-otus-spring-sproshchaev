@@ -58,16 +58,23 @@ Development on the Spring Framework
   - Package name: ru.otus.spring-07-books
 6. Packaging: Jar
 7. Java: 11
-8. Dependencies: Spring Shell I/O, Spring Data JPA (в Dependencies есть возможность выбора H2 Database, 
-но в данной сборке эта зависимость не включена, планируется ручное добавление базы в проекте)
+8. Dependencies: Spring Shell I/O, Spring Data JPA
+   Примечание: в Dependencies есть возможность выбора:
+   - H2 Database, в данной сборке эта зависимость не включена (планируется ручное добавление базы в проекте);
+   - Liquibase Migration, в данной сборке эта зависимость не включена (groupId: org.liquibase, artifactId: liquibase-core
+, version: 4.14.0 + рекомендуется groupId: org.yaml, artifactId: snakeyaml, version: 1.30).
 9. Сохранить spring-07-books.zip в Java\2022-05-otus-spring-sproshchaev
 10. Разархивировать архив Java\2022-05-otus-spring-sproshchaev\spring-07-books.zip (файл .zip удалить)
 11. Открыть проект в IDE
 12. Актуализировать файл .gitignore
 13. Актуализировать файл README.md
 14. Проверить в pom.xml наличие зависимостей: spring-shell-starter, spring-boot-starter-data-jpa
-15. Добавить в pom.xml зависимость H2: artifactId h2 (version>2.1.212) 
-16. Добавить файлы application.yml, data.sql, schema.sql
+15. Добавить в pom.xml зависимость H2: groupId: com.h2database, artifactId: h2, version: 2.1.212 
+
+??? Ликвибэйз используем ??? 
+
+17. Добавить файлы application.yml (, data.sql, schema.sql)
+
 17. При создании таблицы comment необходимо указать для этого поля каскадное удаление "references book(id) on delete cascade",
 которое будет удалять все комментарии в БД при удалении книги
 18. Добавить в файл application.yml: 
@@ -76,13 +83,21 @@ Development on the Spring Framework
       driver-class-name=org.h2.Driver, 
       gpa.generate-ddl=false, 
       gpa.hibernate.ddl-auto=none, 
-      gpa.show-sql=true, 
-      sql.init.mode=always,
-      sql.init.data-locations=data.sql,
-      sql.init.schema-locations=schema.sql,
+      gpa.show-sql=true,
+      liquibase.enabled.true //sql.init.mode=always,
+                             //sql.init.data-locations=data.sql,
+                             //sql.init.schema-locations=schema.sql,
       h2.console.path=/h2-console,
       h2.console.settings.web-allow-others=true
-19. Создать классы сущностей и разметить их аннотациями 
+19. Настройка liquibase:
+    - Создать структуру каталогов resources/db/changelog
+    - Создать resources/db/changelog/db.changelog-master.yaml:
+      - версии БД (schema.sql): databaseChangeLog.- includeAll.path: db/changelog/1.0/ 
+      - данные для БД (data.sql): databaseChangeLog.- includeAll.path: db/changelog/data/
+    - Создать каталог для changelog-ов (схемы БД): resources/db/changelog/1.0
+    - Создать changelog-и YYYY-MM-DD--Create-table_name.yml (.xml,.yml,.json,.sql): 2022-08-04--Create-author.yaml
+    - Создать changelog в каталоге с данными (db/changelog/data/):   
+20. Создать классы сущностей и разметить их аннотациями 
       @Entity, 
       @Id, 
       @GeneratedValue(strategy = GenerationType.IDENTITY) - если id формируется на уровне БД (через 
@@ -132,3 +147,5 @@ create table t (id bigint auto_increment primary key,...), то эта опци�
 переносить нельзя иначе тесты будут тестировать не то, что находится в базе!)   
 
 ### Статьи по теме
+1. Liquibase changelog (структура БД schema.sql) Formats https://docs.liquibase.com/concepts/changelogs/changelog-formats.html
+2. Liquibase load-data (загрузка данных data.sql) https://docs.liquibase.com/change-types/load-data.html

@@ -1,0 +1,29 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet author="sproshchaev" id="2022-08-04--0003-book">
+        <loadData catalogName="data"
+                  commentLineStartsWith="//"
+                  encoding="UTF-8"
+                  file="data/2022-08-04--0002-book.csv"
+                  quotchar="'"
+                  relativeToChangelogFile="true"
+                  schemaName="public"
+                  separator=";"
+                  tableName="book"
+                  usePreparedStatements="true">
+            <column header="title"
+                    name="title"
+                    type="varchar(255)"/>
+            <column header="author_id"
+                    name="author_id"
+                    type="bigint"/>
+            <column header="genre_id"
+                    name="genre_id"
+                    type="bigint"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,21 @@
+databaseChangeLog:
+- changeSet:
+    id: 2022-08-04--0002-genre
+    author: sproshchaev
+    changes:
+      - loadData:
+          catalogName:  data
+          columns:
+            - column:
+                header: name
+                name:  name
+                type:  varchar(255)
+          commentLineStartsWith:  //
+          encoding:  UTF-8
+          file:  data/2022-08-04--0001-genre.csv
+          quotchar:  ''''
+          relativeToChangelogFile:  true
+          schemaName:  public
+          separator:  ;
+          tableName:  genre
+          usePreparedStatements:  true
