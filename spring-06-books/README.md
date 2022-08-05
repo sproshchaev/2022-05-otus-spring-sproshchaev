@@ -98,34 +98,34 @@ create table t (id bigint auto_increment primary key,...), то эта опци�
 ### Примечания
 
 ### Вызов методов (@ShellMethod)
-"a" - Information about the library
-"c" - Start console H2
+"a" - Information about the library, example: a
+"c" - Start console H2, example: c
 #### CRUD for Genres
-"cg" - Create a new genre of books in the library (Crud)
-"gibg" - Getting a genre id (cRud)
-"ggbi" - Getting information about the author from the library by id (cRud)
-"ug" - Updating information about the genre (crUd)
-"dg" - Deleting genre data from the library (cruD)
+"cg" - Create a new genre of books in the library (Crud), example: cg --name Novel
+"gibg" - Getting a genre id (cRud), example: gibg --name 'History'
+"ggbi" - Getting information about the author from the library by id (cRud), example: ggbi --id 2
+"gag" - Getting a list of all genres from the library (cRud), example: getallgenres
+"ug" - Updating information about the genre (crUd), example: ug --id 1 --name 'Politics'
+"dg" - Deleting genre data from the library (cruD), example: dg --id 5 --name 'Fiction'
 #### CRUD for Authors
-"ca" - Create a new Author of books in the library (Crud)
-"giba" - Getting an id by author (cRud)
-"gabi" - Getting information about the author from the library by id (cRud)
-"gaa" - Getting a list of all authors from the library (cRud)
-"gag" - Getting a list of all genres from the library (cRud)
-"ua" - Updating information about the author (crUd)
-"da" - Deleting author data from the library (cruD)
+"ca" - Create a new Author of books in the library (Crud), example: ca --fullName 'Stephen Edwin King'
+"giba" - Getting an id by author (cRud), example: giba --fullName 'Daniel Defoe'
+"gabi" - Getting information about the author from the library by id (cRud), example: gabi --id 2
+"gaa" - Getting a list of all authors from the library (cRud), example: getallauthors
+"ua" - Updating information about the author (crUd), example: ua --id 1 --fullName 'Gianni Rodari'
+"da" - Deleting author data from the library (cruD), example: da --id 3 --fullName 'Gianni Rodari'
 #### CRUD for Books
-"cb" - Add information about a new book, author, genre to the library (Crud)
-"gbbi" - Get book data by its id (cRud)
-"gab" - Get a list of all library books (cRud)
-"gibb" - Getting an id by book (cRud)
-"ub" - Update book data by id (crUd)
-"db" - Deleting the selected book by id (cruD)
+"cb" - Add information about a new book, author, genre to the library (Crud), example: cb --title 'A Life in Letters' --author 'Arthur Conan Doyle' --genre Autobiography
+"gbbi" - Get book data by its id (cRud), example: gbbi --id 1
+"gab" - Get a list of all library books (cRud), example: gab
+"gibb" - Getting an id by book (cRud), example: gibb --title 'The Pilgrim’s Progress' --fullName 'John Bunyan' --name 'History'
+"ub" - Update book data by id (crUd), example: ub --id 1 --title 'New title' --author 'New Author' --genre 'New Genre'
+"db" - Deleting the selected book by id (cruD), example: db --id 1
 #### CRUD for Comment
-"cc" - Create a new book comment (Crud)
-"gcbi" - Get comment by its id (cRud)
-"uc" - Update comment by id (crUd)
-"dc" - Deleting the selected comment by id (cruD)
+"cc" - Create a new book comment (Crud), example: cc --idBook 1 --comment 'I read the book with pleasure :)'
+"gcbi" - Get comment by its id (cRud), example: gcbi --id 1
+"uc" - Update comment by id (crUd), example: uc --id 1 --comment 'New comment'
+"dc" - Deleting the selected comment by id (cruD), example: dc --id 1
 
 ### Тестирование
 1. Отключить Spring Shell в application.yml: spring.shell.interactive.enabled=false

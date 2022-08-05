@@ -10,6 +10,9 @@ import java.util.List;
  * Класс Книга
  * Использование @Table, @Column - хорошая практика, даже когда устраивает автонейминг!
  * Для полей-классов вместо @Column используется @JoinColumn()
+ *
+ * todo (Работа над ошибками): у полей Author, Genre в аннотации @ManyToOne() убрана опция cascade = CascadeType.ALL
+ *
  */
 @Entity
 @Table(name = "book")
