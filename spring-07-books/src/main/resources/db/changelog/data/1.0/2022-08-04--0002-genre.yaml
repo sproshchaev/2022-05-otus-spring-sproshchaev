@@ -4,7 +4,6 @@ databaseChangeLog:
     author: sproshchaev
     changes:
       - loadData:
-          catalogName:  data
           columns:
             - column:
                 header: name
@@ -12,7 +11,7 @@ databaseChangeLog:
                 type:  varchar(255)
           commentLineStartsWith:  //
           encoding:  UTF-8
-          file:  data/2022-08-04--0001-genre.csv
+          file:  csv/2022-08-04--0001-genre.csv
           quotchar:  ''''
           relativeToChangelogFile:  true
           schemaName:  public

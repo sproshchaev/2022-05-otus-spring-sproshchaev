@@ -1,0 +1,41 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "2022-08-05--0001-comment",
+        "author": "sproshchaev",
+        "changes": [
+          {
+            "loadData": {
+              "columns": [
+                {
+                  "column": {
+                    "header": "comment_text",
+                    "name": "comment_text",
+                    "type": "varchar(255)"
+                  }
+                },
+                {
+                  "column": {
+                    "header": "book_id",
+                    "name": "book_id",
+                    "type": "bigint"
+                  }
+                }
+              ],
+              "commentLineStartsWith": "//",
+              "encoding": "UTF-8",
+              "file": "csv/2022-08-05--0001-comment.csv",
+              "quotchar": "'",
+              "relativeToChangelogFile": true,
+              "schemaName": "public",
+              "separator": ";",
+              "tableName": "comment",
+              "usePreparedStatements": true
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

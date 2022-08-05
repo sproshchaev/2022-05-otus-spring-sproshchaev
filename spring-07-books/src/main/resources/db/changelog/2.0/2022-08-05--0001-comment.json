@@ -1,0 +1,51 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "2022-08-05--0001-comment",
+        "author": "sproshchaev",
+        "changes": [
+          {
+            "createTable": {
+              "tableName": "comment",
+              "columns": [
+                {
+                  "column": {
+                    "name": "id",
+                    "type": "bigint",
+                    "autoIncrement": true,
+                    "constraints": {
+                      "primaryKey": true,
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "comment_text",
+                    "type": "varchar(255)",
+                    "constraints": {
+                      "nullable": false
+                    }
+                  }
+                },
+                {
+                  "column": {
+                    "name": "book_id",
+                    "type": "bigint",
+                    "constraints": {
+                      "nullable": false,
+                      "foreignKeyName": "fk_book_id",
+                      "references": "book(id)",
+                      "deleteCascade": true
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
