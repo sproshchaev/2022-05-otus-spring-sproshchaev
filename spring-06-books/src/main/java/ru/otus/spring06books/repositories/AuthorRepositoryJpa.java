@@ -45,10 +45,8 @@ public class AuthorRepositoryJpa implements AuthorRepository {
         long authorId = getIdByAuthor(author);
         if (authorId == 0) {
             entityManager.persist(author);
-            return author;
-        } else {
-            return getAuthorById(authorId);
         }
+        return author;
     }
 
     /**
@@ -66,19 +64,20 @@ public class AuthorRepositoryJpa implements AuthorRepository {
 
     /**
      * Метод getIdByAuthor получает id автора
+     * Для получения id используется TypedQuery<Long>
      *
      * @param author
      * @return
      */
     @Override
     public long getIdByAuthor(Author author) {
-        TypedQuery<Author> query = entityManager.createQuery("select a " +
+        TypedQuery<Long> query = entityManager.createQuery("select a.id " +
                         "from Author a " +
                         "where a.fullName = :fullname",
-                Author.class);
+                Long.class);
         query.setParameter("fullname", author.getFullName());
-        List<Author> authorList = query.getResultList();
-        return authorList.size() == 0 ? 0 : authorList.get(0).getId();
+        List<Long> idList = query.getResultList();
+        return idList.size() == 0 ? 0 : idList.get(0);
     }
 
     /**

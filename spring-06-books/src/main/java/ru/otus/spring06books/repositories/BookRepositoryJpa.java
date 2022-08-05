@@ -83,7 +83,6 @@ public class BookRepositoryJpa implements BookRepository {
      */
     @Override
     public boolean updateBookById(long id, Book book) {
-        entityManager.find(Book.class, id);
         long authorId = authorRepositoryJpa.getIdByAuthor(book.getAuthor());
         if (authorId == 0) {
             entityManager.persist(book.getAuthor());
@@ -143,33 +142,28 @@ public class BookRepositoryJpa implements BookRepository {
      */
     @Override
     public long getIdByBook(Book book) {
-        TypedQuery<Book> query = entityManager.createQuery("select b " +
+        TypedQuery<Long> query = entityManager.createQuery("select b.id " +
                         "from Book b, Author a, Genre g " +
                         "where (b.title = :title) and (b.author.fullName = :fullName) and (b.genre.name = :name)",
-                Book.class);
+                Long.class);
         query.setParameter("title", book.getTitle());
         query.setParameter("fullName", book.getAuthor().getFullName());
         query.setParameter("name", book.getGenre().getName());
-        List<Book> bookList = query.getResultList();
-        return bookList.size() == 0 ? 0 : bookList.get(0).getId();
+        List<Long> idBookList = query.getResultList();
+        return idBookList.size() == 0 ? 0 : idBookList.get(0);
     }
 
     /**
      * Метод getAllBooks возвращает коллекцию из всех книг, имеющиеся в библиотеке
      * Проблема N+1 решается с использованием @NamedEntityGraph для комментария, автора и жанра.
-     * Оставлять здесь EntityGraph, если используется @Fetch(FetchMode.SUBSELECT)?
      *
      * @return
      */
     @Override
     public List<Book> getAllBooks() {
-        EntityGraph<?> commentsEntityGraph = entityManager.getEntityGraph("book-comments-entity-graph");
-        EntityGraph<?> authorEntityGraph = entityManager.getEntityGraph("book-author-entity-graph");
-        EntityGraph<?> genreEntityGraph = entityManager.getEntityGraph("book-genre-entity-graph");
-        TypedQuery<Book> query = entityManager.createQuery("select b from Book b join fetch b.comments", Book.class);
-        query.setHint("javax.persistence.fetchgraph", commentsEntityGraph);
-        query.setHint("javax.persistence.fetchgraph", authorEntityGraph);
-        query.setHint("javax.persistence.fetchgraph", genreEntityGraph);
+        EntityGraph<?> bookEntityGraph = entityManager.getEntityGraph("book-author-genre-entity-graph");
+        TypedQuery<Book> query = entityManager.createQuery("select b from Book b", Book.class);
+        query.setHint("javax.persistence.fetchgraph", bookEntityGraph);
         return query.getResultList();
     }
 

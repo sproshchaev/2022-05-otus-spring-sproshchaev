@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import ru.otus.spring06books.entities.Comment;
 import ru.otus.spring06books.services.*;
 
 import java.sql.SQLException;
@@ -313,14 +314,22 @@ public class AppEventsCommands {
     }
 
     /**
+     * Метод getIdByComment возвращает id для комментария (cRud)
+     * Сокращенный вызов: "gibс", "getidbycomment" --comment comment_text
+     * Пример: gibс --comment 'The Pilgrims Progress — is a very interesting book!'
+     */
+    @ShellMethod(value = "Getting an id by comment", key = {"gibс", "getidbycomment"})
+    public String getIdByComment(@ShellOption(defaultValue = "The Pilgrims Progress — is a very interesting book!") String comment) {
+        return commentService.getIdByComment(new Comment(comment));
+    }
+
+    /**
      * Метод updateCommentById обновляет комментарий к книге по его id (crUd)
      * Сокращенный вызов: "uc", "updatecomment" --id id --comment new_comment
      * Пример: uc --id 1 --comment 'New comment'
      *
      * @param id
-     * @param title
-     * @param author
-     * @param genre
+     * @param comment
      * @return
      */
     @ShellMethod(value = "Update comment by id", key = {"uc", "updatecomment"})

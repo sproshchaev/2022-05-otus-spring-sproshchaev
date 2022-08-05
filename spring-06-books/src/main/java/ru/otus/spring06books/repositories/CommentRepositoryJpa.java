@@ -78,7 +78,13 @@ public class CommentRepositoryJpa implements CommentRepository {
      */
     @Override
     public long getIdByComment(Comment comment) {
-        return 0;
+        TypedQuery<Long> query = entityManager.createQuery("select c.id " +
+                        "from Comment c " +
+                        "where c.commentText = :commentText",
+                Long.class);
+        query.setParameter("commentText", comment.getCommentText());
+        List<Long> idList = query.getResultList();
+        return idList.size() == 0 ? 0 : idList.get(0);
     }
 
     /**

@@ -70,11 +70,11 @@ class CommentRepositoryJpaTest {
      */
     @DisplayName("get the comment's id")
     @Test
-    void getIdByComment() {
-        long idBook = 1;
-        Comment commentForGet = new Comment(new Book(idBook), "The Pilgrims Progress — is a very interesting book!");
+    void shouldGetIdByComment() {
+        long expectedIdComment = 1;
+        Comment commentForGet = new Comment("The Pilgrims Progress — is a very interesting book!");
         long commentId = commentRepositoryJpa.getIdByComment(commentForGet);
-        assertThat(commentId).isEqualTo(commentForGet.getId());
+        assertThat(commentId).isEqualTo(expectedIdComment);
     }
 
     /**
@@ -86,7 +86,7 @@ class CommentRepositoryJpaTest {
      */
     @DisplayName("update a new comment")
     @Test
-    void updateComment() {
+    void shouldUpdateComment() {
         long idBook = 1;
         Comment commentForUpdate = new Comment(new Book(idBook), "New comment");
         commentRepositoryJpa.updateComment(commentForUpdate);

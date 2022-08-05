@@ -105,13 +105,13 @@ public class GenreRepositoryJpa implements GenreRepository {
      */
     @Override
     public long getIdByGenre(Genre genre) {
-        TypedQuery<Genre> query = entityManager.createQuery("select g " +
+        TypedQuery<Long> query = entityManager.createQuery("select g.id " +
                         "from Genre g " +
                         "where g.name = :name",
-                Genre.class);
+                Long.class);
         query.setParameter("name", genre.getName());
-        List<Genre> genreList = query.getResultList();
-        return genreList.size() == 0 ? 0 : genreList.get(0).getId();
+        List<Long> idList = query.getResultList();
+        return idList.size() == 0 ? 0 : idList.get(0);
     }
 
     /**

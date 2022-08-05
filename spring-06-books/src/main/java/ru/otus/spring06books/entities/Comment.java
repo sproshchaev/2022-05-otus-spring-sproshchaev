@@ -17,7 +17,7 @@ public class Comment {
     @Column(name = "comment_text")
     private String commentText;
     /**
-     * Поле книга, к которой оставляют комменатрии
+     * Поле книга, к которой оставляют комментарии
      *
      * @ManyToOne - много комментариев (Comment.class) к одной книге
      * При создании таблицы comment необходимо указать для этого поля каскадное удаление "references book(id) on delete cascade"
@@ -30,6 +30,14 @@ public class Comment {
      * Конструктор класса без параметров
      */
     public Comment() {
+    }
+
+    /**
+     * Конструктор класса с параметром commentText
+     * @param commentText
+     */
+    public Comment(String commentText) {
+        this.commentText = commentText;
     }
 
     /**
@@ -55,6 +63,7 @@ public class Comment {
         this.commentText = commentText;
         this.book = book;
     }
+
 
     public long getId() {
         return id;

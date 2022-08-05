@@ -1,5 +1,6 @@
 package ru.otus.spring06books.entities;
 
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -10,15 +11,13 @@ import java.util.List;
  * Класс Книга
  * Использование @Table, @Column - хорошая практика, даже когда устраивает автонейминг!
  * Для полей-классов вместо @Column используется @JoinColumn()
- *
- * todo (Работа над ошибками): у полей Author, Genre в аннотации @ManyToOne() убрана опция cascade = CascadeType.ALL
- *
+ * Поле комментарии к книге
+ * @OneToMany - одна книга (Book.class) имеет множество комментариев
+ * orphanRemoval = true ("удаление сирот") т.е. комментарии не живут без книги
  */
 @Entity
 @Table(name = "book")
-@NamedEntityGraph(name = "book-comments-entity-graph", attributeNodes = @NamedAttributeNode("comments"))
-@NamedEntityGraph(name = "book-author-entity-graph", attributeNodes = @NamedAttributeNode("author"))
-@NamedEntityGraph(name = "book-genre-entity-graph", attributeNodes = @NamedAttributeNode("genre"))
+@NamedEntityGraph(name = "book-author-genre-entity-graph", attributeNodes = {@NamedAttributeNode("comments"), @NamedAttributeNode("author"), @NamedAttributeNode("genre")})
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,28 +25,21 @@ public class Book {
     private long id;
     @Column(name = "title")
     private String title;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private Author author;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "genre_id")
     private Genre genre;
-    /**
-     * Поле комментарии к книге
-     *
-     * @OneToMany - одна книга (Book.class) имеет множество комментариев
-     * orphanRemoval = true ("удаление сирот") т.е. комментарии не живут без книги
-     */
-    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "book_id")
+    @OneToMany(mappedBy = "id", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
+    @BatchSize(size = 10)
     private List<Comment> comments;
 
     /**
      * Конструктор класса без параметров
      */
     public Book() {
-
     }
 
     /**
@@ -127,7 +119,7 @@ public class Book {
 
     /**
      * Метод toString()
-     * Выводит первый комментарий к книге
+     * Выводит все комментарии к книге
      *
      * @return
      */

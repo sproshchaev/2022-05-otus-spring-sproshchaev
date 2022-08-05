@@ -58,7 +58,7 @@ public class AuthorService {
      * Метод не подразумевает изменения данных в БД, используется рекомендуемая аннотация @Transactional(readOnly = true)
      */
     @Transactional(readOnly = true)
-    public String getIdByAuthor(@ShellOption(defaultValue = "Daniel Defoe") String fullName) {
+    public String getIdByAuthor(String fullName) {
         long id = authorRepositoryJpa.getIdByAuthor(new Author(fullName));
         return id == 0 ? "Author '" + fullName + "' not found in the library!" : "Author '" + fullName + "' has an id=" + id;
     }
