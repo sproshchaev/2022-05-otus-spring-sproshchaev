@@ -59,10 +59,11 @@ Development on the Spring Framework
 6. Packaging: Jar
 7. Java: 11
 8. Dependencies: Spring Shell I/O, Spring Data JPA
-   Примечание: в Dependencies есть возможность выбора:
+   Примечание: в Dependencies есть возможность дополнительно добавить зависимости:
    - H2 Database, в данной сборке эта зависимость не включена (планируется ручное добавление базы в проекте);
    - Liquibase Migration, в данной сборке эта зависимость не включена (groupId: org.liquibase, artifactId: liquibase-core
-, version: 4.14.0 + рекомендуется groupId: org.yaml, artifactId: snakeyaml, version: 1.30).
+, version: 4.14.0 + рекомендуется groupId: org.yaml, artifactId: snakeyaml, version: 1.30);
+   - Flyway Migration (в данной сборке эта зависимость не включена).
 9. Сохранить spring-07-books.zip в Java\2022-05-otus-spring-sproshchaev
 10. Разархивировать архив Java\2022-05-otus-spring-sproshchaev\spring-07-books.zip (файл .zip удалить)
 11. Открыть проект в IDE
@@ -70,23 +71,20 @@ Development on the Spring Framework
 13. Актуализировать файл README.md
 14. Проверить в pom.xml наличие зависимостей: spring-shell-starter, spring-boot-starter-data-jpa
 15. Добавить в pom.xml зависимость H2: groupId: com.h2database, artifactId: h2, version: 2.1.212 
-
-??? Ликвибэйз используем ??? 
-
-17. Добавить файлы application.yml (, data.sql, schema.sql)
-
-17. При создании таблицы comment необходимо указать для этого поля каскадное удаление "references book(id) on delete cascade",
-которое будет удалять все комментарии в БД при удалении книги
-18. Добавить в файл application.yml: 
+16. Добавить в pom.xml зависимость Liquibase:
+    - groupId: org.liquibase, artifactId: liquibase-core, version: 4.14.0
+    - groupId: org.yaml, artifactId: snakeyaml, version: 1.30 (рекомендуется эта зависимость для корректной работы 
+liquibase с разными версиями)
+17. Создать файл и добавить в файл application.yml: 
       url=jdbc:h2:mem:books, 
       username=sa, password, 
       driver-class-name=org.h2.Driver, 
       gpa.generate-ddl=false, 
       gpa.hibernate.ddl-auto=none, 
       gpa.show-sql=true,
-      liquibase.enabled.true //sql.init.mode=always,
-                             //sql.init.data-locations=data.sql,
-                             //sql.init.schema-locations=schema.sql,
+      liquibase.enabled.true #sql.init.mode=always,
+                             #sql.init.data-locations=data.sql,
+                             #sql.init.schema-locations=schema.sql,
       h2.console.path=/h2-console,
       h2.console.settings.web-allow-others=true
 19. Настройка liquibase:
@@ -97,6 +95,9 @@ Development on the Spring Framework
     - Создать каталог для changelog-ов (схемы БД): resources/db/changelog/1.0
     - Создать changelog-и YYYY-MM-DD--Create-table_name.yml (.xml,.yml,.json,.sql): 2022-08-04--Create-author.yaml
     - Создать changelog в каталоге с данными (db/changelog/data/1.0 и db/changelog/data/1.0/csv)   
+
+//----------//
+
 20. Создать классы сущностей и разметить их аннотациями 
       @Entity, 
       @Id, 
