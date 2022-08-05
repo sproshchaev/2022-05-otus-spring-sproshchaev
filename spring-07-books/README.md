@@ -96,7 +96,7 @@ Development on the Spring Framework
       - данные для БД (data.sql): databaseChangeLog.- includeAll.path: db/changelog/data/
     - Создать каталог для changelog-ов (схемы БД): resources/db/changelog/1.0
     - Создать changelog-и YYYY-MM-DD--Create-table_name.yml (.xml,.yml,.json,.sql): 2022-08-04--Create-author.yaml
-    - Создать changelog в каталоге с данными (db/changelog/data/):   
+    - Создать changelog в каталоге с данными (db/changelog/data/1.0 и db/changelog/data/1.0/csv)   
 20. Создать классы сущностей и разметить их аннотациями 
       @Entity, 
       @Id, 
