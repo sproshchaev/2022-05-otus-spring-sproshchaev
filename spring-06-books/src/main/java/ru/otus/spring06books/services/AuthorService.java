@@ -1,7 +1,6 @@
 package ru.otus.spring06books.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.shell.standard.ShellOption;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring06books.entities.Author;
@@ -48,8 +47,8 @@ public class AuthorService {
      */
     @Transactional(readOnly = true)
     public String getAuthorById(long id) {
-        Author result = authorRepositoryJpa.getAuthorById(1);
-        return result == null ? "Author not found!" : result.toString();
+        Author author = authorRepositoryJpa.getAuthorById(1);
+        return author == null ? "Author not found!" : author.getFullName();
     }
 
     /**
@@ -91,9 +90,12 @@ public class AuthorService {
      */
     @Transactional(readOnly = true)
     public String getAllAuthors() {
-        List<Author> result = authorRepositoryJpa.getAllAuthors();
-        return result.size() == 0 ? "Authors not found!" : result.toString();
+        List<Author> authorList = authorRepositoryJpa.getAllAuthors();
+        String authorsString = "Authors in the library: ";
+        for (int i = 0; i < authorList.size(); i++) {
+            authorsString = authorList + " " + authorList.get(i).getFullName() + (i < (authorList.size() - 1) ? ", " : ".");
+        }
+        return authorList.size() == 0 ? "Authors not found!" : authorsString;
     }
-
 
 }

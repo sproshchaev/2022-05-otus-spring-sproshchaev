@@ -51,11 +51,12 @@ public interface CommentRepository {
     boolean deleteCommentById(long id);
 
     /**
-     * Метод getAllComment получает все комментарии к книгам из библиотеки
+     * Метод getAllCommentsBookById получает все комментарии к книге из библиотеки
      *
+     * @param idBook
      * @return
      */
-    List<Comment> getAllComment();
+    List<Comment> getAllCommentsBookById(long idBook);
 
     /**
      * Метод getCountOfComment получает число комментариев к книгам в библиотеке

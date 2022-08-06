@@ -22,16 +22,13 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @DataJpaTest
 @Import(GenreRepositoryJpa.class)
 class GenreRepositoryJpaTest {
-
     /**
      * Внедрение зависимости тестируемого класса
      */
     @Autowired
     private GenreRepositoryJpa genreRepositoryJpa;
-
     @Autowired
     private TestEntityManager entityManager;
-
     /**
      * Поле ожидаемое количество жанров в базе
      */

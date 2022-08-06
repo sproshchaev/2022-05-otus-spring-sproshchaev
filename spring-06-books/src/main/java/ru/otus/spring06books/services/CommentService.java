@@ -1,13 +1,13 @@
 package ru.otus.spring06books.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.shell.standard.ShellOption;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.spring06books.entities.Author;
 import ru.otus.spring06books.entities.Book;
 import ru.otus.spring06books.entities.Comment;
 import ru.otus.spring06books.repositories.CommentRepositoryJpa;
+
+import java.util.List;
 
 /**
  * Класс CommentService содержит методы сервиса работы с репозиторием Комментариев к книгам библиотеки
@@ -91,6 +91,25 @@ public class CommentService {
         long id = commentRepositoryJpa.getIdByComment(comment);
         return id == 0 ? "Comment '" + comment.getCommentText() + "' not found in the library!" : "Comment '"
                 + comment.getCommentText() + "' has an id=" + id;
+    }
+
+    /**
+     * Метод getAllCommentsBookById возвращает все комментарии к книге
+     * Если id книги не найден - метод вернет строку ""
+     * Аннотация @Transactional(readOnly = true) - метод не изменяет данные
+     * Метод не подразумевает изменения данных в БД, используется рекомендуемая аннотация @Transactional(readOnly = true)
+     *
+     * @param id
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public String getAllCommentsBookById(long idBook) {
+        List<Comment> commentList = commentRepositoryJpa.getAllCommentsBookById(idBook);
+        String commentsString = "All comments on this book: ";
+        for (int i = 0; i < commentList.size(); i++) {
+            commentsString = commentsString + " " + commentList.get(i).getCommentText() + (i < (commentList.size() - 1) ? ", " : ".");
+        }
+        return commentList.size() == 0 ? "Genres not found!" : commentsString;
     }
 
 

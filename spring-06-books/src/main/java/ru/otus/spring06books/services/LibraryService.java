@@ -13,7 +13,6 @@ import ru.otus.spring06books.repositories.GenreRepositoryJpa;
  */
 @Service
 public class LibraryService {
-
     private final AuthorRepositoryJpa authorRepositoryJpa;
     private final GenreRepositoryJpa genreRepositoryJpa;
     private final CommentRepositoryJpa commentRepositoryJpa;

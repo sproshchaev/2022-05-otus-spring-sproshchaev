@@ -314,6 +314,19 @@ public class AppEventsCommands {
     }
 
     /**
+     * Метод getAllCommentsBookById возвращает все комментарии к книге
+     * Сокращенный вызов: "gacbbi", "getallcommentsbookbyid" --id idBook
+     * Пример: gacbbi --id 1
+     *
+     * @param id
+     * @return
+     */
+    @ShellMethod(value = "Get all comments on the book by id", key = {"gacbbi", "getallcommentsbookbyid"})
+    public String getAllCommentsBookById(@ShellOption(defaultValue = "1") long id) {
+        return commentService.getAllCommentsBookById(id);
+    }
+
+    /**
      * Метод getIdByComment возвращает id для комментария (cRud)
      * Сокращенный вызов: "gibс", "getidbycomment" --comment comment_text
      * Пример: gibс --comment 'The Pilgrims Progress — is a very interesting book!'

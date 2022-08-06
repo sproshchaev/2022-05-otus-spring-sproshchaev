@@ -121,14 +121,18 @@ public class CommentRepositoryJpa implements CommentRepository {
     }
 
     /**
-     * Метод getAllComment получает все комментарии к книгам из библиотеки
+     * Метод getAllCommentsBookById получает все комментарии к книге из библиотеки
+     * Если книга не найдена - метод возвращает пустую коллекцию комментариев
      *
+     * @param idBook
      * @return
      */
     @Override
-    public List<Comment> getAllComment() {
+    public List<Comment> getAllCommentsBookById(long idBook) {
         TypedQuery<Comment> query = entityManager.createQuery("select c " +
-                "from Comment c ", Comment.class);
+                "from Comment c " +
+                "where c.book.id = :idBook", Comment.class);
+        query.setParameter("idBook", idBook);
         List<Comment> commentsList = query.getResultList();
         return commentsList;
     }

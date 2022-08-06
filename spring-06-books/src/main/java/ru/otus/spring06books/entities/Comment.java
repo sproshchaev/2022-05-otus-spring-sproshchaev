@@ -34,6 +34,7 @@ public class Comment {
 
     /**
      * Конструктор класса с параметром commentText
+     *
      * @param commentText
      */
     public Comment(String commentText) {

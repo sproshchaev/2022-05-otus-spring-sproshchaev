@@ -125,6 +125,7 @@ create table t (id bigint auto_increment primary key,...), то эта опци�
 "cc" - Create a new book comment (Crud), example: cc --idBook 1 --comment 'I read the book with pleasure :)'
 "gcbi" - Get comment by its id (cRud), example: gcbi --id 1
 "gibс" - Getting an id by comment, example: gibс --comment 'The Pilgrims Progress — is a very interesting book!'
+"gacbbi" - Get all comments on the book by id
 "uc" - Update comment by id (crUd), example: uc --id 1 --comment 'New comment'
 "dc" - Deleting the selected comment by id (cruD), example: dc --id 1
 
@@ -161,3 +162,5 @@ CommentRepositoryJpa(getIdByComment)
 7. BookRepositoryJpa.java (getAllBooks) "Не стоит включать комментарии в основной запрос. Это размножит каждую книгу в результирующем 
 наборе по количеству комментариев к ней, коих могут быть сотни. См. пример в занятии по разбору ДЗ"
 - Исправлено: убран запрос комментариев, оставлен один query.set
+8. getAllComment() - Скорее всего нам этот метод никогда не понадобится. Редко когда нужны прямо все комментарии. Обычно нужны все по книге. Косвенно это подтверждается тем, что для него нет команды шелл
+- Исправлено: добавлен метод getAllCommentsBookById возвращает все комментарии к книге

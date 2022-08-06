@@ -109,17 +109,14 @@ class CommentRepositoryJpaTest {
     }
 
     /**
-     * Метод shouldGetAllComments тестирует getAllComment
+     * Метод shouldGetAllCommentsBookById тестирует getAllCommentsBookById
      */
-    @DisplayName("get a list of comments")
+    @DisplayName("get all comments on the book by id")
     @Test
-    void shouldGetAllComments() {
+    void shouldGetAllCommentsBookById() {
         List<Comment> expectedCommentsList = new ArrayList();
         expectedCommentsList.add(new Comment(new Book(1), "The Pilgrims Progress — is a very interesting book!"));
-        expectedCommentsList.add(new Comment(new Book(2), "Robinson Crusoe — is a very interesting book!"));
-        expectedCommentsList.add(new Comment(new Book(3), "The Holy War — is a very interesting book!"));
-        expectedCommentsList.add(new Comment(new Book(4), "The Farther Adventures of Robinson Crusoe — is a very interesting book!"));
-        List<Comment> actualCommentsList = commentRepositoryJpa.getAllComment();
+        List<Comment> actualCommentsList = commentRepositoryJpa.getAllCommentsBookById(1);
         assertThat(actualCommentsList.size()).isEqualTo(expectedCommentsList.size());
     }
 
