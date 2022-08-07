@@ -1,5 +1,7 @@
 [![Java](https://img.shields.io/badge/Java-E43222??style=for-the-badge&logo=java&logoColor=FFFFFF)](https://java.com/)
 [![Spring](https://img.shields.io/badge/Spring-FFFFFF??style=for-the-badge&logo=Spring)](https://spring.io/)
+[![H2](https://img.shields.io/badge/H2-0618D5??style=for-the-badge&logo=H2&logoColor=FFFFFF)](https://www.h2database.com/)
+[![Liquibase](https://img.shields.io/badge/Liquibase-FFFFFF??style=for-the-badge&logo=Liquibase&logoColor=3861F6)](https://www.liquibase.com/)
 
 # 2022-05-otus-spring-sproshchaev
 Development on the Spring Framework
@@ -95,19 +97,15 @@ liquibase с разными версиями)
     - Создать каталог для changelog-ов (схемы БД): resources/db/changelog/1.0
     - Создать changelog-и YYYY-MM-DD--Create-table_name.yml (.xml,.yml,.json,.sql): 2022-08-04--Create-author.yaml
     - Создать changelog в каталоге с данными (db/changelog/data/1.0 и db/changelog/data/1.0/csv)   
-
-//----------//
-
 20. Создать классы сущностей и разметить их аннотациями 
       @Entity, 
       @Id, 
       @GeneratedValue(strategy = GenerationType.IDENTITY) - если id формируется на уровне БД (через 
 create table t (id bigint auto_increment primary key,...), то эта опция все-равно необходима!
       @ManyToOne
-20. Над сервисами (не в репозитории!) разместить аннотации:
+21. Над сервисами (не в репозитории!) разместить аннотации:
 - @Transactional - если метод изменяет данные (чтение)
 - @Transactional(readOnly = true) - если метод не изменяет данные (чтение) 
-21. В репозитории предпочтительнее использовать TypedQuery
 
 ### Примечания
 
