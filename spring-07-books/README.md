@@ -63,8 +63,8 @@ Development on the Spring Framework
 8. Dependencies: Spring Shell I/O, Spring Data JPA
    Примечание: в Dependencies есть возможность дополнительно добавить зависимости:
    - H2 Database, в данной сборке эта зависимость не включена (планируется ручное добавление базы в проекте);
-   - Liquibase Migration, в данной сборке эта зависимость не включена (groupId: org.liquibase, artifactId: liquibase-core
-, version: 4.14.0 + рекомендуется groupId: org.yaml, artifactId: snakeyaml, version: 1.30);
+   - Liquibase Migration, в данной сборке эта зависимость не включена (groupId: org.liquibase, artifactId: liquibase-core, 
+version: 4.14.0 + рекомендуется groupId: org.yaml, artifactId: snakeyaml, version: 1.30);
    - Flyway Migration (в данной сборке эта зависимость не включена).
 9. Сохранить spring-07-books.zip в Java\2022-05-otus-spring-sproshchaev
 10. Разархивировать архив Java\2022-05-otus-spring-sproshchaev\spring-07-books.zip (файл .zip удалить)
@@ -116,16 +116,16 @@ create table t (id bigint auto_increment primary key,...), то эта опци�
 "cg" - Create a new genre of books in the library (Crud)
 "gibg" - Getting a genre id (cRud)
 "ggbi" - Getting information about the author from the library by id (cRud)
+"gag" - Getting a list of all genres from the library (cRud)
 "ug" - Updating information about the genre (crUd)
 "dg" - Deleting genre data from the library (cruD)
 #### CRUD for Authors
-"ca" - Create a new Author of books in the library (Crud)
-"giba" - Getting an id by author (cRud)
-"gabi" - Getting information about the author from the library by id (cRud)
-"gaa" - Getting a list of all authors from the library (cRud)
-"gag" - Getting a list of all genres from the library (cRud)
-"ua" - Updating information about the author (crUd)
-"da" - Deleting author data from the library (cruD)
++ "ca" - Create a new Author of books in the library (Crud)
++ "giba" - Getting an id by author (cRud)
++ "gabi" - Getting information about the author from the library by id (cRud)
++ "gaa" - Getting a list of all authors from the library (cRud)
++ "ua" - Updating information about the author (crUd)
++ "dabi" - Deleting author by id from the library (cruD)
 #### CRUD for Books
 "cb" - Add information about a new book, author, genre to the library (Crud)
 "gbbi" - Get book data by its id (cRud)

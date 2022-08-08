@@ -1,5 +1,7 @@
 package ru.otus.spring07books.entities;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 
 /**
@@ -14,10 +16,18 @@ public class Comment {
     private long id;
     @Column(name = "comment_text")
     private String commentText;
-    @Column(name = "book_id")
-    private long bookId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id")
+    private Book book;
 
     public Comment() {
+
+    }
+
+    public Comment(long id, String commentText, Book book) {
+        this.id = id;
+        this.commentText = commentText;
+        this.book = book;
     }
 
     public long getId() {
@@ -36,12 +46,12 @@ public class Comment {
         this.commentText = commentText;
     }
 
-    public long getBookId() {
-        return bookId;
+    public Book getBook() {
+        return book;
     }
 
-    public void setBookId(long bookId) {
-        this.bookId = bookId;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     @Override
@@ -49,6 +59,6 @@ public class Comment {
         return "Comment{" +
                 "id=" + id +
                 ", commentText='" + commentText + '\'' +
-                ", Book id=" + bookId + '}';
+                ", Book=" + book.getTitle() + " " + book.getAuthor().getFullName() + " " + book.getGenre().getName() + '}';
     }
 }

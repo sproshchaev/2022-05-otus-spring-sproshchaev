@@ -1,0 +1,2 @@
+databaseChangeLog:
+      path: db/changelog/data/2.0/
