@@ -14,9 +14,7 @@ import java.util.Optional;
  */
 @Service
 public class AuthorService {
-
     private final AuthorRepository authorRepository;
-
     @Autowired
     public AuthorService(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
@@ -34,16 +32,14 @@ public class AuthorService {
      */
     @Transactional
     public String createNewAuthor(String fullName) {
-        String subStringResponse;
         List<Long> listIdAuthor = authorRepository.getAuthorIdByFullName(fullName);
         long authorId = listIdAuthor.size() == 0 ? 0 : listIdAuthor.get(0);
         if (authorId == 0) {
             authorId = authorRepository.save(new Author(fullName)).getId();
-            subStringResponse = "New author (" + authorId + ") " + fullName + " has been successfully created!";
+            return "New author (" + authorId + ") " + fullName + " has been successfully created!";
         } else {
-            subStringResponse = "Author " + fullName + " is already in the library, his id =" + authorId;
+            return "Author " + fullName + " is already in the library, his id =" + authorId;
         }
-        return authorId != 0 ? subStringResponse : "Create author error: Something went wrong!";
     }
 
     /**
@@ -103,13 +99,12 @@ public class AuthorService {
      */
     @Transactional
     public String updateAuthor(long id, String fullName) {
-        int countAuthorsUpdated = 0;
         if (authorRepository.findById(id).isPresent()) {
-            countAuthorsUpdated = authorRepository.updateAuthor(id, fullName);
+            int countAuthorsUpdated = authorRepository.updateAuthor(id, fullName);
+            return "Information about the author (" + "id=" + id + " " + fullName + ") has been updated for " + countAuthorsUpdated + " records!";
+        } else {
+            return "Update author error: author id=" + id + " not found!";
         }
-        return countAuthorsUpdated != 0 ?
-                "Information about the author (" + "id=" + id + " " + fullName + ") has been updated!"
-                : "Update author error: author id=" + id + " not found!";
     }
 
     /**
@@ -130,5 +125,4 @@ public class AuthorService {
             return "Delete error: author id=" + id + " not found!";
         }
     }
-
 }
