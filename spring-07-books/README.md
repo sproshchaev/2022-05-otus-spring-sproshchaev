@@ -113,12 +113,12 @@ create table t (id bigint auto_increment primary key,...), то эта опци�
 "a" - Information about the library
 "c" - Start console H2
 #### CRUD for Genres
-"cg" - Create a new genre of books in the library (Crud)
-"gibg" - Getting a genre id (cRud)
-"ggbi" - Getting information about the author from the library by id (cRud)
-"gag" - Getting a list of all genres from the library (cRud)
-"ug" - Updating information about the genre (crUd)
-"dg" - Deleting genre data from the library (cruD)
++ "cg" - Create a new genre of books in the library (Crud)
++ "gibg" - Getting a genre id (cRud)
++ "ggbi" - Getting information about the author from the library by id (cRud)
++ "gag" - Getting a list of all genres from the library (cRud)
++ "ug" - Updating information about the genre (crUd)
++ "dgbi" - Deleting genre data from the library (cruD)
 #### CRUD for Authors
 + "ca" - Create a new Author of books in the library (Crud)
 + "giba" - Getting an id by author (cRud)

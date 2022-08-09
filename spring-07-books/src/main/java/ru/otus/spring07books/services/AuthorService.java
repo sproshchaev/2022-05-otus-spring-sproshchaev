@@ -10,11 +10,14 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Класс AuthorService содержит методы сервиса работы с репозиторием Авторов библиотеки
+ * Класс AuthorService содержит методы сервиса работы с репозиторием авторов библиотеки
+ *
+ * @see ru.otus.spring07books.repositories.AuthorRepository
  */
 @Service
 public class AuthorService {
     private final AuthorRepository authorRepository;
+
     @Autowired
     public AuthorService(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
@@ -22,10 +25,10 @@ public class AuthorService {
 
     /**
      * Метод createNewAuthor (Crud)
-     * Метод выполняет проверку на наличие добавляемого автора в таблице authors для исключения дубликатов.
+     * Метод выполняет проверку на наличие добавляемого автора в таблице author для исключения дубликатов.
      * В результат, возвращаемый методом, добавляется информация - данный автор был создан, или же он уже есть
      * в справочнике авторов библиотеки
-     * Аннотация @Transactional - метод изменяет данные
+     * Метод изменяет данные
      *
      * @param fullName
      * @return
@@ -36,14 +39,14 @@ public class AuthorService {
         long authorId = listIdAuthor.size() == 0 ? 0 : listIdAuthor.get(0);
         if (authorId == 0) {
             authorId = authorRepository.save(new Author(fullName)).getId();
-            return "New author (" + authorId + ") " + fullName + " has been successfully created!";
+            return "New author (" + authorId + ") '" + fullName + "' has been successfully created!";
         } else {
-            return "Author " + fullName + " is already in the library, his id =" + authorId;
+            return "Author '" + fullName + "' is already in the library, his id =" + authorId;
         }
     }
 
     /**
-     * Метод getIdInfoByAuthor возвращает информацию в текстовом виде о результатах поиска
+     * Метод getIdByAuthor возвращает информацию в текстовом виде о результатах поиска
      * автора с данным id в библиотеке
      * Метод не изменяет данные
      *

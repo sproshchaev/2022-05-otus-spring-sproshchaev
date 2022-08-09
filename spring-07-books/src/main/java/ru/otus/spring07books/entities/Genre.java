@@ -19,6 +19,10 @@ public class Genre {
 
     }
 
+    public Genre(String name) {
+        this.name = name;
+    }
+
     public long getId() {
         return id;
     }
