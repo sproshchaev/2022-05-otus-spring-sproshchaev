@@ -5,6 +5,7 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.spring07books.services.AuthorService;
+import ru.otus.spring07books.services.BookService;
 import ru.otus.spring07books.services.GenreService;
 
 import java.sql.SQLException;
@@ -16,10 +17,12 @@ import java.sql.SQLException;
 public class AppEventsCommands {
     private final AuthorService authorService;
     private final GenreService genreService;
+    private final BookService bookService;
 
-    public AppEventsCommands(AuthorService authorService, GenreService genreService) {
+    public AppEventsCommands(AuthorService authorService, GenreService genreService, BookService bookService) {
         this.authorService = authorService;
         this.genreService = genreService;
+        this.bookService = bookService;
     }
 
     /**
@@ -182,6 +185,49 @@ public class AppEventsCommands {
     @ShellMethod(value = "Deleting genre data from the library", key = {"dgbi", "deletegenrebyid"})
     public String deleteGenreById(@ShellOption(defaultValue = "5") long id) {
         return genreService.deleteGenreById(id);
+    }
+
+    /**
+     * Метод createNewBook (Crud)
+     * Сокращенный вызов: "cb", "createbook" --title title_book --author author --genre genre
+     * Пример: cb --title 'A Life in Letters' --author 'Arthur Conan Doyle' --genre Autobiography
+     *
+     * @param title
+     * @param author
+     * @param genre
+     * @return
+     */
+    @ShellMethod(value = "Add information about a new book, author, genre to the library", key = {"cb", "createbook"})
+    public String createNewBook(@ShellOption(defaultValue = "A Life in Letters") String title,
+                                @ShellOption(defaultValue = "Arthur Conan Doyle") String author,
+                                @ShellOption(defaultValue = "Autobiography") String genre) {
+        return bookService.createNewBook(title, author, genre);
+    }
+
+    /**
+     * Метод getIdByBook возвращает id для книги, если она есть в библиотеке (cRud)
+     * Поиск выполняется по названию, автору и жанру книги
+     * Сокращенный вызов: "gibb", "getidbybook" --title title --fullName fullName --genre name
+     * Пример: gibb --title 'The Pilgrim’s Progress' --fullName 'John Bunyan' --name 'History'
+     */
+    @ShellMethod(value = "Getting an id by book", key = {"gibb", "getidbybook"})
+    public String getIdByBook(@ShellOption(defaultValue = "The Pilgrim’s Progress") String title,
+                              @ShellOption(defaultValue = "John Bunyan") String fullName,
+                              @ShellOption(defaultValue = "History") String name) {
+        return bookService.getIdByBook(title, fullName, name);
+    }
+
+    /**
+     * Метод getBookById возвращает книгу по ее id (cRud)
+     * Сокращенный вызов: "gbbi", "getbookbyid" --id id
+     * Пример: gbbi --id 1
+     *
+     * @param id
+     * @return
+     */
+    @ShellMethod(value = "Get book data by its id", key = {"gbbi", "getbookbyid"})
+    public String getBookById(@ShellOption(defaultValue = "1") long id) {
+        return bookService.getBookById(id);
     }
 
     // ---

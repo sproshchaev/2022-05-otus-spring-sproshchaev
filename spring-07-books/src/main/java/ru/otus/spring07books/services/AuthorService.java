@@ -56,7 +56,9 @@ public class AuthorService {
     @Transactional(readOnly = true)
     public String getIdByAuthor(String fullName) {
         List<Long> listIdAuthor = authorRepository.getAuthorIdByFullName(fullName);
-        return listIdAuthor.size() == 0 ? "Author '" + fullName + "' not found in the library!" : "Author '" + fullName + "' has an id=" + listIdAuthor.get(0);
+        return listIdAuthor.size() == 0
+                ? "Author '" + fullName + "' not found in the library!"
+                : "Author '" + fullName + "' has an id=" + listIdAuthor.get(0);
     }
 
     /**
