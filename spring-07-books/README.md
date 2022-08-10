@@ -113,32 +113,32 @@ create table t (id bigint auto_increment primary key,...), то эта опци�
 "a" - Information about the library
 "c" - Start console H2
 #### CRUD for Genres
-+ "cg" - Create a new genre of books in the library (Crud)
-+ "gibg" - Getting a genre id (cRud)
-+ "ggbi" - Getting information about the author from the library by id (cRud)
-+ "gag" - Getting a list of all genres from the library (cRud)
-+ "ug" - Updating information about the genre (crUd)
-+ "dgbi" - Deleting genre data from the library (cruD)
+"cg" - Create a new genre of books in the library (Crud)
+"gibg" - Getting a genre id (cRud)
+"ggbi" - Getting information about the author from the library by id (cRud)
+"gag" - Getting a list of all genres from the library (cRud)
+"ug" - Updating information about the genre (crUd)
+"dgbi" - Deleting genre data from the library (cruD)
 #### CRUD for Authors
-+ "ca" - Create a new Author of books in the library (Crud)
-+ "giba" - Getting an id by author (cRud)
-+ "gabi" - Getting information about the author from the library by id (cRud)
-+ "gaa" - Getting a list of all authors from the library (cRud)
-+ "ua" - Updating information about the author (crUd)
-+ "dabi" - Deleting author by id from the library (cruD)
+"ca" - Create a new Author of books in the library (Crud)
+"giba" - Getting an id by author (cRud)
+"gabi" - Getting information about the author from the library by id (cRud)
+"gaa" - Getting a list of all authors from the library (cRud)
+"ua" - Updating information about the author (crUd)
+"dabi" - Deleting author by id from the library (cruD)
 #### CRUD for Books
-+ "cb" - Add information about a new book, author, genre to the library (Crud)
-+ "gibb" - Getting an id by book (cRud)
-+ "gbbi" - Get book data by its id (cRud)
-+ "gab" - Get a list of all library books (cRud)
-+ "ub" - Update book data by id (crUd)
-+ "dbbi" - Deleting the selected book by id (cruD)
+"cb" - Add information about a new book, author, genre to the library (Crud)
+"gibb" - Getting an id by book (cRud)
+"gbbi" - Get book data by its id (cRud)
+"gab" - Get a list of all library books (cRud)
+"ub" - Update book data by id (crUd)
+"dbbi" - Deleting the selected book by id (cruD)
 #### CRUD for Comment
-+ "cc" - Create a new book comment (Crud)
-+ "gcbi" - Get comment by its id (cRud)
-+ "gacbbi" - Get all comments on the book by id (cRud)
-+ "ucbi" - Update comment by id (crUd)
-+ "dcbi" - Deleting the selected comment by id (cruD)
+"cc" - Create a new book comment (Crud) <br>
+"gcbi" - Get comment by its id (cRud) <br>
+"gacbbi" - Get all comments on the book by id (cRud) <br>
+"ucbi" - Update comment by id (crUd) <br>
+"dcbi" - Deleting the selected comment by id (cruD) <br>
 
 ### Тестирование
 1. Отключить Spring Shell в application.yml: spring.shell.interactive.enabled=false

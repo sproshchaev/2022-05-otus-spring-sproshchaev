@@ -17,11 +17,11 @@ import java.util.List;
  */
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
+
     List<Comment> getAllByBookId(long idBook);
 
     @Modifying
     @Query("update Comment c set c.commentText = :commentText where c.id = :idComment")
     Integer updateComment(@Param("idComment") long idComment, @Param("commentText") String commentText);
-
 
 }

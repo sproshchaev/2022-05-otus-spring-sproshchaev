@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
-import ru.otus.spring07books.services.AuthorService;
-import ru.otus.spring07books.services.BookService;
-import ru.otus.spring07books.services.CommentService;
-import ru.otus.spring07books.services.GenreService;
+import ru.otus.spring07books.services.*;
 
 import java.sql.SQLException;
 
@@ -21,13 +18,26 @@ public class AppEventsCommands {
     private final GenreService genreService;
     private final BookService bookService;
     private final CommentService commentService;
+    private final LibraryService libraryService;
 
     @Autowired
-    public AppEventsCommands(AuthorService authorService, GenreService genreService, BookService bookService, CommentService commentService) {
+    public AppEventsCommands(AuthorService authorService, GenreService genreService, BookService bookService, CommentService commentService, LibraryService libraryService) {
         this.authorService = authorService;
         this.genreService = genreService;
         this.bookService = bookService;
         this.commentService = commentService;
+        this.libraryService = libraryService;
+    }
+
+    /**
+     * Метод aboutLibrary выводит информацию о числе авторов, книг и жанров в библиотеке
+     * Сокращенный вызов: "a", "about"
+     *
+     * @return
+     */
+    @ShellMethod(value = "Information about the library", key = {"a", "about"})
+    public String aboutLibrary() {
+        return libraryService.aboutLibrary();
     }
 
     /**
