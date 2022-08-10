@@ -50,7 +50,9 @@ public class BookService {
         Author author = (authorList.size() == 0) ? authorRepository.save(new Author(authorFullName)) : authorList.get(0);
         List<Genre> genreList = genreRepository.getGenreByName(genreName);
         Genre genre = (genreList.size() == 0) ? genreRepository.save(new Genre(genreName)) : genreList.get(0);
-        List<Book> listBook = bookRepository.getBook(title, authorFullName, genreName);
+
+        List<Book> listBook = bookRepository.findBookByTitleAndAuthorAndGenre(title, author, genre);
+
         Book book = (listBook.size() == 0) ? bookRepository.save(new Book(title, author, genre)) : listBook.get(0);
         String bookInfo = "id=" + book.getId() + " '" + book.getTitle() + "' " + book.getAuthor().getFullName()
                 + " (" + book.getGenre().getName() + ")";

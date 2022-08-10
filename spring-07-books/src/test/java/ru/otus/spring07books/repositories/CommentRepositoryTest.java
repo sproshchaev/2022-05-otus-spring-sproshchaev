@@ -8,21 +8,16 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-class AuthorRepositoryTest {
+class CommentRepositoryTest {
 
     @Autowired
     private TestEntityManager entityManager;
 
     @Autowired
-    private AuthorRepository authorRepository;
+    private CommentRepository commentRepository;
 
     @Test
-    void getAuthorIdByFullName() {
-        // Вычитать через энтити менеджер
-        // Сравнить с тем, что возвращает
+    void updateComment() {
     }
 
-    @Test
-    void updateAuthor() {
-    }
 }

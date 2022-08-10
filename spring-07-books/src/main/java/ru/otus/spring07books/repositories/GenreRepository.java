@@ -17,11 +17,11 @@ import java.util.List;
 @Repository
 public interface GenreRepository extends JpaRepository<Genre, Long> {
 
+    List<Genre> getGenreByName(String name);
+
     @Query("select g.id from Genre g where g.name = :name")
     List<Long> getGenreIdByName(@Param("name") String name);
 
-    @Query("select g from Genre g where g.name = :name")
-    List<Genre> getGenreByName(@Param("name") String name);
 
     @Modifying
     @Query("update Genre g set g.name = :name where g.id = :id")

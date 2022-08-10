@@ -1,13 +1,17 @@
 package ru.otus.spring07books.repositories;
 
+import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring07books.entities.Author;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * Интерфейс AuthorRepository содержит методы работы со справочником авторов
@@ -17,11 +21,10 @@ import java.util.List;
 @Repository
 public interface AuthorRepository extends JpaRepository<Author, Long> {
 
+    List<Author> getAuthorByFullName(String fullName);
+
     @Query("select a.id from Author a where a.fullName = :fullName")
     List<Long> getAuthorIdByFullName(@Param("fullName") String fullName);
-
-    @Query("select a from Author a where a.fullName = :fullName")
-    List<Author> getAuthorByFullName(@Param("fullName") String fullName);
 
     @Modifying
     @Query("update Author a set a.fullName = :fullName where a.id = :id")

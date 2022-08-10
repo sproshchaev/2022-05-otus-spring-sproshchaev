@@ -19,19 +19,13 @@ import java.util.List;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
 
+    List<Book> findBookByTitleAndAuthorAndGenre(String title, Author author, Genre genre);
+
     @Query("select b.id from Book b " +
             "join Author a on (b.author.fullName = a.fullName) " +
             "join Genre g on (b.genre.name = g.name) " +
             "where (b.title = :title) and (a.fullName = :fullName) and (g.name = :name)")
     List<Long> getIdByBook (@Param("title") String title,
-                            @Param("fullName") String fullName,
-                            @Param("name") String name);
-
-    @Query("select b from Book b " +
-            "join Author a on (b.author.fullName = a.fullName) " +
-            "join Genre g on (b.genre.name = g.name) " +
-            "where (b.title = :title) and (a.fullName = :fullName) and (g.name = :name)")
-    List<Book> getBook (@Param("title") String title,
                             @Param("fullName") String fullName,
                             @Param("name") String name);
 
