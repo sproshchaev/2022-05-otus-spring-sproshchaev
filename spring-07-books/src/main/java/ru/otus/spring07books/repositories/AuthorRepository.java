@@ -23,7 +23,6 @@ public interface AuthorRepository extends JpaRepository<Author, Long> {
     @Query("select a from Author a where a.fullName = :fullName")
     List<Author> getAuthorByFullName(@Param("fullName") String fullName);
 
-
     @Modifying
     @Query("update Author a set a.fullName = :fullName where a.id = :id")
     Integer updateAuthor(@Param("id") long id, @Param("fullName") String fullName);

@@ -230,6 +230,51 @@ public class AppEventsCommands {
         return bookService.getBookById(id);
     }
 
+    /**
+     * Метод getAllBook возвращает все книги из библиотеки (cRud)
+     * Сокращенный вызов: "gab", "getallbook"
+     * Пример: gab
+     *
+     * @return
+     */
+    @ShellMethod(value = "Get a list of all library books", key = {"gab", "getallbook"})
+    public String getAllBook() {
+        return bookService.getAllBook();
+    }
+
+    /**
+     * Метод updateBookById обновляет данные по книге: название, автора, жанр (crUd)
+     * Сокращенный вызов: "ub", "updatebook" --id id --title new_title --author new_author --genre new_genre
+     * Пример: ub --id 1 --title 'New title' --author 'New Author' --genre 'New Genre'
+     *
+     * @param id
+     * @param title
+     * @param author
+     * @param genre
+     * @return
+     */
+    @ShellMethod(value = "Update book data by id", key = {"ub", "updatebook"})
+    public String updateBookById(@ShellOption(defaultValue = "1") long id,
+                                 @ShellOption(defaultValue = "New Title") String title,
+                                 @ShellOption(defaultValue = "New Author") String author,
+                                 @ShellOption(defaultValue = "New Genre") String genre) {
+        return bookService.updateBookById(id, title, author, genre);
+    }
+
+    /**
+     * Метод deleteBookById (cruD)
+     * Сокращенный вызов: "dbbi", "deletebookbyid" --id id
+     * Пример: dbbi --id 1
+     *
+     * @param id
+     * @return
+     */
+    @ShellMethod(value = "Deleting the selected book by id", key = {"dbbi", "deletebookbyid"})
+    public String deleteBookById(@ShellOption(defaultValue = "1") long id) {
+        return bookService.deleteBookById(id);
+    }
+
+
     // ---
 
     /**

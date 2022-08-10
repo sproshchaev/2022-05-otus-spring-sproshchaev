@@ -130,9 +130,9 @@ create table t (id bigint auto_increment primary key,...), то эта опци�
 + "cb" - Add information about a new book, author, genre to the library (Crud)
 + "gibb" - Getting an id by book (cRud)
 + "gbbi" - Get book data by its id (cRud)
-"gab" - Get a list of all library books (cRud)
-"ub" - Update book data by id (crUd)
-"db" - Deleting the selected book by id (cruD)
++ "gab" - Get a list of all library books (cRud)
++ "ub" - Update book data by id (crUd)
+"dbbi" - Deleting the selected book by id (cruD)
 #### CRUD for Comment
 "cc" - Create a new book comment (Crud)
 "gcbi" - Get comment by its id (cRud)

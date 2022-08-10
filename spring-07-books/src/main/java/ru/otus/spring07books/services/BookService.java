@@ -39,9 +39,9 @@ public class BookService {
      * в библиотеке
      * Метод изменяет данные
      *
-     * @param title  (book.title)
-     * @param author (author.fullName)
-     * @param genreName  (genre.name)
+     * @param title     (book.title)
+     * @param author    (author.fullName)
+     * @param genreName (genre.name)
      * @return
      */
     @Transactional
@@ -90,4 +90,70 @@ public class BookService {
                 + " (genre " + book.get().getGenre().getName() + ")";
     }
 
+    /**
+     * Метод getAllBook возвращает все книги из библиотеки (cRud)
+     * Метод не изменяет данные
+     *
+     * @return
+     */
+    @Transactional(readOnly = true)
+    public String getAllBook() {
+        List<Book> listBook = bookRepository.findAll();
+        String bookString = "Books (" + listBook.size() + "): ";
+        for (int i = 0; i < listBook.size(); i++) {
+            bookString = bookString + (i + 1) + ")" + listBook.get(i).getTitle() + " "
+                    + listBook.get(i).getAuthor().getFullName() + " ("
+                    + listBook.get(i).getGenre().getName() + ")"
+                    + (i < (listBook.size() - 1) ? ", " : ".");
+        }
+        return "Received " + (listBook == null ? 0 : bookString);
+    }
+
+    /**
+     * Метод updateBookById обновляет данные по книге: название, автора, жанр (crUd)
+     * Перед изменением данных проверяется автор и жанр на наличие в справочниках для исключения дубликатов
+     * Если id книги не найден, возвращается сообщение о неуспешном обновлении.
+     * Метод изменяет данные
+     *
+     * @param id
+     * @param title
+     * @param author
+     * @param genre
+     * @return
+     */
+    @Transactional
+    public String updateBookById(long id, String title, String authorFullName, String genreName) {
+        Optional<Book> book = bookRepository.findById(id);
+        if (book.isPresent()) {
+            List<Author> authorList = authorRepository.getAuthorByFullName(authorFullName);
+            Author author = (authorList.size() == 0) ? authorRepository.save(new Author(authorFullName)) : authorList.get(0);
+            List<Genre> genreList = genreRepository.getGenreByName(genreName);
+            Genre genre = (genreList.size() == 0) ? genreRepository.save(new Genre(genreName)) : genreList.get(0);
+            int countUpdatedBooks = bookRepository.updateBook(id, title, author, genre);
+            return countUpdatedBooks == 1 ? "The book id=" + id + " has " + "been updated (title: " + title + ", author: " + author + ", genre: " + genre + ")"
+                    : "Error: Something went wrong!";
+        } else {
+            return "Book id=" + id + " not found";
+        }
+    }
+
+    /**
+     * Метод deleteBookById (cruD)
+     * Перед удалением выполняется проверка на наличие книги с данным id в библиотеке,
+     * если книга есть, то производится ее удаление, если нет - возвращается сообщение,
+     * что книга не найдена.
+     * Метод изменяет данные
+     *
+     * @param id
+     * @return
+     */
+    @Transactional
+    public String deleteBookById(long id) {
+        if (bookRepository.findById(id).isPresent()) {
+            bookRepository.deleteById(id);
+            return "The book id=" + id + " has been deleted";
+        } else {
+            return "Book id=" + id + " not found";
+        }
+    }
 }
