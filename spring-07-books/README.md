@@ -78,17 +78,17 @@ version: 4.14.0 + рекомендуется groupId: org.yaml, artifactId: snak
     - groupId: org.yaml, artifactId: snakeyaml, version: 1.30 (рекомендуется эта зависимость для корректной работы 
 liquibase с разными версиями)
 17. Создать файл и добавить в файл application.yml: 
-      url=jdbc:h2:mem:books, 
-      username=sa, password, 
-      driver-class-name=org.h2.Driver, 
-      gpa.generate-ddl=false, 
-      gpa.hibernate.ddl-auto=none, 
-      gpa.show-sql=true,
-      liquibase.enabled.true #sql.init.mode=always,
-                             #sql.init.data-locations=data.sql,
-                             #sql.init.schema-locations=schema.sql,
-      h2.console.path=/h2-console,
-      h2.console.settings.web-allow-others=true
+      url=jdbc:h2:mem:books, <br>
+      username=sa, password, <br>
+      driver-class-name=org.h2.Driver, <br> 
+      gpa.generate-ddl=false, <br>
+      gpa.hibernate.ddl-auto=none, <br>
+      gpa.show-sql=true, <br>
+      liquibase.enabled.true #sql.init.mode=always, <br>
+                             #sql.init.data-locations=data.sql, <br>
+                             #sql.init.schema-locations=schema.sql, <br>
+      h2.console.path=/h2-console, <br>
+      h2.console.settings.web-allow-others=true <br>
 19. Настройка liquibase:
     - Создать структуру каталогов resources/db/changelog
     - Создать resources/db/changelog/db.changelog-master.yaml:
@@ -110,29 +110,29 @@ create table t (id bigint auto_increment primary key,...), то эта опци�
 ### Примечания
 
 ### Вызов методов (@ShellMethod)
-"a" - Information about the library
-"c" - Start console H2
+"a" - Information about the library <br>
+"c" - Start console H2 <br>
 #### CRUD for Genres
-"cg" - Create a new genre of books in the library (Crud)
-"gibg" - Getting a genre id (cRud)
-"ggbi" - Getting information about the author from the library by id (cRud)
-"gag" - Getting a list of all genres from the library (cRud)
-"ug" - Updating information about the genre (crUd)
-"dgbi" - Deleting genre data from the library (cruD)
+"cg" - Create a new genre of books in the library (Crud) <br>
+"gibg" - Getting a genre id (cRud) <br>
+"ggbi" - Getting information about the author from the library by id (cRud) <br>
+"gag" - Getting a list of all genres from the library (cRud) <br>
+"ug" - Updating information about the genre (crUd) <br>
+"dgbi" - Deleting genre data from the library (cruD) <br>
 #### CRUD for Authors
-"ca" - Create a new Author of books in the library (Crud)
-"giba" - Getting an id by author (cRud)
-"gabi" - Getting information about the author from the library by id (cRud)
-"gaa" - Getting a list of all authors from the library (cRud)
-"ua" - Updating information about the author (crUd)
-"dabi" - Deleting author by id from the library (cruD)
+"ca" - Create a new Author of books in the library (Crud) <br>
+"giba" - Getting an id by author (cRud) <br>
+"gabi" - Getting information about the author from the library by id (cRud) <br>
+"gaa" - Getting a list of all authors from the library (cRud) <br>
+"ua" - Updating information about the author (crUd) <br>
+"dabi" - Deleting author by id from the library (cruD) <br>
 #### CRUD for Books
-"cb" - Add information about a new book, author, genre to the library (Crud)
-"gibb" - Getting an id by book (cRud)
-"gbbi" - Get book data by its id (cRud)
-"gab" - Get a list of all library books (cRud)
-"ub" - Update book data by id (crUd)
-"dbbi" - Deleting the selected book by id (cruD)
+"cb" - Add information about a new book, author, genre to the library (Crud) <br>
+"gibb" - Getting an id by book (cRud) <br>
+"gbbi" - Get book data by its id (cRud) <br>
+"gab" - Get a list of all library books (cRud) <br>
+"ub" - Update book data by id (crUd) <br>
+"dbbi" - Deleting the selected book by id (cruD) <br>
 #### CRUD for Comment
 "cc" - Create a new book comment (Crud) <br>
 "gcbi" - Get comment by its id (cRud) <br>

@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring07books.entities.Comment;
-import ru.otus.spring07books.entities.Genre;
 
 import java.util.List;
 

@@ -7,7 +7,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring07books.entities.Genre;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 /**

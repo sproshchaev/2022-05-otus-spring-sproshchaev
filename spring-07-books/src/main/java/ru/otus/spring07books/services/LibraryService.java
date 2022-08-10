@@ -9,7 +9,7 @@ import ru.otus.spring07books.repositories.CommentRepository;
 import ru.otus.spring07books.repositories.GenreRepository;
 
 /**
- * Класс LibraryService содержит методы для работы библиотекой (совокупный объект)
+ * Класс LibraryService содержит методы для работы библиотекой (как совокупный объект)
  */
 @Service
 public class LibraryService {
