@@ -1,11 +1,13 @@
 package ru.otus.spring07books.shell;
 
 import org.h2.tools.Console;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.spring07books.services.AuthorService;
 import ru.otus.spring07books.services.BookService;
+import ru.otus.spring07books.services.CommentService;
 import ru.otus.spring07books.services.GenreService;
 
 import java.sql.SQLException;
@@ -18,11 +20,14 @@ public class AppEventsCommands {
     private final AuthorService authorService;
     private final GenreService genreService;
     private final BookService bookService;
+    private final CommentService commentService;
 
-    public AppEventsCommands(AuthorService authorService, GenreService genreService, BookService bookService) {
+    @Autowired
+    public AppEventsCommands(AuthorService authorService, GenreService genreService, BookService bookService, CommentService commentService) {
         this.authorService = authorService;
         this.genreService = genreService;
         this.bookService = bookService;
+        this.commentService = commentService;
     }
 
     /**
@@ -274,6 +279,74 @@ public class AppEventsCommands {
         return bookService.deleteBookById(id);
     }
 
+    /**
+     * Метод createComment создает новый комментарий (Crud)
+     * Сокращенный вызов: "cc", "createcomment" --idBook idBook --comment commentText
+     * Пример: cc --idBook 1 --comment 'I read the book with pleasure :)'
+     *
+     * @param idBook
+     * @param comment
+     * @return
+     */
+    @ShellMethod(value = "Create a new book comment", key = {"cc", "createcomment"})
+    public String createComment(@ShellOption(defaultValue = "1") long idBook,
+                                @ShellOption(defaultValue = "I read the book with pleasure :)") String comment) {
+        return commentService.createCommentByIdBook(idBook, comment);
+    }
+
+    /**
+     * Метод getCommentById возвращает комментарий к книге по его id (cRud)
+     * Сокращенный вызов: "gcbi", "getcommentbyid" --id id
+     * Пример: gcbi --id 1
+     *
+     * @param id
+     * @return
+     */
+    @ShellMethod(value = "Get comment by its id", key = {"gcbi", "getcommentbyid"})
+    public String getCommentById(@ShellOption(defaultValue = "1") long id) {
+        return commentService.getCommentById(id);
+    }
+
+    /**
+     * Метод getAllCommentsBookById возвращает все комментарии к книге
+     * Сокращенный вызов: "gacbbi", "getallcommentsbookbyid" --id idBook
+     * Пример: gacbbi --id 1
+     *
+     * @param id
+     * @return
+     */
+    @ShellMethod(value = "Get all comments on the book by id", key = {"gacbbi", "getallcommentsbookbyid"})
+    public String getAllCommentsBookById(@ShellOption(defaultValue = "1") long id) {
+        return commentService.getAllCommentsBookById(id);
+    }
+
+    /**
+     * Метод updateCommentById обновляет комментарий к книге по его id (crUd)
+     * Сокращенный вызов: "ucbi", "updatecommentbyid" --id id --comment new_comment
+     * Пример: ucbi --id 1 --comment 'New comment'
+     *
+     * @param id
+     * @param comment
+     * @return
+     */
+    @ShellMethod(value = "Update comment by id", key = {"ucbi", "updatecommentbyid"})
+    public String updateCommentById(@ShellOption(defaultValue = "1") long id,
+                                    @ShellOption(defaultValue = "New comment") String comment) {
+        return commentService.updateCommentById(id, comment);
+    }
+
+    /**
+     * Метод deleteCommentById удаляет комментарий по id (cruD)
+     * Сокращенный вызов: "dcbi", "deletecommentbyid" --id id
+     * Пример: dcbi --id 1
+     *
+     * @param id
+     * @return
+     */
+    @ShellMethod(value = "Deleting the selected comment by id", key = {"dcbi", "deletecommentbyid"})
+    public String deleteCommentById(@ShellOption(defaultValue = "1") long id) {
+        return commentService.deleteCommentById(id);
+    }
 
     // ---
 

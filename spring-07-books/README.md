@@ -132,12 +132,13 @@ create table t (id bigint auto_increment primary key,...), то эта опци�
 + "gbbi" - Get book data by its id (cRud)
 + "gab" - Get a list of all library books (cRud)
 + "ub" - Update book data by id (crUd)
-"dbbi" - Deleting the selected book by id (cruD)
++ "dbbi" - Deleting the selected book by id (cruD)
 #### CRUD for Comment
-"cc" - Create a new book comment (Crud)
-"gcbi" - Get comment by its id (cRud)
-"uc" - Update comment by id (crUd)
-"dc" - Deleting the selected comment by id (cruD)
++ "cc" - Create a new book comment (Crud)
++ "gcbi" - Get comment by its id (cRud)
++ "gacbbi" - Get all comments on the book by id (cRud)
++ "ucbi" - Update comment by id (crUd)
++ "dcbi" - Deleting the selected comment by id (cruD)
 
 ### Тестирование
 1. Отключить Spring Shell в application.yml: spring.shell.interactive.enabled=false

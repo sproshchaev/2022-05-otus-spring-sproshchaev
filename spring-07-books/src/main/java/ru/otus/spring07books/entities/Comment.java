@@ -1,7 +1,5 @@
 package ru.otus.spring07books.entities;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.*;
 
 /**
@@ -22,6 +20,11 @@ public class Comment {
 
     public Comment() {
 
+    }
+
+    public Comment(String commentText, Book book) {
+        this.commentText = commentText;
+        this.book = book;
     }
 
     public Comment(long id, String commentText, Book book) {

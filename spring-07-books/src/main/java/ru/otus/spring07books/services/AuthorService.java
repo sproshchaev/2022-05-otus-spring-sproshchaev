@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Класс AuthorService содержит методы сервиса работы с репозиторием авторов библиотеки
+ * Класс AuthorService содержит методы для работы с репозиторием авторов библиотеки
  *
  * @see ru.otus.spring07books.repositories.AuthorRepository
  */

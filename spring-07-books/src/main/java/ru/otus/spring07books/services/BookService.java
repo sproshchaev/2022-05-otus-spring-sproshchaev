@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Класс BookService содержит методы сервиса работы с репозиторием книг библиотеки
+ * Класс BookService содержит методы для работы с репозиторием книг библиотеки
  *
  * @see
  */

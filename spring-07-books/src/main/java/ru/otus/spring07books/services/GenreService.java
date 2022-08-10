@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Класс GenreService содержит методы сервиса работы с репозиторием жанров библиотеки
+ * Класс GenreService содержит методы для работы с репозиторием жанров библиотеки
  *
  * @see ru.otus.spring07books.repositories.GenreRepository
  */
