@@ -1,5 +1,6 @@
 package ru.otus.spring07books.repositories;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,6 +11,7 @@ import ru.otus.spring07books.entities.Book;
 import ru.otus.spring07books.entities.Genre;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Интерфейс BookRepository содержит методы работы с книгами
@@ -18,6 +20,12 @@ import java.util.List;
  */
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
+
+    @EntityGraph(attributePaths = {"author", "genre"})
+    List<Book> findAll();
+
+    @EntityGraph(attributePaths = {"author", "genre"})
+    Optional<Book> findBookById(long id);
 
     List<Book> findBookByTitleAndAuthorAndGenre(String title, Author author, Genre genre);
 

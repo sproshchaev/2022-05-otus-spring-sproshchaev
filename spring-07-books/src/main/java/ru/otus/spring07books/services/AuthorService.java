@@ -130,4 +130,15 @@ public class AuthorService {
             return "Delete error: author id=" + id + " not found!";
         }
     }
+
+    /**
+     * Метод getFirstAuthorByFullName возвращает первого автора из списка, авторов с одинаковым значением поля fullName
+     *
+     * @param authorFullName
+     * @return
+     */
+    public Author getFirstAuthorByFullName(String authorFullName) {
+        List<Author> authorList = authorRepository.getAuthorByFullName(authorFullName);
+        return (authorList.size() == 0) ? authorRepository.save(new Author(authorFullName)) : authorList.get(0);
+    }
 }

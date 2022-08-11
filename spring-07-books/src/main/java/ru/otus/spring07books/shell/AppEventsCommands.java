@@ -358,8 +358,6 @@ public class AppEventsCommands {
         return commentService.deleteCommentById(id);
     }
 
-    // ---
-
     /**
      * Метод startConsoleH2 запускает консоль
      */

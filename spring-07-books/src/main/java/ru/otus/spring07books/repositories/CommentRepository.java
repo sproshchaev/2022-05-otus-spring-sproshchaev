@@ -1,5 +1,6 @@
 package ru.otus.spring07books.repositories;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import ru.otus.spring07books.entities.Comment;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Интерфейс CommentRepository содержит методы работы со справочником жанров
@@ -18,6 +20,9 @@ import java.util.List;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     List<Comment> getAllByBookId(long idBook);
+
+    @EntityGraph(attributePaths = {"book"})
+    Optional<Comment> findCommentById(long id);
 
     @Modifying
     @Query("update Comment c set c.commentText = :commentText where c.id = :idComment")

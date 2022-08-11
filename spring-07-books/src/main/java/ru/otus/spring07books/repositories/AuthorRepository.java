@@ -1,17 +1,13 @@
 package ru.otus.spring07books.repositories;
 
-import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring07books.entities.Author;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
-import java.util.function.Function;
 
 /**
  * Интерфейс AuthorRepository содержит методы работы со справочником авторов

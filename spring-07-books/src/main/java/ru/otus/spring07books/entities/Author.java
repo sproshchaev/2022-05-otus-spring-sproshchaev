@@ -3,7 +3,7 @@ package ru.otus.spring07books.entities;
 import javax.persistence.*;
 
 /**
- * Класс Автор
+ * Класс Автор книги
  */
 @Entity
 @Table(name = "author")

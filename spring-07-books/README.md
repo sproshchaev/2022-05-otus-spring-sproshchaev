@@ -143,8 +143,15 @@ create table t (id bigint auto_increment primary key,...), то эта опци�
 ### Тестирование
 1. Отключить Spring Shell в application.yml: spring.shell.interactive.enabled=false
 2. Добавить для тестирования Spring Shell в application.yml: spring.main.allow-circular-references=true
-3. В ресурсы тестов необходимо скопировать только: application.yml и data.sql. (файл schema.sql в ресурсы тестов 
-переносить нельзя иначе тесты будут тестировать не то, что находится в базе!)   
+3. B Liquibase используется databaseChangeLog.path: db/changelog/data/2.0/
+4. Аннотация replace = AutoConfigureTestDatabase.Replace.NONE определяет тестирование на базе приложения
+5. Аннотация @Transactional(propagation = Propagation.NOT_SUPPORTED) не используется
+6. Примеры тестирования:
+- Метод shouldGetGenreIdByName тестирует метод getGenreIdByName, первоначально выполняется через entityManager 
+сохранение сущности, далее сущность запрашивается через метод getGenreByName и сравниваются соответствующие поля
+- Метод shouldUpdateGenre тестирует метод updateGenre, первоначально выполняется метод updateGenre из GenreRepository, 
+далее через entityManager запрашивается сущность с idGenre и сравниваются соответствующие поля
+
 
 ### Статьи по теме
 1. Liquibase changelog (структура БД schema.sql) Formats https://docs.liquibase.com/concepts/changelogs/changelog-formats.html

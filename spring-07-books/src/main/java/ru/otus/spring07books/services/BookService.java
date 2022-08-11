@@ -6,9 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring07books.entities.Author;
 import ru.otus.spring07books.entities.Book;
 import ru.otus.spring07books.entities.Genre;
-import ru.otus.spring07books.repositories.AuthorRepository;
 import ru.otus.spring07books.repositories.BookRepository;
-import ru.otus.spring07books.repositories.GenreRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,15 +18,14 @@ import java.util.Optional;
  */
 @Service
 public class BookService {
-
-    private final AuthorRepository authorRepository;
-    private final GenreRepository genreRepository;
+    private final AuthorService authorService;
+    private final GenreService genreService;
     private final BookRepository bookRepository;
 
     @Autowired
-    public BookService(AuthorRepository authorRepository, GenreRepository genreRepository, BookRepository bookRepository) {
-        this.authorRepository = authorRepository;
-        this.genreRepository = genreRepository;
+    public BookService(AuthorService authorService, GenreService genreService, BookRepository bookRepository) {
+        this.authorService = authorService;
+        this.genreService = genreService;
         this.bookRepository = bookRepository;
     }
 
@@ -39,20 +36,16 @@ public class BookService {
      * в библиотеке
      * Метод изменяет данные
      *
-     * @param title     (book.title)
-     * @param author    (author.fullName)
-     * @param genreName (genre.name)
+     * @param title          (book.title)
+     * @param authorFullName (author.fullName)
+     * @param genreName      (genre.name)
      * @return
      */
     @Transactional
     public String createNewBook(String title, String authorFullName, String genreName) {
-        List<Author> authorList = authorRepository.getAuthorByFullName(authorFullName);
-        Author author = (authorList.size() == 0) ? authorRepository.save(new Author(authorFullName)) : authorList.get(0);
-        List<Genre> genreList = genreRepository.getGenreByName(genreName);
-        Genre genre = (genreList.size() == 0) ? genreRepository.save(new Genre(genreName)) : genreList.get(0);
-
+        Author author = authorService.getFirstAuthorByFullName(authorFullName);
+        Genre genre = genreService.getFirstGenreByName(genreName);
         List<Book> listBook = bookRepository.findBookByTitleAndAuthorAndGenre(title, author, genre);
-
         Book book = (listBook.size() == 0) ? bookRepository.save(new Book(title, author, genre)) : listBook.get(0);
         String bookInfo = "id=" + book.getId() + " '" + book.getTitle() + "' " + book.getAuthor().getFullName()
                 + " (" + book.getGenre().getName() + ")";
@@ -86,7 +79,7 @@ public class BookService {
      */
     @Transactional(readOnly = true)
     public String getBookById(long id) {
-        Optional<Book> book = bookRepository.findById(id);
+        Optional<Book> book = bookRepository.findBookById(id);
         return book.isEmpty() ? "The book was not found!" : "Book: "
                 + book.get().getId() + " " + book.get().getAuthor().getFullName()
                 + " (genre " + book.get().getGenre().getName() + ")";
@@ -119,18 +112,16 @@ public class BookService {
      *
      * @param id
      * @param title
-     * @param author
-     * @param genre
+     * @param authorFullName
+     * @param genreName
      * @return
      */
     @Transactional
     public String updateBookById(long id, String title, String authorFullName, String genreName) {
         Optional<Book> book = bookRepository.findById(id);
         if (book.isPresent()) {
-            List<Author> authorList = authorRepository.getAuthorByFullName(authorFullName);
-            Author author = (authorList.size() == 0) ? authorRepository.save(new Author(authorFullName)) : authorList.get(0);
-            List<Genre> genreList = genreRepository.getGenreByName(genreName);
-            Genre genre = (genreList.size() == 0) ? genreRepository.save(new Genre(genreName)) : genreList.get(0);
+            Author author = authorService.getFirstAuthorByFullName(authorFullName);
+            Genre genre = genreService.getFirstGenreByName(genreName);
             int countUpdatedBooks = bookRepository.updateBook(id, title, author, genre);
             return countUpdatedBooks == 1 ? "The book id=" + id + " has " + "been updated (title: " + title + ", author: " + author + ", genre: " + genre + ")"
                     : "Error: Something went wrong!";

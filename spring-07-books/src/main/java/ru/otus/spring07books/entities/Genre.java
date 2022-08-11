@@ -3,7 +3,7 @@ package ru.otus.spring07books.entities;
 import javax.persistence.*;
 
 /**
- * Класс Жанр
+ * Класс Жанр книги
  */
 @Entity
 @Table(name = "genre")

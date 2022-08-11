@@ -50,7 +50,10 @@ public class CommentService {
      */
     @Transactional(readOnly = true)
     public String getCommentById(long idComment) {
+        Optional<Comment> comment = commentRepository.findCommentById(idComment);
+/*
         Optional<Comment> comment = commentRepository.findById(idComment);
+*/
         return comment.isPresent() ? "Comment on the book ('" + comment.get().getBook().getTitle() + "' "
                 + comment.get().getBook().getAuthor().getFullName() + " "
                 + comment.get().getBook().getGenre().getName() + ") id=" + idComment + ":"

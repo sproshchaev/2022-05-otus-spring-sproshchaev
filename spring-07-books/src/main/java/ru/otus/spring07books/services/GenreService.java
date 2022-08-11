@@ -3,6 +3,7 @@ package ru.otus.spring07books.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.otus.spring07books.entities.Author;
 import ru.otus.spring07books.entities.Genre;
 import ru.otus.spring07books.repositories.GenreRepository;
 
@@ -130,4 +131,16 @@ public class GenreService {
             return "Delete error: genre id=" + id + " not found!";
         }
     }
+
+    /**
+     * Метод getFirstGenreByName возвращает первый жанр из списка с одинаковым значением поля name
+     *
+     * @param genreName
+     * @return
+     */
+    public Genre getFirstGenreByName(String genreName) {
+        List<Genre> authorList = genreRepository.getGenreByName(genreName);
+        return (authorList.size() == 0) ? genreRepository.save(new Genre(genreName)) : authorList.get(0);
+    }
+
 }

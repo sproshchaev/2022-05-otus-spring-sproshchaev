@@ -22,7 +22,6 @@ public interface GenreRepository extends JpaRepository<Genre, Long> {
     @Query("select g.id from Genre g where g.name = :name")
     List<Long> getGenreIdByName(@Param("name") String name);
 
-
     @Modifying
     @Query("update Genre g set g.name = :name where g.id = :id")
     Integer updateGenre(@Param("id") long id, @Param("name") String fullName);
