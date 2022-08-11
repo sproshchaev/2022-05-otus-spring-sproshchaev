@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2022-08-04--0001_author
+      author: sproshchaev
+      createTable:
+        tableName: author
+        columns:
+          - column:
+              name: id
+              type: bigint
+              autoIncrement: true
+              constraints:
+                nullable: false
+                primaryKey: true
+                primaryKeyName: pk_author
+          - column:
+              name: fullname
+              type: varchar(255)

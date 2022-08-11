@@ -1,0 +1,158 @@
+[![Java](https://img.shields.io/badge/Java-E43222??style=for-the-badge&logo=java&logoColor=FFFFFF)](https://java.com/)
+[![Spring](https://img.shields.io/badge/Spring-FFFFFF??style=for-the-badge&logo=Spring)](https://spring.io/)
+[![H2](https://img.shields.io/badge/H2-0618D5??style=for-the-badge&logo=H2&logoColor=FFFFFF)](https://www.h2database.com/)
+[![Liquibase](https://img.shields.io/badge/Liquibase-FFFFFF??style=for-the-badge&logo=Liquibase&logoColor=3861F6)](https://www.liquibase.com/)
+
+# 2022-05-otus-spring-sproshchaev
+Development on the Spring Framework
+-----------------------------------
+### Домашнее задание №7 (Занятие 13 "Белая магия" Spring Data: Spring Data JPA")
+Библиотеку на Spring Data JPA
+
+### Цель:
+Цель: максимально просто писать слой репозиториев с применением современных подходов
+Результат: приложение со слоем репозиториев на Spring Data JPA
+
+### Описание/Пошаговая инструкция выполнения домашнего задания:
+Домашнее задание выполняется переписыванием предыдущего на JPA.
+Требования:
+
+1. Переписать все репозитории по работе с книгами на Spring Data JPA репозитории.
+2. Используйте spring-boot-starter-data-jpa.
+3. Кастомные методы репозиториев (или с хитрым @Query) покрыть тестами, используя H2.
+4. @Transactional рекомендуется ставить на методы сервисов, а не репозиториев.
+Это домашнее задание будет использоваться в качестве основы для других ДЗ
+Данная работа не засчитывает предыдущую!
+Дополнение из Вебинара 11 по ДЗ:
+
+### Критерии оценки:
+Факт сдачи:
+0 - задание не сдано
+1 - задание сдано
+Степень выполнения (количество работающего функционала, что примет заказчик, что будет проверять тестировщик):
+0 - ничего не работает или отсутствует основной функционал
+1 - не работает или отсутствует большая часть критического функционала
+2 - основной функционал есть, возможны небольшие косяки
+3 - основной функционал есть, всё хорошо работает
+4 - основной функционал есть, всё хорошо работает, тесты и/или задание перевыполнено
+Способ выполнения (качество выполнения, стиль кода, как ревью перед мержем):
+0 - нужно править, мержить нельзя (нарушение соглашений, публичные поля)
+1 - лучше исправить в рамках этого ДЗ для повышения оценки
+2 - можно мержить, но в следующих ДЗ нужно поправить.
+3 - можно мержить, мелкие недочёты
+4 - отличная работа!
+5 - экстра балл за особо красивый кусочек кода/решение целиком (ставится только после отличной работы, отдельно не ставится)
+Статус "Принято" ставится от 6 и выше баллов.
+Ниже 6, задание не принимается.
+Идеальное, но не работающее, решение = 1 + 0 + 4 (+4 а не 5) = 5 - не принимается.
+Если всё работает, но стилю не соответствует (публичные поля, классы капсом) = 1 + 4 + 0 = 5 - не принимается
+
+### Параметры создания проекта Spring Initializr
+1. https://start.spring.io/
+2. Project: Maven Project
+3. Language: Java
+4. Spring Boot: 2.7.2
+5. Project Metadata
+  - Group: ru.otus
+  - Artifact: spring-07-books
+  - Name: spring-07-books
+  - Description: Demo project for Spring Boot, Spring Shell, Spring Data JPA
+  - Package name: ru.otus.spring-07-books
+6. Packaging: Jar
+7. Java: 11
+8. Dependencies: Spring Shell I/O, Spring Data JPA
+   Примечание: в Dependencies есть возможность дополнительно добавить зависимости:
+   - H2 Database, в данной сборке эта зависимость не включена (планируется ручное добавление базы в проекте);
+   - Liquibase Migration, в данной сборке эта зависимость не включена (groupId: org.liquibase, artifactId: liquibase-core, 
+version: 4.14.0 + рекомендуется groupId: org.yaml, artifactId: snakeyaml, version: 1.30);
+   - Flyway Migration (в данной сборке эта зависимость не включена).
+9. Сохранить spring-07-books.zip в Java\2022-05-otus-spring-sproshchaev
+10. Разархивировать архив Java\2022-05-otus-spring-sproshchaev\spring-07-books.zip (файл .zip удалить)
+11. Открыть проект в IDE
+12. Актуализировать файл .gitignore
+13. Актуализировать файл README.md
+14. Проверить в pom.xml наличие зависимостей: spring-shell-starter, spring-boot-starter-data-jpa
+15. Добавить в pom.xml зависимость H2: groupId: com.h2database, artifactId: h2, version: 2.1.212 
+16. Добавить в pom.xml зависимость Liquibase:
+    - groupId: org.liquibase, artifactId: liquibase-core, version: 4.14.0
+    - groupId: org.yaml, artifactId: snakeyaml, version: 1.30 (рекомендуется эта зависимость для корректной работы 
+liquibase с разными версиями)
+17. Создать файл и добавить в файл application.yml: 
+      url=jdbc:h2:mem:books, <br>
+      username=sa, password, <br>
+      driver-class-name=org.h2.Driver, <br> 
+      gpa.generate-ddl=false, <br>
+      gpa.hibernate.ddl-auto=none, <br>
+      gpa.show-sql=true, <br>
+      liquibase.enabled.true #sql.init.mode=always, <br>
+                             #sql.init.data-locations=data.sql, <br>
+                             #sql.init.schema-locations=schema.sql, <br>
+      h2.console.path=/h2-console, <br>
+      h2.console.settings.web-allow-others=true <br>
+19. Настройка liquibase:
+    - Создать структуру каталогов resources/db/changelog
+    - Создать resources/db/changelog/db.changelog-master.yaml:
+      - версии БД (schema.sql): databaseChangeLog.- includeAll.path: db/changelog/1.0/ 
+      - данные для БД (data.sql): databaseChangeLog.- includeAll.path: db/changelog/data/
+    - Создать каталог для changelog-ов (схемы БД): resources/db/changelog/1.0
+    - Создать changelog-и YYYY-MM-DD--Create-table_name.yml (.xml,.yml,.json,.sql): 2022-08-04--Create-author.yaml
+    - Создать changelog в каталоге с данными (db/changelog/data/1.0 и db/changelog/data/1.0/csv)   
+20. Создать классы сущностей и разметить их аннотациями 
+      @Entity, 
+      @Id, 
+      @GeneratedValue(strategy = GenerationType.IDENTITY) - если id формируется на уровне БД (через 
+create table t (id bigint auto_increment primary key,...), то эта опция все-равно необходима!
+      @ManyToOne
+21. Над сервисами (не в репозитории!) разместить аннотации:
+- @Transactional - если метод изменяет данные (чтение)
+- @Transactional(readOnly = true) - если метод не изменяет данные (чтение) 
+
+### Примечания
+
+### Вызов методов (@ShellMethod)
+"a" - Information about the library <br>
+"c" - Start console H2 <br>
+#### CRUD for Genres
+"cg" - Create a new genre of books in the library (Crud) <br>
+"gibg" - Getting a genre id (cRud) <br>
+"ggbi" - Getting information about the author from the library by id (cRud) <br>
+"gag" - Getting a list of all genres from the library (cRud) <br>
+"ug" - Updating information about the genre (crUd) <br>
+"dgbi" - Deleting genre data from the library (cruD) <br>
+#### CRUD for Authors
+"ca" - Create a new Author of books in the library (Crud) <br>
+"giba" - Getting an id by author (cRud) <br>
+"gabi" - Getting information about the author from the library by id (cRud) <br>
+"gaa" - Getting a list of all authors from the library (cRud) <br>
+"ua" - Updating information about the author (crUd) <br>
+"dabi" - Deleting author by id from the library (cruD) <br>
+#### CRUD for Books
+"cb" - Add information about a new book, author, genre to the library (Crud) <br>
+"gibb" - Getting an id by book (cRud) <br>
+"gbbi" - Get book data by its id (cRud) <br>
+"gab" - Get a list of all library books (cRud) <br>
+"ub" - Update book data by id (crUd) <br>
+"dbbi" - Deleting the selected book by id (cruD) <br>
+#### CRUD for Comment
+"cc" - Create a new book comment (Crud) <br>
+"gcbi" - Get comment by its id (cRud) <br>
+"gacbbi" - Get all comments on the book by id (cRud) <br>
+"ucbi" - Update comment by id (crUd) <br>
+"dcbi" - Deleting the selected comment by id (cruD) <br>
+
+### Тестирование
+1. Отключить Spring Shell в application.yml: spring.shell.interactive.enabled=false
+2. Добавить для тестирования Spring Shell в application.yml: spring.main.allow-circular-references=true
+3. B Liquibase используется databaseChangeLog.path: db/changelog/data/2.0/
+4. Аннотация replace = AutoConfigureTestDatabase.Replace.NONE определяет тестирование на базе приложения
+5. Аннотация @Transactional(propagation = Propagation.NOT_SUPPORTED) не используется
+6. Примеры тестирования:
+- Метод shouldGetGenreIdByName тестирует метод getGenreIdByName, первоначально выполняется через entityManager 
+сохранение сущности, далее сущность запрашивается через метод getGenreByName и сравниваются соответствующие поля
+- Метод shouldUpdateGenre тестирует метод updateGenre, первоначально выполняется метод updateGenre из GenreRepository, 
+далее через entityManager запрашивается сущность с idGenre и сравниваются соответствующие поля
+
+
+### Статьи по теме
+1. Liquibase changelog (структура БД schema.sql) Formats https://docs.liquibase.com/concepts/changelogs/changelog-formats.html
+2. Liquibase load-data (загрузка данных data.sql) https://docs.liquibase.com/change-types/load-data.html
