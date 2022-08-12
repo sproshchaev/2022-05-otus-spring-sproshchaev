@@ -82,10 +82,16 @@ Development on the Spring Framework
 17. Проверить соединение с БД в IntelliJ IDEA
   - "Database" - "Data Source" - "MongoDB" - Port=27017 - "Test Connection"
   - "Query Consoles" - "console"
-  - Ввести команды:
-    - use test;
-    - show dbs;
+  - Ввести команду: show dbs (показать все БД)
   - Проверить вывод результата в консоль: "Services" - "console" - "console" 
+18. Добавить application.yml:
+  - spring.data.mongodb:
+      - authentication-database: admin
+      - username: root
+      - password: root
+      - database: library
+      - port: 27017
+      - host: localhost
 
 ### Примечания
 
