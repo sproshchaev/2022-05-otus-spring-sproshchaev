@@ -84,14 +84,31 @@ Development on the Spring Framework
   - "Query Consoles" - "console"
   - Ввести команду: show dbs (показать все БД)
   - Проверить вывод результата в консоль: "Services" - "console" - "console" 
-18. Добавить application.yml:
+  - Основные команды в MongoDB:
+    - show dbs - показать все базы данных;
+    - use databaseName - выбор базы данных для работы;
+    - show collections - список коллекций текущей базы;
+    - show users - список юзеров текущей базы;
+    - db.createCollection("collectionName") - создание коллекции;
+    - db.<collectionName>.insert({field1: "value", field2: "value"}) - вставить один или несколько документов в коллекцию;
+    - db.<collectionName>.find() - показать все записи коллекции;
+    - db.<collectionName>.count() - число записей в коллекции.
+18. Добавить application.yml настройки для MongoDB:
   - spring.data.mongodb:
       - authentication-database: admin
       - username: root
       - password: root
-      - database: library
+      - database: library # задает имя БД, в которую затем mongock создает коллекции
       - port: 27017
       - host: localhost
+19. Добавить application.yml настройки для Mongock:
+  - mongock:
+      - runner-type: "InitializingBean" - если в приложении Mongock вместе с Spring Shell см. https://otus.ru/nest/post/1557/  
+                     "ApplicationRunner" - если в приложении нет SpringShell
+      - change-logs-scan-package: ru.otus.spring08books.mongock.changelog
+20. Создать пакет и классы для Mongock 
+  - mongock/changelog/Schema.java, Data.java 
+21. Добавить аннотацию @EnableMongock в Main.class
 
 ### Примечания
 
@@ -130,4 +147,8 @@ Development on the Spring Framework
 ### Статьи по теме
 1. DOCKER OFFICIAL IMAGE mongo https://hub.docker.com/_/mongo
 2. Mongock GET STARTED https://docs.mongock.io/v5/get-started/#1--add-mongock-bom-to-your-pom-file
-3. MONGODB SPRING DATA DRIVER https://docs.mongock.io/v5/driver/mongodb-springdata/index.html 
+3. MONGODB SPRING DATA DRIVER https://docs.mongock.io/v5/driver/mongodb-springdata/index.html
+4. Spring Data: Easy MongoDB Migration Using Mongock https://dzone.com/articles/spring-data-easy-mongodb-migration-using-mongock
+5. Работа со Spring Shell и Mongock из Spring Boot - в проекте Spring Boot, одновременно интерфейс командной строки 
+Spring Shell и библиотеку миграции Mongock, разработчики сталкиваются с тем, что запуск миграций не происходит https://otus.ru/nest/post/1557/
+6. CHANGELOGS https://docs.mongock.io/v4/changelogs/index.html
