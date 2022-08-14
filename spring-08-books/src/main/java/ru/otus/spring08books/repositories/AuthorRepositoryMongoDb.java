@@ -5,11 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.otus.spring08books.entities.Author;
 
 @Repository
-public interface AuthorRepository extends MongoRepository<Author, String> {
-
-    default void w2() {
-        System.out.println();
-    }
+public interface AuthorRepositoryMongoDb extends MongoRepository<Author, String> {
 
     Author findAuthorByFullName(String fullName);
 

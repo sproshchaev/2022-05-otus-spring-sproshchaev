@@ -2,9 +2,9 @@ package ru.otus.spring08books.repositories;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-import ru.otus.spring08books.entities.Book;
+import ru.otus.spring08books.entities.Comment;
 
 @Repository
-public interface BookRepository extends MongoRepository<Book, String> {
+public interface CommentRepositoryMongoDB extends MongoRepository<Comment, String> {
 
 }

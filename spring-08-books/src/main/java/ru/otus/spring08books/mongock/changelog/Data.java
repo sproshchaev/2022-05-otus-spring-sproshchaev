@@ -7,9 +7,9 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import ru.otus.spring08books.entities.Book;
 import ru.otus.spring08books.entities.Comment;
-import ru.otus.spring08books.repositories.AuthorRepository;
-import ru.otus.spring08books.repositories.BookRepository;
-import ru.otus.spring08books.repositories.CommentRepository;
+import ru.otus.spring08books.repositories.AuthorRepositoryMongoDb;
+import ru.otus.spring08books.repositories.BookRepositoryMongoDb;
+import ru.otus.spring08books.repositories.CommentRepositoryMongoDB;
 import ru.otus.spring08books.repositories.GenreRepository;
 
 @ChangeLog(order = "002")
@@ -72,90 +72,90 @@ public class Data {
     }
 
     @ChangeSet(order = "009", id = "insertBook1", author = "sproshchaev")
-    public void insertBook1(MongoDatabase db, BookRepository bookRepository,
-                            AuthorRepository authorRepository,
+    public void insertBook1(MongoDatabase db, BookRepositoryMongoDb bookRepositoryMongoDb,
+                            AuthorRepositoryMongoDb authorRepositoryMongoDb,
                             GenreRepository genreRepository) {
         Book book = new Book("The Pilgrim’s Progress",
-                authorRepository.findAuthorByFullName("John Bunyan"),
-                genreRepository.findGenreByName("History"));
-        bookRepository.save(book);
+                authorRepositoryMongoDb.findAuthorByFullName("John Bunyan"),
+                genreRepository.findGenreByName("History").get(0));
+        bookRepositoryMongoDb.save(book);
     }
 
     @ChangeSet(order = "010", id = "insertBook2", author = "sproshchaev")
-    public void insertBook2(MongoDatabase db, BookRepository bookRepository,
-                            AuthorRepository authorRepository,
+    public void insertBook2(MongoDatabase db, BookRepositoryMongoDb bookRepositoryMongoDb,
+                            AuthorRepositoryMongoDb authorRepositoryMongoDb,
                             GenreRepository genreRepository) {
         Book book = new Book("Robinson Crusoe",
-                authorRepository.findAuthorByFullName("Daniel Defoe"),
-                genreRepository.findGenreByName("Classic"));
-        bookRepository.save(book);
+                authorRepositoryMongoDb.findAuthorByFullName("Daniel Defoe"),
+                genreRepository.findGenreByName("Classic").get(0));
+        bookRepositoryMongoDb.save(book);
     }
 
     @ChangeSet(order = "011", id = "insertBook3", author = "sproshchaev")
-    public void insertBook3(MongoDatabase db, BookRepository bookRepository,
-                            AuthorRepository authorRepository,
+    public void insertBook3(MongoDatabase db, BookRepositoryMongoDb bookRepositoryMongoDb,
+                            AuthorRepositoryMongoDb authorRepositoryMongoDb,
                             GenreRepository genreRepository) {
         Book book = new Book("The Holy War",
-                authorRepository.findAuthorByFullName("John Bunyan"),
-                genreRepository.findGenreByName("History"));
-        bookRepository.save(book);
+                authorRepositoryMongoDb.findAuthorByFullName("John Bunyan"),
+                genreRepository.findGenreByName("History").get(0));
+        bookRepositoryMongoDb.save(book);
     }
 
     @ChangeSet(order = "012", id = "insertBook4", author = "sproshchaev")
-    public void insertBook4(MongoDatabase db, BookRepository bookRepository,
-                            AuthorRepository authorRepository,
+    public void insertBook4(MongoDatabase db, BookRepositoryMongoDb bookRepositoryMongoDb,
+                            AuthorRepositoryMongoDb authorRepositoryMongoDb,
                             GenreRepository genreRepository) {
         Book book = new Book("The Farther Adventures of Robinson Crusoe",
-                authorRepository.findAuthorByFullName("Daniel Defoe"),
-                genreRepository.findGenreByName("Classic"));
-        bookRepository.save(book);
+                authorRepositoryMongoDb.findAuthorByFullName("Daniel Defoe"),
+                genreRepository.findGenreByName("Classic").get(0));
+        bookRepositoryMongoDb.save(book);
     }
 
     @ChangeSet(order = "013", id = "insertComment1", author = "sproshchaev")
-    public void insertComment1(MongoDatabase db, BookRepository bookRepository,
-                               AuthorRepository authorRepository,
+    public void insertComment1(MongoDatabase db, BookRepositoryMongoDb bookRepositoryMongoDb,
+                               AuthorRepositoryMongoDb authorRepositoryMongoDb,
                                GenreRepository genreRepository,
-                               CommentRepository commentRepository) {
+                               CommentRepositoryMongoDB commentRepositoryMongoDB) {
         Comment comment = new Comment("The Pilgrims Progress — is a very interesting book!",
                 new Book("The Pilgrim’s Progress",
-                        authorRepository.findAuthorByFullName("John Bunyan"),
-                        genreRepository.findGenreByName("History")));
-        commentRepository.save(comment);
+                        authorRepositoryMongoDb.findAuthorByFullName("John Bunyan"),
+                        genreRepository.findGenreByName("History").get(0)));
+        commentRepositoryMongoDB.save(comment);
     }
 
     @ChangeSet(order = "014", id = "insertComment2", author = "sproshchaev")
-    public void insertComment2(MongoDatabase db, BookRepository bookRepository,
-                               AuthorRepository authorRepository,
+    public void insertComment2(MongoDatabase db, BookRepositoryMongoDb bookRepositoryMongoDb,
+                               AuthorRepositoryMongoDb authorRepositoryMongoDb,
                                GenreRepository genreRepository,
-                               CommentRepository commentRepository) {
+                               CommentRepositoryMongoDB commentRepositoryMongoDB) {
         Comment comment = new Comment("Robinson Crusoe — is a very interesting book!",
                 new Book("Robinson Crusoe",
-                        authorRepository.findAuthorByFullName("Daniel Defoe"),
-                        genreRepository.findGenreByName("Classic")));
-        commentRepository.save(comment);
+                        authorRepositoryMongoDb.findAuthorByFullName("Daniel Defoe"),
+                        genreRepository.findGenreByName("Classic").get(0)));
+        commentRepositoryMongoDB.save(comment);
     }
 
     @ChangeSet(order = "015", id = "insertComment3", author = "sproshchaev")
-    public void insertComment3(MongoDatabase db, BookRepository bookRepository,
-                               AuthorRepository authorRepository,
+    public void insertComment3(MongoDatabase db, BookRepositoryMongoDb bookRepositoryMongoDb,
+                               AuthorRepositoryMongoDb authorRepositoryMongoDb,
                                GenreRepository genreRepository,
-                               CommentRepository commentRepository) {
+                               CommentRepositoryMongoDB commentRepositoryMongoDB) {
         Comment comment = new Comment("The Holy War — is a very interesting book!",
                 new Book("The Holy War",
-                        authorRepository.findAuthorByFullName("John Bunyan"),
-                        genreRepository.findGenreByName("History")));
-        commentRepository.save(comment);
+                        authorRepositoryMongoDb.findAuthorByFullName("John Bunyan"),
+                        genreRepository.findGenreByName("History").get(0)));
+        commentRepositoryMongoDB.save(comment);
     }
 
     @ChangeSet(order = "016", id = "insertComment4", author = "sproshchaev")
-    public void insertComment4(MongoDatabase db, BookRepository bookRepository,
-                               AuthorRepository authorRepository,
+    public void insertComment4(MongoDatabase db, BookRepositoryMongoDb bookRepositoryMongoDb,
+                               AuthorRepositoryMongoDb authorRepositoryMongoDb,
                                GenreRepository genreRepository,
-                               CommentRepository commentRepository) {
+                               CommentRepositoryMongoDB commentRepositoryMongoDB) {
         Comment comment = new Comment("The Farther Adventures of Robinson Crusoe — is a very interesting book!",
                 new Book("The Farther Adventures of Robinson Crusoe",
-                        authorRepository.findAuthorByFullName("Daniel Defoe"),
-                        genreRepository.findGenreByName("Classic")));
-        commentRepository.save(comment);
+                        authorRepositoryMongoDb.findAuthorByFullName("Daniel Defoe"),
+                        genreRepository.findGenreByName("Classic").get(0)));
+        commentRepositoryMongoDB.save(comment);
     }
 }
