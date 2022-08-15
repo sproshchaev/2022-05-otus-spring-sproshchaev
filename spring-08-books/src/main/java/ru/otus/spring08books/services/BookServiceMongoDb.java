@@ -1,7 +1,16 @@
 package ru.otus.spring08books.services;
 
+import com.mongodb.client.result.DeleteResult;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
+import ru.otus.spring08books.entities.Author;
+import ru.otus.spring08books.entities.Book;
+import ru.otus.spring08books.entities.Genre;
 import ru.otus.spring08books.repositories.BookRepositoryMongoDb;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Класс BookServiceMongoDb содержит методы для работы с репозиторием книг библиотеки
@@ -10,6 +19,19 @@ import ru.otus.spring08books.repositories.BookRepositoryMongoDb;
  */
 @Service
 public class BookServiceMongoDb implements BookService {
+    private final BookRepositoryMongoDb bookRepositoryMongoDb;
+    private final MongoTemplate mongoTemplate;
+    private final AuthorServiceMongoDb authorServiceMongoDb;
+    private final GenreServiceMongoDb genreServiceMongoDb;
+
+    @Autowired
+    public BookServiceMongoDb(BookRepositoryMongoDb bookRepositoryMongoDb, MongoTemplate mongoTemplate,
+                              AuthorServiceMongoDb authorServiceMongoDb, GenreServiceMongoDb genreServiceMongoDb) {
+        this.bookRepositoryMongoDb = bookRepositoryMongoDb;
+        this.mongoTemplate = mongoTemplate;
+        this.authorServiceMongoDb = authorServiceMongoDb;
+        this.genreServiceMongoDb = genreServiceMongoDb;
+    }
 
     /**
      * Метод createBook создает новую книгу (Crud)
@@ -25,7 +47,13 @@ public class BookServiceMongoDb implements BookService {
      */
     @Override
     public String createNewBook(String title, String authorFullName, String genreName) {
-        return null;
+        Author author = authorServiceMongoDb.getFirstAuthorByFullName(authorFullName);
+        Genre genre = genreServiceMongoDb.getFirstGenreByName(genreName);
+        List<Book> listBook = bookRepositoryMongoDb.findAllByTitleAndAuthorAndGenre(title, author, genre);
+        Book book = (listBook.size() == 0) ? bookRepositoryMongoDb.save(new Book(title, author, genre)) : listBook.get(0);
+        String bookInfo = "id=" + book.getId() + " '" + book.getTitle() + "' " + book.getAuthor().getFullName()
+                + " (" + book.getGenre().getName() + ")";
+        return (listBook.size() == 0) ? "Book added " + bookInfo : "Book is already in the library " + bookInfo;
     }
 
     /**
@@ -34,13 +62,18 @@ public class BookServiceMongoDb implements BookService {
      * Метод не изменяет данные
      *
      * @param title
-     * @param fullName
-     * @param name
+     * @param authorFullName
+     * @param genreName
      * @return
      */
     @Override
-    public String getIdByBook(String title, String fullName, String name) {
-        return null;
+    public String getIdByBook(String title, String authorFullName, String genreName) {
+        Author author = authorServiceMongoDb.getFirstAuthorByFullName(authorFullName);
+        Genre genre = genreServiceMongoDb.getFirstGenreByName(genreName);
+        List<Book> listIdBook = bookRepositoryMongoDb.findAllByTitleAndAuthorAndGenre(title, author, genre);
+        return listIdBook.size() == 0
+                ? "Book '" + title + "' " + authorFullName + " (" + genreName + ") not found in the library!"
+                : "Book '" + title + "' " + authorFullName + " (" + genreName + ") has an id=" + listIdBook.get(0).getId();
     }
 
     /**
@@ -51,8 +84,11 @@ public class BookServiceMongoDb implements BookService {
      * @return
      */
     @Override
-    public String getBookById(long id) {
-        return null;
+    public String getBookById(String id) {
+        Optional<Book> book = bookRepositoryMongoDb.findById(id);
+        return book.isEmpty() ? "The book was not found!" : "Book: "
+                + book.get().getId() + " " + book.get().getAuthor().getFullName()
+                + " (genre " + book.get().getGenre().getName() + ")";
     }
 
     /**
@@ -63,14 +99,22 @@ public class BookServiceMongoDb implements BookService {
      */
     @Override
     public String getAllBook() {
-        return null;
+        List<Book> listBook = bookRepositoryMongoDb.findAll();
+        String bookString = "Books (" + listBook.size() + "):\n ";
+        for (int i = 0; i < listBook.size(); i++) {
+            bookString = bookString + (i + 1) + ") '" + listBook.get(i).getTitle() + "' "
+                    + listBook.get(i).getAuthor().getFullName() + " ("
+                    + listBook.get(i).getGenre().getName() + ")"
+                    + (i < (listBook.size() - 1) ? ",\n " : ".");
+        }
+        return "Received " + (listBook == null ? 0 : bookString);
     }
 
     /**
      * Метод updateBookById обновляет данные по книге: название, автора, жанр (crUd)
      * Перед изменением данных проверяется автор и жанр на наличие в справочниках для исключения дубликатов
      * Если id книги не найден, возвращается сообщение о неуспешном обновлении.
-     * Метод изменяет данные
+     * Метод изменяет данныеo
      *
      * @param id
      * @param title
@@ -79,8 +123,16 @@ public class BookServiceMongoDb implements BookService {
      * @return
      */
     @Override
-    public String updateBookById(long id, String title, String authorFullName, String genreName) {
-        return null;
+    public String updateBookById(String id, String title, String authorFullName, String genreName) {
+        if (bookRepositoryMongoDb.findById(id).isPresent()) {
+            Author author = authorServiceMongoDb.getFirstAuthorByFullName(authorFullName);
+            Genre genre = genreServiceMongoDb.getFirstGenreByName(genreName);
+            Book book = bookRepositoryMongoDb.save(new Book(id, title, author, genre));
+            return "The book id=" + book.getId() + " has " + "been updated (title: " + book.getTitle()
+                    + ", author: " + book.getAuthor().getFullName() + ", genre: " + book.getGenre().getName() + ")";
+        } else {
+            return "Book id=" + id + " not found";
+        }
     }
 
     /**
@@ -89,12 +141,22 @@ public class BookServiceMongoDb implements BookService {
      * если книга есть, то производится ее удаление, если нет - возвращается сообщение,
      * что книга не найдена.
      * Метод изменяет данные
+     * Для реализации метода используется MongoTemplate
      *
      * @param id
      * @return
      */
     @Override
-    public String deleteBookById(long id) {
-        return null;
+    public String deleteBookById(String id) {
+        Book bookForDelete = mongoTemplate.findById(id, Book.class);
+        if (bookForDelete != null) {
+            DeleteResult deleteResult = mongoTemplate.remove(bookForDelete);
+            return "Book (id=" + id + " '" + bookForDelete.getTitle() + "' "
+                    + bookForDelete.getAuthor().getFullName() + " "
+                    + bookForDelete.getGenre().getName()
+                    + ") removed from the library (deleted " + deleteResult.getDeletedCount() + " entries)";
+        } else {
+            return "Delete error: book id=" + id + " not found!";
+        }
     }
 }

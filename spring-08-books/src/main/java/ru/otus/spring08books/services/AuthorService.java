@@ -1,12 +1,13 @@
 package ru.otus.spring08books.services;
 
 import ru.otus.spring08books.entities.Author;
+import ru.otus.spring08books.repositories.GenreRepositoryMongoDb;
 
 /**
  * Интерфейс AuthorService содержит набор методов для работы с репозиторием сущности Author
  *
  * @see ru.otus.spring08books.entities.Author
- * @see ru.otus.spring08books.repositories.GenreRepository
+ * @see GenreRepositoryMongoDb
  */
 public interface AuthorService {
 
@@ -36,7 +37,7 @@ public interface AuthorService {
      * @param id
      * @return
      */
-    String getAuthorById(long id);
+    String getAuthorById(String id);
 
     /**
      * Метод getAllAuthors получает список всех авторов из библиотеки (cRud)
@@ -54,7 +55,7 @@ public interface AuthorService {
      * @param fullName
      * @return
      */
-    String updateAuthor(long id, String fullName);
+    String updateAuthor(String id, String fullName);
 
     /**
      * Метод deleteAuthorById удаляет данные об авторе в библиотеке (cruD)
@@ -63,7 +64,7 @@ public interface AuthorService {
      * @param id
      * @return
      */
-    String deleteAuthorById(long id);
+    String deleteAuthorById(String id);
 
     /**
      * Метод getFirstAuthorByFullName возвращает первого автора из списка

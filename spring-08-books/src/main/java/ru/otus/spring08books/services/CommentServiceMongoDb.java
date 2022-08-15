@@ -1,12 +1,12 @@
 package ru.otus.spring08books.services;
 
 import org.springframework.stereotype.Service;
-import ru.otus.spring08books.repositories.CommentRepositoryMongoDB;
+import ru.otus.spring08books.repositories.CommentRepositoryMongoDb;
 
 /**
  * Класс CommentServiceMongoDb содержит методы для работы с репозиторием комментариев
  *
- * @see CommentRepositoryMongoDB
+ * @see CommentRepositoryMongoDb
  */
 @Service
 public class CommentServiceMongoDb implements CommentService {

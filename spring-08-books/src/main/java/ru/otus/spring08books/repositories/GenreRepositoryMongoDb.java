@@ -7,10 +7,7 @@ import ru.otus.spring08books.entities.Genre;
 import java.util.List;
 
 @Repository
-public interface GenreRepository extends MongoRepository<Genre, String> {
-
-    List<Genre> findGenreByName(String name);
-
-
+public interface GenreRepositoryMongoDb extends MongoRepository<Genre, String> {
+    List<Genre> findAllGenreByName(String name);
 
 }

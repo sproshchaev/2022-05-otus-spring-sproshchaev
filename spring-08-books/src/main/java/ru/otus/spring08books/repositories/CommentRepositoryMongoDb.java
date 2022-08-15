@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import ru.otus.spring08books.entities.Comment;
 
 @Repository
-public interface CommentRepositoryMongoDB extends MongoRepository<Comment, String> {
+public interface CommentRepositoryMongoDb extends MongoRepository<Comment, String> {
 
 }

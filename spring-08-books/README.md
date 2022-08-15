@@ -115,26 +115,26 @@ Development on the Spring Framework
 ### Вызов методов (@ShellMethod)
 "a" - Information about the library <br>
 #### CRUD for Genres
-"cg" - Create a new genre of books in the library (Crud) <br>
-"gibg" - Getting a genre id (cRud) <br>
-"ggbi" - Getting information about the author from the library by id (cRud) <br>
-"gag" - Getting a list of all genres from the library (cRud) <br>
-"ug" - Updating information about the genre (crUd) <br>
-"dgbi" - Deleting genre data from the library (cruD) <br>
++ "cg" - Create a new genre of books in the library (Crud) <br>
++ "gibg" - Getting a genre id (cRud) <br>
++ "ggbi" - Getting information about the author from the library by id (cRud) <br>
++ "gag" - Getting a list of all genres from the library (cRud) <br>
++ "ug" - Updating information about the genre (crUd) <br>
++ "dgbi" - Deleting genre data from the library (cruD) <br>
 #### CRUD for Authors
-"ca" - Create a new Author of books in the library (Crud) <br>
-"giba" - Getting an id by author (cRud) <br>
-"gabi" - Getting information about the author from the library by id (cRud) <br>
-"gaa" - Getting a list of all authors from the library (cRud) <br>
-"ua" - Updating information about the author (crUd) <br>
-"dabi" - Deleting author by id from the library (cruD) <br>
++ "ca" - Create a new Author of books in the library (Crud) <br>
++ "giba" - Getting an id by author (cRud) <br>
++ "gabi" - Getting information about the author from the library by id (cRud) <br>
++ "gaa" - Getting a list of all authors from the library (cRud) <br>
++ "ua" - Updating information about the author (crUd) <br>
++ "dabi" - Deleting author by id from the library (cruD) <br>
 #### CRUD for Books
-"cb" - Add information about a new book, author, genre to the library (Crud) <br>
-"gibb" - Getting an id by book (cRud) <br>
-"gbbi" - Get book data by its id (cRud) <br>
-"gab" - Get a list of all library books (cRud) <br>
-"ub" - Update book data by id (crUd) <br>
-"dbbi" - Deleting the selected book by id (cruD) <br>
++ "cb" - Add information about a new book, author, genre to the library (Crud) <br>
++ "gibb" - Getting an id by book (cRud) <br>
++ "gbbi" - Get book data by its id (cRud) <br>
++ "gab" - Get a list of all library books (cRud) <br>
++ "ub" - Update book data by id (crUd) <br>
++ "dbbi" - Deleting the selected book by id (cruD) <br>
 #### CRUD for Comment
 "cc" - Create a new book comment (Crud) <br>
 "gcbi" - Get comment by its id (cRud) <br>

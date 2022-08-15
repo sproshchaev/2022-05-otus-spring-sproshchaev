@@ -36,7 +36,7 @@ interface BookService {
      * @param id
      * @return
      */
-    String getBookById(long id);
+    String getBookById(String id);
 
     /**
      * Метод getAllBook возвращает все книги из библиотеки (cRud)
@@ -56,7 +56,7 @@ interface BookService {
      * @param genreName
      * @return
      */
-    String updateBookById(long id, String title, String authorFullName, String genreName);
+    String updateBookById(String id, String title, String authorFullName, String genreName);
 
     /**
      * Метод deleteBookById (cruD)
@@ -65,5 +65,5 @@ interface BookService {
      * @param id
      * @return
      */
-    String deleteBookById(long id);
+    String deleteBookById(String id);
 }

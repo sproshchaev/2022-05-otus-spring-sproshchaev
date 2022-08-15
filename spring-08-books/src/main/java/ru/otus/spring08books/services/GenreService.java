@@ -51,7 +51,7 @@ public interface GenreService {
      * @param name
      * @return
      */
-    String updateGenre(long id, String name);
+    String updateGenre(String id, String name);
 
     /**
      * Метод deleteGenreById удаляет данные о жанре из библиотеки (cruD)
@@ -60,7 +60,7 @@ public interface GenreService {
      * @param id
      * @return
      */
-    String deleteGenreById(long id);
+    String deleteGenreById(String id);
 
     /**
      * Метод getFirstGenreByName возвращает первый жанр из списка с одинаковым значением поля name
