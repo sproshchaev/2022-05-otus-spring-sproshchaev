@@ -3,11 +3,13 @@ package ru.otus.spring08books;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class MainTests {
+import static org.junit.jupiter.api.Assertions.*;
 
-	@Test
-	void contextLoads() {
-	}
+@SpringBootTest
+class MainTest {
+
+    @Test
+    void contextLoads() {
+    }
 
 }

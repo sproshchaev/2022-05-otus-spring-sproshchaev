@@ -143,6 +143,9 @@ Development on the Spring Framework
 "dcbi" - Deleting the selected comment by id (cruD) <br>
 
 ### Тестирование
+1. Создать дирректорию test\resources
+2. Создать test\resources\application.yaml
+3. Создать TestAppConfiguration.java и подключить через аннотацию в MainTests.java
 
 ### Статьи по теме
 1. DOCKER OFFICIAL IMAGE mongo https://hub.docker.com/_/mongo
@@ -152,3 +155,4 @@ Development on the Spring Framework
 5. Работа со Spring Shell и Mongock из Spring Boot - в проекте Spring Boot, одновременно интерфейс командной строки 
 Spring Shell и библиотеку миграции Mongock, разработчики сталкиваются с тем, что запуск миграций не происходит https://otus.ru/nest/post/1557/
 6. CHANGELOGS https://docs.mongock.io/v4/changelogs/index.html
+7. Spring Boot Integration Testing with Embedded MongoDB https://www.baeldung.com/spring-boot-embedded-mongodb
