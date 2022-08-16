@@ -70,4 +70,10 @@ public interface GenreService {
      */
     Genre getFirstGenreByName(String genreName);
 
+    /**
+     * Метод countGenres возвращает число жанров
+     * @return
+     */
+    Long countGenres();
+
 }

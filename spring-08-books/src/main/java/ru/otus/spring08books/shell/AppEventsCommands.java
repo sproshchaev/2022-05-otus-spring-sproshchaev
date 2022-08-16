@@ -27,6 +27,17 @@ public class AppEventsCommands {
     }
 
     /**
+     * Метод aboutLibrary выводит информацию о числе авторов, книг и жанров в библиотеке
+     * Сокращенный вызов: "a", "about"
+     *
+     * @return
+     */
+    @ShellMethod(value = "Information about the library", key = {"a", "about"})
+    public String aboutLibrary() {
+        return libraryServiceMongoDb.aboutLibrary();
+    }
+
+    /**
      * Метод createNewAuthor (Crud)
      * Сокращенный вызов: "ca", "createauthor" --name author_fullname
      * Пример: ca --fullName 'Stephen Edwin King'
@@ -194,7 +205,74 @@ public class AppEventsCommands {
         return bookServiceMongoDb.deleteBookById(id);
     }
 
-    //--- todo: убрать разделитель
+    /**
+     * Метод createComment создает новый комментарий (Crud)
+     * Сокращенный вызов: "cc", "createcomment" --idBook idBook --comment commentText
+     * Пример: cc --idBook 1 --comment 'I read the book with pleasure :)'
+     *
+     * @param idBook
+     * @param comment
+     * @return
+     */
+    @ShellMethod(value = "Create a new book comment", key = {"cc", "createcomment"})
+    public String createComment(@ShellOption(defaultValue = "1") String idBook,
+                                @ShellOption(defaultValue = "I read the book with pleasure :)") String comment) {
+        return commentServiceMongoDb.createCommentByIdBook(idBook, comment);
+    }
+
+    /**
+     * Метод getCommentById возвращает комментарий к книге по его id (cRud)
+     * Сокращенный вызов: "gcbi", "getcommentbyid" --id id
+     * Пример: gcbi --id 1
+     *
+     * @param id
+     * @return
+     */
+    @ShellMethod(value = "Get comment by its id", key = {"gcbi", "getcommentbyid"})
+    public String getCommentById(@ShellOption(defaultValue = "1") String id) {
+        return commentServiceMongoDb.getCommentById(id);
+    }
+
+    /**
+     * Метод getAllCommentsBookById возвращает все комментарии к книге
+     * Сокращенный вызов: "gacbbi", "getallcommentsbookbyid" --id idBook
+     * Пример: gacbbi --id 1
+     *
+     * @param id
+     * @return
+     */
+    @ShellMethod(value = "Get all comments on the book by id", key = {"gacbbi", "getallcommentsbookbyid"})
+    public String getAllCommentsBookById(@ShellOption(defaultValue = "1") String id) {
+        return commentServiceMongoDb.getAllCommentsBookById(id);
+    }
+
+    /**
+     * Метод updateCommentById обновляет комментарий к книге по его id (crUd)
+     * Сокращенный вызов: "ucbi", "updatecommentbyid" --id id --comment new_comment
+     * Пример: ucbi --id 1 --comment 'New comment'
+     *
+     * @param id
+     * @param comment
+     * @return
+     */
+    @ShellMethod(value = "Update comment by id", key = {"ucbi", "updatecommentbyid"})
+    public String updateCommentById(@ShellOption(defaultValue = "1") String id,
+                                    @ShellOption(defaultValue = "New comment") String comment) {
+        return commentServiceMongoDb.updateCommentById(id, comment);
+    }
+
+    /**
+     * Метод deleteCommentById удаляет комментарий по id (cruD)
+     * Сокращенный вызов: "dcbi", "deletecommentbyid" --id id
+     * Пример: dcbi --id 1
+     *
+     * @param id
+     * @return
+     */
+    @ShellMethod(value = "Deleting the selected comment by id", key = {"dcbi", "deletecommentbyid"})
+    public String deleteCommentById(@ShellOption(defaultValue = "1") String id) {
+        return commentServiceMongoDb.deleteCommentById(id);
+    }
 
     /**
      * Метод createGenre - создает наименование нового жанра книг в библиотеке

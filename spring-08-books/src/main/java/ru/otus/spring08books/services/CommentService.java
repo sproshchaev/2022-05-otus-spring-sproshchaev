@@ -14,7 +14,7 @@ interface CommentService {
      * @param comment
      * @return
      */
-    String createCommentByIdBook(long idBook, String comment);
+    String createCommentByIdBook(String idBook, String comment);
 
     /**
      * Метод getCommentById возвращает комментарий к книге по его id (cRud)
@@ -23,7 +23,7 @@ interface CommentService {
      * @param idComment
      * @return
      */
-    String getCommentById(long idComment);
+    String getCommentById(String idComment);
 
     /**
      * Метод getAllCommentsBookById возвращает все комментарии к книге
@@ -33,7 +33,7 @@ interface CommentService {
      * @param idBook
      * @return
      */
-    String getAllCommentsBookById(long idBook);
+    String getAllCommentsBookById(String idBook);
 
     /**
      * Метод updateCommentById обновляет комментарий к книге по его id (crUd)
@@ -43,7 +43,7 @@ interface CommentService {
      * @param commentText
      * @return
      */
-    String updateCommentById(long idComment, String commentText);
+    String updateCommentById(String idComment, String commentText);
 
     /**
      * Метод deleteCommentById удаляет комментарий по id (cruD)
@@ -52,6 +52,11 @@ interface CommentService {
      * @param idComment
      * @return
      */
-    String deleteCommentById(long idComment);
+    String deleteCommentById(String idComment);
 
+    /**
+     * Метод countComments возвращает число комментариев
+     * @return
+     */
+    Long countComments();
 }

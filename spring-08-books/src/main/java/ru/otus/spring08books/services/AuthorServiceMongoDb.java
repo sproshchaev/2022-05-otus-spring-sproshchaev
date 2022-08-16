@@ -148,4 +148,14 @@ public class AuthorServiceMongoDb implements AuthorService {
         List<Author> authorList = authorRepositoryMongoDb.findAllByFullName(authorFullName);
         return (authorList.size() == 0) ? authorRepositoryMongoDb.save(new Author(authorFullName)) : authorList.get(0);
     }
+
+    /**
+     * Метод countAuthors возвращает число авторов
+     *
+     * @return
+     */
+    @Override
+    public Long countAuthors() {
+        return authorRepositoryMongoDb.count();
+    }
 }

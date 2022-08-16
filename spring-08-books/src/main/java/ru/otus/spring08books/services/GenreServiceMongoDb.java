@@ -147,4 +147,14 @@ public class GenreServiceMongoDb implements GenreService {
         return (genreList.size() == 0) ? genreRepositoryMongoDb.save(new Genre(genreName)) : genreList.get(0);
     }
 
+    /**
+     * Метод countGenres возвращает число жанров
+     *
+     * @return
+     */
+    @Override
+    public Long countGenres() {
+        return genreRepositoryMongoDb.count();
+    }
+
 }

@@ -1,5 +1,8 @@
 package ru.otus.spring08books.services;
 
+import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
+import ru.otus.spring08books.entities.Book;
+
 /**
  * Интерфейс BookService содержит набор методов для работы с репозиторием сущности Book
  *
@@ -39,6 +42,13 @@ interface BookService {
     String getBookById(String id);
 
     /**
+     * Метод findBookById возвращает книгу по ее id (cRud)
+     * @param id
+     * @return
+     */
+    Book findBookById(String id);
+
+    /**
      * Метод getAllBook возвращает все книги из библиотеки (cRud)
      * Метод не изменяет данные
      *
@@ -66,4 +76,11 @@ interface BookService {
      * @return
      */
     String deleteBookById(String id);
+
+    /**
+     * Метод countBooks возвращает число книг
+     * @return
+     */
+    Long countBooks();
+
 }

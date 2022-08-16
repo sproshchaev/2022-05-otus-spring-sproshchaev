@@ -92,6 +92,19 @@ public class BookServiceMongoDb implements BookService {
     }
 
     /**
+     * Метод findBookById возвращает книгу по ее id (cRud)
+     * Если книга с таким id не найдена, возвращает null
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Book findBookById(String id) {
+        Optional<Book> book = bookRepositoryMongoDb.findById(id);
+        return book.orElse(null);
+    }
+
+    /**
      * Метод getAllBook возвращает все книги из библиотеки (cRud)
      * Метод не изменяет данные
      *
@@ -158,5 +171,15 @@ public class BookServiceMongoDb implements BookService {
         } else {
             return "Delete error: book id=" + id + " not found!";
         }
+    }
+
+    /**
+     * Метод countBooks возвращает число книг
+     *
+     * @return
+     */
+    @Override
+    public Long countBooks() {
+        return bookRepositoryMongoDb.count();
     }
 }

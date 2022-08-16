@@ -76,4 +76,11 @@ public interface AuthorService {
      */
     Author getFirstAuthorByFullName(String authorFullName);
 
+    /**
+     * Метод countAuthors возвращает число авторов
+     * @return
+     */
+    Long countAuthors();
+
+
 }

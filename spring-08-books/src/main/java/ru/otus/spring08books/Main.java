@@ -5,6 +5,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+/**
+ * Приложение "Библиотека" на Spring Data MongoDB
+ *
+ * @author Sergey Proshchaev
+ * @version 1.0
+ */
 @EnableMongock
 @EnableMongoRepositories
 @SpringBootApplication

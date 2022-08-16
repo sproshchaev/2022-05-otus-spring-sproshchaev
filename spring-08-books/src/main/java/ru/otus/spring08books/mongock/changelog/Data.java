@@ -116,10 +116,13 @@ public class Data {
                                AuthorRepositoryMongoDb authorRepositoryMongoDb,
                                GenreRepositoryMongoDb genreRepositoryMongoDb,
                                CommentRepositoryMongoDb commentRepositoryMongoDB) {
-        Comment comment = new Comment("The Pilgrims Progress — is a very interesting book!",
-                new Book("The Pilgrim’s Progress",
-                        authorRepositoryMongoDb.findAllByFullName("John Bunyan").get(0),
-                        genreRepositoryMongoDb.findAllGenreByName("History").get(0)));
+        String bookTitle = "The Pilgrim’s Progress";
+        String authorFullName = "John Bunyan";
+        String genreName = "History";
+        String commentText = "The Pilgrims Progress — is a very interesting book!";
+        Comment comment = new Comment(commentText, bookRepositoryMongoDb.findAllByTitleAndAuthorAndGenre(bookTitle,
+                authorRepositoryMongoDb.findAllByFullName(authorFullName).get(0),
+                genreRepositoryMongoDb.findAllGenreByName(genreName).get(0)).get(0));
         commentRepositoryMongoDB.save(comment);
     }
 
@@ -128,10 +131,13 @@ public class Data {
                                AuthorRepositoryMongoDb authorRepositoryMongoDb,
                                GenreRepositoryMongoDb genreRepositoryMongoDb,
                                CommentRepositoryMongoDb commentRepositoryMongoDB) {
-        Comment comment = new Comment("Robinson Crusoe — is a very interesting book!",
-                new Book("Robinson Crusoe",
-                        authorRepositoryMongoDb.findAllByFullName("Daniel Defoe").get(0),
-                        genreRepositoryMongoDb.findAllGenreByName("Classic").get(0)));
+        String bookTitle = "Robinson Crusoe";
+        String authorFullName = "Daniel Defoe";
+        String genreName = "Classic";
+        String commentText = "Robinson Crusoe — is a very interesting book!";
+        Comment comment = new Comment(commentText, bookRepositoryMongoDb.findAllByTitleAndAuthorAndGenre(bookTitle,
+                authorRepositoryMongoDb.findAllByFullName(authorFullName).get(0),
+                genreRepositoryMongoDb.findAllGenreByName(genreName).get(0)).get(0));
         commentRepositoryMongoDB.save(comment);
     }
 
@@ -140,10 +146,13 @@ public class Data {
                                AuthorRepositoryMongoDb authorRepositoryMongoDb,
                                GenreRepositoryMongoDb genreRepositoryMongoDb,
                                CommentRepositoryMongoDb commentRepositoryMongoDB) {
-        Comment comment = new Comment("The Holy War — is a very interesting book!",
-                new Book("The Holy War",
-                        authorRepositoryMongoDb.findAllByFullName("John Bunyan").get(0),
-                        genreRepositoryMongoDb.findAllGenreByName("History").get(0)));
+        String bookTitle = "The Holy War";
+        String authorFullName = "John Bunyan";
+        String genreName = "History";
+        String commentText = "The Holy War — is a very interesting book!";
+        Comment comment = new Comment(commentText, bookRepositoryMongoDb.findAllByTitleAndAuthorAndGenre(bookTitle,
+                authorRepositoryMongoDb.findAllByFullName(authorFullName).get(0),
+                genreRepositoryMongoDb.findAllGenreByName(genreName).get(0)).get(0));
         commentRepositoryMongoDB.save(comment);
     }
 
@@ -152,10 +161,13 @@ public class Data {
                                AuthorRepositoryMongoDb authorRepositoryMongoDb,
                                GenreRepositoryMongoDb genreRepositoryMongoDb,
                                CommentRepositoryMongoDb commentRepositoryMongoDB) {
-        Comment comment = new Comment("The Farther Adventures of Robinson Crusoe — is a very interesting book!",
-                new Book("The Farther Adventures of Robinson Crusoe",
-                        authorRepositoryMongoDb.findAllByFullName("Daniel Defoe").get(0),
-                        genreRepositoryMongoDb.findAllGenreByName("Classic").get(0)));
+        String bookTitle = "The Farther Adventures of Robinson Crusoe";
+        String authorFullName = "Daniel Defoe";
+        String genreName = "Classic";
+        String commentText = "The Farther Adventures of Robinson Crusoe — is a very interesting book!";
+        Comment comment = new Comment(commentText, bookRepositoryMongoDb.findAllByTitleAndAuthorAndGenre(bookTitle,
+                authorRepositoryMongoDb.findAllByFullName(authorFullName).get(0),
+                genreRepositoryMongoDb.findAllGenreByName(genreName).get(0)).get(0));
         commentRepositoryMongoDB.save(comment);
     }
 }
