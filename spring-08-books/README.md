@@ -143,7 +143,7 @@ Development on the Spring Framework
 "dcbi" - Deleting the selected comment by id (cruD) <br>
 
 ### Тестирование
-1. Создать дирректорию test\resources
+1. Создать директорию test\resources
 2. Создать test\resources\application.yaml
 3. Создать TestAppConfiguration.java и подключить через аннотацию в MainTests.java
 
