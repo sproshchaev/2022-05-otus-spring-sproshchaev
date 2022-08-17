@@ -7,10 +7,11 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Класс LibraryServiceMongoDbTest содержит методы тестирования класса LibraryServiceMongoDbTest
+ *
  * @see ru.otus.spring08books.services.LibraryServiceMongoDb
  */
 @DataMongoTest
@@ -33,10 +34,17 @@ class LibraryServiceMongoDbTest {
     @Autowired
     private CommentServiceMongoDb commentServiceMongoDb;
     @Autowired
+    private LibraryServiceMongoDb libraryServiceMongoDb;
+    @Autowired
     private MongoTemplate mongoTemplate;
 
-
     @Test
-    void aboutLibrary() {
+    @DisplayName("how many authors, genres, books, comments in library")
+    void shouldAboutLibrary() {
+        String result = libraryServiceMongoDb.aboutLibrary();
+        assertThat(result.contains(String.valueOf(EXPECTED_COUNT_AUTHORS)) &&
+                result.contains(String.valueOf(EXPECTED_COUNT_GENRES)) &&
+                result.contains(String.valueOf(EXPECTED_COUNT_BOOKS)) &&
+                result.contains(String.valueOf(EXPECTED_COUNT_COMMENTS))).isEqualTo(true);
     }
 }
