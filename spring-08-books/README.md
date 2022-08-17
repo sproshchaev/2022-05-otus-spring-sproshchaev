@@ -112,7 +112,6 @@ Development on the Spring Framework
 
 ### Примечания
 
-
 ### Вызов методов (@ShellMethod)
 "a" - Information about the library <br>
 #### CRUD for Genres
