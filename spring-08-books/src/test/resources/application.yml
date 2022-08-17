@@ -1,0 +1,30 @@
+spring:
+  mongodb:
+    embedded:
+      version: 3.5.5
+  data:
+    mongodb:
+      port: 0
+      database: test
+      #host: localhost
+      #port: 27017
+      #database: awesomeMongo
+  shell:
+    interactive:
+      enabled: false
+  main:
+    allow-circular-references: true
+
+mongock:
+  runner-type: "ApplicationRunner" # default
+  # runner-type: "InitializingBean"
+  change-logs-scan-package:
+    - ru.otus.spring08books.mongock.changelog
+  mongo-db:
+    write-concern:
+      journal: false
+    read-concern: local
+
+logging:
+  level:
+    root: ERROR

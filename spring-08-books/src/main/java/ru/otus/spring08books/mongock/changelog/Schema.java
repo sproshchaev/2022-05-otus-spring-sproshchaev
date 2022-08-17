@@ -2,9 +2,7 @@ package ru.otus.spring08books.mongock.changelog;
 
 import com.github.cloudyrock.mongock.ChangeLog;
 import com.github.cloudyrock.mongock.ChangeSet;
-import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import org.bson.Document;
 
 @ChangeLog(order = "001")
 public class Schema {

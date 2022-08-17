@@ -1,6 +1,5 @@
 package ru.otus.spring08books.services;
 
-import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import ru.otus.spring08books.entities.Book;
 
 /**
@@ -43,6 +42,7 @@ interface BookService {
 
     /**
      * Метод findBookById возвращает книгу по ее id (cRud)
+     *
      * @param id
      * @return
      */
@@ -79,6 +79,7 @@ interface BookService {
 
     /**
      * Метод countBooks возвращает число книг
+     *
      * @return
      */
     Long countBooks();

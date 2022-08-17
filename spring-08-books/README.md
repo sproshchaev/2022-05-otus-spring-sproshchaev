@@ -144,11 +144,13 @@ Development on the Spring Framework
 
 ### Тестирование
 1. Создать директорию test\resources
-2. Создать test\resources\application.yaml
+2. Создать test\resources\application.yaml:
+
 3. Создать TestAppConfiguration.java и подключить через аннотацию в MainTests.java
 
 ### Статьи по теме
-1. DOCKER OFFICIAL IMAGE mongo https://hub.docker.com/_/mongo
+1. Репозиторий Otus. Пример работы с MongoDB https://github.com/OtusTeam/Spring/tree/master/examples/mongo-db-demo-new-mongock
+2. DOCKER OFFICIAL IMAGE mongo https://hub.docker.com/_/mongo
 2. Mongock GET STARTED https://docs.mongock.io/v5/get-started/#1--add-mongock-bom-to-your-pom-file
 3. MONGODB SPRING DATA DRIVER https://docs.mongock.io/v5/driver/mongodb-springdata/index.html
 4. Spring Data: Easy MongoDB Migration Using Mongock https://dzone.com/articles/spring-data-easy-mongodb-migration-using-mongock
