@@ -156,4 +156,4 @@ Development on the Spring Framework
 Spring Shell и библиотеку миграции Mongock, разработчики сталкиваются с тем, что запуск миграций не происходит https://otus.ru/nest/post/1557/
 6. CHANGELOGS https://docs.mongock.io/v4/changelogs/index.html
 7. Spring Boot Integration Testing with Embedded MongoDB https://www.baeldung.com/spring-boot-embedded-mongodb
-8. Тестирование приложений Spring Data MongoDB с NoSQLUnit https://bit.ly/3dAHfmr 
+8. Тестирование приложений Spring Data MongoDB с NoSQLUnit https://bit.ly/3dAHfmr  
