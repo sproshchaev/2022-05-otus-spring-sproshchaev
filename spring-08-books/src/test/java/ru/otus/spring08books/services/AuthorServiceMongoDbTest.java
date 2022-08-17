@@ -1,6 +1,5 @@
 package ru.otus.spring08books.services;
 
-import com.mongodb.client.result.DeleteResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +15,10 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Класс AuthorServiceMongoDbTest содержит методы тестирования класса AuthorServiceMongoDb
+ * @see ru.otus.spring08books.services.AuthorServiceMongoDb
+ */
 @DataMongoTest
 @Import(AuthorServiceMongoDb.class)
 @DisplayName("AuthorServiceMongoDb must ")
@@ -32,7 +35,8 @@ class AuthorServiceMongoDbTest {
     @BeforeEach
     void deleteTestAuthors() {
         for (String authorFullName : Arrays.asList(EXPECTED_AUTHOR_NAME_ONE, EXPECTED_AUTHOR_NAME_TWO)) {
-            Author author = mongoTemplate.findOne(Query.query(Criteria.where("fullName").is(authorFullName)), Author.class);
+            Author author = mongoTemplate.findOne(Query.query(Criteria.where("fullName")
+                    .is(authorFullName)), Author.class);
             if (author != null) {
                 mongoTemplate.remove(author);
             }
@@ -50,7 +54,8 @@ class AuthorServiceMongoDbTest {
     @DisplayName("create a new author and check by name")
     void shouldCreateNewAuthor() {
         authorServiceMongoDb.createNewAuthor(EXPECTED_AUTHOR_NAME_ONE);
-        Author author = mongoTemplate.findOne(Query.query(Criteria.where("fullName").is(EXPECTED_AUTHOR_NAME_ONE)), Author.class);
+        Author author = mongoTemplate.findOne(Query.query(Criteria.where("fullName")
+                .is(EXPECTED_AUTHOR_NAME_ONE)), Author.class);
         assertThat(author.getFullName()).isEqualTo(EXPECTED_AUTHOR_NAME_ONE);
     }
 
