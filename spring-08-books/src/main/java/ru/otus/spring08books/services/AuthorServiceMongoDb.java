@@ -87,7 +87,8 @@ public class AuthorServiceMongoDb implements AuthorService {
         List<Author> authorList = authorRepositoryMongoDb.findAll();
         String authorsString = "Authors in the library:\n ";
         for (int i = 0; i < authorList.size(); i++) {
-            authorsString = authorsString + (i + 1) + ") " + authorList.get(i).getFullName() + (i < (authorList.size() - 1) ? ",\n " : ".");
+            authorsString = authorsString + (i + 1) + ") " + authorList.get(i).getFullName()
+                    + (i < (authorList.size() - 1) ? ",\n " : ".");
         }
         return authorList.size() == 0 ? "Authors not found!" : authorsString;
     }

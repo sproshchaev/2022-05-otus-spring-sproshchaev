@@ -116,11 +116,10 @@ public class BookServiceMongoDb implements BookService {
         String bookString = "Books (" + listBook.size() + "):\n ";
         for (int i = 0; i < listBook.size(); i++) {
             bookString = bookString + (i + 1) + ") '" + listBook.get(i).getTitle() + "' "
-                    + listBook.get(i).getAuthor().getFullName() + " ("
-                    + listBook.get(i).getGenre().getName() + ")"
+                    + listBook.get(i).getAuthor().getFullName() + " (" + listBook.get(i).getGenre().getName() + ")"
                     + (i < (listBook.size() - 1) ? ",\n " : ".");
         }
-        return "Received " + (listBook == null ? 0 : bookString);
+        return "Received " + bookString;
     }
 
     /**

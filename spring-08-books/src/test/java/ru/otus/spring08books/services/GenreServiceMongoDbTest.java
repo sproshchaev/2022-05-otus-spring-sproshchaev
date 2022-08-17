@@ -23,7 +23,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Import(GenreServiceMongoDb.class)
 @DisplayName("GenreServiceMongoDb must ")
 class GenreServiceMongoDbTest {
-
     private final long EXPECTED_COUNT_GENRES = 5;
     private final String EXPECTED_GENRE_NAME_ONE = "New genre for the test one";
     private final String EXPECTED_GENRE_NAME_TWO = "New genre for the test two";
@@ -34,10 +33,10 @@ class GenreServiceMongoDbTest {
     private MongoTemplate mongoTemplate;
 
     @BeforeEach
-    void deleteTestAuthors() {
-        for (String authorFullName : Arrays.asList(EXPECTED_GENRE_NAME_ONE, EXPECTED_GENRE_NAME_TWO)) {
+    void deleteTestGenres() {
+        for (String genreName : Arrays.asList(EXPECTED_GENRE_NAME_ONE, EXPECTED_GENRE_NAME_TWO)) {
             Genre genre = mongoTemplate.findOne(Query.query(Criteria.where("name")
-                    .is(authorFullName)), Genre.class);
+                    .is(genreName)), Genre.class);
             if (genre != null) {
                 mongoTemplate.remove(genre);
             }
@@ -47,36 +46,17 @@ class GenreServiceMongoDbTest {
     @Test
     @DisplayName("how many genres in library")
     void shouldCountGenres() {
-        Long countGenres = genreServiceMongoDb.countGenres();
+        long countGenres = genreServiceMongoDb.countGenres();
         assertThat(countGenres).isEqualTo(EXPECTED_COUNT_GENRES);
     }
 
     @Test
-    void createGenre() {
-    }
-
-    @Test
-    void getIdByGenre() {
-    }
-
-    @Test
-    void getGenreById() {
-    }
-
-    @Test
-    void getAllGenres() {
-    }
-
-    @Test
-    void updateGenre() {
-    }
-
-    @Test
-    void deleteGenreById() {
-    }
-
-    @Test
-    void getFirstGenreByName() {
+    @DisplayName("create a new genre and check by name")
+    void shouldCreateNewGenre() {
+        genreServiceMongoDb.createGenre(EXPECTED_GENRE_NAME_ONE);
+        Genre genre = mongoTemplate.findOne(Query.query(Criteria.where("name")
+                .is(EXPECTED_GENRE_NAME_ONE)), Genre.class);
+        assertThat(genre.getName()).isEqualTo(EXPECTED_GENRE_NAME_ONE);
     }
 
 }

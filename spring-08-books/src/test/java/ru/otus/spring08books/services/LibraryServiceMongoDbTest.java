@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.mongodb.core.MongoTemplate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,17 +25,7 @@ class LibraryServiceMongoDbTest {
     private final long EXPECTED_COUNT_COMMENTS = 4;
 
     @Autowired
-    private AuthorServiceMongoDb authorServiceMongoDb;
-    @Autowired
-    private GenreServiceMongoDb genreServiceMongoDb;
-    @Autowired
-    private BookServiceMongoDb bookServiceMongoDb;
-    @Autowired
-    private CommentServiceMongoDb commentServiceMongoDb;
-    @Autowired
     private LibraryServiceMongoDb libraryServiceMongoDb;
-    @Autowired
-    private MongoTemplate mongoTemplate;
 
     @Test
     @DisplayName("how many authors, genres, books, comments in library")

@@ -46,7 +46,7 @@ class AuthorServiceMongoDbTest {
     @Test
     @DisplayName("how many authors in library")
     void shouldCountAuthors() {
-        Long countAuthors = authorServiceMongoDb.countAuthors();
+        long countAuthors = authorServiceMongoDb.countAuthors();
         assertThat(countAuthors).isEqualTo(EXPECTED_COUNT_AUTHORS);
     }
 

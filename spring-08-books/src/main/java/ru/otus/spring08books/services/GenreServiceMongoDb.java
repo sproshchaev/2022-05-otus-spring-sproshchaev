@@ -86,7 +86,8 @@ public class GenreServiceMongoDb implements GenreService {
         List<Genre> genreList = genreRepositoryMongoDb.findAll();
         String genresString = "Genres in the library:\n ";
         for (int i = 0; i < genreList.size(); i++) {
-            genresString = genresString + (i + 1) + ") " + genreList.get(i).getName() + (i < (genreList.size() - 1) ? ",\n " : ".");
+            genresString = genresString + (i + 1) + ") " + genreList.get(i).getName()
+                    + (i < (genreList.size() - 1) ? ",\n " : ".");
         }
         return genreList.size() == 0 ? "Genres not found!" : genresString;
     }
