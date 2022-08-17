@@ -144,10 +144,8 @@ Development on the Spring Framework
 
 ### Тестирование
 1. Создать директорию test\resources
-2. Создать test\resources\application.yaml:
-
-3. Создать TestAppConfiguration.java и подключить через аннотацию в MainTests.java
-
+2. Создать test\resources\application.yaml
+3. Тестирование производится на встроенной базе Embedded MongoDB
 ### Статьи по теме
 1. Репозиторий Otus. Пример работы с MongoDB https://github.com/OtusTeam/Spring/tree/master/examples/mongo-db-demo-new-mongock
 2. DOCKER OFFICIAL IMAGE mongo https://hub.docker.com/_/mongo
