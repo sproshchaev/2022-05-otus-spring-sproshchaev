@@ -1,6 +1,5 @@
 package ru.otus.spring08books.services;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -65,13 +64,6 @@ class AuthorServiceMongoDbTest {
     @Test
     @DisplayName("create a new author and check by the count of authors")
     void shouldCreateNewAuthorAndCheckCount() {
-        System.out.println("!!!" + mongoTemplate.count(new Query(), Author.class)); // todo del
-        List<Author> authorList = mongoTemplate.findAll(Author.class);
-        for (Author author : authorList) {
-                System.out.println(author.getFullName()); // todo: del
-            }
-        // ----
-
         authorServiceMongoDb.createNewAuthor(EXPECTED_AUTHOR_NAME);
         Long countAuthorsAfter = mongoTemplate.count(new Query(), Author.class);
         assertThat(EXPECTED_COUNT_AUTHORS + 1).isEqualTo(countAuthorsAfter);
@@ -102,7 +94,6 @@ class AuthorServiceMongoDbTest {
         for (Author author : authorList) {
             if (result.contains(author.getFullName())) {
                 countAuthor++;
-                System.out.println(author.getFullName()); // todo: del
             }
         }
         assertThat(countAuthor).isEqualTo(EXPECTED_COUNT_AUTHORS);
