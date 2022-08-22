@@ -1,13 +1,13 @@
 package ru.otus.spring08books.services;
 
 import ru.otus.spring08books.entities.Author;
-import ru.otus.spring08books.repositories.GenreRepositoryMongoDb;
+import ru.otus.spring08books.repositories.GenreRepository;
 
 /**
  * Интерфейс AuthorService содержит набор методов для работы с репозиторием сущности Author
  *
  * @see ru.otus.spring08books.entities.Author
- * @see GenreRepositoryMongoDb
+ * @see GenreRepository
  */
 public interface AuthorService {
 
@@ -81,6 +81,4 @@ public interface AuthorService {
      * @return
      */
     Long countAuthors();
-
-
 }

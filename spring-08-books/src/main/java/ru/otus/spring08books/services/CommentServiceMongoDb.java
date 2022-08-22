@@ -1,10 +1,10 @@
 package ru.otus.spring08books.services;
 
-import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.otus.spring08books.entities.Book;
 import ru.otus.spring08books.entities.Comment;
-import ru.otus.spring08books.repositories.CommentRepositoryMongoDb;
+import ru.otus.spring08books.repositories.CommentRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,18 +12,16 @@ import java.util.Optional;
 /**
  * Класс CommentServiceMongoDb содержит методы для работы с репозиторием комментариев
  *
- * @see CommentRepositoryMongoDb
+ * @see CommentRepository
  */
 @Service
 public class CommentServiceMongoDb implements CommentService {
-    private final CommentRepositoryMongoDb commentRepositoryMongoDb;
-    private final MongoTemplate mongoTemplate;
+    private final CommentRepository commentRepository;
     private final BookServiceMongoDb bookServiceMongoDb;
 
-    public CommentServiceMongoDb(CommentRepositoryMongoDb commentRepositoryMongoDb, MongoTemplate mongoTemplate,
-                                 BookServiceMongoDb bookServiceMongoDb) {
-        this.commentRepositoryMongoDb = commentRepositoryMongoDb;
-        this.mongoTemplate = mongoTemplate;
+    @Autowired
+    public CommentServiceMongoDb(CommentRepository commentRepository, BookServiceMongoDb bookServiceMongoDb) {
+        this.commentRepository = commentRepository;
         this.bookServiceMongoDb = bookServiceMongoDb;
     }
 
@@ -40,7 +38,7 @@ public class CommentServiceMongoDb implements CommentService {
     public String createCommentByIdBook(String idBook, String comment) {
         Book book = bookServiceMongoDb.findBookById(idBook);
         if (book != null) {
-            Comment newComment = commentRepositoryMongoDb.save(new Comment(comment, book));
+            Comment newComment = commentRepository.save(new Comment(comment, book));
             return "New comment '" + newComment.getCommentText() + "' for book id=" + newComment.getBook().getId()
                     + " has been successfully created!";
         } else {
@@ -57,7 +55,7 @@ public class CommentServiceMongoDb implements CommentService {
      */
     @Override
     public String getCommentById(String idComment) {
-        Optional<Comment> comment = commentRepositoryMongoDb.findById(idComment);
+        Optional<Comment> comment = commentRepository.findById(idComment);
         return comment.isPresent() ? "Comment on the book ('" + comment.get().getBook().getTitle() + "' "
                 + comment.get().getBook().getAuthor().getFullName() + " "
                 + comment.get().getBook().getGenre().getName() + ") id="
@@ -67,7 +65,7 @@ public class CommentServiceMongoDb implements CommentService {
 
     /**
      * Метод getAllCommentsBookById возвращает все комментарии к книге
-     * Если id книги не найден - метод вернет строку ""
+     * Если id книги не найден - метод вернет сообщение об отсутствии книги с id
      * Метод не изменяет данные
      *
      * @param idBook
@@ -77,7 +75,7 @@ public class CommentServiceMongoDb implements CommentService {
     public String getAllCommentsBookById(String idBook) {
         Book book = bookServiceMongoDb.findBookById(idBook);
         if (book != null) {
-            List<Comment> commentList = commentRepositoryMongoDb.findAllByBook(book);
+            List<Comment> commentList = commentRepository.findAllByBook(book);
             String commentsString = "All comments (" + commentList.size() + ") on book id=" + idBook + ": \n";
             for (int i = 0; i < commentList.size(); i++) {
                 commentsString = commentsString + " " + (i + 1) + ") " + commentList.get(i).getCommentText()
@@ -99,10 +97,10 @@ public class CommentServiceMongoDb implements CommentService {
      */
     @Override
     public String updateCommentById(String idComment, String commentText) {
-        Optional<Comment> comment = commentRepositoryMongoDb.findById(idComment);
+        Optional<Comment> comment = commentRepository.findById(idComment);
         if (comment.isPresent()) {
             comment.get().setCommentText(commentText);
-            Comment newComment = commentRepositoryMongoDb.save(comment.get());
+            Comment newComment = commentRepository.save(comment.get());
             return "The comment id=" + newComment.getId() + " has been updated: '" + newComment.getCommentText() + "'";
         } else {
             return "Comment id=" + idComment + " not found!";
@@ -118,11 +116,30 @@ public class CommentServiceMongoDb implements CommentService {
      */
     @Override
     public String deleteCommentById(String idComment) {
-        if (commentRepositoryMongoDb.findById(idComment).isPresent()) {
-            commentRepositoryMongoDb.deleteById(idComment);
-            return "The comment id=" + idComment + " has been deleted";
+       return commentRepository.findById(idComment)
+                .map(comment -> {
+                    commentRepository.delete(comment);
+                    return "The comment id=" + idComment + " has been deleted";
+                }).orElse("Comment id=" + idComment + " not found!");
+    }
+
+    /**
+     * Метод deleteAllCommentBook удаляет все комментарии к книге
+     * Если id книги не найден - метод вернет сообщение об отсутствии книги с id
+     * Метод изменяет данные
+     *
+     * @param idBook
+     * @return
+     */
+    @Override
+    public String deleteAllCommentBook(String idBook) {
+        Book book = bookServiceMongoDb.findBookById(idBook);
+        if (book != null) {
+            List<Comment> commentList = commentRepository.findAllByBook(book);
+            commentRepository.deleteAllByBook(book);
+            return "Removed " + commentList.size() + " comments to the book id=" + idBook;
         } else {
-            return "Comment id=" + idComment + " not found!";
+            return "Book id=" + idBook + " not found!";
         }
     }
 
@@ -133,6 +150,6 @@ public class CommentServiceMongoDb implements CommentService {
      */
     @Override
     public Long countComments() {
-        return commentRepositoryMongoDb.count();
+        return commentRepository.count();
     }
 }

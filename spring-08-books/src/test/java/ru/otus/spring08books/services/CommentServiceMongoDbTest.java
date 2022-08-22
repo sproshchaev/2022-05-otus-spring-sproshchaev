@@ -61,5 +61,4 @@ class CommentServiceMongoDbTest {
                 .is(EXPECTED_COMMENT_TEXT_ONE)), Comment.class);
         assertThat(comment.getCommentText()).isEqualTo(EXPECTED_COMMENT_TEXT_ONE);
     }
-
 }

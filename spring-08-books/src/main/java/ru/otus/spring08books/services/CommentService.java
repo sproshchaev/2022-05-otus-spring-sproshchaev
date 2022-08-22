@@ -55,7 +55,16 @@ interface CommentService {
     String deleteCommentById(String idComment);
 
     /**
+     * Метод deleteAllCommentBook удаляет все комментарии у книги
+     *
+     * @param idBook
+     * @return
+     */
+    String deleteAllCommentBook(String idBook);
+
+    /**
      * Метод countComments возвращает число комментариев
+     *
      * @return
      */
     Long countComments();

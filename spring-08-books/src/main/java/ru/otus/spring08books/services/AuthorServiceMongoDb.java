@@ -1,11 +1,11 @@
 package ru.otus.spring08books.services;
 
-import com.mongodb.client.result.DeleteResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import ru.otus.spring08books.entities.Author;
-import ru.otus.spring08books.repositories.AuthorRepositoryMongoDb;
+import ru.otus.spring08books.entities.Book;
+import ru.otus.spring08books.repositories.AuthorRepository;
+import ru.otus.spring08books.repositories.BookRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,17 +13,17 @@ import java.util.Optional;
 /**
  * Класс AuthorServiceMongoDb содержит методы для работы с репозиторием авторов библиотеки
  *
- * @see AuthorRepositoryMongoDb
+ * @see AuthorRepository
  */
 @Service
 public class AuthorServiceMongoDb implements AuthorService {
-    private final AuthorRepositoryMongoDb authorRepositoryMongoDb;
-    private final MongoTemplate mongoTemplate;
+    private final AuthorRepository authorRepository;
+    private final BookRepository bookRepository;
 
     @Autowired
-    public AuthorServiceMongoDb(AuthorRepositoryMongoDb authorRepositoryMongoDb, MongoTemplate mongoTemplate) {
-        this.authorRepositoryMongoDb = authorRepositoryMongoDb;
-        this.mongoTemplate = mongoTemplate;
+    public AuthorServiceMongoDb(AuthorRepository authorRepository, BookRepository bookRepository) {
+        this.authorRepository = authorRepository;
+        this.bookRepository = bookRepository;
     }
 
     /**
@@ -38,9 +38,9 @@ public class AuthorServiceMongoDb implements AuthorService {
      */
     @Override
     public String createNewAuthor(String fullName) {
-        List<Author> authorList = authorRepositoryMongoDb.findAllByFullName(fullName);
+        List<Author> authorList = authorRepository.findAllByFullName(fullName);
         if (authorList.size() == 0) {
-            Author author = authorRepositoryMongoDb.save(new Author(fullName));
+            Author author = authorRepository.save(new Author(fullName));
             return "New author (" + author.getId() + ") '" + author.getFullName() + "' has been successfully created!";
         } else {
             return "Author '" + fullName + "' is already in the library, his id =" + authorList.get(0).getId();
@@ -57,7 +57,7 @@ public class AuthorServiceMongoDb implements AuthorService {
      */
     @Override
     public String getIdByAuthor(String fullName) {
-        List<Author> authorList = authorRepositoryMongoDb.findAllByFullName(fullName);
+        List<Author> authorList = authorRepository.findAllByFullName(fullName);
         return authorList.size() == 0
                 ? "Author '" + fullName + "' not found in the library!"
                 : "Author '" + fullName + "' has an id=" + authorList.get(0).getId();
@@ -72,7 +72,7 @@ public class AuthorServiceMongoDb implements AuthorService {
      */
     @Override
     public String getAuthorById(String id) {
-        Optional<Author> author = authorRepositoryMongoDb.findById(id);
+        Optional<Author> author = authorRepository.findById(id);
         return author.isEmpty() ? "Author not found!" : author.get().getFullName();
     }
 
@@ -84,11 +84,12 @@ public class AuthorServiceMongoDb implements AuthorService {
      */
     @Override
     public String getAllAuthors() {
-        List<Author> authorList = authorRepositoryMongoDb.findAll();
+        List<Author> authorList = authorRepository.findAll();
         String authorsString = "Authors in the library:\n ";
         for (int i = 0; i < authorList.size(); i++) {
             authorsString = authorsString + (i + 1) + ") " + authorList.get(i).getFullName()
-                    + (i < (authorList.size() - 1) ? ",\n " : ".");
+                    + " id=" + authorList.get(i).getId()
+                    + (i < (authorList.size() - 1) ? ";\n " : ".");
         }
         return authorList.size() == 0 ? "Authors not found!" : authorsString;
     }
@@ -107,8 +108,8 @@ public class AuthorServiceMongoDb implements AuthorService {
      */
     @Override
     public String updateAuthor(String id, String fullName) {
-        if (authorRepositoryMongoDb.findById(id).isPresent()) {
-            Author newAuthor = authorRepositoryMongoDb.save(new Author(id, fullName));
+        if (authorRepository.findById(id).isPresent()) {
+            Author newAuthor = authorRepository.save(new Author(id, fullName));
             return "Information about the author (" + "id=" + newAuthor.getId() + " " + newAuthor.getFullName()
                     + ") has been updated!";
         } else {
@@ -118,7 +119,9 @@ public class AuthorServiceMongoDb implements AuthorService {
 
     /**
      * Метод deleteAuthorById удаляет данные об авторе в библиотеке (cruD)
-     * Перед удалением выполняется проверка существования автора с таким id в таблице author
+     * Перед удалением выполняется:
+     * 1) проверка существования автора с таким id в таблице author
+     * 2) наличие книг у которых указан данный автор, если книги есть - удаление автора невозможно
      * Метод изменяет данные
      * Для реализации метода используется MongoTemplate
      *
@@ -127,11 +130,16 @@ public class AuthorServiceMongoDb implements AuthorService {
      */
     @Override
     public String deleteAuthorById(String id) {
-        Author authorForDelete = mongoTemplate.findById(id, Author.class);
-        if (authorForDelete != null) {
-            DeleteResult deleteResult = mongoTemplate.remove(authorForDelete);
-            return "Author (id=" + id + " " + authorForDelete.getFullName() + ") removed from the library (deleted "
-                    + deleteResult.getDeletedCount() + " entries)";
+        Optional<Author> authorForDelete = authorRepository.findById(id);
+        if (authorForDelete.isPresent()) {
+            List<Book> bookList = bookRepository.findBookByAuthor(authorForDelete.get());
+            if (bookList.size() == 0) {
+                authorRepository.delete(authorForDelete.get());
+                return "Author (id=" + id + " " + authorForDelete.get().getFullName() + ") removed from the library";
+            } else {
+                return "Delete error: author id=" + id + " " + authorForDelete.get().getFullName() + " is present in "
+                        + bookList.size() + " books!";
+            }
         } else {
             return "Delete error: author id=" + id + " not found!";
         }
@@ -146,8 +154,8 @@ public class AuthorServiceMongoDb implements AuthorService {
      */
     @Override
     public Author getFirstAuthorByFullName(String authorFullName) {
-        List<Author> authorList = authorRepositoryMongoDb.findAllByFullName(authorFullName);
-        return (authorList.size() == 0) ? authorRepositoryMongoDb.save(new Author(authorFullName)) : authorList.get(0);
+        List<Author> authorList = authorRepository.findAllByFullName(authorFullName);
+        return (authorList.size() == 0) ? authorRepository.save(new Author(authorFullName)) : authorList.get(0);
     }
 
     /**
@@ -157,6 +165,6 @@ public class AuthorServiceMongoDb implements AuthorService {
      */
     @Override
     public Long countAuthors() {
-        return authorRepositoryMongoDb.count();
+        return authorRepository.count();
     }
 }

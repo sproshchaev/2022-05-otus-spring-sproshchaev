@@ -1,11 +1,11 @@
 package ru.otus.spring08books.services;
 
-import com.mongodb.client.result.DeleteResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
+import ru.otus.spring08books.entities.Book;
 import ru.otus.spring08books.entities.Genre;
-import ru.otus.spring08books.repositories.GenreRepositoryMongoDb;
+import ru.otus.spring08books.repositories.BookRepository;
+import ru.otus.spring08books.repositories.GenreRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,17 +13,17 @@ import java.util.Optional;
 /**
  * Класс GenreServiceMongoDb содержит методы для работы с репозиторием жанров библиотеки
  *
- * @see GenreRepositoryMongoDb
+ * @see GenreRepository
  */
 @Service
 public class GenreServiceMongoDb implements GenreService {
-    private final GenreRepositoryMongoDb genreRepositoryMongoDb;
-    private final MongoTemplate mongoTemplate;
+    private final GenreRepository genreRepository;
+    private final BookRepository bookRepository;
 
     @Autowired
-    public GenreServiceMongoDb(GenreRepositoryMongoDb genreRepositoryMongoDb, MongoTemplate mongoTemplate) {
-        this.genreRepositoryMongoDb = genreRepositoryMongoDb;
-        this.mongoTemplate = mongoTemplate;
+    public GenreServiceMongoDb(GenreRepository genreRepository, BookRepository bookRepository) {
+        this.genreRepository = genreRepository;
+        this.bookRepository = bookRepository;
     }
 
     /**
@@ -37,9 +37,9 @@ public class GenreServiceMongoDb implements GenreService {
      * @return
      */
     public String createGenre(String name) {
-        List<Genre> listGenre = genreRepositoryMongoDb.findAllGenreByName(name);
+        List<Genre> listGenre = genreRepository.findAllGenreByName(name);
         if (listGenre.size() == 0) {
-            Genre genre = genreRepositoryMongoDb.save(new Genre(name));
+            Genre genre = genreRepository.save(new Genre(name));
             return "New genre (" + genre.getId() + ") '" + genre.getName() + "' has been successfully created!";
         } else {
             return "Genre '" + name + "' is already in the library, his id =" + listGenre.get(0).getId();
@@ -56,7 +56,7 @@ public class GenreServiceMongoDb implements GenreService {
      */
     @Override
     public String getIdByGenre(String name) {
-        List<Genre> listGenre = genreRepositoryMongoDb.findAllGenreByName(name);
+        List<Genre> listGenre = genreRepository.findAllGenreByName(name);
         return listGenre.size() == 0 ? "Genre '" + name + "' not found in the library!"
                 : "Genre '" + name + "' has an id=" + listGenre.get(0).getId();
     }
@@ -70,7 +70,7 @@ public class GenreServiceMongoDb implements GenreService {
      */
     @Override
     public String getGenreById(String id) {
-        Optional<Genre> genre = genreRepositoryMongoDb.findById(id);
+        Optional<Genre> genre = genreRepository.findById(id);
         return genre.isEmpty() ? "Genre id=" + id + " not found!"
                 : "Genre with id=" + id + ": '" + genre.get().getName() + "'";
     }
@@ -83,11 +83,12 @@ public class GenreServiceMongoDb implements GenreService {
      */
     @Override
     public String getAllGenres() {
-        List<Genre> genreList = genreRepositoryMongoDb.findAll();
+        List<Genre> genreList = genreRepository.findAll();
         String genresString = "Genres in the library:\n ";
         for (int i = 0; i < genreList.size(); i++) {
             genresString = genresString + (i + 1) + ") " + genreList.get(i).getName()
-                    + (i < (genreList.size() - 1) ? ",\n " : ".");
+                    + " id=" + genreList.get(i).getId()
+                    + (i < (genreList.size() - 1) ? ";\n " : ".");
         }
         return genreList.size() == 0 ? "Genres not found!" : genresString;
     }
@@ -106,8 +107,8 @@ public class GenreServiceMongoDb implements GenreService {
      */
     @Override
     public String updateGenre(String id, String name) {
-        if (genreRepositoryMongoDb.findById(id).isPresent()) {
-            Genre newGenre = genreRepositoryMongoDb.save(new Genre(id, name));
+        if (genreRepository.findById(id).isPresent()) {
+            Genre newGenre = genreRepository.save(new Genre(id, name));
             return "Information about the genre (" + "id=" + id + " " + name + ") has been updated: "
                     + "id=" + newGenre.getId() + " " + newGenre.getName() + "!";
         } else {
@@ -117,7 +118,9 @@ public class GenreServiceMongoDb implements GenreService {
 
     /**
      * Метод deleteGenreById удаляет данные о жанре из библиотеки (cruD)
-     * Перед удалением выполняется проверка существования жанра с таким id в таблице genre
+     * Перед удалением выполняется:
+     * 1) проверка существования жанра с таким id в таблице genre
+     * 2) наличие книг у которых указан данный жанр, если книги есть - удаление жанра невозможно
      * Метод изменяет данные
      * Для реализации метода используется MongoTemplate
      *
@@ -126,11 +129,16 @@ public class GenreServiceMongoDb implements GenreService {
      */
     @Override
     public String deleteGenreById(String id) {
-        Genre genreForDelete = mongoTemplate.findById(id, Genre.class);
-        if (genreForDelete != null) {
-            DeleteResult deleteResult = mongoTemplate.remove(genreForDelete);
-            return "Genre (id=" + id + " " + genreForDelete.getName() + ") removed from the library (deleted "
-                    + deleteResult.getDeletedCount() + " entries)";
+        Optional<Genre> genreForDelete = genreRepository.findById(id);
+        if (genreForDelete.isPresent()) {
+            List<Book> bookList = bookRepository.findBookByGenre(genreForDelete.get());
+            if (bookList.size() == 0) {
+                genreRepository.delete(genreForDelete.get());
+                return "Genre (id=" + id + " " + genreForDelete.get().getName() + ") removed from the library";
+            } else {
+                return "Delete error: genre id=" + id + " " + genreForDelete.get().getName() + " is present in "
+                        + bookList.size() + " books!";
+            }
         } else {
             return "Delete error: genre id=" + id + " not found!";
         }
@@ -144,8 +152,8 @@ public class GenreServiceMongoDb implements GenreService {
      */
     @Override
     public Genre getFirstGenreByName(String genreName) {
-        List<Genre> genreList = genreRepositoryMongoDb.findAllGenreByName(genreName);
-        return (genreList.size() == 0) ? genreRepositoryMongoDb.save(new Genre(genreName)) : genreList.get(0);
+        List<Genre> genreList = genreRepository.findAllGenreByName(genreName);
+        return (genreList.size() == 0) ? genreRepository.save(new Genre(genreName)) : genreList.get(0);
     }
 
     /**
@@ -155,7 +163,6 @@ public class GenreServiceMongoDb implements GenreService {
      */
     @Override
     public Long countGenres() {
-        return genreRepositoryMongoDb.count();
+        return genreRepository.count();
     }
-
 }

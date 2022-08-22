@@ -81,5 +81,4 @@ class BookServiceMongoDbTest {
                 .is(EXPECTED_BOOK_TITLE_ONE)), Book.class);
         assertThat(book.getTitle()).isEqualTo(EXPECTED_BOOK_TITLE_ONE);
     }
-
 }

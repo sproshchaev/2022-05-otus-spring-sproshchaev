@@ -83,5 +83,4 @@ interface BookService {
      * @return
      */
     Long countBooks();
-
 }

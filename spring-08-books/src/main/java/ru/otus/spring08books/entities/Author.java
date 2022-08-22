@@ -3,6 +3,7 @@ package ru.otus.spring08books.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Objects;
 
@@ -13,6 +14,7 @@ import java.util.Objects;
 public class Author {
     @Id
     private String id;
+    @Field(name = "fullname")
     private String fullName;
 
     public Author() {

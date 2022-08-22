@@ -121,7 +121,7 @@ public class AppEventsCommands {
     /**
      * Метод createNewBook (Crud)
      * Сокращенный вызов: "cb", "createbook" --title title_book --author author --genre genre
-     * Пример: cb --title 'A Life in Letters' --author 'Arthur Conan Doyle' --genre Autobiography
+     * Пример: cb --title 'A Life in Letters' --author 'Arthur Conan Doyle' --genre 'Autobiography'
      *
      * @param title
      * @param author
@@ -275,6 +275,20 @@ public class AppEventsCommands {
     }
 
     /**
+     * Метод deleteAllCommentBook удаляет все комментарии по книге (cruD)
+     * Сокращенный вызов: "dacb", "deleteallcommentbook" --idBook id
+     * Пример: dacb --idBook 1
+     *
+     * @param idBook
+     * @return
+     */
+    @ShellMethod(value = "Delete all comments to the book", key = {"dacb", "deleteallcommentbook"})
+    public String deleteAllCommentBook(@ShellOption(defaultValue = "1") String idBook) {
+        return commentServiceMongoDb.deleteAllCommentBook(idBook);
+    }
+
+
+    /**
      * Метод createGenre - создает наименование нового жанра книг в библиотеке
      * Сокращенный вызов: "cg", "creategenre" --name genre_name
      * Пример: cg --name Novel
@@ -354,5 +368,4 @@ public class AppEventsCommands {
     public String deleteGenreById(@ShellOption(defaultValue = "5") String id) {
         return genreServiceMongoDb.deleteGenreById(id);
     }
-
 }

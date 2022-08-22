@@ -1,7 +1,9 @@
 package ru.otus.spring08books.entities;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
  * Класс Книга
@@ -10,8 +12,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Book {
     @Id
     private String id;
+    @Field(name = "title")
     private String title;
+    @DBRef
     private Author author;
+    @DBRef
     private Genre genre;
 
     public Book() {

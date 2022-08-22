@@ -58,5 +58,4 @@ class GenreServiceMongoDbTest {
                 .is(EXPECTED_GENRE_NAME_ONE)), Genre.class);
         assertThat(genre.getName()).isEqualTo(EXPECTED_GENRE_NAME_ONE);
     }
-
 }

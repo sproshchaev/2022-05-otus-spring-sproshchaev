@@ -1,7 +1,9 @@
 package ru.otus.spring08books.entities;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
  * Класс Комментарий к книге
@@ -10,7 +12,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Comment {
     @Id
     private String id;
+    @Field(name = "comment_text")
     private String commentText;
+    @DBRef
     private Book book;
 
     public Comment() {

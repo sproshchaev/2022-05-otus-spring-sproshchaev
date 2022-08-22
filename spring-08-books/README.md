@@ -115,32 +115,33 @@ Development on the Spring Framework
 ### Вызов методов (@ShellMethod)
 "a" - Information about the library <br>
 #### CRUD for Genres
-"cg" - Create a new genre of books in the library (Crud) <br>
-"gibg" - Getting a genre id (cRud) <br>
-"ggbi" - Getting information about the author from the library by id (cRud) <br>
+"cg --name 'New genre'" - Create a new genre of books in the library (Crud) <br>
+"gibg --name 'Genre name'" - Getting a genre id (cRud) <br>
+"ggbi --id <id genre>" - Getting information about the author from the library by id (cRud) <br>
 "gag" - Getting a list of all genres from the library (cRud) <br>
-"ug" - Updating information about the genre (crUd) <br>
-"dgbi" - Deleting genre data from the library (cruD) <br>
+"ug  --id <id genre> --name 'New genre name'" - Updating information about the genre (crUd) <br>
+"dgbi --id <id genre>" - Deleting genre data from the library (cruD) <br>
 #### CRUD for Authors
-"ca" - Create a new Author of books in the library (Crud) <br>
-"giba" - Getting an id by author (cRud) <br>
-"gabi" - Getting information about the author from the library by id (cRud) <br>
+"ca --fullName 'New author'" - Create a new Author of books in the library (Crud) <br>
+"giba --fullName 'Author name'" - Getting an id by author (cRud) <br>
+"gabi --id <id author>" - Getting information about the author from the library by id (cRud) <br>
 "gaa" - Getting a list of all authors from the library (cRud) <br>
-"ua" - Updating information about the author (crUd) <br>
-"dabi" - Deleting author by id from the library (cruD) <br>
+"ua --id <id author> --fullName 'New author name'" - Updating information about the author (crUd) <br>
+"dabi --id <id author>" - Deleting author by id from the library (cruD) <br>
 #### CRUD for Books
-"cb" - Add information about a new book, author, genre to the library (Crud) <br>
-"gibb" - Getting an id by book (cRud) <br>
-"gbbi" - Get book data by its id (cRud) <br>
+"cb --title 'Title book' --author 'Author name' --genre 'Genre name'" - Add information about a new book, author, genre to the library (Crud) <br>
+"gibb --title 'Title book' --fullName 'Author name' --name 'Genre name'" - Getting an id by book (cRud) <br>
+"gbbi --id <id book>" - Get book data by its id (cRud) <br>
 "gab" - Get a list of all library books (cRud) <br>
-"ub" - Update book data by id (crUd) <br>
-"dbbi" - Deleting the selected book by id (cruD) <br>
+"ub --id 1 --title 'New title' --author 'New Author' --genre 'New Genre'" - Update book data by id (crUd) <br>
+"dbbi --id <id book>" - Deleting the selected book by id (cruD) <br>
 #### CRUD for Comment
-"cc" - Create a new book comment (Crud) <br>
-"gcbi" - Get comment by its id (cRud) <br>
-"gacbbi" - Get all comments on the book by id (cRud) <br>
-"ucbi" - Update comment by id (crUd) <br>
-"dcbi" - Deleting the selected comment by id (cruD) <br>
+"cc --idBook <id book> --comment 'Text comment'" - Create a new book comment (Crud) <br>
+"gcbi --id <id comment>" - Get comment by its id (cRud) <br>
+"gacbbi --id <id book>" - Get all comments on the book by id (cRud) <br>
+"ucbi --id <id comment> --comment 'New comment'" - Update comment by id (crUd) <br>
+"dcbi --id <id comment>" - Deleting the selected comment by id (cruD) <br>
+"dacb --idBook <id book>" - Delete all comments to the book
 
 ### Тестирование
 1. Создать директорию test\resources

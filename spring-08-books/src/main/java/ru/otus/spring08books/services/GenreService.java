@@ -75,5 +75,4 @@ public interface GenreService {
      * @return
      */
     Long countGenres();
-
 }

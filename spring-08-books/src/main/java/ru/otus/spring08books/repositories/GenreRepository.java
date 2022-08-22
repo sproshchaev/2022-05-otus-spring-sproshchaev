@@ -5,9 +5,15 @@ import org.springframework.stereotype.Repository;
 import ru.otus.spring08books.entities.Genre;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface GenreRepositoryMongoDb extends MongoRepository<Genre, String> {
+public interface GenreRepository extends MongoRepository<Genre, String> {
     List<Genre> findAllGenreByName(String name);
 
+    @Override
+    Optional<Genre> findById(String id);
+
+    @Override
+    void delete(Genre genre);
 }

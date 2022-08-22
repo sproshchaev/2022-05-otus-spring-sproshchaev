@@ -7,10 +7,20 @@ import ru.otus.spring08books.entities.Book;
 import ru.otus.spring08books.entities.Genre;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface BookRepositoryMongoDb extends MongoRepository<Book, String> {
+public interface BookRepository extends MongoRepository<Book, String> {
 
     List<Book> findAllByTitleAndAuthorAndGenre(String title, Author author, Genre genre);
 
+    @Override
+    Optional<Book> findById(String id);
+
+    @Override
+    void delete(Book book);
+
+    List<Book> findBookByAuthor(Author author);
+
+    List<Book> findBookByGenre(Genre genre);
 }

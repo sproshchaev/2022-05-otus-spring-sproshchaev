@@ -12,5 +12,4 @@ public interface LibraryService {
      * @return
      */
     String aboutLibrary();
-
 }
