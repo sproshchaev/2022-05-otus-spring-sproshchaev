@@ -4,6 +4,8 @@ import javax.persistence.*;
 
 /**
  * Класс Комментарий к книге (POJO)
+ * Примечание: для связанных сущностей переопределение методов toString, equals, hashcode приводит к вытягиванию
+ * связей из базы
  */
 @Entity
 @Table(name = "comment")

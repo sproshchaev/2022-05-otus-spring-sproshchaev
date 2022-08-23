@@ -4,6 +4,8 @@ import javax.persistence.*;
 
 /**
  * Класс Книга (POJO)
+ * Примечание: для связанных сущностей переопределение методов toString, equals, hashcode приводит к вытягиванию
+ * связей из базы
  */
 @Entity
 @Table(name = "book")
@@ -31,6 +33,7 @@ public class Book {
 
     /**
      * Конструктор класса с параметром id
+     *
      * @param id
      */
     public Book(long id) {
@@ -39,6 +42,7 @@ public class Book {
 
     /**
      * Конструктор класса с параметрами title, author, genre
+     *
      * @param title
      * @param author
      * @param genre
