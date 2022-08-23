@@ -3,7 +3,7 @@ package ru.otus.spring09books.entities;
 import javax.persistence.*;
 
 /**
- * Класс Автор
+ * Класс Автор (POJO)
  */
 @Entity
 @Table(name = "author")
