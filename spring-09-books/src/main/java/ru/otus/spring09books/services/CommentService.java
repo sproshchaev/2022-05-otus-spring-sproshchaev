@@ -6,4 +6,5 @@ package ru.otus.spring09books.services;
  * @see ru.otus.spring09books.entities.Comment
  */
 public interface CommentService {
+
 }

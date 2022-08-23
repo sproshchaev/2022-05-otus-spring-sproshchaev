@@ -100,7 +100,7 @@ CRUD приложение с Web UI и хранением данных в БД
 18. Добавить в resources\db.migration ChengeLog-и:
       - 1.0 
       - 2.0
-      - data
+      - data - sql-запросы для добавления данных в СУБД
     Нэйминг ChengeLog-ов: PN__<Description>.sql
       - P - префикс "V" - версионные миграции, "U" - undo-миграции (только в Enterprise версии), "R" - повторяемые;
       - N - версия. Разделяется точками или единичными подчеркиваниями, может быть достаточно длинной;
@@ -136,10 +136,11 @@ CRUD приложение с Web UI и хранением данных в БД
 "gacbbi --id <id book>" - Get all comments on the book by id (cRud) <br>
 "ucbi --id <id comment> --comment 'New comment'" - Update comment by id (crUd) <br>
 "dcbi --id <id comment>" - Deleting the selected comment by id (cruD) <br>
-"dacb --idBook <id book>" - Delete all comments to the book
+"dacb --idBook <id book>" - Delete all comments to the book <br>
 
 ### Тестирование
 
 ### Статьи по теме
 1. PostgreSQL Типы данных https://postgrespro.ru/docs/postgresql/9.4/datatype
 2. Внешние ключи FOREIGN KEY: ON DELETE CASCADE https://bit.ly/3Kd0Ipg
+3. Учебник: Использование Thymeleaf https://habr.com/ru/post/350862/
