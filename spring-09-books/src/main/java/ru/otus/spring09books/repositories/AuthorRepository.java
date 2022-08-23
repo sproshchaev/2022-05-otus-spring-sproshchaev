@@ -5,14 +5,14 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import ru.otus.spring09books.entities.Author;
+import ru.otus.spring09books.domain.Author;
 
 import java.util.List;
 
 /**
  * Интерфейс AuthorRepository содержит методы работы со справочником авторов
  *
- * @see ru.otus.spring09books.entities.Author
+ * @see ru.otus.spring09books.domain.Author
  */
 @Repository
 public interface AuthorRepository extends JpaRepository<Author, Long> {

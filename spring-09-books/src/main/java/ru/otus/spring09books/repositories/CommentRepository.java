@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import ru.otus.spring09books.entities.Comment;
+import ru.otus.spring09books.domain.Comment;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +14,7 @@ import java.util.Optional;
 /**
  * Интерфейс CommentRepository содержит методы работы со справочником комментариев
  *
- * @see ru.otus.spring09books.entities.Comment
+ * @see ru.otus.spring09books.domain.Comment
  */
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {

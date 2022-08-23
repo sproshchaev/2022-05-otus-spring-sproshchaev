@@ -144,3 +144,5 @@ CRUD приложение с Web UI и хранением данных в БД
 1. PostgreSQL Типы данных https://postgrespro.ru/docs/postgresql/9.4/datatype
 2. Внешние ключи FOREIGN KEY: ON DELETE CASCADE https://bit.ly/3Kd0Ipg
 3. Учебник: Использование Thymeleaf https://habr.com/ru/post/350862/
+4. Spring Expression Language (SpEL) https://bit.ly/3dRuKmj
+5. Переосмысление DTO в Java https://habr.com/ru/post/513072/

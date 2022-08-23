@@ -1,4 +1,4 @@
-package ru.otus.spring09books.entities;
+package ru.otus.spring09books.domain;
 
 import javax.persistence.*;
 

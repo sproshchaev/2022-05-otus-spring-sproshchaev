@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import ru.otus.spring09books.entities.Author;
-import ru.otus.spring09books.entities.Book;
-import ru.otus.spring09books.entities.Genre;
+import ru.otus.spring09books.domain.Author;
+import ru.otus.spring09books.domain.Book;
+import ru.otus.spring09books.domain.Genre;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +16,7 @@ import java.util.Optional;
 /**
  * Интерфейс BookRepository содержит методы работы с книгами
  *
- * @see ru.otus.spring09books.entities.Book
+ * @see ru.otus.spring09books.domain.Book
  */
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {

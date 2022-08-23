@@ -2,7 +2,7 @@ package ru.otus.spring09books.services;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.spring09books.entities.Book;
+import ru.otus.spring09books.domain.Book;
 import ru.otus.spring09books.repositories.BookRepository;
 
 import java.util.List;

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.otus.spring09books.entities.Book;
+import ru.otus.spring09books.domain.Book;
 import ru.otus.spring09books.services.BookServiceJpa;
 
 import java.util.List;
