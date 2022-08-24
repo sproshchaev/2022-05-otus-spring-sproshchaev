@@ -7,4 +7,9 @@ package ru.otus.spring09books.services;
  */
 public interface CommentService {
 
+    /**
+     * Число комментариев ко всем книгам в библиотеке, определяет популярность ресурса
+     * @return
+     */
+    long countComments();
 }

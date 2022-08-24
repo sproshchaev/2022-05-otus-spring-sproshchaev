@@ -5,4 +5,9 @@ package ru.otus.spring09books.services;
  */
 public interface LibraryService {
 
+    /**
+     * Вывод информации о библиотеке, книгах, авторах, жанрах и комментариях
+     * @return
+     */
+    String aboutLibrary();
 }

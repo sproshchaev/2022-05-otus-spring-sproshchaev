@@ -7,4 +7,9 @@ package ru.otus.spring09books.services;
  */
 public interface AuthorService {
 
+    /**
+     * Число авторов в библиотеке
+     * @return
+     */
+    long countAuthors();
 }

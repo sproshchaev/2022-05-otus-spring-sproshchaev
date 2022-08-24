@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ru" xmlns:text-align="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Books</title>
+    <style>
+        body {
+            padding: 50px;
+        }
+        .books {
+            border: 1px solid steelblue;
+            width: 300px;
+            border-collapse: collapse;
+        }
+        .books tr td, th {
+            padding: 5px;
+            border: 1px solid steelblue;
+        }
+        .books td:last-child, td:first-child {
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+<p>Library Books</p>
+<p>
+    <button onclick="window.location.href = '/books/all';">Get all books</button>
+    <button onclick="window.location.href = '/books/all';">Add new book</button>
+    <input name="Id book" type="number"/>
+    <button onclick="window.location.href = '/books/all';">Get book by id</button> <br/>
+</p>
+<table class="books" style="white-space: nowrap">
+    <thead>
+    <tr>
+        <th style="text-align: center">№</th>
+        <th style="text-align: center">Title</th>
+        <th style="text-align: center">Author</th>
+        <th style="text-align: center">Genre</th>
+        <th style="text-align: center">Id book</th>
+        <th style="text-align: center">Operations</th>
+    </tr>
+    </thead>
+    <tr th:each="book, state : ${books}">
+        <td th:text="${state.index + 1}" style="text-align: center">№</td>
+        <td th:text="${book.title}" style="text-align: left">Title</td>
+        <td th:text="${book.author.fullName}" style="text-align: left">Author</td>
+        <td th:text="${book.genre.name}" style="text-align: center">Genre</td>
+        <td th:text="${book.id}" style="text-align: center">Id book</td>
+        <td>
+            <button onclick="window.location.href = '/books/all';">Edit</button>
+            <button onclick="window.location.href = '/books/all';">Delete</button>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

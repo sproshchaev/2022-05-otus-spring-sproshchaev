@@ -7,4 +7,9 @@ package ru.otus.spring09books.services;
  */
 public interface GenreService {
 
+    /**
+     * Число жанров книг в библиотеке
+     * @return
+     */
+    long countGenres();
 }

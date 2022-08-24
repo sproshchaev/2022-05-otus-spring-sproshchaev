@@ -7,4 +7,9 @@ package ru.otus.spring09books.services;
  */
 public interface BookService {
 
+    /**
+     * Число книг в библиотеке
+     * @return
+     */
+    long countBooks();
 }

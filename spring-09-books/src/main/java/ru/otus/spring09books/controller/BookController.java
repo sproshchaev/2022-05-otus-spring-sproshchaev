@@ -5,25 +5,32 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import ru.otus.spring09books.domain.Book;
-import ru.otus.spring09books.services.BookServiceJpa;
+import ru.otus.spring09books.dto.BookDto;
+import ru.otus.spring09books.services.BookServiceImpl;
 
 import java.util.List;
 
 @Controller
 public class BookController {
 
-    private final BookServiceJpa bookServiceJpa;
+    private final BookServiceImpl bookService;
 
     @Autowired
-    public BookController(BookServiceJpa bookServiceJpa) {
-        this.bookServiceJpa = bookServiceJpa;
+    public BookController(BookServiceImpl bookService) {
+        this.bookService = bookService;
     }
 
-    @GetMapping("/")
-    public String listPage(Model model) {
-        List<Book> bookList = bookServiceJpa.getAllBook(); // todo: переделать String на List?
-        model.addAttribute("books", bookList);
-        return "book";
+    @GetMapping("/books")
+    public String booksPage(Model model) {
+        return "books";
     }
+
+    @GetMapping("/books/all")
+    public String allBooks(Model model) {
+        List<Book> bookList = bookService.getAllBook(); // TODO: преобразование в dto?
+        model.addAttribute("books", bookList);
+        return "books";
+    }
+
 
 }
