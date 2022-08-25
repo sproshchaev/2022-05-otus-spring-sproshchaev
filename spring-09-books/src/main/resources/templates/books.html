@@ -36,7 +36,7 @@
     <button onclick="window.location.href = '/books/all'">Get all books</button>
     <button onclick="window.location.href = '/books/new'">Add new book</button>
     <input id="input-id-book" type="number" th:value="${id_book}"/>
-    <button onclick="window.location.href = '/books/id?id=' + document.getElementById('input_id_book').value">Get book by id</button><br/> <br/>
+    <button onclick="window.location.href = '/books/id?id=' + document.getElementById('input-id-book').value">Get book by id</button><br/> <br/>
     <span style="font-weight: bold">Author</span>
     <select class="authors" id="author-selector">
         <option value="">Select author</option>
@@ -44,7 +44,7 @@
                 th:text="${author.fullName}">
         </option>
     </select>
-    <button onclick="window.location.href = '/books/author?author=' + document.querySelector('#author_selector').value">
+    <button onclick="window.location.href = '/books/author?author=' + document.querySelector('#author-selector').value">
         Get book by author
     </button>
 </div>
