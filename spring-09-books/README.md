@@ -96,6 +96,9 @@ CRUD приложение с Web UI и хранением данных в БД
       - datasource.driver-class-name: org.postgresql.Driver
       - jpa.database: postgresql
       - jpa.database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+      - jpa.generate-ddl: false       # не создавать объекты в БД 
+      - jpa.hibernate.ddl-auto: none  # не создавать объекты в БД
+      - jpa.show-sql: true            # отображать sql-запросы в консоль
       - flyway.enabled: true
 18. Добавить в resources\db.migration ChengeLog-и:
       - 1.0 
