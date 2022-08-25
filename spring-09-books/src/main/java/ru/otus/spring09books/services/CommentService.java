@@ -1,7 +1,7 @@
 package ru.otus.spring09books.services;
 
 /**
- * Интерфейс CommentService содержит методы для сущности Comment
+ * Интерфейс CommentService содержит методы для работы с сущностью Comment
  *
  * @see ru.otus.spring09books.domain.Comment
  */
@@ -12,4 +12,5 @@ public interface CommentService {
      * @return
      */
     long countComments();
+
 }

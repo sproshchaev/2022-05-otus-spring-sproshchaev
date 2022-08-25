@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru" xmlns:text-align="http://www.w3.org/1999/xhtml">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -10,28 +10,45 @@
         body {
             padding: 50px;
         }
+
         .books {
             border: 1px solid steelblue;
             width: 300px;
             border-collapse: collapse;
         }
+
         .books tr td, th {
             padding: 5px;
             border: 1px solid steelblue;
         }
+
         .books td:last-child, td:first-child {
             width: 50px;
         }
     </style>
 </head>
 <body>
-<p>Library Books</p>
 <p>
-    <button onclick="window.location.href = '/books/all';">Get all books</button>
-    <button onclick="window.location.href = '/books/all';">Add new book</button>
-    <input name="Id book" type="number"/>
-    <button onclick="window.location.href = '/books/all';">Get book by id</button> <br/>
+    <span style="font-weight: bold"> Library Books </span> </br>
+    <img src="/library.png" alt="Library Books">
 </p>
+<div>
+    <button onclick="window.location.href = '/books/all'">Get all books</button>
+    <button onclick="window.location.href = '/books/new'">Add new book</button>
+    <input id="input-id-book" type="number" th:value="${id_book}"/>
+    <button onclick="window.location.href = '/books/id?id=' + document.getElementById('input_id_book').value">Get book by id</button><br/> <br/>
+    <span style="font-weight: bold">Author</span>
+    <select class="authors" id="author-selector">
+        <option value="">Select author</option>
+        <option th:each="author : ${authors}"
+                th:text="${author.fullName}">
+        </option>
+    </select>
+    <button onclick="window.location.href = '/books/author?author=' + document.querySelector('#author_selector').value">
+        Get book by author
+    </button>
+</div>
+<br/>
 <table class="books" style="white-space: nowrap">
     <thead>
     <tr>
@@ -50,8 +67,8 @@
         <td th:text="${book.genre.name}" style="text-align: center">Genre</td>
         <td th:text="${book.id}" style="text-align: center">Id book</td>
         <td>
-            <button onclick="window.location.href = '/books/all';">Edit</button>
-            <button onclick="window.location.href = '/books/all';">Delete</button>
+            <button onclick="window.location.href = '/books/all'">Edit</button>
+            <button onclick="window.location.href = '/books/all'">Delete</button>
         </td>
     </tr>
 </table>

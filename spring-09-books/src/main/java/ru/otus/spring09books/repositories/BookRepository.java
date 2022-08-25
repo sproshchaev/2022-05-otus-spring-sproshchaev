@@ -43,4 +43,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
                        @Param("title") String title,
                        @Param("author") Author author,
                        @Param("genre") Genre genre);
+
+    @EntityGraph(attributePaths = {"author", "genre"})
+    List<Book> findBookByAuthor(Author author);
+
 }

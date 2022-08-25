@@ -2,7 +2,11 @@ package ru.otus.spring09books.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.otus.spring09books.domain.Author;
 import ru.otus.spring09books.repositories.AuthorRepository;
+
+import java.util.List;
 
 /**
  * Класс AuthorService содержит методы для работы с репозиторием авторов библиотеки
@@ -20,12 +24,41 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     /**
-     * Число авторов в библиотеке
+     * Метод getFirstAuthorByFullName возвращает первого автора из списка, авторов с одинаковым значением поля fullName
+     * Метод не изменяет данные
+     *
+     * @param authorFullName
+     * @return
+     */
+    @Transactional(readOnly = true)
+    @Override
+    public Author getFirstAuthorByFullName(String authorFullName) {
+        List<Author> authorList = authorRepository.getAuthorByFullName(authorFullName);
+        return (authorList.size() == 0) ? null : authorList.get(0);
+    }
+
+    /**
+     * Метод getAllAuthors получает список всех авторов из библиотеки (cRud)
+     * Метод не изменяет данные
      *
      * @return
      */
+    @Transactional(readOnly = true)
+    @Override
+    public List<Author> getAllAuthors() {
+        return authorRepository.findAll();
+    }
+
+    /**
+     * Число авторов в библиотеке
+     * Метод не изменяет данные
+     *
+     * @return
+     */
+    @Transactional(readOnly = true)
     @Override
     public long countAuthors() {
         return authorRepository.count();
     }
+
 }

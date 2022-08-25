@@ -149,5 +149,7 @@ CRUD приложение с Web UI и хранением данных в БД
 6. Переосмысление DTO в Java https://habr.com/ru/post/513072/
 7. Шаблон проектирования DTO https://www.baeldung.com/java-dto-pattern
 8. java - Наглядный пример различия DTO, POCO (POJO) и Value Object https://bit.ly/3pFYvtg
-9. Преобразование Entity в DTO с помощью ModelMapper https://sysout.ru/preobrazovanie-entity-v-dto-s-pomoshhyu-modelmapper/
-10. Цикл в Thymeleaf https://betacode.net/12359/thymeleaf-loops#a40012251
+9. Преобразование Entity в DTO с помощью ModelMapper https://bit.ly/3PMGtjt
+10. Цикл в Thymeleaf https://bit.ly/3PMGiVl
+11. Как заполнить выпадающий список с помощью thymeleaf и spring https://bit.ly/3RciB9V
+12. Пример POST-запроса https://spring.io/guides/gs/handling-form-submission/

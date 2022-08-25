@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Класс LibraryServiceImpl содержит методы для работы с сервисами авторов, жанров, книг, комментариев
+ */
 @Service
 public class LibraryServiceImpl {
     private final AuthorServiceImpl authorService;
@@ -35,4 +38,5 @@ public class LibraryServiceImpl {
                 + " books by " + countOfAuthors + " authors and " + countOfGenres + " genres in our library. " +
                 "Our readers have left more than " + countOfComment + " comments on the books!";
     }
+
 }
