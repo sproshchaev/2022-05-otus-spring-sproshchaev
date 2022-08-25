@@ -8,5 +8,9 @@ spring:
   jpa:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    show-sql: true
   flyway:
     enabled: true
