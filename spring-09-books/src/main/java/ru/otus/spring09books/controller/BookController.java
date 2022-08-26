@@ -81,8 +81,22 @@ public class BookController {
 
     @PostMapping("/saveeditedbook")
     public String saveEditedBook(@ModelAttribute BookDto bookDto, Model model) {
-        int countEditedBooks = bookService.updateBookById(bookDto.getId(), bookDto.getTitle(), bookDto.getAuthorFullName(), bookDto.getGenreName());
-        return (countEditedBooks == 1) ? "redirect:/books/id?id=" + bookDto.getId() : ""; // todo переход на страницу с инфо об ошибке
+        int countEditedBooks = bookService.updateBookById(bookDto.getId(), bookDto.getTitle(),
+                bookDto.getAuthorFullName(), bookDto.getGenreName());
+        return (countEditedBooks == 1) ? "redirect:/books/id?id=" + bookDto.getId() : "";
+    }
+
+    @GetMapping("/books/delete")
+    public String confirmDeleteBook(@RequestParam("id") long id, Model model) {
+        Book book = bookService.getBookById(id);
+        model.addAttribute("book_dto", BookDto.fromDomainObject(book));
+        return "deletebook";
+    }
+
+    @PostMapping("/deletingbook")
+    public String deletingBook(@ModelAttribute BookDto bookDto, Model model) {
+        bookService.deleteBookById(bookDto.getId());
+        return "books";
     }
 
 }

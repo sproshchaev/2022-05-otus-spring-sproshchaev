@@ -12,6 +12,39 @@ import java.util.List;
 public interface BookService {
 
     /**
+     * Метод createBook (Crud)
+     *
+     * @param title          (book.title)
+     * @param authorFullName (author.fullName)
+     * @param genreName      (genre.name)
+     * @return
+     */
+    Book createNewBook(String title, String authorFullName, String genreName);
+
+    /**
+     * Метод getBookById возвращает книгу по ее id (cRud)
+     *
+     * @param id
+     * @return
+     */
+    Book getBookById(long id);
+
+    /**
+     * Метод getAllBook возвращает все книги из библиотеки (cRud)
+     *
+     * @return
+     */
+    List<Book> getAllBook();
+
+    /**
+     * Метод возвращает все книги автора (cRud)
+     *
+     * @param authorFullName
+     * @return
+     */
+    List<Book> getAllBookByAuthor(String authorFullName);
+
+    /**
      * Метод updateBookById обновляет данные по книге: название, автора, жанр (crUd)
      *
      * @param id
@@ -23,29 +56,12 @@ public interface BookService {
     int updateBookById(long id, String title, String authorFullName, String genreName);
 
     /**
-     * Метод createBook (Crud)
+     * Метод deleteBookById (cruD)
      *
-     * @param title          (book.title)
-     * @param authorFullName (author.fullName)
-     * @param genreName      (genre.name)
+     * @param id
      * @return
      */
-    Book createNewBook(String title, String authorFullName, String genreName);
-
-    /**
-     * Метод getAllBook возвращает все книги из библиотеки (cRud)
-     *
-     * @return
-     */
-    List<Book> getAllBook();
-
-    /**
-     * Метод возвращает все книги автора
-     *
-     * @param authorFullName
-     * @return
-     */
-    List<Book> getAllBookByAuthor(String authorFullName);
+    String deleteBookById(long id);
 
     /**
      * Число книг в библиотеке

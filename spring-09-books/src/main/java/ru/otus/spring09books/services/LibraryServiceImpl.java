@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Класс LibraryServiceImpl содержит методы для работы с сервисами авторов, жанров, книг, комментариев
  */
 @Service
-public class LibraryServiceImpl {
+public class LibraryServiceImpl implements LibraryService {
     private final AuthorServiceImpl authorService;
     private final GenreServiceImpl genreService;
     private final CommentServiceImpl commentService;
@@ -29,6 +29,7 @@ public class LibraryServiceImpl {
      * @return
      */
     @Transactional(readOnly = true)
+    @Override
     public String aboutLibrary() {
         long countOfBooks = bookService.countBooks();
         long countOfAuthors = authorService.countAuthors();
