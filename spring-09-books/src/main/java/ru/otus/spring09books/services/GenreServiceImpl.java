@@ -3,7 +3,10 @@ package ru.otus.spring09books.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.otus.spring09books.domain.Genre;
 import ru.otus.spring09books.repositories.GenreRepository;
+
+import java.util.List;
 
 /**
  * Класс GenreServiceImpl содержит методы для работы с репозиторием жанров книг
@@ -18,6 +21,20 @@ public class GenreServiceImpl implements GenreService {
     @Autowired
     public GenreServiceImpl(GenreRepository genreRepository) {
         this.genreRepository = genreRepository;
+    }
+
+    /**
+     * Метод getFirstGenreByName возвращает первый жанр из списка с одинаковым значением поля name
+     * Метод может изменять данные
+     *
+     * @param genreName
+     * @return
+     */
+    @Transactional
+    @Override
+    public Genre getFirstGenreByName(String genreName) {
+        List<Genre> authorList = genreRepository.getGenreByName(genreName);
+        return (authorList.size() == 0) ? genreRepository.save(new Genre(genreName)) : authorList.get(0);
     }
 
     /**

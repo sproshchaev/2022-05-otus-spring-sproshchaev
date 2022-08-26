@@ -4,9 +4,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring09books.domain.Author;
 import ru.otus.spring09books.domain.Book;
+import ru.otus.spring09books.domain.Genre;
 import ru.otus.spring09books.repositories.BookRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Класс BookServiceImpl содержит методы для работы с репозиторием книг библиотеки
@@ -24,6 +26,52 @@ public class BookServiceImpl implements BookService {
         this.authorService = authorService;
         this.genreService = genreService;
         this.bookRepository = bookRepository;
+    }
+
+    /**
+     * Метод updateBookById обновляет данные по книге: название, автора, жанр (crUd)
+     * Перед изменением данных проверяется автор и жанр на наличие в справочниках для исключения дубликатов
+     * Если id книги не найден, возвращается сообщение о неуспешном обновлении.
+     * Метод изменяет данные
+     *
+     * @param id
+     * @param title
+     * @param authorFullName
+     * @param genreName
+     * @return
+     */
+    @Transactional
+    @Override
+    public int updateBookById(long id, String title, String authorFullName, String genreName) {
+        Optional<Book> book = bookRepository.findById(id);
+        if (book.isPresent()) {
+            Author author = authorService.getFirstAuthorByFullName(authorFullName);
+            Genre genre = genreService.getFirstGenreByName(genreName);
+            return bookRepository.updateBook(id, title, author, genre);
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+     * Метод createBook (Crud)
+     * Метод выполняет проверку на наличие книги в таблице book для исключения дубликатов.
+     * В результат, возвращаемый методом, добавляется информация - данная книга была создан, или же он уже есть
+     * в библиотеке
+     * Метод изменяет данные
+     *
+     * @param title          (book.title)
+     * @param authorFullName (author.fullName)
+     * @param genreName      (genre.name)
+     * @return
+     */
+    @Transactional
+    @Override
+    public Book createNewBook(String title, String authorFullName, String genreName) {
+        Author author = authorService.getFirstAuthorByFullName(authorFullName);
+        Genre genre = genreService.getFirstGenreByName(genreName);
+        List<Book> listBook = bookRepository.findBookByTitleAndAuthorAndGenre(title, author, genre);
+        return (listBook.size() == 0) ? bookRepository.save(new Book(title, author, genre)) : listBook.get(0);
     }
 
     /**

@@ -12,6 +12,27 @@ import java.util.List;
 public interface BookService {
 
     /**
+     * Метод updateBookById обновляет данные по книге: название, автора, жанр (crUd)
+     *
+     * @param id
+     * @param title
+     * @param authorFullName
+     * @param genreName
+     * @return
+     */
+    int updateBookById(long id, String title, String authorFullName, String genreName);
+
+    /**
+     * Метод createBook (Crud)
+     *
+     * @param title          (book.title)
+     * @param authorFullName (author.fullName)
+     * @param genreName      (genre.name)
+     * @return
+     */
+    Book createNewBook(String title, String authorFullName, String genreName);
+
+    /**
      * Метод getAllBook возвращает все книги из библиотеки (cRud)
      *
      * @return

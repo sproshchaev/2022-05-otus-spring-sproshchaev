@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.otus.spring09books.domain.Author;
+import ru.otus.spring09books.domain.Book;
 import ru.otus.spring09books.dto.BookDto;
 import ru.otus.spring09books.services.AuthorServiceImpl;
 import ru.otus.spring09books.services.BookServiceImpl;
@@ -66,9 +67,22 @@ public class BookController {
     }
 
     @PostMapping("/createbook")
-    public String savePerson(@ModelAttribute BookDto bookDto, Model model) {
-        System.out.println("! " + bookDto.getTitle() + " ");
-        return "redirect:/books/id?id=1"; // todo передать id созданной книги
+    public String saveBook(@ModelAttribute BookDto bookDto, Model model) {
+        Book book = bookService.createNewBook(bookDto.getTitle(), bookDto.getAuthorFullName(), bookDto.getGenreName());
+        return (book != null) ? "redirect:/books/id?id=" + book.getId() : "";
+    }
+
+    @GetMapping("/books/edit")
+    public String editBook(@RequestParam("id") long id, Model model) {
+        Book book = bookService.getBookById(id);
+        model.addAttribute("book_dto", BookDto.fromDomainObject(book));
+        return "editbook";
+    }
+
+    @PostMapping("/saveeditedbook")
+    public String saveEditedBook(@ModelAttribute BookDto bookDto, Model model) {
+        int countEditedBooks = bookService.updateBookById(bookDto.getId(), bookDto.getTitle(), bookDto.getAuthorFullName(), bookDto.getGenreName());
+        return (countEditedBooks == 1) ? "redirect:/books/id?id=" + bookDto.getId() : ""; // todo переход на страницу с инфо об ошибке
     }
 
 }

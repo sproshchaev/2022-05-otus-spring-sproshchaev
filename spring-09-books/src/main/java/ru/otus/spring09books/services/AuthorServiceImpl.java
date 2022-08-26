@@ -25,16 +25,16 @@ public class AuthorServiceImpl implements AuthorService {
 
     /**
      * Метод getFirstAuthorByFullName возвращает первого автора из списка, авторов с одинаковым значением поля fullName
-     * Метод не изменяет данные
+     * Метод может изменять данные
      *
      * @param authorFullName
      * @return
      */
-    @Transactional(readOnly = true)
+    @Transactional
     @Override
     public Author getFirstAuthorByFullName(String authorFullName) {
         List<Author> authorList = authorRepository.getAuthorByFullName(authorFullName);
-        return (authorList.size() == 0) ? null : authorList.get(0);
+        return (authorList.size() == 0) ? authorRepository.save(new Author(authorFullName)) : authorList.get(0);
     }
 
     /**
