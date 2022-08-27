@@ -3,7 +3,6 @@ package ru.otus.spring09books.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +15,11 @@ import ru.otus.spring09books.services.BookServiceImpl;
 
 import java.util.List;
 
+/**
+ * Класс BookController обрабатывает запросы, связанные с сущностью Book
+ *
+ * @see ru.otus.spring09books.domain.Book
+ */
 @Controller
 public class BookController {
 
@@ -31,31 +35,31 @@ public class BookController {
     @GetMapping("/books")
     public String booksPage(Model model) {
         List<Author> authorList = authorService.getAllAuthors();
-        model.addAttribute("authors", authorList); // TODO: преобразование в dto?
+        model.addAttribute("authors", authorList);
         model.addAttribute("id_book", 0);
         return "books";
     }
 
     @GetMapping("/books/all")
     public String allBooks(Model model) {
-        model.addAttribute("books", bookService.getAllBook()); // TODO: преобразование в dto?
-        model.addAttribute("authors", authorService.getAllAuthors()); // TODO: преобразование в dto?
+        model.addAttribute("books", bookService.getAllBook());
+        model.addAttribute("authors", authorService.getAllAuthors());
         model.addAttribute("id_book", 0);
         return "books";
     }
 
     @GetMapping("/books/author")
     public String authorBooks(@RequestParam("author") String authorFullName, Model model) {
-        model.addAttribute("books", bookService.getAllBookByAuthor(authorFullName)); // TODO: преобразование в dto?
-        model.addAttribute("authors", authorService.getAllAuthors()); // TODO: преобразование в dto?
+        model.addAttribute("books", bookService.getAllBookByAuthor(authorFullName));
+        model.addAttribute("authors", authorService.getAllAuthors());
         model.addAttribute("id_book", 0);
         return "books";
     }
 
     @GetMapping("/books/id")
-    public String id_book(@RequestParam("id") long id, Model model) {
-        model.addAttribute("books", bookService.getBookById(id)); // TODO: преобразование в dto?
-        model.addAttribute("authors", authorService.getAllAuthors()); // TODO: преобразование в dto?
+    public String getBookById(@RequestParam("id") long id, Model model) {
+        model.addAttribute("books", bookService.getBookById(id));
+        model.addAttribute("authors", authorService.getAllAuthors());
         model.addAttribute("id_book", id);
         return "books";
     }
@@ -83,7 +87,7 @@ public class BookController {
     public String saveEditedBook(@ModelAttribute BookDto bookDto, Model model) {
         int countEditedBooks = bookService.updateBookById(bookDto.getId(), bookDto.getTitle(),
                 bookDto.getAuthorFullName(), bookDto.getGenreName());
-        return (countEditedBooks == 1) ? "redirect:/books/id?id=" + bookDto.getId() : "";
+        return "redirect:/books/id?id=" + bookDto.getId();
     }
 
     @GetMapping("/books/delete")

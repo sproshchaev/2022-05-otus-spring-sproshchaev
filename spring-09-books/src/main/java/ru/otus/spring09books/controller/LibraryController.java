@@ -10,7 +10,6 @@ import ru.otus.spring09books.services.LibraryServiceImpl;
  */
 @Controller
 public class LibraryController {
-
     private final LibraryServiceImpl libraryService;
 
     public LibraryController(LibraryServiceImpl libraryService) {

@@ -1,6 +1,5 @@
 package ru.otus.spring09books.services;
 
-import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring09books.domain.Genre;
 
 /**
@@ -21,6 +20,7 @@ public interface GenreService {
 
     /**
      * Число жанров книг в библиотеке
+     *
      * @return
      */
     long countGenres();

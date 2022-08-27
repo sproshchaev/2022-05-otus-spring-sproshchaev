@@ -156,3 +156,4 @@ CRUD приложение с Web UI и хранением данных в БД
 10. Цикл в Thymeleaf https://bit.ly/3PMGiVl
 11. Как заполнить выпадающий список с помощью thymeleaf и spring https://bit.ly/3RciB9V
 12. Пример POST-запроса https://spring.io/guides/gs/handling-form-submission/
+13. Тестирование контроллеров с помощью MockMvc https://sysout.ru/testirovanie-kontrollerov-s-pomoshhyu-mockmvc/
