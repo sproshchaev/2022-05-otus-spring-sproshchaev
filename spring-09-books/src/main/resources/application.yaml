@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/books
+    username: postgres
+    password: 12345
+
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  flyway:
+    enabled: true
