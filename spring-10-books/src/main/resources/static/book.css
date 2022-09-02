@@ -1,0 +1,18 @@
+body {
+    padding: 50px;
+}
+.books {
+    border: 1px solid steelblue;
+    width: 300px;
+    border-collapse: collapse;
+}
+
+.books tr td, th {
+    padding: 5px;
+    border: 1px solid steelblue;
+    white-space: nowrap;
+}
+
+.books td:last-child, td:first-child {
+    width: 50px;
+}

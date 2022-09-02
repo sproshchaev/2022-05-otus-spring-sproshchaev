@@ -127,3 +127,4 @@ Development on the Spring Framework
 2. Accessing data with MySQL https://spring.io/guides/gs/accessing-data-mysql/
 3. MySQL + Spring JPA + Docker. Basic https://bit.ly/3RfG9e9
 4. Введение в AJAX https://developer.mozilla.org/ru/docs/Web/Guide/AJAX
+5. Создать таблицу с помощью JavaScript https://www.delftstack.com/ru/howto/javascript/create-table-javascript/
