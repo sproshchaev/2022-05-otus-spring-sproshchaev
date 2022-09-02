@@ -57,11 +57,11 @@ Development on the Spring Framework
   - Group: ru.otus
   - Artifact: spring-10-books
   - Name: spring-10-books
-  - Description: Demo project for Spring Boot, Spring Web, Spring Data JPA, MySQL Driver, Liquibase Migration
+  - Description: Demo project for Spring Boot, Spring Web, Thymeleaf, Spring Data JPA, MySQL Driver, Liquibase Migration
   - Package name: ru.otus.spring-10-books
 6. Packaging: Jar
 7. Java: 11
-8. Dependencies: Spring Web, Spring Data JPA, MySQL Driver, Liquibase Migration
+8. Dependencies: Spring Web, Thymeleaf, Spring Data JPA, MySQL Driver, Liquibase Migration
 9. Сохранить spring-10-books.zip в Java\2022-05-otus-spring-sproshchaev
 10. Разархивировать архив Java\2022-05-otus-spring-sproshchaev\spring-10-books.zip (файл .zip удалить)
 11. Открыть проект в IDE
@@ -72,6 +72,7 @@ Development on the Spring Framework
   - spring-boot-starter-web
   - liquibase-core
   - mysql-connector-java
+  - spring-boot-starter-thymeleaf (без нее не работает @GetMapping в @Controller)
 15. Запустить Docker
   - Проверить в Docker в разделе "Images" наличие "postgres", при отсутствии ввести в терминале команду "docker pull mysql"
   - Запустить в Docker в "Image" : "Images" - "Run", указать Optional settings: 
