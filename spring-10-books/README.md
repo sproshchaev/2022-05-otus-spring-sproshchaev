@@ -3,6 +3,9 @@
 [![Spring Data JPA](https://img.shields.io/badge/Spring_Data_JPA-FFFFFF??style=for-the-badge&logo=Spring)](https://spring.io/projects/spring-data-jpa)
 [![MySQL](https://img.shields.io/badge/MySQL-42759B??style=for-the-badge&logo=MySQL&logoColor=FFFFFF)](https://www.mysql.com/)
 [![Liquibase](https://img.shields.io/badge/Liquibase-FFFFFF??style=for-the-badge&logo=Liquibase&logoColor=3861F6)](https://www.liquibase.com/)
+[![Thymeleaf](https://img.shields.io/badge/Thymeleaf-FFFFFF??style=for-the-badge&logo=Thymeleaf&logoColor=025B10)](https://www.thymeleaf.org/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-000000??style=for-the-badge&logo=JavaScript&logoColor=F3E050)](https://github.com/sproshchaev/javascript-jquery/)
+[![AJAX](https://img.shields.io/badge/AJAX-FFFFFF??style=for-the-badge&logo=AJAX&logoColor=2E64A4)](https://developer.mozilla.org/ru/docs/Web/Guide/AJAX/)
 
 # 2022-05-otus-spring-sproshchaev
 Development on the Spring Framework
@@ -123,3 +126,4 @@ Development on the Spring Framework
 1. Docker MySQL https://hub.docker.com/_/mysql
 2. Accessing data with MySQL https://spring.io/guides/gs/accessing-data-mysql/
 3. MySQL + Spring JPA + Docker. Basic https://bit.ly/3RfG9e9
+4. Введение в AJAX https://developer.mozilla.org/ru/docs/Web/Guide/AJAX
