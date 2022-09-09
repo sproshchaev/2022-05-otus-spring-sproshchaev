@@ -101,37 +101,19 @@ Development on the Spring Framework
     db..insert({field1: "value", field2: "value"}) - вставить один или несколько документов в коллекцию;
     db..find() - показать все записи коллекции;
     db..count() - число записей в коллекции.
-18. Добавить файл application.yaml:
-  - spring:
-      - datasource.url: jdbc:mysql://localhost:3306/books
-      - datasource.username: library
-      - datasource.password: 12345
-      - datasource.driver-class-name: com.mysql.cj.jdbc.Driver
-      - jpa.generate-ddl: false        
-      - jpa.hibernate.ddl-auto: none  
-      - jpa.show-sql: true            
-      - liquibase.enabled: true
-18. Добавить в resources\db.changelog ChengeLog-и:
-      - \1.0 
-      - \2.0
-      - \data - sql-запросы для добавления данных в СУБД
-      - db.changelog-master.yaml
-          - databaseChangeLog:
-              - includeAll:
-                  path: db/changelog/1.0/ 
-              - includeAll:
-                  path: db/changelog/data/1.0/
-              - includeAll:
-                  path: db/changelog/2.0/
-              - includeAll:
-                  path: db/changelog/data/2.0/
+18. Добавить application.yml настройки для MongoDB:
+    - spring.data.mongodb:
+    - authentication-database: admin
+    - username: root
+    - password: root
+    - database: library # задает имя БД, в которую затем mongock создает коллекции
+    - port: 27017
+    - host: localhost
+19. Добавить application.yml настройки для Mongock, создать пакет и классы для Mongock, Добавить аннотацию @EnableMongock в Main.class
+    - Для работы в реактивном стеке требуется mongodb-reactive-driver https://docs.mongock.io/v5/driver/mongodb-reactive/index.html
+
 ### Примечания
 
 ### Тестирование
 
 ### Статьи по теме
-1. Docker MySQL https://hub.docker.com/_/mysql
-2. Accessing data with MySQL https://spring.io/guides/gs/accessing-data-mysql/
-3. MySQL + Spring JPA + Docker. Basic https://bit.ly/3RfG9e9
-4. Введение в AJAX https://developer.mozilla.org/ru/docs/Web/Guide/AJAX
-5. Создать таблицу с помощью JavaScript https://www.delftstack.com/ru/howto/javascript/create-table-javascript/
