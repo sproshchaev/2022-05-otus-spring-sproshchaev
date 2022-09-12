@@ -15,4 +15,5 @@ public interface AuthorRepository extends ReactiveMongoRepository<Author, String
 
     @Override
     Mono<Void> delete(Author author);
+
 }
