@@ -111,7 +111,9 @@ Development on the Spring Framework
     spring.jpa.hibernate.ddl-auto=none
     spring.flyway.enabled=true
 18. Создать БД
-    Ввести в Query console: create database library
+    Система миграций flyway не поддерживает транзакции по созданию базы данных, поэтому ее необходимо создать вручную, 
+    введя в "Query console" команду: create database library
+    Далее все ChengeLog-и будут создаваться в базе данных, определенной в файле application.yaml
 19. Добавить в resources\db.migration ChengeLog-и:
       - 1.0 
       - 2.0
