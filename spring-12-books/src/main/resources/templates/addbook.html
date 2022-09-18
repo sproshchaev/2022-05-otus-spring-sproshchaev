@@ -28,18 +28,17 @@
     </style>
 </head>
 <body>
-<p>
-    <span style="font-weight: bold">Add a new book to the library</span> </br>
-    <img src="/book.png" alt="Add a new book to the library">
-</p>
-<form id="add-book-form" th:action="@{/createbook}" th:object="${book_dto}" method="post">
-    <span style="font-weight: bold">Title</span> <input id="input_book_title" th:field="*{title}" type="text" value=""/> </br> <br/>
-    <span style="font-weight: bold">Author</span> <input id="input_book_author_fullname" th:field="*{authorFullName}" type="text" value=""/> </br> <br/>
-    <span style="font-weight: bold">Genre</span> <input id="input_book_genre_name" th:field="*{genreName}" type="text" value=""/> </br> <br/>
-    <button type="submit">Add</button>
+    <p>
+        <span style="font-weight: bold">Add a new book to the library</span> </br>
+        <img src="/book.png" alt="Add a new book to the library">
+    </p>
+    <form id="add-book-form" th:action="@{/createbook}" th:object="${book_dto}" method="post">
+        <span style="font-weight: bold">Title</span> <input id="input_book_title" th:field="*{title}" type="text" value=""/> </br> <br/>
+        <span style="font-weight: bold">Author</span> <input id="input_book_author_fullname" th:field="*{authorFullName}" type="text" value=""/> </br> <br/>
+        <span style="font-weight: bold">Genre</span> <input id="input_book_genre_name" th:field="*{genreName}" type="text" value=""/> </br> <br/>
+        <button type="submit">Add</button>
+    </form>
+    <br/>
     <button onclick="window.location.href = '/books'">Cancel</button>
-    <br/> <br/>
-</form>
-
 </body>
 </html>

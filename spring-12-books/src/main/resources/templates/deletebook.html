@@ -28,24 +28,24 @@
     </style>
 </head>
 <body>
-<p>
-    <span style="font-weight: bold">Delete the selected book</span> </br>
-    <img src="/deletebook.png" alt="Delete the selected book">
-</p>
+    <p>
+        <span style="font-weight: bold">Delete the selected book</span> </br>
+        <img src="/deletebook.png" alt="Delete the selected book">
+    </p>
 
-<form id="delete-book-form" th:action="@{/deletingbook}" th:object="${book_dto}" method="post">
-    <span style="font-weight: bold">Id</span> <input id="input_book_id" th:field="*{id}" type="text"
+    <form id="delete-book-form" th:action="@{/deletingbook}" th:object="${book_dto}" method="post">
+        <span style="font-weight: bold">Id</span> <input id="input_book_id" th:field="*{id}" type="text"
                                                      th:value="*{id}" readonly/> </br> <br/>
-    <span style="font-weight: bold">Title</span> <input id="input_book_title" th:field="*{title}" type="text"
+        <span style="font-weight: bold">Title</span> <input id="input_book_title" th:field="*{title}" type="text"
                                                         th:value="*{title}" readonly/> </br> <br/>
-    <span style="font-weight: bold">Author</span> <input id="input_book_author_fullname"
+        <span style="font-weight: bold">Author</span> <input id="input_book_author_fullname"
                                                          th:field="*{authorFullName}" type="text"
                                                          th:value="*{authorFullName}" readonly/> </br> <br/>
-    <span style="font-weight: bold">Genre</span> <input id="input_book_genre_name" th:field="*{genreName}"
+        <span style="font-weight: bold">Genre</span> <input id="input_book_genre_name" th:field="*{genreName}"
                                                         type="text" th:value="*{genreName}" readonly/> </br> <br/>
-    <button type="submit">Confirm delete</button>
-</form>
-<br/><br/>
-<button onclick="window.location.href = '/books'">Cancel</button>
+        <button type="submit">Confirm delete</button>
+    </form>
+    <br/>
+    <button onclick="window.location.href = '/books'">Cancel</button>
 </body>
 </html>

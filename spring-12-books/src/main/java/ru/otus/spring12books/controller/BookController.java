@@ -40,61 +40,59 @@ public class BookController {
         return "books";
     }
 
-    @GetMapping("/books/all")
-    public String allBooks(Model model) {
-        model.addAttribute("books", bookService.getAllBook());
-        model.addAttribute("authors", authorService.getAllAuthors());
-        model.addAttribute("id_book", 0);
+    @GetMapping(value = "/books", params = {"filter", "value"})
+    public String allBooks(@RequestParam("filter") String filter, @RequestParam("value") String value, Model model) {
+        if (filter.equals("allbook")) {
+            model.addAttribute("books", bookService.getAllBook());
+            model.addAttribute("authors", authorService.getAllAuthors());
+            model.addAttribute("id_book", 0);
+        }
+        if (filter.equals("author")) {
+            if (!value.equals("")) {
+                model.addAttribute("books", bookService.getAllBookByAuthor(value));
+            }
+            model.addAttribute("authors", authorService.getAllAuthors());
+            model.addAttribute("id_book", 0);
+        }
+        if (filter.equals("id")) {
+            model.addAttribute("books", bookService.getBookById(Long.parseLong(value)));
+            model.addAttribute("authors", authorService.getAllAuthors());
+            model.addAttribute("id_book", value);
+        }
         return "books";
     }
 
-    @GetMapping("/books/author")
-    public String authorBooks(@RequestParam("author") String authorFullName, Model model) {
-        model.addAttribute("books", bookService.getAllBookByAuthor(authorFullName));
-        model.addAttribute("authors", authorService.getAllAuthors());
-        model.addAttribute("id_book", 0);
-        return "books";
-    }
-
-    @GetMapping("/books/id")
-    public String getBookById(@RequestParam("id") long id, Model model) {
-        model.addAttribute("books", bookService.getBookById(id));
-        model.addAttribute("authors", authorService.getAllAuthors());
-        model.addAttribute("id_book", id);
-        return "books";
-    }
-
-    @GetMapping("/books/new")
-    public String addNewBook(Model model) {
-        model.addAttribute("book_dto", new BookDto("", "", ""));
-        return "addbook";
+    @GetMapping(value = "/books", params = {"operation", "id"})
+    public String addNewBook(@RequestParam("operation") String operation, @RequestParam("id") long id, Model model) {
+        String templateName = null;
+        if (operation.equals("new")) {
+            model.addAttribute("book_dto", new BookDto("", "", ""));
+            templateName = "addbook";
+        }
+        if (operation.equals("edit")) {
+            Book book = bookService.getBookById(id);
+            model.addAttribute("book_dto", BookDto.fromDomainObject(book));
+            templateName = "editbook";
+        }
+        if (operation.equals("delete")) {
+            Book book = bookService.getBookById(id);
+            model.addAttribute("book_dto", BookDto.fromDomainObject(book));
+            templateName = "deletebook";
+        }
+        return templateName;
     }
 
     @PostMapping("/createbook")
     public String saveBook(@ModelAttribute BookDto bookDto, Model model) {
         Book book = bookService.createNewBook(bookDto.getTitle(), bookDto.getAuthorFullName(), bookDto.getGenreName());
-        return (book != null) ? "redirect:/books/id?id=" + book.getId() : "";
-    }
-
-    @GetMapping("/books/edit")
-    public String editBook(@RequestParam("id") long id, Model model) {
-        Book book = bookService.getBookById(id);
-        model.addAttribute("book_dto", BookDto.fromDomainObject(book));
-        return "editbook";
+        return (book != null) ? "redirect:/books?filter=id&value=" + book.getId() : "";
     }
 
     @PostMapping("/saveeditedbook")
     public String saveEditedBook(@ModelAttribute BookDto bookDto, Model model) {
         int countEditedBooks = bookService.updateBookById(bookDto.getId(), bookDto.getTitle(),
                 bookDto.getAuthorFullName(), bookDto.getGenreName());
-        return "redirect:/books/id?id=" + bookDto.getId();
-    }
-
-    @GetMapping("/books/delete")
-    public String confirmDeleteBook(@RequestParam("id") long id, Model model) {
-        Book book = bookService.getBookById(id);
-        model.addAttribute("book_dto", BookDto.fromDomainObject(book));
-        return "deletebook";
+        return "redirect:/books?filter=id&value=" + bookDto.getId();
     }
 
     @PostMapping("/deletingbook")
