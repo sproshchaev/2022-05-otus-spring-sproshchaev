@@ -29,7 +29,7 @@
 </head>
 <body>
     <p>
-        <span style="font-weight: bold"> Library Books </span> </br>
+        <span style="font-weight: bold"> Library Books </span> <br>
         <img src="/library.png" alt="Library Books">
     </p>
     <div>
@@ -39,7 +39,7 @@
         <button onclick="window.location.href = '/books?filter=id&value=' + document.getElementById('input-id-book').value">Get book
             by id
         </button>
-        <br/> <br/>
+        <br> <br>
         <span style="font-weight: bold">Author</span>
         <select class="authors" id="author-selector">
             <option value="">Select author</option>
@@ -52,7 +52,7 @@
         </button>
 
     </div>
-    <br/>
+    <br>
     <table class="books" id="table" style="white-space: nowrap">
         <thead>
             <tr>
@@ -76,5 +76,8 @@
                 </td>
             </tr>
     </table>
+    <br>
+    <br>
+    <button onclick="window.location.href = '/logout'">Logout</button>
 </body>
 </html>

@@ -7,8 +7,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.otus.spring12books.services.AuthorServiceImpl;
-import ru.otus.spring12books.services.BookServiceImpl;
+import ru.otus.spring12books.services.AuthorService;
+import ru.otus.spring12books.services.BookService;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -21,15 +21,21 @@ class BookControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private BookServiceImpl bookService;
+    private BookService bookService;
     @MockBean
-    private AuthorServiceImpl authorService;
+    private AuthorService authorService;
 
-    @DisplayName("testAuthenticated")
+    @DisplayName("testAuthenticated with user in context")
     @WithMockUser(username = "reader", authorities = {"ROLE_USER"})
     @Test
-    public void testAuthenticated() throws Exception {
+    public void testAuthenticatedWithUserIsOk() throws Exception {
         mockMvc.perform(get("/books")).andExpect(status().isOk());
+    }
+
+    @DisplayName("testAuthenticated without user in context")
+    @Test
+    public void testAuthenticatedWithOutUserIsRedirection() throws Exception {
+        mockMvc.perform(get("/books")).andExpect(status().is3xxRedirection());
     }
 
 }

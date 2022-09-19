@@ -7,9 +7,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.otus.spring12books.services.LibraryServiceImpl;
+import ru.otus.spring12books.services.LibraryService;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -21,12 +20,18 @@ class LibraryControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private LibraryServiceImpl libraryService;
+    private LibraryService libraryService;
 
-    @DisplayName("testAuthenticated")
+    @DisplayName("testAuthenticated with user")
     @WithMockUser(username = "guest", authorities = {"ROLE_USER"})
     @Test
-    public void testAuthenticated() throws Exception {
+    public void testAuthenticatedWithUserIsOk() throws Exception {
+        mockMvc.perform(get("/")).andExpect(status().isOk());
+    }
+
+    @DisplayName("testAuthenticated without user")
+    @Test
+    public void testAuthenticatedWithoutUserIsOk() throws Exception {
         mockMvc.perform(get("/")).andExpect(status().isOk());
     }
 

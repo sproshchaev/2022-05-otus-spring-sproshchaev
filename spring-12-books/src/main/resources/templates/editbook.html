@@ -29,17 +29,17 @@
 </head>
 <body>
     <p>
-        <span style="font-weight: bold">Edit the selected book</span> </br>
+        <span style="font-weight: bold">Edit the selected book</span> <br>
         <img src="/editbook.png" alt="Edit the selected book">
     </p>
     <form id="edit-book-form" th:action="@{/saveeditedbook}" th:object="${book_dto}" method="post">
-        <span style="font-weight: bold">Id</span> <input id="input_book_id" th:field="*{id}" type="text" th:value="*{id}" readonly/> </br> <br/>
-        <span style="font-weight: bold">Title</span> <input id="input_book_title" th:field="*{title}" type="text" value=""/> </br> <br/>
-        <span style="font-weight: bold">Author</span> <input id="input_book_author_fullname" th:field="*{authorFullName}" type="text" value=""/> </br> <br/>
-        <span style="font-weight: bold">Genre</span> <input id="input_book_genre_name" th:field="*{genreName}" type="text" value=""/> </br> <br/>
+        <span style="font-weight: bold">Id</span> <input id="input_book_id" th:field="*{id}" type="text" th:value="*{id}" readonly/> <br> <br>
+        <span style="font-weight: bold">Title</span> <input id="input_book_title" th:field="*{title}" type="text" value=""/> <br> <br>
+        <span style="font-weight: bold">Author</span> <input id="input_book_author_fullname" th:field="*{authorFullName}" type="text" value=""/> <br> <br>
+        <span style="font-weight: bold">Genre</span> <input id="input_book_genre_name" th:field="*{genreName}" type="text" value=""/> <br> <br>
         <button type="submit">Save</button>
     </form>
-    <br/>
+    <br>
     <button onclick="window.location.href = '/books'">Cancel</button>
 </body>
 </html>

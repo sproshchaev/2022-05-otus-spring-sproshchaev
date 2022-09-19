@@ -123,9 +123,11 @@ Development on the Spring Framework
       - P - префикс "V" - версионные миграции, "U" - undo-миграции (только в Enterprise версии), "R" - повторяемые;
       - N - версия. Разделяется точками или единичными подчеркиваниями, может быть достаточно длинной;
       - <Description> - описание версии.
+
 ### Примечания
 
 ### Тестирование
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0
 
 ### Статьи по теме
 1. Docker Microsoft SQL Server https://hub.docker.com/_/microsoft-mssql-server

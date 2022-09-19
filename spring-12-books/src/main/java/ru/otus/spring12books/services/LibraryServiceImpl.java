@@ -9,13 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class LibraryServiceImpl implements LibraryService {
-    private final AuthorServiceImpl authorService;
-    private final GenreServiceImpl genreService;
-    private final CommentServiceImpl commentService;
-    private final BookServiceImpl bookService;
+    private final AuthorService authorService;
+    private final GenreService genreService;
+    private final CommentService commentService;
+    private final BookService bookService;
 
     @Autowired
-    public LibraryServiceImpl(AuthorServiceImpl authorService, GenreServiceImpl genreService, CommentServiceImpl commentService, BookServiceImpl bookService) {
+    public LibraryServiceImpl(AuthorService authorService, GenreService genreService, CommentService commentService,
+                              BookService bookService) {
         this.authorService = authorService;
         this.genreService = genreService;
         this.commentService = commentService;

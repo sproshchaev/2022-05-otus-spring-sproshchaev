@@ -18,16 +18,16 @@ import java.util.Collection;
 @Service
 public class CustomUserDetailedService implements UserDetailsService {
 
-    private final UserAccessServiceImpl userAccessServiceImpl;
+    private final UserAccessService userAccessService;
 
     @Autowired
-    public CustomUserDetailedService(UserAccessServiceImpl userAccessServiceImpl) {
-        this.userAccessServiceImpl = userAccessServiceImpl;
+    public CustomUserDetailedService(UserAccessServiceImpl userAccessService) {
+        this.userAccessService = userAccessService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserAccess userAccess = userAccessServiceImpl.getUserAccess(username);
+        UserAccess userAccess = userAccessService.getUserAccess(username);
         if (userAccess == null) {
             throw new UsernameNotFoundException("User " + username + " not found!");
         }

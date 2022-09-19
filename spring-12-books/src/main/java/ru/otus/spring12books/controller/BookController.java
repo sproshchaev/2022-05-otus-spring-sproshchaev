@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.otus.spring12books.domain.Author;
 import ru.otus.spring12books.domain.Book;
 import ru.otus.spring12books.dto.BookDto;
-import ru.otus.spring12books.services.AuthorServiceImpl;
-import ru.otus.spring12books.services.BookServiceImpl;
+import ru.otus.spring12books.services.AuthorService;
+import ru.otus.spring12books.services.BookService;
 
 import java.util.List;
 
@@ -23,11 +23,11 @@ import java.util.List;
 @Controller
 public class BookController {
 
-    private final BookServiceImpl bookService;
-    private final AuthorServiceImpl authorService;
+    private final BookService bookService;
+    private final AuthorService authorService;
 
     @Autowired
-    public BookController(BookServiceImpl bookService, AuthorServiceImpl authorService) {
+    public BookController(BookService bookService, AuthorService authorService) {
         this.bookService = bookService;
         this.authorService = authorService;
     }
