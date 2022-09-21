@@ -127,7 +127,7 @@ Development on the Spring Framework
 ### Примечания
 
 ### Тестирование
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0
 
 ### Статьи по теме
 1. Docker Microsoft SQL Server https://hub.docker.com/_/microsoft-mssql-server
