@@ -21,7 +21,7 @@ public class CustomUserDetailedService implements UserDetailsService {
     private final UserAccessService userAccessService;
 
     @Autowired
-    public CustomUserDetailedService(UserAccessServiceImpl userAccessService) {
+    public CustomUserDetailedService(UserAccessService userAccessService) {
         this.userAccessService = userAccessService;
     }
 
