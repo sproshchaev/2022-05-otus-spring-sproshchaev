@@ -128,4 +128,3 @@ Development on the Spring Framework
 3. Типы данных в MS SQL Server https://bit.ly/3S7DHXw
 4. Автоинкрементное поле в MS SQL Server https://bit.ly/3Ucj6TX
 5. Spring Boot Security Auto-Configuration https://www.baeldung.com/spring-boot-security-autoconfiguration
-6. 
