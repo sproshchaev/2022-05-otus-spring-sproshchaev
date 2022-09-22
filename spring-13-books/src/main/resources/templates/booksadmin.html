@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Books</title>
+    <style>
+        body {
+            padding: 50px;
+        }
+
+        .books {
+            border: 1px solid steelblue;
+            width: 300px;
+            border-collapse: collapse;
+        }
+
+        .books tr td, th {
+            padding: 5px;
+            border: 1px solid steelblue;
+        }
+
+        .books td:last-child, td:first-child {
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        <span style="font-weight: bold"> Library Books </span> <br>
+        <img src="/library.png" alt="Library Books">
+    </p>
+    <div>
+        <button onclick="window.location.href = '/books?filter=allbook&value=0'">Get all books</button>
+        <button onclick="window.location.href = '/books?operation=new&id=0'">Add new book</button>
+        <input id="input-id-book" type="number" th:value="${id_book}"/>
+        <button onclick="window.location.href = '/books?filter=id&value=' + document.getElementById('input-id-book').value">Get book
+            by id
+        </button>
+        <br> <br>
+        <span style="font-weight: bold">Author</span>
+        <select class="authors" id="author-selector">
+            <option value="">Select author</option>
+            <option th:each="author : ${authors}"
+                    th:text="${author.fullName}">
+            </option>
+        </select>
+        <button onclick="window.location.href = '/books?filter=author&value=' + document.querySelector('#author-selector').value">
+            Get book by author
+        </button>
+
+    </div>
+    <br>
+    <table class="books" id="table" style="white-space: nowrap">
+        <thead>
+            <tr>
+                <th style="text-align: center">№</th>
+                <th style="text-align: center">Title</th>
+                <th style="text-align: center">Author</th>
+                <th style="text-align: center">Genre</th>
+                <th style="text-align: center">Id book</th>
+                <th style="text-align: center">Operations</th>
+            </tr>
+        </thead>
+            <tr th:each="book, state : ${books}">
+                <td th:text="${state.index + 1}" style="text-align: center">№</td>
+                <td th:text="${book.title}" style="text-align: left">Title</td>
+                <td th:text="${book.author.fullName}" style="text-align: left">Author</td>
+                <td th:text="${book.genre.name}" style="text-align: center">Genre</td>
+                <td th:text="${book.id}" style="text-align: center">Id book</td>
+                <td>
+                    <button th:onclick="'window.location.href = \'/books?operation=edit&id=' + ${book.id} + '\''">Edit</button>
+                    <button th:onclick="'window.location.href = \'/books?operation=delete&id=' + ${book.id} + '\''">Delete</button>
+                </td>
+            </tr>
+    </table>
+    <br>
+    <br>
+    <button onclick="window.location.href = '/logout'">Logout</button>
+</body>
+</html>
