@@ -22,6 +22,9 @@ public class UserAccess {
     @Column(name = "fullname")
     private String fullName;
 
+    @Column(name = "role")
+    private String role;
+
     /**
      * Конструктор класса без параметров
      */
@@ -61,6 +64,14 @@ public class UserAccess {
         this.fullName = fullName;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "UserAccess{" +
@@ -68,6 +79,7 @@ public class UserAccess {
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", fullName='" + fullName + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }

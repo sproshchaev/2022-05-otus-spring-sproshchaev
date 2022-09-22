@@ -19,6 +19,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/library.png").permitAll()
+                .antMatchers("/booksadmin").hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin();

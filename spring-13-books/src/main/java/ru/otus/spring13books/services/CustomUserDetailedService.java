@@ -2,6 +2,7 @@ package ru.otus.spring13books.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,6 +33,7 @@ public class CustomUserDetailedService implements UserDetailsService {
             throw new UsernameNotFoundException("User " + username + " not found!");
         }
         Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + userAccess.getRole()));
         return new User(userAccess.getLogin(), userAccess.getPassword(), authorities);
     }
 
