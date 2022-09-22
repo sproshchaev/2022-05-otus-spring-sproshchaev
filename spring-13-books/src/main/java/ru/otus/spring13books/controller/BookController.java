@@ -40,8 +40,63 @@ public class BookController {
         return "books";
     }
 
+    @GetMapping("/booksadmin")
+    public String booksAdminPage(Model model) {
+        List<Author> authorList = authorService.getAllAuthors();
+        model.addAttribute("authors", authorList);
+        model.addAttribute("id_book", 0);
+        return "booksadmin";
+    }
+
+    @GetMapping(value = "/booksadmin", params = {"filter", "value"})
+    public String booksAdminFilter(@RequestParam("filter") String filter, @RequestParam("value") String value, Model model) {
+        if (filter.equals("allbook")) {
+            model.addAttribute("books", bookService.getAllBook());
+            model.addAttribute("authors", authorService.getAllAuthors());
+            model.addAttribute("id_book", 0);
+        }
+        if (filter.equals("author")) {
+            if (!value.equals("")) {
+                model.addAttribute("books", bookService.getAllBookByAuthor(value));
+            }
+            model.addAttribute("authors", authorService.getAllAuthors());
+            model.addAttribute("id_book", 0);
+        }
+        if (filter.equals("id")) {
+            model.addAttribute("books", bookService.getBookById(Long.parseLong(value)));
+            model.addAttribute("authors", authorService.getAllAuthors());
+            model.addAttribute("id_book", value);
+        }
+        return "booksadmin";
+    }
+
+    @GetMapping(value = "/booksadmin", params = {"operation", "id"})
+    public String booksAdminOperation(@RequestParam("operation") String operation, @RequestParam("id") long id, Model model) {
+        String templateName = null;
+        if (operation.equals("new")) {
+            model.addAttribute("book_dto", new BookDto("", "", ""));
+            templateName = "addbook";
+        }
+        if (operation.equals("edit")) {
+            Book book = bookService.getBookById(id);
+            model.addAttribute("book_dto", BookDto.fromDomainObject(book));
+            templateName = "editbook";
+        }
+        if (operation.equals("delete")) {
+            Book book = bookService.getBookById(id);
+            model.addAttribute("book_dto", BookDto.fromDomainObject(book));
+            templateName = "deletebook";
+        }
+        if (operation.equals("read")) {
+            Book book = bookService.getBookById(id);
+            model.addAttribute("book_dto", BookDto.fromDomainObject(book));
+            templateName = "readbook";
+        }
+        return templateName;
+    }
+
     @GetMapping(value = "/books", params = {"filter", "value"})
-    public String allBooks(@RequestParam("filter") String filter, @RequestParam("value") String value, Model model) {
+    public String booksFilter(@RequestParam("filter") String filter, @RequestParam("value") String value, Model model) {
         if (filter.equals("allbook")) {
             model.addAttribute("books", bookService.getAllBook());
             model.addAttribute("authors", authorService.getAllAuthors());
@@ -63,7 +118,7 @@ public class BookController {
     }
 
     @GetMapping(value = "/books", params = {"operation", "id"})
-    public String addNewBook(@RequestParam("operation") String operation, @RequestParam("id") long id, Model model) {
+    public String booksOperation(@RequestParam("operation") String operation, @RequestParam("id") long id, Model model) {
         String templateName = null;
         if (operation.equals("new")) {
             model.addAttribute("book_dto", new BookDto("", "", ""));
@@ -78,6 +133,11 @@ public class BookController {
             Book book = bookService.getBookById(id);
             model.addAttribute("book_dto", BookDto.fromDomainObject(book));
             templateName = "deletebook";
+        }
+        if (operation.equals("read")) {
+            Book book = bookService.getBookById(id);
+            model.addAttribute("book_dto", BookDto.fromDomainObject(book));
+            templateName = "readbook";
         }
         return templateName;
     }

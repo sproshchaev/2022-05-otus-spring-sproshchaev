@@ -29,14 +29,14 @@
 </head>
 <body>
     <p>
-        <span style="font-weight: bold"> Library Books </span> <br>
+        <span style="font-weight: bold"> Library Books (administrator mode) </span> <br>
         <img src="/library.png" alt="Library Books">
     </p>
     <div>
-        <button onclick="window.location.href = '/books?filter=allbook&value=0'">Get all books</button>
-        <button onclick="window.location.href = '/books?operation=new&id=0'">Add new book</button>
+        <button onclick="window.location.href = '/booksadmin?filter=allbook&value=0'">Get all books</button>
+        <button onclick="window.location.href = '/booksadmin?operation=new&id=0'">Add new book</button>
         <input id="input-id-book" type="number" th:value="${id_book}"/>
-        <button onclick="window.location.href = '/books?filter=id&value=' + document.getElementById('input-id-book').value">Get book
+        <button onclick="window.location.href = '/booksadmin?filter=id&value=' + document.getElementById('input-id-book').value">Get book
             by id
         </button>
         <br> <br>
@@ -47,7 +47,7 @@
                     th:text="${author.fullName}">
             </option>
         </select>
-        <button onclick="window.location.href = '/books?filter=author&value=' + document.querySelector('#author-selector').value">
+        <button onclick="window.location.href = '/booksadmin?filter=author&value=' + document.querySelector('#author-selector').value">
             Get book by author
         </button>
 
@@ -71,8 +71,8 @@
                 <td th:text="${book.genre.name}" style="text-align: center">Genre</td>
                 <td th:text="${book.id}" style="text-align: center">Id book</td>
                 <td>
-                    <button th:onclick="'window.location.href = \'/books?operation=edit&id=' + ${book.id} + '\''">Edit</button>
-                    <button th:onclick="'window.location.href = \'/books?operation=delete&id=' + ${book.id} + '\''">Delete</button>
+                    <button th:onclick="'window.location.href = \'/booksadmin?operation=edit&id=' + ${book.id} + '\''">Edit</button>
+                    <button th:onclick="'window.location.href = \'/booksadmin?operation=delete&id=' + ${book.id} + '\''">Delete</button>
                 </td>
             </tr>
     </table>

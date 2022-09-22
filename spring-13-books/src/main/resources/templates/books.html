@@ -34,7 +34,6 @@
     </p>
     <div>
         <button onclick="window.location.href = '/books?filter=allbook&value=0'">Get all books</button>
-        <button onclick="window.location.href = '/books?operation=new&id=0'">Add new book</button>
         <input id="input-id-book" type="number" th:value="${id_book}"/>
         <button onclick="window.location.href = '/books?filter=id&value=' + document.getElementById('input-id-book').value">Get book
             by id
@@ -71,8 +70,7 @@
                 <td th:text="${book.genre.name}" style="text-align: center">Genre</td>
                 <td th:text="${book.id}" style="text-align: center">Id book</td>
                 <td>
-                    <button th:onclick="'window.location.href = \'/books?operation=edit&id=' + ${book.id} + '\''">Edit</button>
-                    <button th:onclick="'window.location.href = \'/books?operation=delete&id=' + ${book.id} + '\''">Delete</button>
+                    <button th:onclick="'window.location.href = \'/books?operation=read&id=' + ${book.id} + '\''">Read</button>
                 </td>
             </tr>
     </table>
