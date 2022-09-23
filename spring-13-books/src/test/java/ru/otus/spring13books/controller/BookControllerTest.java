@@ -34,61 +34,101 @@ class BookControllerTest {
     @MockBean
     private AuthorService authorService;
 
-    @DisplayName("testAuthenticated with user in context for /books")
+    @DisplayName("testAuth with user in context for /books")
     @WithMockUser(username = "reader", authorities = {"ROLE_USER"})
     @Test
-    public void testAuthenticatedWithUserForBooksIsOk() throws Exception {
+    public void testAuthWithUserForBooksIsOk() throws Exception {
         mockMvc.perform(get("/books")).andExpect(status().isOk());
     }
 
-    @DisplayName("testAuthenticated without user in context for /books")
+    @DisplayName("testAuth without user in context for /books")
     @Test
-    public void testAuthenticatedWithOutUserForBooksIsRedirection() throws Exception {
+    public void testAuthWithOutUserForBooksIsRedirection() throws Exception {
         mockMvc.perform(get("/books")).andExpect(status().is3xxRedirection());
     }
 
-    @DisplayName("testAuthenticated with user in context for /books?filter=1&value=2")
+    @DisplayName("testAuth with user in context for /books?filter=1&value=2")
     @WithMockUser(username = "reader", authorities = {"ROLE_USER"})
     @Test
-    public void testAuthenticatedWithUserForBooksParamFilterValueIsOk() throws Exception {
+    public void testAuthWithUserForBooksParamFilterValueIsOk() throws Exception {
         mockMvc.perform(get("/books?filter=1&value=2")).andExpect(status().isOk());
     }
 
-    @DisplayName("testAuthenticated without user in context for /books?filter=1&value=2")
+    @DisplayName("testAuth without user in context for /books?filter=1&value=2")
     @Test
-    public void testAuthenticatedWithOutUserForBooksParamFilterValueIsRedirection() throws Exception {
+    public void testAuthWithOutUserForBooksParamFilterValueIsRedirection() throws Exception {
         mockMvc.perform(get("/books?filter=1&value=2")).andExpect(status().is3xxRedirection());
     }
 
-    @DisplayName("testAuthenticated with user in context for /books?operation=1&id=2")
+    @DisplayName("testAuth with user in context for /books?operation=1&id=2")
     @WithMockUser(username = "reader", authorities = {"ROLE_USER"})
     @Test
-    public void testAuthenticatedWithUserForBooksParamOperationIdIsOk() throws Exception {
+    public void testAuthWithUserForBooksParamOperationIdIsOk() throws Exception {
         mockMvc.perform(get("/books?operation=1&id=2")).andExpect(status().isOk());
     }
 
-    @DisplayName("testAuthenticated without user in context for /books?operation=1&id=2")
+    @DisplayName("testAuth without user in context for /books?operation=1&id=2")
     @Test
-    public void testAuthenticatedWithOutUserForBooksParamOperationIdIsRedirection() throws Exception {
+    public void testAuthWithOutUserForBooksParamOperationIdIsRedirection() throws Exception {
         mockMvc.perform(get("/books?operation=1&id=2")).andExpect(status().is3xxRedirection());
     }
 
-    @DisplayName("testAuthenticated without user in context for /createbook")
+    @DisplayName("testAuth without user in context for /createbook")
     @Test
-    public void testAuthenticatedWithOutUserForCreateBookIsRedirection() throws Exception {
+    public void testAuthWithOutUserForCreateBookIsRedirection() throws Exception {
         mockMvc.perform(post("/createbook")).andExpect(status().is3xxRedirection());
     }
 
-    @DisplayName("testAuthenticated without user in context for /saveeditedbook")
+    @DisplayName("testAuth without user in context for /saveeditedbook")
     @Test
-    public void testAuthenticatedWithOutUserForSaveEditBookIsRedirection() throws Exception {
+    public void testAuthWithOutUserForSaveEditBookIsRedirection() throws Exception {
         mockMvc.perform(post("/saveeditedbook")).andExpect(status().is3xxRedirection());
     }
 
-    @DisplayName("testAuthenticated without user in context for /deletingbook")
+    @DisplayName("testAuth without user in context for /deletingbook")
     @Test
-    public void testAuthenticatedWithOutUserForDeletingBookIsRedirection() throws Exception {
+    public void testAuthWithOutUserForDeletingBookIsRedirection() throws Exception {
         mockMvc.perform(post("/saveeditedbook")).andExpect(status().is3xxRedirection());
+    }
+
+    // @GetMapping("/booksadmin")
+    @DisplayName("testAuth with user in context for /booksadmin")
+    @WithMockUser(username = "administrator", authorities = {"ROLE_ADMIN"})
+    @Test
+    public void testAuthWithUserForBooksAdminIsOk() throws Exception {
+        mockMvc.perform(get("/booksadmin")).andExpect(status().isOk());
+    }
+
+    @DisplayName("testAuth without user in context for /booksadmin")
+    @Test
+    public void testAuthWithOutUserForBooksAdminIsRedirection() throws Exception {
+        mockMvc.perform(get("/booksadmin")).andExpect(status().is3xxRedirection());
+    }
+
+    @DisplayName("testAuth with user in context for /booksadmin?filter=1&value=2")
+    @WithMockUser(username = "administrator", authorities = {"ROLE_ADMIN"})
+    @Test
+    public void testAuthWithUserForBooksAdminParamFilterValueIsOk() throws Exception {
+        mockMvc.perform(get("/booksadmin?filter=1&value=2")).andExpect(status().isOk());
+    }
+
+    @DisplayName("testAuth without user in context for /booksadmin?filter=1&value=2")
+    @Test
+    public void testAuthWithOutUserForBooksAdminParamFilterValueIsRedirection() throws Exception {
+        mockMvc.perform(get("/booksadmin?filter=1&value=2")).andExpect(status().is3xxRedirection());
+    }
+
+    @DisplayName("testAuth with user in context for /booksadmin?operation=1&id=2")
+    @WithMockUser(username = "reader", authorities = {"ROLE_ADMIN"})
+    @Test
+    public void testAuthWithUserForBooksAdminParamOperationIdIsOk() throws Exception {
+        mockMvc.perform(get("/booksadmin?operation=1&id=2")).andExpect(status().isOk());
+    }
+
+    @DisplayName("testAuth without user in context for /booksadmin?operation=1&id=2")
+    @Test
+    public void testAuthWithOutUserForBooksAdminParamOperationIdIsRedirection() throws Exception {
+        mockMvc.perform(get("/booksadmin?operation=1&id=2")).andExpect(status().is3xxRedirection());
     }
 
 }
