@@ -115,16 +115,14 @@ Development on the Spring Framework
     Нэйминг ChengeLog-ов: PN__<Description>.sql
       - P - префикс "V" - версионные миграции, "U" - undo-миграции (только в Enterprise версии), "R" - повторяемые;
       - N - версия. Разделяется точками или единичными подчеркиваниями, может быть достаточно длинной;
-      - <Description> - описание версии.
-
+      - <Description> - описание версии
 ### Примечания
 
 ### Тестирование
 
-
 ### Статьи по теме
 1. Docker Microsoft SQL Server https://hub.docker.com/_/microsoft-mssql-server
-2. Jasypt: шифрование конфигурационных файлов https://bit.ly/3RTepNq
-3. Типы данных в MS SQL Server https://bit.ly/3S7DHXw
-4. Автоинкрементное поле в MS SQL Server https://bit.ly/3Ucj6TX
-5. Spring Boot Security Auto-Configuration https://www.baeldung.com/spring-boot-security-autoconfiguration
+2. Типы данных в MS SQL Server https://bit.ly/3S7DHXw
+3. Автоинкрементное поле в MS SQL Server https://bit.ly/3Ucj6TX
+4. Spring Boot Security Auto-Configuration https://www.baeldung.com/spring-boot-security-autoconfiguration
+5. Spring Boot: Customize Whitelabel Error Page https://www.baeldung.com/spring-boot-custom-error-page
