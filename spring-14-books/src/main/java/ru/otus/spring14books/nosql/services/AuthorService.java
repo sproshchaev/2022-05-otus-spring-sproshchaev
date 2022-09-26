@@ -6,7 +6,7 @@ import ru.otus.spring14books.nosql.repositories.GenreRepositoryDest;
 /**
  * Интерфейс AuthorService содержит набор методов для работы с репозиторием сущности Author
  *
- * @see ru.otus.spring08books.entities.Author
+ * @see ru.otus.spring14books.nosql.domain.Author
  * @see GenreRepositoryDest
  */
 public interface AuthorService {
