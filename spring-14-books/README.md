@@ -111,14 +111,14 @@ Development on the Spring Framework
     spring.data.mongodb.database: library2
     spring.data.mongodb.port: 27017
     spring.data.mongodb.host: localhost
-18. Добавить application.yml настройки для Mongock:
-    mongock:
-    runner-type: "InitializingBean" - если в приложении Mongock вместе с Spring Shell см. https://otus.ru/nest/post/1557/
-    "ApplicationRunner" - если в приложении нет SpringShell
-    change-logs-scan-package: ru.otus.spring08books.mongock.changelog
-19. Создать пакет и классы для Mongock
-    mongock/changelog/Schema.java, Data.java
-21. Добавить аннотацию @EnableMongock в Main.class
+18. Настройка Mongock 
+1) Добавить зависимость в pom.xml: mongock-spring-v5, mongodb-springdata-v3-driver 
+2) Добавить аннотацию @EnableMongock в Main.class
+3) Добавить application.yaml настройки для Mongock:
+    mongock.runner-type: "InitializingBean" - если в приложении Mongock вместе с Spring Shell см. https://otus.ru/nest/post/1557/ "ApplicationRunner" - если в приложении нет SpringShell
+   mongock.change-logs-scan-package: ru.otus.spring14books.mongock.changelog
+4) Создать пакет и классы для Mongock: mongock/changelog/Schema.java
+
 ### Примечания
 
 ### Тестирование
