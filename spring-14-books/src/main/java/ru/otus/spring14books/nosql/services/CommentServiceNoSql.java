@@ -10,17 +10,17 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Класс CommentServiceMongoDb содержит методы для работы с репозиторием комментариев
+ * Класс CommentServiceNoSql содержит методы для работы с репозиторием комментариев
  *
  * @see CommentRepositoryDest
  */
 @Service
-public class CommentServiceMongoDb implements CommentService {
+public class CommentServiceNoSql implements CommentService {
     private final CommentRepositoryDest commentRepository;
     private final BookService bookService;
 
     @Autowired
-    public CommentServiceMongoDb(CommentRepositoryDest commentRepository, BookService bookService) {
+    public CommentServiceNoSql(CommentRepositoryDest commentRepository, BookService bookService) {
         this.commentRepository = commentRepository;
         this.bookService = bookService;
     }

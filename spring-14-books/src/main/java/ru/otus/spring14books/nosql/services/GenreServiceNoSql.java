@@ -11,17 +11,17 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Класс GenreServiceMongoDb содержит методы для работы с репозиторием жанров библиотеки
+ * Класс GenreServiceNoSql содержит методы для работы с репозиторием жанров библиотеки
  *
  * @see GenreRepositoryDest
  */
 @Service
-public class GenreServiceMongoDb implements GenreService {
+public class GenreServiceNoSql implements GenreService {
     private final GenreRepositoryDest genreRepositoryDest;
     private final BookRepositoryDest bookRepositoryDest;
 
     @Autowired
-    public GenreServiceMongoDb(GenreRepositoryDest genreRepositoryDest, BookRepositoryDest bookRepositoryDest) {
+    public GenreServiceNoSql(GenreRepositoryDest genreRepositoryDest, BookRepositoryDest bookRepositoryDest) {
         this.genreRepositoryDest = genreRepositoryDest;
         this.bookRepositoryDest = bookRepositoryDest;
     }

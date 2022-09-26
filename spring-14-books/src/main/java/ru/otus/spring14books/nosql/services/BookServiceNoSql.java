@@ -11,19 +11,19 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Класс BookServiceMongoDb содержит методы для работы с репозиторием книг библиотеки
+ * Класс BookServiceNoSql содержит методы для работы с репозиторием книг библиотеки
  *
  * @see BookRepositoryDest
  */
 @Service
-public class BookServiceMongoDb implements BookService {
+public class BookServiceNoSql implements BookService {
     private final BookRepositoryDest bookRepository;
     private final AuthorService authorServiceMongoDb;
     private final GenreService genreServiceMongoDb;
 
     @Autowired
-    public BookServiceMongoDb(BookRepositoryDest bookRepository, AuthorService authorService,
-                              GenreService genreService) {
+    public BookServiceNoSql(BookRepositoryDest bookRepository, AuthorService authorService,
+                            GenreService genreService) {
         this.bookRepository = bookRepository;
         this.authorServiceMongoDb = authorService;
         this.genreServiceMongoDb = genreService;

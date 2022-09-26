@@ -11,17 +11,17 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Класс AuthorServiceMongoDb содержит методы для работы с репозиторием авторов библиотеки
+ * Класс AuthorServiceNoSql содержит методы для работы с репозиторием авторов библиотеки
  *
  * @see AuthorRepositoryDest
  */
 @Service
-public class AuthorServiceMongoDb implements AuthorService {
+public class AuthorServiceNoSql implements AuthorService {
     private final AuthorRepositoryDest authorRepositoryDest;
     private final BookRepositoryDest bookRepositoryDest;
 
     @Autowired
-    public AuthorServiceMongoDb(AuthorRepositoryDest authorRepositoryDest, BookRepositoryDest bookRepositoryDest) {
+    public AuthorServiceNoSql(AuthorRepositoryDest authorRepositoryDest, BookRepositoryDest bookRepositoryDest) {
         this.authorRepositoryDest = authorRepositoryDest;
         this.bookRepositoryDest = bookRepositoryDest;
     }
