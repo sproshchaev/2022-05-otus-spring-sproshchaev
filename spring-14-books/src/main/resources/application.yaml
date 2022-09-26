@@ -13,6 +13,11 @@ spring:
       #authentication-database: admin
       #username: root
       #password: root
-      database: library
+      database: library2
       port: 27017
       host: localhost
+mongock:
+  # runner-type: "ApplicationRunner" # default
+  runner-type: "InitializingBean"    # mongock + spring shell https://bit.ly/3C28YX4
+  change-logs-scan-package:
+    - ru.otus.spring14books.mongock.changelog

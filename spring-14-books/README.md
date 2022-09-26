@@ -21,7 +21,7 @@ Development on the Spring Framework
 Описание/Пошаговая инструкция выполнения домашнего задания:
 1. Задание может быть выполнено в отдельном репозитории, с сущностями из ДЗ JPA и MongoDB.
 2. Вы можете выбрать другую доменную модель
-3. Не обязательно добавлять процесс миграции в веб-приложение. Приложение может быть оформлено в виде отдельной утилиты.
+3. Необязательно добавлять процесс миграции в веб-приложение. Приложение может быть оформлено в виде отдельной утилиты.
 4. Используя Spring Batch, следите, чтобы связи сущностей сохранились.
 5. Опционально: Сделать restart задачи с помощью Spring Shell.
 Данное задание НЕ засчитывает предыдущие!
@@ -100,6 +100,7 @@ Development on the Spring Framework
     - "Database" - "Data Source" - "MongoDB" 
     - Port=27017 
     - "Test Connection"
+    - В консоли ввести команду создания новой БД: use library2
 17. Добавить файл application.yaml:
     spring.datasource.url: jdbc:sqlserver://localhost:1433;database=library;encrypt=true;trustServerCertificate=true;
     spring.datasource.username: sa
@@ -107,9 +108,17 @@ Development on the Spring Framework
     spring.datasource.driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
     spring.jpa.show-sql: true
     spring.jpa.hibernate: ddl-auto: none
-    spring.data.mongodb.database: library
+    spring.data.mongodb.database: library2
     spring.data.mongodb.port: 27017
     spring.data.mongodb.host: localhost
+18. Добавить application.yml настройки для Mongock:
+    mongock:
+    runner-type: "InitializingBean" - если в приложении Mongock вместе с Spring Shell см. https://otus.ru/nest/post/1557/
+    "ApplicationRunner" - если в приложении нет SpringShell
+    change-logs-scan-package: ru.otus.spring08books.mongock.changelog
+19. Создать пакет и классы для Mongock
+    mongock/changelog/Schema.java, Data.java
+21. Добавить аннотацию @EnableMongock в Main.class
 ### Примечания
 
 ### Тестирование
