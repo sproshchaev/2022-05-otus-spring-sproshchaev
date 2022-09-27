@@ -16,6 +16,8 @@ spring:
       database: library2
       port: 27017
       host: localhost
+  main:
+    allow-bean-definition-overriding: true
 mongock:
   # runner-type: "ApplicationRunner" # default
   runner-type: "InitializingBean"    # mongock + spring shell https://bit.ly/3C28YX4
