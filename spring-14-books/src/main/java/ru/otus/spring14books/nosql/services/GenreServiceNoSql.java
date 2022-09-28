@@ -36,13 +36,26 @@ public class GenreServiceNoSql implements GenreService {
      * @param name
      * @return
      */
-    public String createGenre(String name) {
+    public String createGenreByName(String name) {
         List<Genre> listGenre = genreRepositoryDest.findAllGenreByName(name);
         if (listGenre.size() == 0) {
             Genre genre = genreRepositoryDest.save(new Genre(name));
             return "New genre (" + genre.getId() + ") '" + genre.getName() + "' has been successfully created!";
         } else {
             return "Genre '" + name + "' is already in the library, his id =" + listGenre.get(0).getId();
+        }
+    }
+
+    /**
+     * Метод createGenreByName создает новый жанр в библиотеке (Crud)
+     *
+     * @param genre
+     */
+    @Override
+    public void createGenre(Genre genre) {
+        List<Genre> genreList = genreRepositoryDest.findAllGenreByName(genre.getName());
+        if (genreList.size() == 0) {
+            genreRepositoryDest.save(genre);
         }
     }
 

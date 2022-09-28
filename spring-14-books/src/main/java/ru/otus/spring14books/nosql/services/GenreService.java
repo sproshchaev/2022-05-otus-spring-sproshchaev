@@ -10,12 +10,20 @@ import ru.otus.spring14books.nosql.domain.Genre;
 public interface GenreService {
 
     /**
-     * Метод createGenre создает новый жанр в библиотеке (Crud)
+     * Метод createGenreByName создает новый жанр в библиотеке (Crud)
      *
      * @param name
      * @return
      */
-    String createGenre(String name);
+    String createGenreByName(String name);
+
+    /**
+     * Метод createGenreByName создает новый жанр в библиотеке (Crud)
+     *
+     * @param genre
+     */
+    void createGenre(Genre genre);
+
 
     /**
      * Метод getIdByGenre возвращает информацию о результатах поиска жанра с данным id в библиотеке
@@ -72,6 +80,7 @@ public interface GenreService {
 
     /**
      * Метод countGenres возвращает число жанров
+     *
      * @return
      */
     Long countGenres();

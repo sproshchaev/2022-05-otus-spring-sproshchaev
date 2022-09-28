@@ -8,9 +8,7 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.otus.spring14books.services.AuthorProcessor;
-import ru.otus.spring14books.services.AuthorReader;
-import ru.otus.spring14books.services.AuthorWriter;
+import ru.otus.spring14books.services.*;
 import ru.otus.spring14books.sql.domain.Author;
 
 /**
@@ -30,14 +28,24 @@ public class BatchConfig {
 
     private final AuthorWriter authorWriter;
 
+    private final GenreReader genreReader;
+
+    private final GenreProcessor genreProcessor;
+
+    private final GenreWriter genreWriter;
+
     @Autowired
     public BatchConfig(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
-                       AuthorReader authorReader, AuthorProcessor authorProcessor, AuthorWriter authorWriter) {
+                       AuthorReader authorReader, AuthorProcessor authorProcessor, AuthorWriter authorWriter,
+                       GenreReader genreReader, GenreProcessor genreProcessor, GenreWriter genreWriter) {
         this.jobBuilderFactory = jobBuilderFactory;
         this.stepBuilderFactory = stepBuilderFactory;
         this.authorReader = authorReader;
         this.authorProcessor = authorProcessor;
         this.authorWriter = authorWriter;
+        this.genreReader = genreReader;
+        this.genreProcessor = genreProcessor;
+        this.genreWriter = genreWriter;
     }
 
     /**
@@ -48,6 +56,7 @@ public class BatchConfig {
     public Job libraryMigration() {
         return jobBuilderFactory.get("job")
                 .start(authorsMigration())
+                .next(genresMigration())
                 .build();
     }
 
@@ -57,11 +66,25 @@ public class BatchConfig {
      */
     @Bean
     public Step authorsMigration() {
-        return stepBuilderFactory.get("stepOne")
+        return stepBuilderFactory.get("authorsMigration")
                 .<Author, Author>chunk(10)
                 .reader(authorReader)
                 .processor(authorProcessor)
                 .writer(authorWriter)
+                .build();
+    }
+
+    /**
+     * Метод genresMigration() выполняет миграцию жанров
+     * @return
+     */
+    @Bean
+    public Step genresMigration() {
+        return stepBuilderFactory.get("genresMigration")
+                .<Author, Author>chunk(10)
+                .reader(genreReader)
+                .processor(genreProcessor)
+                .writer(genreWriter)
                 .build();
     }
 

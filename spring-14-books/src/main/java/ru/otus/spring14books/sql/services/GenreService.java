@@ -2,6 +2,8 @@ package ru.otus.spring14books.sql.services;
 
 import ru.otus.spring14books.sql.domain.Genre;
 
+import java.util.List;
+
 /**
  * Интерфейс GenreService содержит методы для работы с сущностью Genre
  *
@@ -17,6 +19,12 @@ public interface GenreService {
      * @return
      */
     Genre getFirstGenreByName(String genreName);
+
+    /**
+     * Метод getAllGenre() возвращает все Жанры
+     * @return
+     */
+    List<Genre> getAllGenre();
 
     /**
      * Число жанров книг в библиотеке

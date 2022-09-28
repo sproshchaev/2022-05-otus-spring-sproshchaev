@@ -34,7 +34,17 @@ public class GenreServiceSql implements GenreService {
     @Override
     public Genre getFirstGenreByName(String genreName) {
         List<Genre> authorList = genreRepositorySource.getGenreByName(genreName);
-        return (authorList.size() == 0) ? genreRepositorySource.save(new Genre(genreName)) : authorList.get(0);
+        return (authorList.size() == 0) ? null : authorList.get(0);
+    }
+
+    /**
+     * Метод getAllGenre() возвращает все Жанры
+     *
+     * @return
+     */
+    @Override
+    public List<Genre> getAllGenre() {
+        return genreRepositorySource.findAll();
     }
 
     /**
