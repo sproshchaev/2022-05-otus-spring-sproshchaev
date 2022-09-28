@@ -30,7 +30,7 @@ public class BookServiceNoSql implements BookService {
     }
 
     /**
-     * Метод createBook создает новую книгу (Crud)
+     * Метод createNewBookByTitleAuthorFullNameGenreName создает новую книгу (Crud)
      * Метод выполняет проверку на наличие книги в таблице book для исключения дубликатов.
      * В результат, возвращаемый методом, добавляется информация - данная книга была создан, или же он уже есть
      * в библиотеке
@@ -42,7 +42,7 @@ public class BookServiceNoSql implements BookService {
      * @return
      */
     @Override
-    public String createNewBook(String title, String authorFullName, String genreName) {
+    public String createNewBookByTitleAuthorFullNameGenreName(String title, String authorFullName, String genreName) {
         Author author = authorServiceMongoDb.getFirstAuthorByFullName(authorFullName);
         Genre genre = genreServiceMongoDb.getFirstGenreByName(genreName);
         List<Book> listBook = bookRepository.findAllByTitleAndAuthorAndGenre(title, author, genre);
@@ -50,6 +50,28 @@ public class BookServiceNoSql implements BookService {
         String bookInfo = "id=" + book.getId() + " '" + book.getTitle() + "' " + book.getAuthor().getFullName()
                 + " (" + book.getGenre().getName() + ")";
         return (listBook.size() == 0) ? "Book added " + bookInfo : "Book is already in the library " + bookInfo;
+    }
+
+    /**
+     * Метод createBook создает новую книгу
+     *
+     * @param book
+     */
+    @Override
+    public void createBook(Book book) {
+/*
+        Author author = authorServiceMongoDb.getFirstAuthorByFullName(book.getAuthor().getFullName());
+        Genre genre = genreServiceMongoDb.getFirstGenreByName(book.getGenre().getName());
+        List<Book> listBook = bookRepository.findAllByTitleAndAuthorAndGenre(book.getTitle(), author, genre);
+        Book newBook = (listBook.size() == 0) ? bookRepository.save(book) : listBook.get(0);
+*/
+        System.out.println("bookRepository.save(book): ");
+        System.out.println("  - id: " + book.getId());
+        System.out.println("  - title: " + book.getTitle());
+        System.out.println("  - author: " + book.getAuthor().getId() + " " + book.getAuthor().getFullName());
+        System.out.println("  - genre: " + book.getGenre().getId() + " " + book.getGenre().getName()); // todo удалить!
+
+        bookRepository.save(book);
     }
 
     /**
@@ -68,8 +90,8 @@ public class BookServiceNoSql implements BookService {
         Genre genre = genreServiceMongoDb.getFirstGenreByName(genreName);
         List<Book> listIdBook = bookRepository.findAllByTitleAndAuthorAndGenre(title, author, genre);
         return listIdBook.size() == 0
-                ? "Book '" + title + "' " + authorFullName + " (" + genreName + ") not found in the library!"
-                : "Book '" + title + "' " + authorFullName + " (" + genreName + ") has an id=" + listIdBook.get(0).getId();
+                ? ""
+                : listIdBook.get(0).getId();
     }
 
     /**

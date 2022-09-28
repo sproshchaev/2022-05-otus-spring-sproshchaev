@@ -20,12 +20,12 @@ public class AppEventsCommands {
 
     private final JobLauncher jobLauncher;
 
-    private final Job job;
+    private final Job libraryMigration;
 
     @Autowired
-    public AppEventsCommands(JobLauncher jobLauncher, Job job) {
+    public AppEventsCommands(JobLauncher jobLauncher, Job libraryMigration) {
         this.jobLauncher = jobLauncher;
-        this.job = job;
+        this.libraryMigration = libraryMigration;
     }
 
     /**
@@ -57,7 +57,7 @@ public class AppEventsCommands {
      */
     @ShellMethod(value = "Start Migration", key = {"sm", "startmigration"})
     public void startMigrationJobWithJobLauncher() throws Exception {
-        JobExecution execution = jobLauncher.run(job, new JobParametersBuilder()
+        JobExecution execution = jobLauncher.run(libraryMigration, new JobParametersBuilder()
                 .toJobParameters());
     }
 

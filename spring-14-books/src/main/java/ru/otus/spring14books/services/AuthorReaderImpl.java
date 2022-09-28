@@ -20,7 +20,7 @@ public class AuthorReaderImpl implements AuthorReader {
 
     private final AuthorService authorService;
     private List<Author> authorList;
-    private int index = 0;
+    private int index = -1;
 
     @Autowired
     public AuthorReaderImpl(AuthorService authorService) {
@@ -32,7 +32,12 @@ public class AuthorReaderImpl implements AuthorReader {
      */
     @BeforeStep
     public void getAuthorList() {
+
         authorList = authorService.getAllAuthors();
+        System.out.println("Авторов: " + authorList.size()); // todo удалить!
+        for (int i = 0; i < authorList.size(); i++) {
+            System.out.println(" -" + authorList.get(i).getId() + " " + authorList.get(i).getFullName());
+        }
     }
 
     /**
@@ -45,9 +50,10 @@ public class AuthorReaderImpl implements AuthorReader {
      * @throws NonTransientResourceException
      */
     @Override
-    public Object read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
+    public Object read() throws UnexpectedInputException, ParseException, NonTransientResourceException {
         index++;
         if (index < authorList.size()) {
+            System.out.println("read(): " + authorList.get(index)); // todo удалить!
             return authorList.get(index);
         } else {
             return null;

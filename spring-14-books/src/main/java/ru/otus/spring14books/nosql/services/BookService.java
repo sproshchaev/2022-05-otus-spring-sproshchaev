@@ -7,10 +7,10 @@ import ru.otus.spring14books.nosql.domain.Book;
  *
  * @see ru.otus.spring14books.nosql.domain.Book
  */
-interface BookService {
+public interface BookService {
 
     /**
-     * Метод createBook создает новую книгу (Crud)
+     * Метод createNewBookByTitleAuthorFullNameGenreName создает новую книгу (Crud)
      * Метод изменяет данные
      *
      * @param title          (book.title)
@@ -18,7 +18,13 @@ interface BookService {
      * @param genreName      (genre.name)
      * @return
      */
-    String createNewBook(String title, String authorFullName, String genreName);
+    String createNewBookByTitleAuthorFullNameGenreName(String title, String authorFullName, String genreName);
+
+    /**
+     * Метод createBook создает новую книгу
+     * @param book
+     */
+    void createBook(Book book);
 
     /**
      * Метод getIdByBook возвращает id для книги, если она есть в библиотеке (cRud)

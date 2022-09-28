@@ -6,38 +6,37 @@ import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.otus.spring14books.sql.domain.Genre;
-import ru.otus.spring14books.sql.services.AuthorService;
-import ru.otus.spring14books.sql.services.GenreService;
+import ru.otus.spring14books.sql.domain.Book;
+import ru.otus.spring14books.sql.services.BookService;
 
 import java.util.List;
 
 /**
- * Класс GenreReaderImpl реализует методы интерфейса GenreReader для сущности Genre
+ * Класс BookReaderImpl реализует методы интерфейса BookReader для сущности Book
  * Считывание происходит по одной записи из выборки
  */
 @Service
-public class GenreReaderImpl implements GenreReader {
+public class BookReaderImpl implements BookReader {
 
-    private final GenreService genreService;
-    private List<Genre> genreList;
+    private final BookService bookService;
+    private List<Book> bookList;
     private int index = -1;
 
     @Autowired
-    public GenreReaderImpl(GenreService genreService) {
-        this.genreService = genreService;
+    public BookReaderImpl(BookService bookService) {
+        this.bookService = bookService;
     }
 
     /**
      * Методы, аннотированные @BeforeStep, будут выполнены 1 раз перед запуском всего шага
      */
     @BeforeStep
-    public void getGenreList() {
-        genreList = genreService.getAllGenre();
+    public void getBookList() {
+        bookList = bookService.getAllBook();
     }
 
     /**
-     * Метод read() возвращает по одной записи из полученной выборки authorList для процессора
+     * Метод read() возвращает по одной записи из полученной выборки bookList для процессора
      *
      * @return
      * @throws Exception
@@ -48,8 +47,8 @@ public class GenreReaderImpl implements GenreReader {
     @Override
     public Object read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
         index++;
-        if (index < genreList.size()) {
-            return genreList.get(index);
+        if (index < bookList.size()) {
+            return bookList.get(index);
         } else {
             return null;
         }

@@ -34,10 +34,17 @@ public class BatchConfig {
 
     private final GenreWriter genreWriter;
 
+    private final BookReader bookReader;
+
+    private final BookProcessor bookProcessor;
+
+    private final BookWriter bookWriter;
+
+
     @Autowired
     public BatchConfig(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
                        AuthorReader authorReader, AuthorProcessor authorProcessor, AuthorWriter authorWriter,
-                       GenreReader genreReader, GenreProcessor genreProcessor, GenreWriter genreWriter) {
+                       GenreReader genreReader, GenreProcessor genreProcessor, GenreWriter genreWriter, BookReader bookReader, BookProcessor bookProcessor, BookWriter bookWriter) {
         this.jobBuilderFactory = jobBuilderFactory;
         this.stepBuilderFactory = stepBuilderFactory;
         this.authorReader = authorReader;
@@ -46,6 +53,9 @@ public class BatchConfig {
         this.genreReader = genreReader;
         this.genreProcessor = genreProcessor;
         this.genreWriter = genreWriter;
+        this.bookReader = bookReader;
+        this.bookProcessor = bookProcessor;
+        this.bookWriter = bookWriter;
     }
 
     /**
@@ -54,9 +64,10 @@ public class BatchConfig {
      */
     @Bean
     public Job libraryMigration() {
-        return jobBuilderFactory.get("job")
+        return jobBuilderFactory.get("libraryMigration")
                 .start(authorsMigration())
                 .next(genresMigration())
+                .next(booksMigration())
                 .build();
     }
 
@@ -85,6 +96,20 @@ public class BatchConfig {
                 .reader(genreReader)
                 .processor(genreProcessor)
                 .writer(genreWriter)
+                .build();
+    }
+
+    /**
+     * Метод booksMigration() выполняет миграцию книг
+     * @return
+     */
+    @Bean
+    public Step booksMigration() {
+        return stepBuilderFactory.get("booksMigration")
+                .<Author, Author>chunk(10)
+                .reader(bookReader)
+                .processor(bookProcessor)
+                .writer(bookWriter)
                 .build();
     }
 

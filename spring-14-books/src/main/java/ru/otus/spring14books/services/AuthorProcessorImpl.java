@@ -23,6 +23,7 @@ public class AuthorProcessorImpl implements AuthorProcessor {
                 String.valueOf(new ObjectId()),
                 authorSql.getFullName()
         );
+        System.out.println("Автор для MongoDB " + authorNoSql.getId() + " " + authorNoSql.getFullName()); // todo удалить!
         return authorNoSql;
     }
 }
