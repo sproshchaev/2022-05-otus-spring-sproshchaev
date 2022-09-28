@@ -2,7 +2,7 @@
 [![Spring Shell](https://img.shields.io/badge/Spring_Shell-FFFFFF??style=for-the-badge&logo=Spring)](https://spring.io/projects/spring-shell/)
 [![Spring Batch](https://img.shields.io/badge/Spring_Batch-FFFFFF??style=for-the-badge&logo=Spring)](https://spring.io/projects/spring-batch/)
 [![Spring Data JPA](https://img.shields.io/badge/Spring_Data_JPA-FFFFFF??style=for-the-badge&logo=Spring)](https://spring.io/projects/spring-data-jpa)
-[![MS SQL](https://img.shields.io/badge/SQL_Server-2B65B2??style=for-the-badge&logo=Microsoft&logoColor=FFFFFF)](https://www.microsoft.com/en-us/sql-server)
+[![H2](https://img.shields.io/badge/H2-0618D5??style=for-the-badge&logo=H2&logoColor=FFFFFF)](https://www.h2database.com/)
 [![Spring Data MongoDB](https://img.shields.io/badge/Spring_Data_MongoDB-FFFFFF??style=for-the-badge&logo=Spring)](https://spring.io/projects/spring-data-mongodb/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-FFFFFF??style=for-the-badge&logo=MongoDB&logoColor=#4CA257)](https://www.mongodb.com/)
 [![Mongock](https://img.shields.io/badge/Mongock-FFFFFF??style=for-the-badge&logo=Mongock&logoColor=#4CA257)](https://mongock.io/)
@@ -110,10 +110,16 @@ Development on the Spring Framework
     mongock.runner-type: "InitializingBean" - если в приложении Mongock вместе с Spring Shell см. https://otus.ru/nest/post/1557/ "ApplicationRunner" - если в приложении нет SpringShell
    mongock.change-logs-scan-package: ru.otus.spring14books.mongock.changelog
 4) Создать пакет и классы для Mongock: mongock/changelog/Schema.java
+5) Если необходимо, чтобы после каждого запуска создавалась БД с нуля, то устанавливаем runAlways = true
+   @ChangeSet(order = "001", id = "dropDb", author = "sproshchaev", runAlways = true)
 
 ### Примечания
 
 ### Тестирование
+
 Тестов нет 
 
 ### Статьи по теме
+1. Spring Batch 3.0 - Часть 1: Пример использования https://bit.ly/3xlUzSF
+2. Spring Batch 3.0 - Часть 2: Кастомный ItemReader, ItemPocessor и ItemWriter https://bit.ly/3U8VdwD
+3. https://github.com/JavaGrinko/batch-example.git

@@ -7,7 +7,7 @@ import com.mongodb.client.MongoDatabase;
 @ChangeLog(order = "001")
 public class Schema {
 
-    @ChangeSet(order = "001", id = "dropDb", author = "sproshchaev", runAlways = true)
+    @ChangeSet(order = "001", id = "dropDb", author = "sproshchaev", runAlways = false)
     public void dropDb(MongoDatabase db) {
         db.drop();
     }

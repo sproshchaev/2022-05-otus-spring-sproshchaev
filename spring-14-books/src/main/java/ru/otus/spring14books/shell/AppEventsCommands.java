@@ -17,7 +17,7 @@ import java.sql.SQLException;
 @ShellComponent
 public class AppEventsCommands {
 
-/*
+
     private final JobLauncher jobLauncher;
 
     private final Job job;
@@ -27,7 +27,6 @@ public class AppEventsCommands {
         this.jobLauncher = jobLauncher;
         this.job = job;
     }
-*/
 
     /**
      * Метод about выводит информацию о приложении
@@ -52,13 +51,14 @@ public class AppEventsCommands {
         }
     }
 
-/*
-    @ShellMethod(value = "startMigrationJobWithJobLauncher", key = "sm-jl")
+    /**
+     * Метод запускает job
+     * @throws Exception
+     */
+    @ShellMethod(value = "Start Migration", key = {"sm", "startmigration"})
     public void startMigrationJobWithJobLauncher() throws Exception {
         JobExecution execution = jobLauncher.run(job, new JobParametersBuilder()
                 .toJobParameters());
-        System.out.println(execution);
     }
-*/
 
 }

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 /**
- * Миграция данных приложения "Библиотека" из реляционной СУБД MS SQL Server в NoSQL СУБД MongoDB
+ * Миграция данных приложения "Библиотека" из реляционной СУБД H2 в NoSQL СУБД MongoDB
  *
  * @author Sergey Proshchaev
  * @version 1.0

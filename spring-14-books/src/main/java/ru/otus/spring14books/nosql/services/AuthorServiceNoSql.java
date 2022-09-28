@@ -37,13 +37,27 @@ public class AuthorServiceNoSql implements AuthorService {
      * @return
      */
     @Override
-    public String createNewAuthor(String fullName) {
+    public String createAuthorByName(String fullName) {
         List<Author> authorList = authorRepositoryDest.findAllByFullName(fullName);
         if (authorList.size() == 0) {
             Author author = authorRepositoryDest.save(new Author(fullName));
             return "New author (" + author.getId() + ") '" + author.getFullName() + "' has been successfully created!";
         } else {
             return "Author '" + fullName + "' is already in the library, his id =" + authorList.get(0).getId();
+        }
+    }
+
+    /**
+     * Метод createAuthor создает нового автора в библиотеке (Crud)
+     * Метод изменяет данные
+     *
+     * @param author
+     */
+    @Override
+    public void createAuthor(Author author) {
+        List<Author> authorList = authorRepositoryDest.findAllByFullName(author.getFullName());
+        if (authorList.size() == 0) {
+            Author authorNew = authorRepositoryDest.save(author);
         }
     }
 
@@ -155,7 +169,7 @@ public class AuthorServiceNoSql implements AuthorService {
     @Override
     public Author getFirstAuthorByFullName(String authorFullName) {
         List<Author> authorList = authorRepositoryDest.findAllByFullName(authorFullName);
-        return (authorList.size() == 0) ? authorRepositoryDest.save(new Author(authorFullName)) : authorList.get(0);
+        return (authorList.size() == 0) ? null : authorList.get(0);
     }
 
     /**

@@ -12,13 +12,21 @@ import ru.otus.spring14books.nosql.repositories.GenreRepositoryDest;
 public interface AuthorService {
 
     /**
-     * Метод createNewAuthor создает нового автора в библиотеке (Crud)
+     * Метод createAuthorByName создает нового автора в библиотеке (Crud)
      * Метод изменяет данные
      *
      * @param fullName
      * @return
      */
-    String createNewAuthor(String fullName);
+    String createAuthorByName(String fullName);
+
+    /**
+     * Метод createAuthor создает нового автора в библиотеке (Crud)
+     * Метод изменяет данные
+     *
+     * @param author
+     */
+    void createAuthor(Author author);
 
     /**
      * Метод getIdByAuthor возвращает информацию в текстовом виде о результатах поиска
@@ -78,6 +86,7 @@ public interface AuthorService {
 
     /**
      * Метод countAuthors возвращает число авторов
+     *
      * @return
      */
     Long countAuthors();

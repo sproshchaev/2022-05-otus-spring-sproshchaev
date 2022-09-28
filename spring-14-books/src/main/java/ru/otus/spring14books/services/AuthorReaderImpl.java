@@ -1,26 +1,29 @@
-package ru.otus.spring14books.config;
+package ru.otus.spring14books.services;
 
 import org.springframework.batch.core.annotation.BeforeStep;
-import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.NonTransientResourceException;
 import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.otus.spring14books.sql.domain.Author;
 import ru.otus.spring14books.sql.services.AuthorService;
 
 import java.util.List;
 
-@Component
-public class AuthorReader implements ItemReader {
+/**
+ * Класс AuthorReaderImpl реализует методы интерфейса AuthorReader для сущности Author
+ * Считывание происходит по одной записи из выборки
+ */
+@Service
+public class AuthorReaderImpl implements AuthorReader {
 
     private final AuthorService authorService;
     private List<Author> authorList;
     private int index = 0;
 
     @Autowired
-    public AuthorReader(AuthorService authorService) {
+    public AuthorReaderImpl(AuthorService authorService) {
         this.authorService = authorService;
     }
 
@@ -32,6 +35,15 @@ public class AuthorReader implements ItemReader {
         authorList = authorService.getAllAuthors();
     }
 
+    /**
+     * Метод read() возвращает по одной записи из полученной выборки authorList для процессора
+     *
+     * @return
+     * @throws Exception
+     * @throws UnexpectedInputException
+     * @throws ParseException
+     * @throws NonTransientResourceException
+     */
     @Override
     public Object read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
         index++;
