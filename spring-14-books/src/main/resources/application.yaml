@@ -1,9 +1,27 @@
 spring:
+  # datasource:
+  #   url: jdbc:sqlserver://localhost:1433;database=library;encrypt=true;trustServerCertificate=true;
+  #   username: sa
+  #   password: Sa123456
+  #   driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
   datasource:
-    url: jdbc:sqlserver://localhost:1433;database=library;encrypt=true;trustServerCertificate=true;
+    url: jdbc:h2:mem:books
     username: sa
-    password: Sa123456
-    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    password:
+    driver-class-name: org.h2.Driver
+    #initialization-mode: always
+    #schema: schema.sql
+    #data: data.sql
+  sql:
+    init:
+      mode: always
+      data-locations: data.sql
+      schema-locations: schema.sql
+  h2:
+    console:
+      path: /h2-console
+      settings:
+        web-allow-others: true
   jpa:
     show-sql: true
     hibernate:
@@ -18,6 +36,9 @@ spring:
       host: localhost
   main:
     allow-bean-definition-overriding: true
+  batch:
+    job:
+      enabled: false
 mongock:
   # runner-type: "ApplicationRunner" # default
   runner-type: "InitializingBean"    # mongock + spring shell https://bit.ly/3C28YX4

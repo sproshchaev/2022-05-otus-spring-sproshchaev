@@ -64,7 +64,7 @@ Development on the Spring Framework
   - Package name: ru.otus.spring-14-books
 6. Packaging: Jar
 7. Java: 11
-8. Dependencies: Spring Batch, Spring Shell, Spring Data JPA, MS SQL Server Driver, Spring Data MongoDB
+8. Dependencies: Spring Batch, Spring Shell, Spring Data JPA, Spring Data MongoDB, H2
 9. Сохранить spring-14-books.zip в Java\2022-05-otus-spring-sproshchaev
 10. Разархивировать архив Java\2022-05-otus-spring-sproshchaev\spring-14-books.zip (файл .zip удалить)
 11. Открыть проект в IDE
@@ -75,42 +75,34 @@ Development on the Spring Framework
   - spring-boot-starter-data-jpa
   - spring-boot-starter-data-mongodb
   - spring-shell-starter
-  - mssql-jdbc
+  - h2
 15. Запустить Docker
-1) Проверить в Docker в разделе "Images" наличие "mcr.microsoft.com/mssql/server", при отсутствии ввести в терминале 
-  команду "docker pull mcr.microsoft.com/mssql/server"
-  - Запустить в Docker в "Image" : "Images" - "Run", указать Optional settings: 
-     - ACCEPT_EULA=Y
-     - SA_PASSWORD=Sa123456
-     - MSSQL_PID=Developer
-  - Проверить в Docker в "Containers": Image "mcr.microsoft...", Status "Running", Port(s) "1433".
-2) Проверить в Docker в разделе "Images" наличие "mongo", при отсутствии ввести в терминале команду "docker pull mongo"
+    Проверить в Docker в разделе "Images" наличие "mongo", при отсутствии ввести в терминале команду "docker pull mongo"
    - Запустить в Docker в "Image" : "Images" - "Run", указать Optional settings: 
    - Ports=27017
    - Проверить в Docker в "Containers": Image "mongo:latest", Status "Running".
 16. Проверить соединение с БД в IntelliJ IDEA
-1) Microsoft SQL Server  
-    - "Database" - "Data Source" - "Microsoft SQL Server": 
-    - Port=1433 
-    - User=sa 
-    - Password=Sa123456
-    - Url=jdbc:sqlserver://localhost:1433 
-  - "Test Connection"
-2) MongoDB
+    MongoDB
     - "Database" - "Data Source" - "MongoDB" 
     - Port=27017 
     - "Test Connection"
     - В консоли ввести команду создания новой БД: use library2
 17. Добавить файл application.yaml:
-    spring.datasource.url: jdbc:sqlserver://localhost:1433;database=library;encrypt=true;trustServerCertificate=true;
+    spring.datasource.url: jdbc:h2:mem:books
     spring.datasource.username: sa
-    spring.datasource.password: Sa123456
-    spring.datasource.driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    spring.datasource.password:
+    spring.datasource.driver-class-name: org.h2.Driver
+    spring.sql.init.mode: always
+    spring.sql.init.data-locations: data.sql
+    spring.sql.init.schema-locations: schema.sql
+    spring.h2.console.path: /h2-console
+    spring.h2.console.settings.web-allow-others: true
     spring.jpa.show-sql: true
     spring.jpa.hibernate: ddl-auto: none
     spring.data.mongodb.database: library2
     spring.data.mongodb.port: 27017
     spring.data.mongodb.host: localhost
+    spring.batch.job.enabled: false
 18. Настройка Mongock 
 1) Добавить зависимость в pom.xml: mongock-spring-v5, mongodb-springdata-v3-driver 
 2) Добавить аннотацию @EnableMongock в Main.class

@@ -1,5 +1,6 @@
 package ru.otus.spring14books.shell;
 
+import org.h2.tools.Console;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParametersBuilder;
@@ -7,6 +8,8 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+
+import java.sql.SQLException;
 
 /**
  * Класс ApplicationEventsCommands содержит набор методов-команд (аннотация @ShellComponent)
@@ -35,6 +38,18 @@ public class AppEventsCommands {
     @ShellMethod(value = "Information about the application", key = {"a", "about"})
     public String aboutApplication() {
         return "Welcome to Spring Batch Application!";
+    }
+
+    /**
+     * Метод startConsoleH2 запускает консоль
+     */
+    @ShellMethod(value = "Start console H2", key = {"c", "console"})
+    public void startConsoleH2() {
+        try {
+            Console.main();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 /*
