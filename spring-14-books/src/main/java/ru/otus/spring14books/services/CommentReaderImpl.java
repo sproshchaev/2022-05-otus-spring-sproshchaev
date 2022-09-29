@@ -29,15 +29,11 @@ public class CommentReaderImpl implements CommentReader {
 
     /**
      * Методы, аннотированные @BeforeStep, будут выполнены 1 раз перед запуском всего шага
+     * Метод getCommentList() формирует список комментариев для последующей обработки в методе read()
      */
     @BeforeStep
-    public void getAuthorList() {
-
+    public void getCommentList() {
         commentList = commentService.getAllComment();
-        System.out.println("Комментариев: " + commentList.size()); // todo удалить!
-        for (int i = 0; i < commentList.size(); i++) {
-            System.out.println(" -" + commentList.get(i).getId() + " " + commentList.get(i).getCommentText());
-        }
     }
 
     /**
@@ -53,11 +49,9 @@ public class CommentReaderImpl implements CommentReader {
     public Object read() throws UnexpectedInputException, ParseException, NonTransientResourceException {
         index++;
         if (index < commentList.size()) {
-            System.out.println("read(): " + commentList.get(index)); // todo удалить!
             return commentList.get(index);
         } else {
             return null;
         }
     }
-
 }

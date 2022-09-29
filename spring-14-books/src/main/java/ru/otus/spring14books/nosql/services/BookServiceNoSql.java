@@ -17,14 +17,14 @@ import java.util.Optional;
  */
 @Service
 public class BookServiceNoSql implements BookService {
-    private final BookRepositoryDest bookRepository;
+    private final BookRepositoryDest bookRepositoryDest;
     private final AuthorService authorServiceMongoDb;
     private final GenreService genreServiceMongoDb;
 
     @Autowired
-    public BookServiceNoSql(BookRepositoryDest bookRepository, AuthorService authorService,
+    public BookServiceNoSql(BookRepositoryDest bookRepositoryDest, AuthorService authorService,
                             GenreService genreService) {
-        this.bookRepository = bookRepository;
+        this.bookRepositoryDest = bookRepositoryDest;
         this.authorServiceMongoDb = authorService;
         this.genreServiceMongoDb = genreService;
     }
@@ -45,8 +45,8 @@ public class BookServiceNoSql implements BookService {
     public String createNewBookByTitleAuthorFullNameGenreName(String title, String authorFullName, String genreName) {
         Author author = authorServiceMongoDb.getFirstAuthorByFullName(authorFullName);
         Genre genre = genreServiceMongoDb.getFirstGenreByName(genreName);
-        List<Book> listBook = bookRepository.findAllByTitleAndAuthorAndGenre(title, author, genre);
-        Book book = (listBook.size() == 0) ? bookRepository.save(new Book(title, author, genre)) : listBook.get(0);
+        List<Book> listBook = bookRepositoryDest.findAllByTitleAndAuthorAndGenre(title, author, genre);
+        Book book = (listBook.size() == 0) ? bookRepositoryDest.save(new Book(title, author, genre)) : listBook.get(0);
         String bookInfo = "id=" + book.getId() + " '" + book.getTitle() + "' " + book.getAuthor().getFullName()
                 + " (" + book.getGenre().getName() + ")";
         return (listBook.size() == 0) ? "Book added " + bookInfo : "Book is already in the library " + bookInfo;
@@ -59,19 +59,7 @@ public class BookServiceNoSql implements BookService {
      */
     @Override
     public void createBook(Book book) {
-/*
-        Author author = authorServiceMongoDb.getFirstAuthorByFullName(book.getAuthor().getFullName());
-        Genre genre = genreServiceMongoDb.getFirstGenreByName(book.getGenre().getName());
-        List<Book> listBook = bookRepository.findAllByTitleAndAuthorAndGenre(book.getTitle(), author, genre);
-        Book newBook = (listBook.size() == 0) ? bookRepository.save(book) : listBook.get(0);
-*/
-        System.out.println("bookRepository.save(book): ");
-        System.out.println("  - id: " + book.getId());
-        System.out.println("  - title: " + book.getTitle());
-        System.out.println("  - author: " + book.getAuthor().getId() + " " + book.getAuthor().getFullName());
-        System.out.println("  - genre: " + book.getGenre().getId() + " " + book.getGenre().getName()); // todo удалить!
-
-        bookRepository.save(book);
+        bookRepositoryDest.save(book);
     }
 
     /**
@@ -84,7 +72,7 @@ public class BookServiceNoSql implements BookService {
      */
     @Override
     public List<Book> findAllByTitleAndAuthorAndGenre(String title, Author author, Genre genre) {
-        return bookRepository.findAllByTitleAndAuthorAndGenre(title, author, genre);
+        return bookRepositoryDest.findAllByTitleAndAuthorAndGenre(title, author, genre);
     }
 
     /**
@@ -101,7 +89,7 @@ public class BookServiceNoSql implements BookService {
     public String getIdByBook(String title, String authorFullName, String genreName) {
         Author author = authorServiceMongoDb.getFirstAuthorByFullName(authorFullName);
         Genre genre = genreServiceMongoDb.getFirstGenreByName(genreName);
-        List<Book> listIdBook = bookRepository.findAllByTitleAndAuthorAndGenre(title, author, genre);
+        List<Book> listIdBook = bookRepositoryDest.findAllByTitleAndAuthorAndGenre(title, author, genre);
         return listIdBook.size() == 0
                 ? ""
                 : listIdBook.get(0).getId();
@@ -116,7 +104,7 @@ public class BookServiceNoSql implements BookService {
      */
     @Override
     public String getBookById(String id) {
-        Optional<Book> book = bookRepository.findById(id);
+        Optional<Book> book = bookRepositoryDest.findById(id);
         return book.isEmpty() ? "The book was not found!" : "Book: "
                 + book.get().getId() + " " + book.get().getAuthor().getFullName()
                 + " (genre " + book.get().getGenre().getName() + ")";
@@ -131,7 +119,7 @@ public class BookServiceNoSql implements BookService {
      */
     @Override
     public Book findBookById(String id) {
-        Optional<Book> book = bookRepository.findById(id);
+        Optional<Book> book = bookRepositoryDest.findById(id);
         return book.orElse(null);
     }
 
@@ -143,7 +131,7 @@ public class BookServiceNoSql implements BookService {
      */
     @Override
     public String getAllBook() {
-        List<Book> listBook = bookRepository.findAll();
+        List<Book> listBook = bookRepositoryDest.findAll();
         String bookString = "Books (" + listBook.size() + "):\n ";
         for (int i = 0; i < listBook.size(); i++) {
             bookString = bookString + (i + 1) + ") '" + listBook.get(i).getTitle() + "' "
@@ -167,10 +155,10 @@ public class BookServiceNoSql implements BookService {
      */
     @Override
     public String updateBookById(String id, String title, String authorFullName, String genreName) {
-        if (bookRepository.findById(id).isPresent()) {
+        if (bookRepositoryDest.findById(id).isPresent()) {
             Author author = authorServiceMongoDb.getFirstAuthorByFullName(authorFullName);
             Genre genre = genreServiceMongoDb.getFirstGenreByName(genreName);
-            Book book = bookRepository.save(new Book(id, title, author, genre));
+            Book book = bookRepositoryDest.save(new Book(id, title, author, genre));
             return "The book id=" + book.getId() + " has " + "been updated (title: " + book.getTitle()
                     + ", author: " + book.getAuthor().getFullName() + ", genre: " + book.getGenre().getName() + ")";
         } else {
@@ -191,9 +179,9 @@ public class BookServiceNoSql implements BookService {
      */
     @Override
     public String deleteBookById(String id) {
-        Optional<Book> bookForDelete = bookRepository.findById(id);
+        Optional<Book> bookForDelete = bookRepositoryDest.findById(id);
         if (bookForDelete.isPresent()) {
-            bookRepository.delete(bookForDelete.get());
+            bookRepositoryDest.delete(bookForDelete.get());
             return "Book (id=" + id + " '" + bookForDelete.get().getTitle() + "' "
                     + bookForDelete.get().getAuthor().getFullName() + " " + bookForDelete.get().getGenre().getName()
                     + ") removed from the library";
@@ -209,6 +197,6 @@ public class BookServiceNoSql implements BookService {
      */
     @Override
     public Long countBooks() {
-        return bookRepository.count();
+        return bookRepositoryDest.count();
     }
 }

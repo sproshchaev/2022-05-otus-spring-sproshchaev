@@ -29,11 +29,9 @@ public class AuthorWriterImpl implements AuthorWriter {
      */
     @Override
     public void write(List<? extends Author> list) throws Exception {
-
         for (int i = 0; i < list.size(); i++) {
             if (authorService.getFirstAuthorByFullName(list.get(i).getFullName()) == null) {
                 authorService.createAuthor(list.get(i));
-                System.out.println("Элемент: " + list.get(i).getId() + " " + list.get(i).getFullName()); // todo убрать
             }
         }
     }

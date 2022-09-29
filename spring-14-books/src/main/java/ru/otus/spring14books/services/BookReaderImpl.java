@@ -29,6 +29,7 @@ public class BookReaderImpl implements BookReader {
 
     /**
      * Методы, аннотированные @BeforeStep, будут выполнены 1 раз перед запуском всего шага
+     * Метод getBookList() формирует список книг для последующей обработки в методе read()
      */
     @BeforeStep
     public void getBookList() {

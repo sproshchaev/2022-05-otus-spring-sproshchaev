@@ -15,7 +15,7 @@ public class Schema {
      * В случае, если runAlways = true - удаление будет происходить при каждом запуске приложения
      * @param db
      */
-    @ChangeSet(order = "001", id = "dropDb", author = "sproshchaev", runAlways = false)
+    @ChangeSet(order = "001", id = "dropDb", author = "sproshchaev", runAlways = true)
     public void dropDb(MongoDatabase db) {
         db.drop();
     }

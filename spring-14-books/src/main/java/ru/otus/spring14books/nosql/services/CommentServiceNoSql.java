@@ -16,12 +16,12 @@ import java.util.Optional;
  */
 @Service
 public class CommentServiceNoSql implements CommentService {
-    private final CommentRepositoryDest commentRepository;
+    private final CommentRepositoryDest commentRepositoryDest;
     private final BookService bookService;
 
     @Autowired
-    public CommentServiceNoSql(CommentRepositoryDest commentRepository, BookService bookService) {
-        this.commentRepository = commentRepository;
+    public CommentServiceNoSql(CommentRepositoryDest commentRepositoryDest, BookService bookService) {
+        this.commentRepositoryDest = commentRepositoryDest;
         this.bookService = bookService;
     }
 
@@ -38,7 +38,7 @@ public class CommentServiceNoSql implements CommentService {
     public String createCommentByIdBook(String idBook, String comment) {
         Book book = bookService.findBookById(idBook);
         if (book != null) {
-            Comment newComment = commentRepository.save(new Comment(comment, book));
+            Comment newComment = commentRepositoryDest.save(new Comment(comment, book));
             return "New comment '" + newComment.getCommentText() + "' for book id=" + newComment.getBook().getId()
                     + " has been successfully created!";
         } else {
@@ -55,7 +55,7 @@ public class CommentServiceNoSql implements CommentService {
      */
     @Override
     public String getCommentById(String idComment) {
-        Optional<Comment> comment = commentRepository.findById(idComment);
+        Optional<Comment> comment = commentRepositoryDest.findById(idComment);
         return comment.isPresent() ? "Comment on the book ('" + comment.get().getBook().getTitle() + "' "
                 + comment.get().getBook().getAuthor().getFullName() + " "
                 + comment.get().getBook().getGenre().getName() + ") id="
@@ -75,7 +75,7 @@ public class CommentServiceNoSql implements CommentService {
     public String getAllCommentsBookById(String idBook) {
         Book book = bookService.findBookById(idBook);
         if (book != null) {
-            List<Comment> commentList = commentRepository.findAllByBook(book);
+            List<Comment> commentList = commentRepositoryDest.findAllByBook(book);
             String commentsString = "All comments (" + commentList.size() + ") on book id=" + idBook + ": \n";
             for (int i = 0; i < commentList.size(); i++) {
                 commentsString = commentsString + " " + (i + 1) + ") " + commentList.get(i).getCommentText()
@@ -97,10 +97,10 @@ public class CommentServiceNoSql implements CommentService {
      */
     @Override
     public String updateCommentById(String idComment, String commentText) {
-        Optional<Comment> comment = commentRepository.findById(idComment);
+        Optional<Comment> comment = commentRepositoryDest.findById(idComment);
         if (comment.isPresent()) {
             comment.get().setCommentText(commentText);
-            Comment newComment = commentRepository.save(comment.get());
+            Comment newComment = commentRepositoryDest.save(comment.get());
             return "The comment id=" + newComment.getId() + " has been updated: '" + newComment.getCommentText() + "'";
         } else {
             return "Comment id=" + idComment + " not found!";
@@ -116,9 +116,9 @@ public class CommentServiceNoSql implements CommentService {
      */
     @Override
     public String deleteCommentById(String idComment) {
-        return commentRepository.findById(idComment)
+        return commentRepositoryDest.findById(idComment)
                 .map(comment -> {
-                    commentRepository.delete(comment);
+                    commentRepositoryDest.delete(comment);
                     return "The comment id=" + idComment + " has been deleted";
                 }).orElse("Comment id=" + idComment + " not found!");
     }
@@ -135,8 +135,8 @@ public class CommentServiceNoSql implements CommentService {
     public String deleteAllCommentBook(String idBook) {
         Book book = bookService.findBookById(idBook);
         if (book != null) {
-            List<Comment> commentList = commentRepository.findAllByBook(book);
-            commentRepository.deleteAllByBook(book);
+            List<Comment> commentList = commentRepositoryDest.findAllByBook(book);
+            commentRepositoryDest.deleteAllByBook(book);
             return "Removed " + commentList.size() + " comments to the book id=" + idBook;
         } else {
             return "Book id=" + idBook + " not found!";
@@ -150,7 +150,7 @@ public class CommentServiceNoSql implements CommentService {
      */
     @Override
     public Long countComments() {
-        return commentRepository.count();
+        return commentRepositoryDest.count();
     }
 
     /**
@@ -160,7 +160,7 @@ public class CommentServiceNoSql implements CommentService {
      */
     @Override
     public List<Comment> getAllComment() {
-        return commentRepository.findAll();
+        return commentRepositoryDest.findAll();
     }
 
     /**
@@ -173,6 +173,6 @@ public class CommentServiceNoSql implements CommentService {
      */
     @Override
     public List<Comment> findCommentByCommentTextAndBook(String commentText, Book book) {
-        return commentRepository.findCommentByCommentTextAndBook(commentText, book);
+        return commentRepositoryDest.findCommentByCommentTextAndBook(commentText, book);
     }
 }

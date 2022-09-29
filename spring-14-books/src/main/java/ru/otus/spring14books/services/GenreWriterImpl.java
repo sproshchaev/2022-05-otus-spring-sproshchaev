@@ -32,7 +32,6 @@ public class GenreWriterImpl implements GenreWriter {
         for (int i = 0; i < list.size(); i++) {
             if (genreService.getFirstGenreByName(list.get(i).getName()) == null) {
                 genreService.createGenre(list.get(i));
-                System.out.println("Элемент: " + list.get(i).getId() + " " + list.get(i).getName()); // todo убрать
             }
         }
     }

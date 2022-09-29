@@ -38,20 +38,13 @@ public class CommentProcessorImpl implements CommentProcessor {
      */
     @Override
     public ru.otus.spring14books.nosql.domain.Comment process(Comment commentSql) {
-
-        System.out.println("Получен commentSql: " + commentSql.getId() + " " + commentSql.getCommentText() + " book " +
-                commentSql.getBook().getId() + " " + commentSql.getBook().getTitle() + " "
-                        + commentSql.getBook().getAuthor().getId() + " " + commentSql.getBook().getAuthor().getFullName());
-
         Author author = authorService.getFirstAuthorByFullName(commentSql.getBook().getAuthor().getFullName());
         Genre genre = genreService.getFirstGenreByName(commentSql.getBook().getGenre().getName());
-
         ru.otus.spring14books.nosql.domain.Comment commentNoSql = new ru.otus.spring14books.nosql.domain.Comment(
                 String.valueOf(new ObjectId()),
                 commentSql.getCommentText(),
                 bookService.findAllByTitleAndAuthorAndGenre(commentSql.getBook().getTitle(), author, genre).get(0)
         );
-        System.out.println("Комментарий для MongoDB " + commentNoSql.getId() + " " + commentNoSql.getCommentText()); // todo удалить!
         return commentNoSql;
     }
 }

@@ -29,15 +29,11 @@ public class AuthorReaderImpl implements AuthorReader {
 
     /**
      * Методы, аннотированные @BeforeStep, будут выполнены 1 раз перед запуском всего шага
+     * Метод getAuthorList() формирует список всех авторов для дальнейшей обработки в методе read()
      */
     @BeforeStep
     public void getAuthorList() {
-
         authorList = authorService.getAllAuthors();
-        System.out.println("Авторов: " + authorList.size()); // todo удалить!
-        for (int i = 0; i < authorList.size(); i++) {
-            System.out.println(" -" + authorList.get(i).getId() + " " + authorList.get(i).getFullName());
-        }
     }
 
     /**
@@ -53,11 +49,9 @@ public class AuthorReaderImpl implements AuthorReader {
     public Object read() throws UnexpectedInputException, ParseException, NonTransientResourceException {
         index++;
         if (index < authorList.size()) {
-            System.out.println("read(): " + authorList.get(index)); // todo удалить!
             return authorList.get(index);
         } else {
             return null;
         }
     }
-
 }

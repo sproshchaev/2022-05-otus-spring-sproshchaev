@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Интерфейс AuthorRepositoryDest содержит методы работы со справочником авторов
+ * Интерфейс AuthorRepositorySource содержит методы работы со справочником авторов
  *
  * @see ru.otus.spring14books.nosql.domain.Author
  */

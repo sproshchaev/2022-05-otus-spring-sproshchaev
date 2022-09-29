@@ -30,6 +30,7 @@ public class GenreReaderImpl implements GenreReader {
 
     /**
      * Методы, аннотированные @BeforeStep, будут выполнены 1 раз перед запуском всего шага
+     * Метод getGenreList() формирует список жанров для последующей обработки в методе read()
      */
     @BeforeStep
     public void getGenreList() {
@@ -46,7 +47,7 @@ public class GenreReaderImpl implements GenreReader {
      * @throws NonTransientResourceException
      */
     @Override
-    public Object read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
+    public Object read() throws UnexpectedInputException, ParseException, NonTransientResourceException {
         index++;
         if (index < genreList.size()) {
             return genreList.get(index);

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Класс AuthorService содержит методы для работы с репозиторием авторов библиотеки
  *
- * @see ru.otus.spring14books.sql.repositories.AuthorRepositorySource
+ * @see AuthorRepositorySource
  */
 @Service
 public class AuthorServiceSql implements AuthorService {

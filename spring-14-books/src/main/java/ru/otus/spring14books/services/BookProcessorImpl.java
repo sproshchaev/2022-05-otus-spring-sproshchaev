@@ -35,8 +35,8 @@ public class BookProcessorImpl implements BookProcessor {
         ru.otus.spring14books.nosql.domain.Book bookNoSql = new ru.otus.spring14books.nosql.domain.Book(
                 String.valueOf(new ObjectId()),
                 bookSql.getTitle(),
-                authorService.getFirstAuthorByFullName(bookSql.getAuthor().getFullName()), // todo автор с id!
-                 genreService.getFirstGenreByName(bookSql.getGenre().getName())       // todo жанр с id!
+                authorService.getFirstAuthorByFullName(bookSql.getAuthor().getFullName()),
+                 genreService.getFirstGenreByName(bookSql.getGenre().getName())
         );
         return bookNoSql;
     }
