@@ -7,7 +7,6 @@ import org.springframework.batch.item.UnexpectedInputException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.otus.spring14books.sql.domain.Genre;
-import ru.otus.spring14books.sql.services.AuthorService;
 import ru.otus.spring14books.sql.services.GenreService;
 
 import java.util.List;
@@ -55,5 +54,4 @@ public class GenreReaderImpl implements GenreReader {
             return null;
         }
     }
-
 }

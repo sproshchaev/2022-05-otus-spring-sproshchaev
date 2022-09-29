@@ -2,8 +2,6 @@ package ru.otus.spring14books.services;
 
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
-import ru.otus.spring14books.nosql.domain.Author;
-import ru.otus.spring14books.nosql.domain.Genre;
 import ru.otus.spring14books.nosql.services.AuthorService;
 import ru.otus.spring14books.nosql.services.GenreService;
 import ru.otus.spring14books.sql.domain.Book;
@@ -36,7 +34,7 @@ public class BookProcessorImpl implements BookProcessor {
                 String.valueOf(new ObjectId()),
                 bookSql.getTitle(),
                 authorService.getFirstAuthorByFullName(bookSql.getAuthor().getFullName()),
-                 genreService.getFirstGenreByName(bookSql.getGenre().getName())
+                genreService.getFirstGenreByName(bookSql.getGenre().getName())
         );
         return bookNoSql;
     }

@@ -1,9 +1,4 @@
 spring:
-  # datasource:
-  #   url: jdbc:sqlserver://localhost:1433;database=library;encrypt=true;trustServerCertificate=true;
-  #   username: sa
-  #   password: Sa123456
-  #   driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
   datasource:
     url: jdbc:h2:mem:books
     username: sa
