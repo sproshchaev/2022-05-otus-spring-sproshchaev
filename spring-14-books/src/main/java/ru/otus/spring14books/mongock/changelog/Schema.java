@@ -4,9 +4,17 @@ import com.github.cloudyrock.mongock.ChangeLog;
 import com.github.cloudyrock.mongock.ChangeSet;
 import com.mongodb.client.MongoDatabase;
 
+/**
+ * Класс Schema создает структуру базы MongoDb
+ */
 @ChangeLog(order = "001")
 public class Schema {
 
+    /**
+     * Метод dropDb производит удаление базы данных.
+     * В случае, если runAlways = true - удаление будет происходить при каждом запуске приложения
+     * @param db
+     */
     @ChangeSet(order = "001", id = "dropDb", author = "sproshchaev", runAlways = false)
     public void dropDb(MongoDatabase db) {
         db.drop();
