@@ -13,6 +13,10 @@ public interface CommentRepositoryDest extends MongoRepository<Comment, String> 
 
     List<Comment> findAllByBook(Book book);
 
+    List<Comment> findAll();
+
+    List<Comment> findCommentByCommentTextAndBook(String commentText, Book book);
+
     @Override
     Optional<Comment> findById(String id);
 

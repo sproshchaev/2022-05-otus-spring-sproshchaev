@@ -1,6 +1,10 @@
 package ru.otus.spring14books.nosql.services;
 
+import ru.otus.spring14books.nosql.domain.Author;
 import ru.otus.spring14books.nosql.domain.Book;
+import ru.otus.spring14books.nosql.domain.Genre;
+
+import java.util.List;
 
 /**
  * Интерфейс BookService содержит набор методов для работы с репозиторием сущности Book
@@ -25,6 +29,15 @@ public interface BookService {
      * @param book
      */
     void createBook(Book book);
+
+    /**
+     * Метод findAllByTitleAndAuthorAndGenre возвращает список книг по наименованию, автору, жанру
+     * @param title
+     * @param author
+     * @param genre
+     * @return
+     */
+    List<Book> findAllByTitleAndAuthorAndGenre(String title, Author author, Genre genre);
 
     /**
      * Метод getIdByBook возвращает id для книги, если она есть в библиотеке (cRud)

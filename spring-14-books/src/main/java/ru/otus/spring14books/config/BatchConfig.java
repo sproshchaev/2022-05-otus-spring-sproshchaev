@@ -40,11 +40,16 @@ public class BatchConfig {
 
     private final BookWriter bookWriter;
 
+    private final CommentReader commentReader;
+
+    private final CommentProcessor commentProcessor;
+
+    private final CommentWriter commentWriter;
 
     @Autowired
     public BatchConfig(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
                        AuthorReader authorReader, AuthorProcessor authorProcessor, AuthorWriter authorWriter,
-                       GenreReader genreReader, GenreProcessor genreProcessor, GenreWriter genreWriter, BookReader bookReader, BookProcessor bookProcessor, BookWriter bookWriter) {
+                       GenreReader genreReader, GenreProcessor genreProcessor, GenreWriter genreWriter, BookReader bookReader, BookProcessor bookProcessor, BookWriter bookWriter, CommentReader commentReader, CommentProcessor commentProcessor, CommentWriter commentWriter) {
         this.jobBuilderFactory = jobBuilderFactory;
         this.stepBuilderFactory = stepBuilderFactory;
         this.authorReader = authorReader;
@@ -56,6 +61,9 @@ public class BatchConfig {
         this.bookReader = bookReader;
         this.bookProcessor = bookProcessor;
         this.bookWriter = bookWriter;
+        this.commentReader = commentReader;
+        this.commentProcessor = commentProcessor;
+        this.commentWriter = commentWriter;
     }
 
     /**
@@ -68,6 +76,7 @@ public class BatchConfig {
                 .start(authorsMigration())
                 .next(genresMigration())
                 .next(booksMigration())
+                .next(commentsMigration())
                 .build();
     }
 
@@ -113,4 +122,17 @@ public class BatchConfig {
                 .build();
     }
 
+    /**
+     * Метод commentsMigration() выполняет миграцию книг
+     * @return
+     */
+    @Bean
+    public Step commentsMigration() {
+        return stepBuilderFactory.get("commentsMigration")
+                .<Author, Author>chunk(10)
+                .reader(commentReader)
+                .processor(commentProcessor)
+                .writer(commentWriter)
+                .build();
+    }
 }

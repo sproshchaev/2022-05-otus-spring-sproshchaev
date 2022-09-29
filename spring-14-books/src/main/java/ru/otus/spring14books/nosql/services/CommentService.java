@@ -1,11 +1,17 @@
 package ru.otus.spring14books.nosql.services;
 
+import ru.otus.spring14books.nosql.domain.Book;
+import ru.otus.spring14books.nosql.domain.Comment;
+
+import java.util.List;
+
 /**
  * Интерфейс CommentService содержит набор методов для работы с репозиторием сущности Comment
  *
  * @see ru.otus.spring14books.nosql.domain.Comment
  */
-interface CommentService {
+public interface CommentService {
+
     /**
      * Метод createCommentByIdBook создает новый комментарий (Crud)
      * Метод изменяет данные
@@ -68,4 +74,20 @@ interface CommentService {
      * @return
      */
     Long countComments();
+
+    /**
+     * Метод getAllComment возвращает все комментарии ко всем книгам библиотеки
+     * @return
+     */
+    List<Comment> getAllComment();
+
+    /**
+     * Метод findCommentByCommentTextAndBook возвращает список комментариев с соответствующим текстом для выбранной
+     * книги
+     * @param commentText
+     * @param book
+     * @return
+     */
+    List<Comment> findCommentByCommentTextAndBook(String commentText, Book book);
+
 }

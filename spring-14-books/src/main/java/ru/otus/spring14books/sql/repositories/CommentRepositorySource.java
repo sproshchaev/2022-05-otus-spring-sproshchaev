@@ -21,11 +21,14 @@ public interface CommentRepositorySource extends JpaRepository<Comment, Long> {
 
     List<Comment> getAllByBookId(long idBook);
 
+    List<Comment> findAll();
+
     @EntityGraph(attributePaths = {"book"})
     Optional<Comment> findCommentById(long id);
 
     @Modifying
     @Query("update Comment c set c.commentText = :commentText where c.id = :idComment")
     Integer updateComment(@Param("idComment") long idComment, @Param("commentText") String commentText);
+
 
 }

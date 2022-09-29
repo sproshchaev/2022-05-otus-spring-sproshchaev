@@ -40,6 +40,16 @@ public class AppEventsCommands {
     }
 
     /**
+     * Метод запускает job
+     * @throws Exception
+     */
+    @ShellMethod(value = "Start Migration", key = {"sm", "startmigration"})
+    public void startMigrationJobWithJobLauncher() throws Exception {
+        JobExecution execution = jobLauncher.run(libraryMigration, new JobParametersBuilder()
+                .toJobParameters());
+    }
+
+    /**
      * Метод startConsoleH2 запускает консоль
      */
     @ShellMethod(value = "Start console H2", key = {"c", "console"})
@@ -50,15 +60,4 @@ public class AppEventsCommands {
             throw new RuntimeException(e);
         }
     }
-
-    /**
-     * Метод запускает job
-     * @throws Exception
-     */
-    @ShellMethod(value = "Start Migration", key = {"sm", "startmigration"})
-    public void startMigrationJobWithJobLauncher() throws Exception {
-        JobExecution execution = jobLauncher.run(libraryMigration, new JobParametersBuilder()
-                .toJobParameters());
-    }
-
 }

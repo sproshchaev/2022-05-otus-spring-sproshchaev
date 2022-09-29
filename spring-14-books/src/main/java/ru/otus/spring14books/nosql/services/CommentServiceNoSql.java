@@ -152,4 +152,27 @@ public class CommentServiceNoSql implements CommentService {
     public Long countComments() {
         return commentRepository.count();
     }
+
+    /**
+     * Метод getAllComment возвращает все комментарии ко всем книгам библиотеки
+     *
+     * @return
+     */
+    @Override
+    public List<Comment> getAllComment() {
+        return commentRepository.findAll();
+    }
+
+    /**
+     * Метод findCommentByCommentTextAndBook возвращает список комментариев с соответствующим текстом для выбранной
+     * книги
+     *
+     * @param commentText
+     * @param book
+     * @return
+     */
+    @Override
+    public List<Comment> findCommentByCommentTextAndBook(String commentText, Book book) {
+        return commentRepository.findCommentByCommentTextAndBook(commentText, book);
+    }
 }
