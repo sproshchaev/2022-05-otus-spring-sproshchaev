@@ -40,6 +40,16 @@ public interface BookService {
     List<Book> findAllByTitleAndAuthorAndGenre(String title, Author author, Genre genre);
 
     /**
+     * Метод findAllByTitleAndAuthorFullNameAndGenreName возвращает список книг по наименованию (строка),
+     * автору (строка), жанру (строка)
+     * @param title
+     * @param fullName
+     * @param name
+     * @return
+     */
+    List<Book> findAllByTitleAndAuthorFullNameAndGenreName(String title, String fullName, String name);
+
+    /**
      * Метод getIdByBook возвращает id для книги, если она есть в библиотеке (cRud)
      * Метод не изменяет данные
      *

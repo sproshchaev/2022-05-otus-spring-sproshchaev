@@ -76,6 +76,22 @@ public class BookServiceNoSql implements BookService {
     }
 
     /**
+     * Метод findAllByTitleAndAuthorFullNameAndGenreName возвращает список книг по наименованию (строка),
+     * автору (строка), жанру (строка)
+     *
+     * @param title
+     * @param fullName
+     * @param name
+     * @return
+     */
+    @Override
+    public List<Book> findAllByTitleAndAuthorFullNameAndGenreName(String title, String fullName, String name) {
+        Author author = authorServiceMongoDb.getFirstAuthorByFullName(fullName);
+        Genre genre = genreServiceMongoDb.getFirstGenreByName(name);
+        return bookRepositoryDest.findAllByTitleAndAuthorAndGenre(title, author, genre);
+    }
+
+    /**
      * Метод getIdByBook возвращает id для книги, если она есть в библиотеке (cRud)
      * Поиск выполняется по названию, автору и жанру книги.
      * Метод не изменяет данные

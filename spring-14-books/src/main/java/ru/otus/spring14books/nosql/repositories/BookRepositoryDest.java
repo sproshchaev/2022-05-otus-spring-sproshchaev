@@ -23,4 +23,5 @@ public interface BookRepositoryDest extends MongoRepository<Book, String> {
     List<Book> findBookByAuthor(Author author);
 
     List<Book> findBookByGenre(Genre genre);
+
 }
