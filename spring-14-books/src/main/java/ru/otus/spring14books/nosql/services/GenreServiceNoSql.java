@@ -107,6 +107,17 @@ public class GenreServiceNoSql implements GenreService {
     }
 
     /**
+     * Метод getAllGenresList получает коллекцию всех жанров из библиотеки (cRud)
+     * Метод не изменяет данные
+     *
+     * @return
+     */
+    @Override
+    public List<Genre> getAllGenresList() {
+        return genreRepositoryDest.findAll();
+    }
+
+    /**
      * Метод updateGenre обновляет данные о жанре в библиотеке (crUd)
      * Обновлению подлежит поле name для передаваемого в качестве аргумента id.
      * Перед выполнением запроса на изменение данных об авторе проверяется наличие жанра с таким id,

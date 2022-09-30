@@ -2,7 +2,7 @@ package ru.otus.spring14books.services;
 
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
-import ru.otus.spring14books.sql.domain.Author;
+import ru.otus.spring14books.nosql.domain.Author;
 
 /**
  * Класс AuthorProcessorImpl формирует новую сущность для записи в MongoDB
@@ -18,8 +18,8 @@ public class AuthorProcessorImpl implements AuthorProcessor {
      * @return
      */
     @Override
-    public ru.otus.spring14books.nosql.domain.Author process(Author authorSql) {
-        ru.otus.spring14books.nosql.domain.Author authorNoSql = new ru.otus.spring14books.nosql.domain.Author(
+    public Author process(ru.otus.spring14books.sql.domain.Author authorSql) {
+        Author authorNoSql = new Author(
                 String.valueOf(new ObjectId()),
                 authorSql.getFullName()
         );

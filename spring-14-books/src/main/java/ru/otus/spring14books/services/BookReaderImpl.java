@@ -46,7 +46,7 @@ public class BookReaderImpl implements BookReader {
      * @throws NonTransientResourceException
      */
     @Override
-    public Object read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
+    public Object read() throws UnexpectedInputException, ParseException, NonTransientResourceException {
         index++;
         if (index < bookList.size()) {
             return bookList.get(index);

@@ -2,6 +2,8 @@ package ru.otus.spring14books.nosql.services;
 
 import ru.otus.spring14books.nosql.domain.Genre;
 
+import java.util.List;
+
 /**
  * Интерфейс GenreService содержит методы для работы с сущностью Genre
  *
@@ -50,6 +52,14 @@ public interface GenreService {
      * @return
      */
     String getAllGenres();
+
+    /**
+     * Метод getAllGenresList получает коллекцию всех жанров из библиотеки (cRud)
+     * Метод не изменяет данные
+     *
+     * @return
+     */
+    List<Genre> getAllGenresList();
 
     /**
      * Метод updateGenre обновляет данные о жанре в библиотеке (crUd)

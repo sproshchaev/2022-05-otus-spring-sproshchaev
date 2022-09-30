@@ -3,10 +3,12 @@ package ru.otus.spring14books.nosql.services;
 import ru.otus.spring14books.nosql.domain.Author;
 import ru.otus.spring14books.nosql.repositories.GenreRepositoryDest;
 
+import java.util.List;
+
 /**
  * Интерфейс AuthorService содержит набор методов для работы с репозиторием сущности Author
  *
- * @see ru.otus.spring14books.nosql.domain.Author
+ * @see Author
  * @see GenreRepositoryDest
  */
 public interface AuthorService {
@@ -54,6 +56,14 @@ public interface AuthorService {
      * @return
      */
     String getAllAuthors();
+
+
+    /**
+     * Метод getAuthorsList возвращает коллекцию из списка всех авторов
+     * Метод не изменяет данные
+     * @return
+     */
+    List<Author> getAuthorsList();
 
     /**
      * Метод updateAuthor обновляет данные об авторе в библиотеке (crUd)

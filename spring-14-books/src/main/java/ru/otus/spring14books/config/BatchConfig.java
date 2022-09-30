@@ -5,11 +5,17 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.item.data.MongoItemWriter;
+import org.springframework.batch.item.data.builder.MongoItemWriterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import ru.otus.spring14books.nosql.domain.Author;
+import ru.otus.spring14books.nosql.domain.Book;
+import ru.otus.spring14books.nosql.domain.Comment;
+import ru.otus.spring14books.nosql.domain.Genre;
 import ru.otus.spring14books.services.*;
-import ru.otus.spring14books.sql.domain.Author;
 
 /**
  * Класс BatchConfig содержит конфигурацию Spring Batch
@@ -22,117 +28,133 @@ public class BatchConfig {
 
     private final StepBuilderFactory stepBuilderFactory;
 
-    private final AuthorReader authorReader;
-
-    private final AuthorProcessor authorProcessor;
-
-    private final AuthorWriter authorWriter;
-
-    private final GenreReader genreReader;
-
-    private final GenreProcessor genreProcessor;
-
-    private final GenreWriter genreWriter;
-
-    private final BookReader bookReader;
-
-    private final BookProcessor bookProcessor;
-
-    private final BookWriter bookWriter;
-
-    private final CommentReader commentReader;
-
-    private final CommentProcessor commentProcessor;
-
-    private final CommentWriter commentWriter;
-
     @Autowired
-    public BatchConfig(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
-                       AuthorReader authorReader, AuthorProcessor authorProcessor, AuthorWriter authorWriter,
-                       GenreReader genreReader, GenreProcessor genreProcessor, GenreWriter genreWriter, BookReader bookReader, BookProcessor bookProcessor, BookWriter bookWriter, CommentReader commentReader, CommentProcessor commentProcessor, CommentWriter commentWriter) {
+    public BatchConfig(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory) {
         this.jobBuilderFactory = jobBuilderFactory;
         this.stepBuilderFactory = stepBuilderFactory;
-        this.authorReader = authorReader;
-        this.authorProcessor = authorProcessor;
-        this.authorWriter = authorWriter;
-        this.genreReader = genreReader;
-        this.genreProcessor = genreProcessor;
-        this.genreWriter = genreWriter;
-        this.bookReader = bookReader;
-        this.bookProcessor = bookProcessor;
-        this.bookWriter = bookWriter;
-        this.commentReader = commentReader;
-        this.commentProcessor = commentProcessor;
-        this.commentWriter = commentWriter;
     }
 
     /**
      * Метод libraryMigration() запускает процесс миграции вссех сущностей библиотеки
+     *
      * @return
      */
     @Bean
-    public Job libraryMigration() {
+    public Job libraryMigration(Step authorsMigration, Step genresMigration, Step booksMigration,
+                                Step commentsMigration) {
         return jobBuilderFactory.get("libraryMigration")
-                .start(authorsMigration())
-                .next(genresMigration())
-                .next(booksMigration())
-                .next(commentsMigration())
+                .start(authorsMigration)
+                .next(genresMigration)
+                .next(booksMigration)
+                .next(commentsMigration)
                 .build();
     }
 
     /**
      * Метод authorsMigration() выполняет миграцию авторов
+     *
      * @return
      */
     @Bean
-    public Step authorsMigration() {
+    public Step authorsMigration(AuthorReader authorReader,  AuthorProcessor authorProcessor,
+                                 MongoItemWriter<Author> writerAuthorMongo) {
         return stepBuilderFactory.get("authorsMigration")
-                .<Author, Author>chunk(10)
+                .<ru.otus.spring14books.sql.domain.Author, ru.otus.spring14books.sql.domain.Author>chunk(10)
                 .reader(authorReader)
                 .processor(authorProcessor)
-                .writer(authorWriter)
+                .writer(writerAuthorMongo)
                 .build();
     }
 
     /**
      * Метод genresMigration() выполняет миграцию жанров
+     *
      * @return
      */
     @Bean
-    public Step genresMigration() {
+    public Step genresMigration(GenreReader genreReader, GenreProcessor genreProcessor,
+                                MongoItemWriter<Genre> genreWriterMongo) {
         return stepBuilderFactory.get("genresMigration")
-                .<Author, Author>chunk(10)
+                .<ru.otus.spring14books.sql.domain.Author, ru.otus.spring14books.sql.domain.Author>chunk(10)
                 .reader(genreReader)
                 .processor(genreProcessor)
-                .writer(genreWriter)
+                .writer(genreWriterMongo)
                 .build();
     }
 
     /**
      * Метод booksMigration() выполняет миграцию книг
+     *
      * @return
      */
     @Bean
-    public Step booksMigration() {
+    public Step booksMigration(BookReader bookReader, BookProcessor bookProcessor,
+                               MongoItemWriter<Book> bookWriterMongo) {
         return stepBuilderFactory.get("booksMigration")
-                .<Author, Author>chunk(10)
+                .<ru.otus.spring14books.sql.domain.Author, ru.otus.spring14books.sql.domain.Author>chunk(10)
                 .reader(bookReader)
                 .processor(bookProcessor)
-                .writer(bookWriter)
+                .writer(bookWriterMongo)
                 .build();
     }
 
     /**
      * Метод commentsMigration() выполняет миграцию книг
+     *
      * @return
      */
     @Bean
-    public Step commentsMigration() {
+    public Step commentsMigration(CommentReader commentReader, CommentProcessor commentProcessor,
+                                  MongoItemWriter<Comment> commentWriterMongo) {
         return stepBuilderFactory.get("commentsMigration")
-                .<Author, Author>chunk(10)
+                .<ru.otus.spring14books.sql.domain.Author, ru.otus.spring14books.sql.domain.Author>chunk(10)
                 .reader(commentReader)
                 .processor(commentProcessor)
-                .writer(commentWriter)
+                .writer(commentWriterMongo)
+                .build();
+    }
+
+    /**
+     * Метод authorWriterMongo() использует класс MongoItemWriter
+     * @param mongoTemplate
+     * @return
+     */
+    @Bean
+    public MongoItemWriter<Author> authorWriterMongo(MongoTemplate mongoTemplate) {
+        return new MongoItemWriterBuilder<Author>().template(mongoTemplate).collection("author")
+                .build();
+    }
+
+    /**
+     * Метод genreWriterMongo() использует класс MongoItemWriter
+     * @param mongoTemplate
+     * @return
+     */
+    @Bean
+    public MongoItemWriter<Genre> genreWriterMongo(MongoTemplate mongoTemplate) {
+        return new MongoItemWriterBuilder<Genre>().template(mongoTemplate).collection("genre")
+                .build();
+    }
+
+    /**
+     * Метод bookWriterMongo() использует класс MongoItemWriter
+     * @param mongoTemplate
+     * @return
+     */
+    @Bean
+    public MongoItemWriter<Book> bookWriterMongo(MongoTemplate mongoTemplate) {
+        return new MongoItemWriterBuilder<Book>().template(mongoTemplate).collection("book")
+                .build();
+    }
+
+    /**
+     * Метод commentWriterMongo() использует класс MongoItemWriter
+     * @param mongoTemplate
+     * @return
+     */
+    @Bean
+    public MongoItemWriter<Comment> commentWriterMongo(MongoTemplate mongoTemplate) {
+        return new MongoItemWriterBuilder<Comment>().template(mongoTemplate).collection("comment")
                 .build();
     }
 }

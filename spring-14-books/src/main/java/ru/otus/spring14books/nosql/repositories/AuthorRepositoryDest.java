@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * Интерфейс AuthorRepositorySource содержит методы работы со справочником авторов
  *
- * @see ru.otus.spring14books.nosql.domain.Author
+ * @see Author
  */
 @Repository
 public interface AuthorRepositoryDest extends MongoRepository<Author, String> {
@@ -22,4 +22,5 @@ public interface AuthorRepositoryDest extends MongoRepository<Author, String> {
 
     @Override
     void delete(Author author);
+
 }

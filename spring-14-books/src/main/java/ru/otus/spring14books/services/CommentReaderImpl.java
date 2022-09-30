@@ -12,7 +12,7 @@ import ru.otus.spring14books.sql.services.CommentService;
 import java.util.List;
 
 /**
- * Класс CommentReaderImpl реализует методы интерфейса CommentReader для сущности Comment
+ * Класс CommentReaderImpl реализует кастомные методы интерфейса CommentReader для сущности Comment
  * Считывание происходит по одной записи из выборки
  */
 @Service

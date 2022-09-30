@@ -122,4 +122,5 @@ Development on the Spring Framework
 ### Статьи по теме
 1. Spring Batch 3.0 - Часть 1: Пример использования https://bit.ly/3xlUzSF
 2. Spring Batch 3.0 - Часть 2: Кастомный ItemReader, ItemPocessor и ItemWriter https://bit.ly/3U8VdwD
-3. https://github.com/JavaGrinko/batch-example.git
+3. Spring Batch 3.0 - репозиторий https://github.com/JavaGrinko/batch-example.git
+4. Spring Batch With MongoDB Example https://www.tutorialsbuddy.com/spring-batch-with-mongodb-example

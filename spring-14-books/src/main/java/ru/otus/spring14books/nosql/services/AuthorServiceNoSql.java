@@ -109,6 +109,17 @@ public class AuthorServiceNoSql implements AuthorService {
     }
 
     /**
+     * Метод getAuthorsList возвращает коллекцию из списка всех авторов
+     * Метод не изменяет данные
+     *
+     * @return
+     */
+    @Override
+    public List<Author> getAuthorsList() {
+        return authorRepositoryDest.findAll();
+    }
+
+    /**
      * Метод updateAuthor обновляет данные об авторе в библиотеке (crUd)
      * Обновлению подлежит поле fullName для передаваемого в качестве аргумента id.
      * Перед выполнением запроса на изменение данных об авторе проверяется наличие автора с таким id,

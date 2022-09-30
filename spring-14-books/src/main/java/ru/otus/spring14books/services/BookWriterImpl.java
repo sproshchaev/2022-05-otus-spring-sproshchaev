@@ -8,7 +8,7 @@ import ru.otus.spring14books.nosql.services.BookService;
 import java.util.List;
 
 /**
- * Класс BookWriterImpl реализует методы интерфейса BookWriter
+ * Класс BookWriterImpl реализует кастомыне методы интерфейса BookWriter
  */
 @Component
 public class BookWriterImpl implements BookWriter {
