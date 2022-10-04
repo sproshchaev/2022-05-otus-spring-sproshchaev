@@ -75,3 +75,35 @@ Development on the Spring Framework
 
 ### Статьи по теме
 1. Introduction to Spring Integration https://www.baeldung.com/spring-integration
+
+
+
+### Заметки (временные)
+
+    // 0:47:49 DSL Routing subFlow
+/*
+
+    @Bean
+    public IntegrationFlow cafeFlow2() {
+        return f -> f
+                .<OrderItem, Boolean>route(
+                        OrderItem::isIced,
+                        mapping -> mapping
+                                .subFlowMapping(true, sf -> sf
+                                        .channel("icedOrders"))
+                                .subFlowMapping(false, sf -> sf.channel("notIcedOrders"))
+                );
+    }
+
+    @Bean
+    public IntegrationFlow barFlow2() {
+        return f -> f
+                .channel("barChannel")
+                .split()
+                .handle("barService", "cook")
+                .aggregate();
+    }
+
+
+*/
+

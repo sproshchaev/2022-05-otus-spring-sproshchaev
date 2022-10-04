@@ -10,6 +10,7 @@ import java.util.Collection;
 @Component
 @MessagingGateway
 public interface Cafe {
+
     @Gateway(requestChannel = "itemsChannel", replyChannel = "foodChannel")
     Collection<Food> process(Collection<OrderItem> orderItem);
 }

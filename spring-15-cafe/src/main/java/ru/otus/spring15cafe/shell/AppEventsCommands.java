@@ -2,6 +2,8 @@ package ru.otus.spring15cafe.shell;
 
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import ru.otus.spring15cafe.domain.OrderItem;
+import ru.otus.spring15cafe.services.BarService;
 import ru.otus.spring15cafe.services.NewOrder;
 
 /**
@@ -12,8 +14,11 @@ public class AppEventsCommands {
 
     private final NewOrder newOrder;
 
-    public AppEventsCommands(NewOrder newOrder) {
+    private final BarService barService;
+
+    public AppEventsCommands(NewOrder newOrder, BarService barService) {
         this.newOrder = newOrder;
+        this.barService = barService;
     }
 
     /**
@@ -38,4 +43,11 @@ public class AppEventsCommands {
         newOrder.generate();
         return "Make an order...";
     }
+
+    @ShellMethod(value = "Get drink", key = {"gd", "getdrink"})
+    public String getDrink() throws Exception {
+        barService.drink(new OrderItem("Gin", true));
+        return "";
+    }
+
 }
