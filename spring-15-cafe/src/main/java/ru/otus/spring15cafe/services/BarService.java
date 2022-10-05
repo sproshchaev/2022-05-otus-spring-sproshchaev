@@ -8,11 +8,11 @@ import ru.otus.spring15cafe.domain.OrderItem;
 @Component
 public class BarService {
 
-    public Drink drink(OrderItem orderItem) throws Exception {
+    public Food drink(OrderItem orderItem) throws Exception {
         System.out.println("Drink " + orderItem.getItemName());
         //Thread.sleep(3000);
         System.out.println("Drink " + orderItem.getItemName() + " done");
-        return new Drink(orderItem.getItemName());
+        return new Food(orderItem.getItemName());
     }
 
     public Drink hotDrink(Food orderItem) throws Exception {

@@ -23,12 +23,7 @@ public class AppConfig {
     }
 
     @Bean
-    public PublishSubscribeChannel foodChannel() {
-        return MessageChannels.publishSubscribe().get();
-    }
-
-    @Bean
-    public QueueChannel routerChannel() {
+    public QueueChannel kitchenChannel() {
         return MessageChannels.queue(10).get();
     }
 
@@ -38,9 +33,14 @@ public class AppConfig {
     }
 
     @Bean
-    public QueueChannel kitchenChannel() {
-        return MessageChannels.queue(10).get();
+    public PublishSubscribeChannel foodChannel() {
+        return MessageChannels.publishSubscribe().get();
     }
+
+/*
+    @Bean
+    public QueueChannel routerChannel() { return MessageChannels.queue(10).get(); }
+*/
 
     @Bean(name = PollerMetadata.DEFAULT_POLLER)
     public PollerMetadata poller() {
