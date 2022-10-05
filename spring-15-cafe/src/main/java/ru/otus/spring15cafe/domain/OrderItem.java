@@ -5,7 +5,6 @@ public class OrderItem {
 
     private final boolean isIced;
 
-
     public OrderItem(String itemName, boolean isIced) {
         this.itemName = itemName;
         this.isIced = isIced;
