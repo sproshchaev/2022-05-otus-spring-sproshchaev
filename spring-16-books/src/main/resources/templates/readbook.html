@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Books</title>
+    <style>
+        body {
+            padding: 50px;
+        }
+
+        .books {
+            border: 1px solid steelblue;
+            width: 300px;
+            border-collapse: collapse;
+        }
+
+        .books tr td, th {
+            padding: 5px;
+            border: 1px solid steelblue;
+        }
+
+        .books td:last-child, td:first-child {
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        <span style="font-weight: bold">Enjoy reading the book</span> <br>
+        <img src="/book.png" alt="Enjoy reading the book">
+    </p>
+    <p th:text="${book_dto.title}">Welcome to the library!</p>
+    <p th:text="${book_dto.authorFullName}">Welcome to the library!</p>
+    <p th:text="${book_dto.genreName}">Welcome to the library!</p>
+    <br>
+    <button onclick="window.location.href = '/books'">Return</button>
+</body>
+</html>
