@@ -22,8 +22,9 @@ public class NewOrder {
 
         List<OrderItem> items = new ArrayList<>();
         items.add(new OrderItem("1", false));
-        items.add(new OrderItem("2", false));
-        items.add(new OrderItem("3", true));
+        items.add(new OrderItem("2", true));
+        items.add(new OrderItem("3", false));
+        items.add(new OrderItem("4", true));
 
         Collection<Food> food = cafe.process(items);
 
