@@ -89,6 +89,7 @@ Flyway Migration
   - flyway-sqlserver  
   - mssql-jdbc 
   - тесты: spring-boot-starter-test, spring-security-test 
+  - micrometer-registry-prometheus
 15. Запустить Docker
   - Проверить в Docker в разделе "Images" наличие "mcr.microsoft.com/mssql/server", при отсутствии ввести в терминале 
   команду "docker pull mcr.microsoft.com/mssql/server"
@@ -112,6 +113,10 @@ Flyway Migration
     spring.jpa.show-sql: true
     spring.jpa.hibernate.ddl-auto: none
     spring.flyway.enabled: true
+    spring.jmx.enabled: true # включение JMX
+    management.endpoints.web.exposure.include: '*' # включение всех опций spring-boot-starter-actuator
+    management.endpoint.health.show-details: always # отображение всех деталей
+    management.health.defaults.enabled: true # включение health
 18. Создать БД
     Система миграций flyway не поддерживает транзакции по созданию базы данных, поэтому ее необходимо создать вручную, 
     введя в "Query console" команду: create database library
@@ -125,6 +130,13 @@ Flyway Migration
       - P - префикс "V" - версионные миграции, "U" - undo-миграции (только в Enterprise версии), "R" - повторяемые;
       - N - версия. Разделяется точками или единичными подчеркиваниями, может быть достаточно длинной;
       - <Description> - описание версии
+
+### Spring Boot Actuator
+
+http://localhost:8080/actuator
+http://localhost:8080/actuator/prometheus
+http://localhost:8080/actuator/health
+
 ### Примечания
 
 ### Тестирование

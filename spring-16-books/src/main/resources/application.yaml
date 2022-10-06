@@ -10,3 +10,16 @@ spring:
       ddl-auto: none
   flyway:
     enabled: true
+  jmx:
+    enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+  health:
+      defaults:
+        enabled: true
