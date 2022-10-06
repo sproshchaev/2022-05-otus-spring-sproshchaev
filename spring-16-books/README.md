@@ -1,5 +1,6 @@
 [![Java](https://img.shields.io/badge/Java-E43222??style=for-the-badge&logo=java&logoColor=FFFFFF)](https://java.com/)
 [![Spring Boot Actuator](https://img.shields.io/badge/Spring_Boot_Actuator-FFFFFF??style=for-the-badge&logo=Spring)](https://spring.io/guides/gs/actuator-service/)
+[![Spring Data REST](https://img.shields.io/badge/Spring_Data_REST-FFFFFF??style=for-the-badge&logo=Spring)](https://spring.io/projects/spring-data-rest)
 [![Spring Security](https://img.shields.io/badge/Spring_Security-FFFFFF??style=for-the-badge&logo=Spring)](https://spring.io/projects/spring-security/)
 [![Spring Web](https://img.shields.io/badge/Spring_Web-FFFFFF??style=for-the-badge&logo=Spring)](https://spring.io/guides/gs/serving-web-content/)
 [![Thymeleaf](https://img.shields.io/badge/Thymeleaf-FFFFFF??style=for-the-badge&logo=Thymeleaf&logoColor=025B10)](https://www.thymeleaf.org/)
@@ -90,6 +91,8 @@ Flyway Migration
   - mssql-jdbc 
   - тесты: spring-boot-starter-test, spring-security-test 
   - micrometer-registry-prometheus
+  - spring-data-rest-hal-explorer
+  - spring-boot-starter-data-rest
 15. Запустить Docker
   - Проверить в Docker в разделе "Images" наличие "mcr.microsoft.com/mssql/server", при отсутствии ввести в терминале 
   команду "docker pull mcr.microsoft.com/mssql/server"
@@ -133,12 +136,27 @@ Flyway Migration
 
 ### Spring Boot Actuator
 
-http://localhost:8080/actuator
-http://localhost:8080/actuator/prometheus
-http://localhost:8080/actuator/health
+1. Вызов Actuator http://localhost:8080/actuator
+
+2. Вызов Prometheus http://localhost:8080/actuator/prometheus
+
+3. Вызов HealthCheck http://localhost:8080/actuator/health
+Пример индикации рабочего состояния приложения: "library":{"status":"UP","details":{"message":"App is working"}} 
+Пример не рабочего состояния: "library":{"status":"DOWN","details":{"message":"App is not working"}}
+
+4. Вызов Hal http://localhost:8080/explorer
+
+5. Вызовы Spring Data REST
+   http://localhost:8080/author
+   http://localhost:8080/author/search
+   http://localhost:8080/genre
+   http://localhost:8080/book   
+   http://localhost:8080/comment
 
 ### Примечания
 
 ### Тестирование
+
+[INFO] Tests run: 20, Failures: 0, Errors: 0, Skipped: 0
 
 ### Статьи по теме

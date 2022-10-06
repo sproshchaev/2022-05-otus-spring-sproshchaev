@@ -10,7 +10,7 @@ import ru.otus.spring16books.domain.Author;
 import java.util.List;
 
 /**
- * Интерфейс AuthorRepository содержит методы работы со справочником авторов
+ * Интерфейс AuthorRepo содержит методы работы со справочником авторов
  *
  * @see ru.otus.spring16books.domain.Author
  */
