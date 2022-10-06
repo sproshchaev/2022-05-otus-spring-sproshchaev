@@ -12,6 +12,9 @@ spring:
     enabled: true
   jmx:
     enabled: true
+  data:
+    rest:
+      base-path: /datarest
 management:
   endpoints:
     web:

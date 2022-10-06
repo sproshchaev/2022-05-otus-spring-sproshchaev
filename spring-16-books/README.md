@@ -117,9 +117,11 @@ Flyway Migration
     spring.jpa.hibernate.ddl-auto: none
     spring.flyway.enabled: true
     spring.jmx.enabled: true # включение JMX
+    spring.data.rest.base-path: /datarest # пути для Spring Data REST в url
     management.endpoints.web.exposure.include: '*' # включение всех опций spring-boot-starter-actuator
     management.endpoint.health.show-details: always # отображение всех деталей
     management.health.defaults.enabled: true # включение health
+
 18. Создать БД
     Система миграций flyway не поддерживает транзакции по созданию базы данных, поэтому ее необходимо создать вручную, 
     введя в "Query console" команду: create database library
@@ -147,11 +149,11 @@ Flyway Migration
 4. Вызов Hal http://localhost:8080/explorer
 
 5. Вызовы Spring Data REST
-   http://localhost:8080/author
-   http://localhost:8080/author/search
-   http://localhost:8080/genre
-   http://localhost:8080/book   
-   http://localhost:8080/comment
+   http://localhost:8080/datarest/author
+   http://localhost:8080/datarest/author/search
+   http://localhost:8080/datarest/genre
+   http://localhost:8080/datarest/book   
+   http://localhost:8080/datarest/comment
 
 ### Примечания
 
