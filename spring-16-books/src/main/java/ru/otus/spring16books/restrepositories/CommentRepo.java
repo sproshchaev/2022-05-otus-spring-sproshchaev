@@ -7,6 +7,12 @@ import ru.otus.spring16books.domain.Comment;
 
 import java.util.List;
 
+/**
+ * Интерфейс CommentRepo реализует репозиторий и обработку endpoint для Comment
+ * (работает без контроллера, Spring Data REST)
+ *
+ * @see ru.otus.spring16books.domain.Comment
+ */
 @RepositoryRestResource(path = "comment")
 public interface CommentRepo extends PagingAndSortingRepository<Comment, Long> {
 

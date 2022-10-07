@@ -7,6 +7,12 @@ import ru.otus.spring16books.domain.Author;
 
 import java.util.List;
 
+/**
+ * Интерфейс AuthorRepo реализует репозиторий и обработку endpoint для Author
+ * (работает без контроллера, Spring Data REST)
+ *
+ * @see ru.otus.spring16books.domain.Author
+ */
 @RepositoryRestResource(path = "author")
 public interface AuthorRepo extends PagingAndSortingRepository<Author, Long> {
 
