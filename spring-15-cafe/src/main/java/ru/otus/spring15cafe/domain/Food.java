@@ -1,5 +1,8 @@
 package ru.otus.spring15cafe.domain;
 
+/**
+ * Класс Food
+ */
 public class Food {
     private final String foodName;
 
@@ -10,4 +13,12 @@ public class Food {
     public String getFoodName() {
         return foodName;
     }
+
+    @Override
+    public String toString() {
+        return "Food{" +
+                "foodName='" + foodName + '\'' +
+                '}';
+    }
+
 }

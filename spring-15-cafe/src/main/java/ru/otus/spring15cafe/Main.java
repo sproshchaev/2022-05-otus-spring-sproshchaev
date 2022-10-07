@@ -6,7 +6,6 @@ import org.springframework.integration.config.EnableIntegration;
 
 /**
  * Миграция данных приложения "Кафе" с использованием Spring Integration, Spring Shell
- * и Spring Batch
  *
  * @author Sergey Proshchaev
  * @version 1.0
@@ -15,8 +14,8 @@ import org.springframework.integration.config.EnableIntegration;
 @SpringBootApplication
 public class Main {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Main.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Main.class, args);
+    }
 
 }

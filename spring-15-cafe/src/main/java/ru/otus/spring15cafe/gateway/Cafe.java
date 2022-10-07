@@ -11,6 +11,6 @@ import java.util.Collection;
 @MessagingGateway
 public interface Cafe {
 
-    @Gateway(requestChannel = "itemsChannel", replyChannel = "foodChannel")
+    @Gateway(requestChannel = "itemsChannel", replyChannel = "readyChannel")
     Collection<Food> process(Collection<OrderItem> orderItem);
 }

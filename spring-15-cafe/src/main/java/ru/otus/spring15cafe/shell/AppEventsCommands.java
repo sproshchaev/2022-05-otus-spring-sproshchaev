@@ -1,11 +1,11 @@
 package ru.otus.spring15cafe.shell;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import ru.otus.spring15cafe.domain.Food;
-import ru.otus.spring15cafe.domain.OrderItem;
-import ru.otus.spring15cafe.services.BarService;
-import ru.otus.spring15cafe.services.NewOrder;
+import org.springframework.shell.standard.ShellOption;
+import ru.otus.spring15cafe.services.OrderService;
+import ru.otus.spring15cafe.services.OrderServiceImpl;
 
 /**
  * Класс ApplicationEventsCommands содержит набор методов-команд (аннотация @ShellComponent)
@@ -13,13 +13,11 @@ import ru.otus.spring15cafe.services.NewOrder;
 @ShellComponent
 public class AppEventsCommands {
 
-    private final NewOrder newOrder;
+    private final OrderService orderService;
 
-    private final BarService barService;
-
-    public AppEventsCommands(NewOrder newOrder, BarService barService) {
-        this.newOrder = newOrder;
-        this.barService = barService;
+    @Autowired
+    public AppEventsCommands(OrderServiceImpl orderService) {
+        this.orderService = orderService;
     }
 
     /**
@@ -40,17 +38,9 @@ public class AppEventsCommands {
      * @return
      */
     @ShellMethod(value = "Make an order", key = {"mo", "makeorder"})
-    public String makeOrder() {
-        newOrder.generate();
-        return "Make an order...";
+    public String makeOrder(@ShellOption(defaultValue = "Meat, 0, Cola, 1, Fish, 0, Сoffee, 1") String orderString) {
+        orderService.generate(orderString);
+        return "Order is ready!";
     }
-/*
-
-    @ShellMethod(value = "Get drink", key = {"gd", "getdrink"})
-    public String getDrink() throws Exception {
-        barService.drink(new Food("Gin"));
-        return "";
-    }
-*/
 
 }
