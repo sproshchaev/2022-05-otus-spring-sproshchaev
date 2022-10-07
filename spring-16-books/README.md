@@ -93,6 +93,7 @@ Flyway Migration
   - micrometer-registry-prometheus
   - spring-data-rest-hal-explorer
   - spring-boot-starter-data-rest
+  - spring-boot-starter-aop
 15. Запустить Docker
   - Проверить в Docker в разделе "Images" наличие "mcr.microsoft.com/mssql/server", при отсутствии ввести в терминале 
   команду "docker pull mcr.microsoft.com/mssql/server"
