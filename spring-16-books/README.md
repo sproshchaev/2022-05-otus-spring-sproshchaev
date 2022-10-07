@@ -141,15 +141,40 @@ Flyway Migration
 
 1. Вызов Actuator http://localhost:8080/actuator
 
-2. Вызов Prometheus http://localhost:8080/actuator/prometheus
+2. Метрики: http://localhost:8080/actuator/metrics
+
+{"names":["application.ready.time","application.started.time","disk.free","disk.total","executor.active",
+"executor.completed","executor.pool.core","executor.pool.max","executor.pool.size","executor.queue.remaining",
+"executor.queued","hikaricp.connections","hikaricp.connections.acquire","hikaricp.connections.active",
+"hikaricp.connections.creation","hikaricp.connections.idle","hikaricp.connections.max","hikaricp.connections.min",
+"hikaricp.connections.pending","hikaricp.connections.timeout","hikaricp.connections.usage","http.server.requests",
+"jdbc.connections.max","jdbc.connections.min","jvm.buffer.count","jvm.buffer.memory.used","jvm.buffer.total.capacity",
+"jvm.classes.loaded","jvm.classes.unloaded","jvm.gc.live.data.size","jvm.gc.max.data.size","jvm.gc.memory.allocated",
+"jvm.gc.memory.promoted","jvm.gc.overhead","jvm.gc.pause","jvm.memory.committed","jvm.memory.max",
+"jvm.memory.usage.after.gc","jvm.memory.used","jvm.threads.daemon","jvm.threads.live","jvm.threads.peak",
+"jvm.threads.states","logback.events","process.cpu.usage","process.start.time","process.uptime",
+"spring.data.repository.invocations","system.cpu.count","system.cpu.usage","tomcat.sessions.active.current",
+"tomcat.sessions.active.max","tomcat.sessions.alive.max","tomcat.sessions.created","tomcat.sessions.expired",
+"tomcat.sessions.rejected"]}
 
 3. Вызов HealthCheck http://localhost:8080/actuator/health
-Пример индикации рабочего состояния приложения: "library":{"status":"UP","details":{"message":"App is working"}} 
-Пример не рабочего состояния: "library":{"status":"DOWN","details":{"message":"App is not working"}}
 
-4. Вызов Hal http://localhost:8080/explorer
+{"status":"UP","components":{"db":{"status":"UP","details":{"database":"Microsoft SQL Server",
+"validationQuery":"isValid()"}},"diskSpace":{"status":"UP","details":{"total":510507945984,"free":239072727040,
+"threshold":10485760,"exists":true}},"library":{"status":"UP","details":{"message":"App is working"}},
+"ping":{"status":"UP"}}}
 
-5. Вызовы Spring Data REST
+4. http://localhost:8080/actuator/health/library
+   Пример индикации рабочего состояния приложения: "library":{"status":"UP","details":{"message":"App is working"}}
+   Пример не рабочего состояния: "library":{"status":"DOWN","details":{"message":"App is not working"}}
+
+5. http://localhost:8080/actuator/loggers
+
+6. Вызов просмотра log-файла http://localhost:8080/actuator/logfile
+
+7. Вызов Prometheus http://localhost:8080/actuator/prometheus
+
+8. Вызовы Spring Data REST
    http://localhost:8080/datarest/author
    http://localhost:8080/datarest/author/search
    http://localhost:8080/datarest/genre
@@ -163,3 +188,4 @@ Flyway Migration
 [INFO] Tests run: 20, Failures: 0, Errors: 0, Skipped: 0
 
 ### Статьи по теме
+1. Введение в Spring Boot Actuator https://habr.com/ru/company/otus/blog/452624/

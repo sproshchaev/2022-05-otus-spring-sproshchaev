@@ -12,10 +12,10 @@ import ru.otus.spring16books.services.LibraryService;
 @Component
 public class LibraryHealthIndicator implements HealthIndicator {
 
-    private final int BOOK_COUNT_MIN = 1;
-    private final int AUTHOR_COUNT_MIN = 1;
-    private final int GENRE_COUNT_MIN = 1;
-    private final int COMMENT_COUNT_MIN = 1;
+    private static final int BOOK_COUNT_MIN = 1;
+    private static final int AUTHOR_COUNT_MIN = 1;
+    private static final int GENRE_COUNT_MIN = 1;
+    private static final int COMMENT_COUNT_MIN = 1;
 
     private final LibraryService libraryService;
 
@@ -48,15 +48,11 @@ public class LibraryHealthIndicator implements HealthIndicator {
 
     private boolean getHealthStatusApp(String controlString) {
         String[] arrayString = controlString.split(" ");
-        int bookCount = Integer.valueOf(arrayString[8]);
-        int authorCount = Integer.valueOf(arrayString[11]);
-        int genreCount = Integer.valueOf(arrayString[14]);
-        int commentCount = Integer.valueOf(arrayString[25]);
-        if ((bookCount > BOOK_COUNT_MIN) && (authorCount > AUTHOR_COUNT_MIN) && (genreCount > GENRE_COUNT_MIN)
-                && (commentCount > COMMENT_COUNT_MIN)) {
-            return true;
-        } else {
-            return false;
+        int bookCount = Integer.parseInt(arrayString[8]);
+        int authorCount = Integer.parseInt(arrayString[11]);
+        int genreCount = Integer.parseInt(arrayString[14]);
+        int commentCount = Integer.parseInt(arrayString[25]);
+        return ((bookCount > BOOK_COUNT_MIN) && (authorCount > AUTHOR_COUNT_MIN) && (genreCount > GENRE_COUNT_MIN)
+                && (commentCount > COMMENT_COUNT_MIN));
         }
-    }
 }
