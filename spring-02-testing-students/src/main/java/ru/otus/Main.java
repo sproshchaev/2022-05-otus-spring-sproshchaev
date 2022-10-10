@@ -2,9 +2,8 @@ package ru.otus;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import ru.otus.service.TestsForStudents;
+import ru.otus.service.StudentsTestingService;
 
 /**
  * Приложение по проведению тестирования студентов - вывод вопросов и получение вариантов ответа
@@ -16,15 +15,9 @@ import ru.otus.service.TestsForStudents;
 @ComponentScan(basePackages = "ru.otus")
 @PropertySource("classpath:application.properties")
 public class Main {
-
-    /**
-     * "Точка входа в приложение"
-     * @param args
-     */
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
-        TestsForStudents testsForStudents = context.getBean(TestsForStudents.class);
-        testsForStudents.runTest();
+        StudentsTestingService studentsTestingService = context.getBean(StudentsTestingService.class);
+        studentsTestingService.runTest();
     }
-
 }

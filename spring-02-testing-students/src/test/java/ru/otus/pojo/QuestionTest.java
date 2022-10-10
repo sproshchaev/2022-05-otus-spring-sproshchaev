@@ -1,24 +1,28 @@
 package ru.otus.pojo;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Класс QuestionTest содержит unit-тесты методов класса Question
- */
-@DisplayName("Запуск тестов класса QuestionTest: ")
-public class QuestionTest {
+class QuestionTest {
 
-    /**
-     * Метод Question_ToString_ExpectedResult выполняет unit-тестирование метода toString
-     */
-    @DisplayName("тестирование метода toString")
     @Test
-    public void Question_ToString_ExpectedResult() {
-        Question question = new Question(1, "An object is an instance:", "programs", "class", "method", 2);
-        String resultExpected = "Question{questionNumber=1, questionText='An object is an instance:', " + "firstAnswer='programs', secondAnswer='class', thirdAnswer='method', rightAnswer=2}";
-        assertThat(question.toString()).isEqualTo(resultExpected);
+    void getQuestionId() {
+    }
+
+    @Test
+    void getQuestionText() {
+    }
+
+    @Test
+    void getListAnswer() {
+    }
+
+    @Test
+    void getRightAnswer() {
+    }
+
+    @Test
+    void testToString() {
     }
 }

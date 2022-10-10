@@ -1,56 +1,40 @@
 package ru.otus.pojo;
 
+import java.util.List;
+import java.util.Objects;
+
 /**
- * Класс Question - POJO-класс, содержащий поля вопроса из файла \resources\questions.csv
+ * Класс Question - POJO-класс, содержащий вопрос теста
  */
 public class Question {
 
     /**
      * Поле "Номер вопроса"
      */
-    private int questionId;
+    private final int questionId;
 
     /**
      * Поле "Текст вопроса"
      */
-    private String questionText;
+    private final String questionText;
 
     /**
-     * Поле "Первый вариант ответа"
+     * Поле "Варианты ответов"
      */
-    private String firstAnswer;
-
-    /**
-     * Поле "Второй вариант ответа"
-     */
-    private String secondAnswer;
-
-    /**
-     * Поле "Третий вариант ответа"
-     */
-    private String thirdAnswer;
+    private final List<String> listAnswer;
 
     /**
      * Поле "Номер правильного варианта ответа"
      */
-    private int rightAnswer;
+    private final int rightAnswer;
 
-    /**
-     * Конструктор класса
-     */
-    public Question(int questionId, String questionText, String firstAnswer, String secondAnswer, String thirdAnswer,
-                    int rightAnswer) {
+    public Question(int questionId, String questionText, List<String> listAnswer, int rightAnswer) {
         this.questionId = questionId;
         this.questionText = questionText;
-        this.firstAnswer = firstAnswer;
-        this.secondAnswer = secondAnswer;
-        this.thirdAnswer = thirdAnswer;
+        this.listAnswer = listAnswer;
         this.rightAnswer = rightAnswer;
     }
 
-    /**
-     * Геттеры и сеттеры полей класса
-     */
     public int getQuestionId() {
         return questionId;
     }
@@ -59,16 +43,8 @@ public class Question {
         return questionText;
     }
 
-    public String getFirstAnswer() {
-        return firstAnswer;
-    }
-
-    public String getSecondAnswer() {
-        return secondAnswer;
-    }
-
-    public String getThirdAnswer() {
-        return thirdAnswer;
+    public List<String> getListAnswer() {
+        return listAnswer;
     }
 
     public int getRightAnswer() {
@@ -83,12 +59,23 @@ public class Question {
     @Override
     public String toString() {
         return "Question{" +
-                "questionNumber=" + questionId +
+                "questionId=" + questionId +
                 ", questionText='" + questionText + '\'' +
-                ", firstAnswer='" + firstAnswer + '\'' +
-                ", secondAnswer='" + secondAnswer + '\'' +
-                ", thirdAnswer='" + thirdAnswer + '\'' +
+                ", listAnswer=" + listAnswer +
                 ", rightAnswer=" + rightAnswer +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Question question = (Question) o;
+        return questionId == question.questionId && rightAnswer == question.rightAnswer && questionText.equals(question.questionText) && listAnswer.equals(question.listAnswer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(questionId, questionText, listAnswer, rightAnswer);
     }
 }
