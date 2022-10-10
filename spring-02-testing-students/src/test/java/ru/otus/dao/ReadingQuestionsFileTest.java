@@ -21,14 +21,14 @@ class ReadingQuestionsFileTest {
 
     @Test
     @DisplayName("method mustFillQuestionList must fill list of test questions")
-    void mustFillQuestionList() {
+    void shouldFillQuestionList() {
         ReadingQuestionsFile readingQuestionsFile = new ReadingQuestionsFile("questions.csv");
         assertThat(readingQuestionsFile.fillQuestionList().size()).isEqualTo(EXPECTED_COUNT_QUESTIONS);
     }
 
     @Test
     @DisplayName("method mustGetQuestionById must returns an instance of the Question class")
-    void mustGetQuestionById() {
+    void shouldGetQuestionById() {
         ReadingQuestionsFile readingQuestionsFile = new ReadingQuestionsFile("questions.csv");
         List<String> listAnswer = new ArrayList<>();
         listAnswer.add(QUESTION_LIST_ANSWER_1);
