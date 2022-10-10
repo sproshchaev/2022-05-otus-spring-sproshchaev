@@ -66,6 +66,11 @@ public class Question {
                 '}';
     }
 
+    /**
+     * Переопределение метода equals()
+     * @param o
+     * @return
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -74,6 +79,10 @@ public class Question {
         return questionId == question.questionId && rightAnswer == question.rightAnswer && questionText.equals(question.questionText) && listAnswer.equals(question.listAnswer);
     }
 
+    /**
+     * Переопределение метода hashCode()
+     * @return
+     */
     @Override
     public int hashCode() {
         return Objects.hash(questionId, questionText, listAnswer, rightAnswer);

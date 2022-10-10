@@ -2,13 +2,11 @@ package ru.otus.pojo;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.otus.dao.ReadingQuestionsFile;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("QuestionTest is testing ")
 class QuestionTest {
