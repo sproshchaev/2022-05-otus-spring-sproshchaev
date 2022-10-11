@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;database=library;encrypt=true;trustServerCertificate=true;
+    username: sa
+    password: Sa123456
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  flyway:
+    enabled: true
+  jmx:
+    enabled: true
+  data:
+    rest:
+      base-path: /datarest
+management:
+  endpoints:
+    web:
+      exposure:
+        include: metrics, health, library, loggers, logfile # prometheus, explorer - доступ к конкретным конечным точкам
+  endpoint:
+    health:
+      show-details: always # дополнительная информация показывается всем пользователям
+logging:
+  file:
+    name: spring-17-book.log
+  level:
+    root: info # Logging Level
