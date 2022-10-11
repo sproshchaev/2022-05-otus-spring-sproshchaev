@@ -54,6 +54,7 @@ Scanner, PrintStream и другие стандартные типы в конт
 
 ### Тестирование
 
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0
 
 ### Статьи по теме
 1. Именование классов реализации Java https://bit.ly/399sNjk 
