@@ -122,6 +122,8 @@ Flyway Migration
     management.endpoints.web.exposure.include: '*' # включение всех опций spring-boot-starter-actuator
     management.endpoint.health.show-details: always # отображение всех деталей
     management.health.defaults.enabled: true # включение health
+    logging.file.name: spring-16-book.log
+    logging.level.root: info # Logging Level
 
 18. Создать БД
     Система миграций flyway не поддерживает транзакции по созданию базы данных, поэтому ее необходимо создать вручную, 
