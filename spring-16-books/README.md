@@ -189,3 +189,4 @@ Flyway Migration
 
 ### Статьи по теме
 1. Введение в Spring Boot Actuator https://habr.com/ru/company/otus/blog/452624/
+2. Используйте Logging в Spring Boot https://betacode.net/11753/use-logging-in-spring-boot

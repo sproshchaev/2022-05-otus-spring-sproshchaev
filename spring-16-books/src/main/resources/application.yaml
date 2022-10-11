@@ -26,3 +26,5 @@ management:
 logging:
   file:
     name: spring-16-book.log
+  level:
+    root: info # Logging Level
