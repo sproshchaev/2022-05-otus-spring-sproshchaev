@@ -168,3 +168,4 @@ Flyway Migration
 1. Справочник по Dockerfile https://dker.ru/docs/docker-engine/engine-reference/dockerfile-reference/
 2. Сравнение современных построителей образов контейнеров: Jib, Buildpacks и Docker https://habr.com/ru/post/552494/
 3. How to Expose Ports in Docker https://www.mend.io/free-developer-tools/blog/docker-expose-port/
+4. Docker: привязываем порты https://nuancesprog.ru/p/7481/

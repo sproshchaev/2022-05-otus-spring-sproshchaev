@@ -4,6 +4,7 @@ services:
     image: "ms_sql_server_2017:14.0.3451.2"
     ports:
       - "1433:1433"
+    command: CREATE DATABASE library
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=Sa123456
@@ -15,6 +16,7 @@ services:
     privileged: true
     ports:
       - "8080:8080"
+      - "1433:1433"
     environment:
       SPRING_DATASOURCE_URL: jdbc:sqlserver://mssql-server:1433;database=library;encrypt=true;trustServerCertificate=true;
       SPRING_DATASOURCE_USERNAME: sa
