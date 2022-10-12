@@ -92,14 +92,21 @@ Flyway Migration
   - spring-boot-starter-data-rest
   - spring-boot-starter-aop
   - тесты: spring-boot-starter-test, spring-security-test
+  - плагины: jib-maven-plugin (замена Dockerfile)
 15. Запустить Docker
-  - Проверить в Docker в разделе "Images" наличие "mcr.microsoft.com/mssql/server", при отсутствии ввести в терминале 
+  1) Проверить в Docker в разделе "Images" наличие "mcr.microsoft.com/mssql/server", при отсутствии ввести в терминале 
   команду "docker pull mcr.microsoft.com/mssql/server"
   - Запустить в Docker в "Image" : "Images" - "Run", указать Optional settings: 
      - ACCEPT_EULA=Y
      - SA_PASSWORD=Sa123456
      - MSSQL_PID=Developer
   - Проверить в Docker в "Containers": Image "mcr.microsoft...", Status "Running", Port(s) "1433"
+
+  2) Проверить в Docker в разделе "Images" наличие openjdk
+  - вариант 1 "adoptopenjdk": https://hub.docker.com/r/adoptopenjdk/openjdk11 
+               TAG "11.0.10-jre-slim" https://hub.docker.com/_/openjdk/tags?page=1&name=11&ordering=-name 
+  - вариант 2 "liberica": https://hub.docker.com/r/bellsoft/liberica-openjdk-alpine
+               TAG "11": https://hub.docker.com/r/bellsoft/liberica-openjdk-alpine/tags?page=2
 16. Проверить соединение с БД в IntelliJ IDEA
   - "Database" - "Data Source" - "Microsoft SQL Server": 
      - Port=1433 
@@ -134,19 +141,29 @@ Flyway Migration
     Нэйминг ChengeLog-ов: PN__<Description>.sql
       - P - префикс "V" - версионные миграции, "U" - undo-миграции (только в Enterprise версии), "R" - повторяемые;
       - N - версия. Разделяется точками или единичными подчеркиваниями, может быть достаточно длинной;
-      - <Description> - описание версии
+      - <Description> - описание версии.
     
 ### Команды Docker
 1) Список образов:                                                  docker image ls
 2) Список запущенных контейнеров:                                   docker ps
 3) Список имеющихся контейнеров (остаются после завершения работы): docker ps -a
 4) Запуск образа с удалением контейнера после завершения работы:    docker run --rm <имя_образа> 
-5) Запуск с возвращением консоли (-d) и заданием порта (-p) и имени 
-контейнера (--name):                                                docker run -d -p1433:1433 --name=ms_sql                                                
-   ( 56:19)
+5) Запуск с возвращением управления или консоли (-d) и определением порта (-p<внешний>:<внутренний>, т.е. все запросы 
+из внешнего порта идут на внутренний) и имени контейнера (--name):  docker run -d -p1433:1433 --name=ms_sql                                                
+6) Просмотр логов контейнера:                                       docker logs <names/ID>
+7) Остановка работающего контейнера (контейнер не удаляется):       docker kill <names/ID>
+8) Удаление контейнера:                                             docker rm <names/ID>
+
+### Запуск в Terminal
+1) Сборка приложения и генерация jar-файла в target: ./mvnw package (необходимо запускать при запущенной БД!)
+2) Запуск docker-compose из docker-compose.yaml    : docker-compose up
+3) curl http://localhost:8080/
+
 ### Тестирование
 
 [INFO] Tests run: 20, Failures: 0, Errors: 0, Skipped: 0
 
 ### Статьи по теме
-1. Сравнение современных построителей образов контейнеров: Jib, Buildpacks и Docker https://habr.com/ru/post/552494/
+1. Справочник по Dockerfile https://dker.ru/docs/docker-engine/engine-reference/dockerfile-reference/
+2. Сравнение современных построителей образов контейнеров: Jib, Buildpacks и Docker https://habr.com/ru/post/552494/
+3. How to Expose Ports in Docker https://www.mend.io/free-developer-tools/blog/docker-expose-port/

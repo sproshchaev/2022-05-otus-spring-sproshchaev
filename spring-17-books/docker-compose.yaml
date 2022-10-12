@@ -1,0 +1,19 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    privileged: true
+    ports:
+      - "8080:8080"
+      - "1433:1433"
+  mssql-server:
+    image: "ms_sql_server_2017:14.0.3451.2"
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Sa123456
+      - MSSQL_PID=Developer
+
