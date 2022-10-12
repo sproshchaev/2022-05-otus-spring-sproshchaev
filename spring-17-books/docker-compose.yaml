@@ -4,11 +4,14 @@ services:
     image: "ms_sql_server_2017:14.0.3451.2"
     ports:
       - "1433:1433"
-    command: CREATE DATABASE library
+#    command: CREATE DATABASE library
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=Sa123456
       - MSSQL_PID=Developer
+    volumes:
+      # copy the sql script to create database
+      - ./sql/create_database.sql:/docker-entrypoint-initdb.d/create_database.sql
   app:
     build:
       context: .
@@ -16,7 +19,6 @@ services:
     privileged: true
     ports:
       - "8080:8080"
-      - "1433:1433"
     environment:
       SPRING_DATASOURCE_URL: jdbc:sqlserver://mssql-server:1433;database=library;encrypt=true;trustServerCertificate=true;
       SPRING_DATASOURCE_USERNAME: sa

@@ -169,3 +169,4 @@ Flyway Migration
 2. Сравнение современных построителей образов контейнеров: Jib, Buildpacks и Docker https://habr.com/ru/post/552494/
 3. How to Expose Ports in Docker https://www.mend.io/free-developer-tools/blog/docker-expose-port/
 4. Docker: привязываем порты https://nuancesprog.ru/p/7481/
+5. Creating and filling a Postgres DB with Docker compose https://levelup.gitconnected.com/creating-and-filling-a-postgres-db-with-docker-compose-e1607f6f882f
