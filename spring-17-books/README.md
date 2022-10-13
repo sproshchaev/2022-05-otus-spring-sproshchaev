@@ -184,9 +184,10 @@ Flyway Migration
 [INFO] Tests run: 20, Failures: 0, Errors: 0, Skipped: 0
 
 ### Статьи по теме
-1. Справочник по Dockerfile https://dker.ru/docs/docker-engine/engine-reference/dockerfile-reference/
-2. Сравнение современных построителей образов контейнеров: Jib, Buildpacks и Docker https://habr.com/ru/post/552494/
-3. How to Expose Ports in Docker https://www.mend.io/free-developer-tools/blog/docker-expose-port/
-4. Docker: привязываем порты https://nuancesprog.ru/p/7481/
-5. Creating and filling a Postgres DB with Docker compose https://levelup.gitconnected.com/creating-and-filling-a-postgres-db-with-docker-compose-e1607f6f882f
-6. Логирование с Slf4j и Logback https://bit.ly/3g37KlJ
+1. Docker и Docker-Compose Tutorial (Контейнеры, install, run, image, daemon, etc.) https://bit.ly/3VnkQKA
+2. Справочник по Dockerfile https://dker.ru/docs/docker-engine/engine-reference/dockerfile-reference/
+3. Сравнение современных построителей образов контейнеров: Jib, Buildpacks и Docker https://habr.com/ru/post/552494/
+4. How to Expose Ports in Docker https://www.mend.io/free-developer-tools/blog/docker-expose-port/
+5. Docker: привязываем порты https://nuancesprog.ru/p/7481/
+6. Creating and filling a Postgres DB with Docker compose https://bit.ly/3MrQiTM
+7. Логирование с Slf4j и Logback https://bit.ly/3g37KlJ
