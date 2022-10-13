@@ -4,7 +4,7 @@
 drop table if exists book;
 create table book
 (
-    id bigint identity(1,1) primary key,
+    id bigserial primary key,
     title varchar(255),
     author_id bigint,
     genre_id bigint,

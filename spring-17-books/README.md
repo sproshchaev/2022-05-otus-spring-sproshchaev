@@ -6,7 +6,7 @@
 [![Thymeleaf](https://img.shields.io/badge/Thymeleaf-FFFFFF??style=for-the-badge&logo=Thymeleaf&logoColor=025B10)](https://www.thymeleaf.org/)
 [![Spring Data JPA](https://img.shields.io/badge/Spring_Data_JPA-FFFFFF??style=for-the-badge&logo=Spring)](https://spring.io/projects/spring-data-jpa)
 [![Flyway](https://img.shields.io/badge/Flyway-FFFFFF??style=for-the-badge&logo=Flyway&logoColor=CC0100)](https://flywaydb.org/)
-[![MS SQL](https://img.shields.io/badge/SQL_Server-2B65B2??style=for-the-badge&logo=Microsoft&logoColor=FFFFFF)](https://www.microsoft.com/en-us/sql-server)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-3E6389??style=for-the-badge&logo=PostgreSQL&logoColor=FFFFFF)](https://www.postgresql.org/)
 [![Docker](https://img.shields.io/badge/Docker-0E2B62??style=for-the-badge&logo=Docker&logoColor=FFFFFF)](https://www.docker.com/)
 
 # 2022-05-otus-spring-sproshchaev
@@ -71,7 +71,7 @@ JAR-приложения. Сборка в контейнере рекоменд�
   - Package name: ru.otus.spring-17-books
 6. Packaging: Jar
 7. Java: 11
-8. Dependencies: Spring Boot Actuator, Spring Security, Spring Web, Thymeleaf, Spring Data JPA, MS SQL Server Driver, 
+8. Dependencies: Spring Boot Actuator, Spring Security, Spring Web, Thymeleaf, Spring Data JPA, PostgreSQL Driver, 
 Flyway Migration
 9. Сохранить spring-17-books.zip в Java\2022-05-otus-spring-sproshchaev
 10. Разархивировать архив Java\2022-05-otus-spring-sproshchaev\spring-17-books.zip (файл .zip удалить)
@@ -87,7 +87,7 @@ Flyway Migration
   - spring-boot-starter-web
   - flyway-core  
   - flyway-sqlserver  
-  - mssql-jdbc 
+  - postgresql 
   - micrometer-registry-prometheus
   - spring-data-rest-hal-explorer
   - spring-boot-starter-data-rest
@@ -95,13 +95,15 @@ Flyway Migration
   - тесты: spring-boot-starter-test, spring-security-test
   - плагины: jib-maven-plugin (замена Dockerfile)
 15. Запустить Docker
-  1) Проверить в Docker в разделе "Images" наличие "mcr.microsoft.com/mssql/server", при отсутствии ввести в терминале 
-  команду "docker pull mcr.microsoft.com/mssql/server"
-  - Запустить в Docker в "Image" : "Images" - "Run", указать Optional settings: 
-     - ACCEPT_EULA=Y
-     - SA_PASSWORD=Sa123456
-     - MSSQL_PID=Developer
-  - Проверить в Docker в "Containers": Image "mcr.microsoft...", Status "Running", Port(s) "1433"
+
+1) Проверить в Docker в разделе "Images" наличие "postgres", при отсутствии ввести в терминале команду "docker pull postgres:14.5"
+  - Запустить в Docker в "Image" : "Images" - "Run", указать Optional settings:
+    - Ports=5432 (установить в разделе "Ports")
+    Environment variables:
+    - POSTGRES_DB=library
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=12345
+  - Проверить в Docker в "Containers": Image "postgresql:14.5", Status "Running", Port(s) "5432"
 
   2) Проверить в Docker в разделе "Images" наличие openjdk
   - вариант 1 "adoptopenjdk": https://hub.docker.com/r/adoptopenjdk/openjdk11 
@@ -109,17 +111,21 @@ Flyway Migration
   - вариант 2 "liberica": https://hub.docker.com/r/bellsoft/liberica-openjdk-alpine
                TAG "11": https://hub.docker.com/r/bellsoft/liberica-openjdk-alpine/tags?page=2
 16. Проверить соединение с БД в IntelliJ IDEA
-  - "Database" - "Data Source" - "Microsoft SQL Server": 
-     - Port=1433 
-     - User=sa 
-     - Password=Sa123456
-     - Url=jdbc:sqlserver://localhost:1433 
-  - "Test Connection"
-17. Добавить файл application.yaml:
-    spring.datasource.url: jdbc:sqlserver://localhost:1433;database=library;encrypt=true;trustServerCertificate=true;
-    spring.datasource.username: sa
-    spring.datasource.password: Sa123456
-    spring.datasource.driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+- "Database" - "Data Source" - "PostgreSQL":
+    - Port=5432
+    - User=postgres
+    - Password=12345
+    - Url=jdbc:postgresql://localhost:5432/library
+- "Test Connection"
+18. Добавить файл application.yaml:
+    spring.datasource.url: jdbc:postgresql://localhost:5432/library
+    spring.datasource.username: postgres
+    spring.datasource.password: 12345
+    spring.datasource.driver-class-name: org.postgresql.Driver
+    spring.jpa.database: postgresql
+    spring.jpa.database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    spring.jpa.generate-ddl: false       # не создавать объекты в БД
+    spring.jpa.hibernate.ddl-auto: none  # не создавать объекты в БД
     spring.jpa.show-sql: true
     spring.jpa.hibernate.ddl-auto: none
     spring.flyway.enabled: true

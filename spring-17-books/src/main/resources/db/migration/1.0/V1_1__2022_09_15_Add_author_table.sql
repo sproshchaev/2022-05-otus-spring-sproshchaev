@@ -4,6 +4,6 @@
 drop table if exists author;
 create table author
 (
-    id bigint identity (1,1) primary key,
+    id bigserial primary key,
     fullname varchar(255)
 );

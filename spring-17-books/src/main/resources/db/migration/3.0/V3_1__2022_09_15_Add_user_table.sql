@@ -4,7 +4,7 @@
 drop table if exists user_access;
 create table user_access
 (
-    id bigint identity (1,1) primary key,
+    id bigserial primary key,
     login varchar(255),
     password varchar(255),
     fullname varchar(255)

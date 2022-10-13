@@ -4,6 +4,6 @@
 drop table if exists genre;
 create table genre
 (
-    id bigint identity(1,1) primary key,
+    id bigserial primary key,
     name varchar(255)
 );
