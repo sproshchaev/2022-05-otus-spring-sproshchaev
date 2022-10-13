@@ -156,10 +156,23 @@ Flyway Migration
 3) Список имеющихся контейнеров (остаются после завершения работы): docker ps -a
 4) Запуск образа с удалением контейнера после завершения работы:    docker run --rm <имя_образа> 
 5) Запуск с возвращением управления или консоли (-d) и определением порта (-p<внешний>:<внутренний>, т.е. все запросы 
-из внешнего порта идут на внутренний) и имени контейнера (--name):  docker run -d -p1433:1433 --name=ms_sql                                                
+из внешнего порта идут на внутренний) и имени контейнера (--name):  docker run -d -p5432:5432 --name=postgresql                                                
 6) Просмотр логов контейнера:                                       docker logs <names/ID>
 7) Остановка работающего контейнера (контейнер не удаляется):       docker kill <names/ID>
 8) Удаление контейнера:                                             docker rm <names/ID>
+
+### Логирование 
+В logback.xml убран вывод в FILE, appender-ref ref="STDOUT" 
+
+### Конфигурация Dockerfile
+  - FROM - запуск контейнера из образа
+  - COPY - копирование jar-файла в контейнер
+  - EXPOSE - открытие портов 
+  - ENTRYPOINT - задание дефолтных команды и аргументы во время запуска контейнера (похожа на CMD)
+
+### Конфигурация docker-compose.yaml
+  - db-postgresql - контейнер с БД
+  - spring-17-books - контейнер с приложением 
 
 ### Запуск в Terminal
 1) Сборка приложения и генерация jar-файла в target: ./mvnw package (необходимо запускать при запущенной БД!)
@@ -176,3 +189,4 @@ Flyway Migration
 3. How to Expose Ports in Docker https://www.mend.io/free-developer-tools/blog/docker-expose-port/
 4. Docker: привязываем порты https://nuancesprog.ru/p/7481/
 5. Creating and filling a Postgres DB with Docker compose https://levelup.gitconnected.com/creating-and-filling-a-postgres-db-with-docker-compose-e1607f6f882f
+6. Логирование с Slf4j и Logback https://bit.ly/3g37KlJ

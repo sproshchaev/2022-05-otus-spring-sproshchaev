@@ -1,28 +1,25 @@
 version: '3'
 services:
-  mssql-server:
-    image: "ms_sql_server_2017:14.0.3451.2"
+  db-postgresql:
+    image: "postgresql:14.5"
     ports:
-      - "1433:1433"
-#    command: CREATE DATABASE library
+      - "5432:5432"
     environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=Sa123456
-      - MSSQL_PID=Developer
-    volumes:
-      # copy the sql script to create database
-      - ./sql/create_database.sql:/docker-entrypoint-initdb.d/create_database.sql
-  app:
+      - POSTGRES_DB=library
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=12345
+  spring-17-books:
     build:
       context: .
       dockerfile: Dockerfile
+    image: "spring-17-books:0.0.1-SNAPSHOT"
     privileged: true
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:sqlserver://mssql-server:1433;database=library;encrypt=true;trustServerCertificate=true;
-      SPRING_DATASOURCE_USERNAME: sa
-      SPRING_DATASOURCE_PASSWORD: Sa123456
-      SPRING_DATASOURCE_DRIVERCLASSNAME: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db-postgresql:5432/library
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 12345
+      SPRING_DRIVER-CLASS-NAME: org.postgresql.Driver
     depends_on:
-      - mssql-server
+      - db-postgresql

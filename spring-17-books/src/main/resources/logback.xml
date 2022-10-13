@@ -9,28 +9,27 @@
         </encoder>
     </appender>
 
+    <!-- Вывод в файл убрать для контейнера
     <appender name="FILE"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>spring-17-book.log</file>
         <rollingPolicy
                 class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- daily rollover -->
+
             <fileNamePattern>spring-17-book.%d{yyyy-MM-dd}.log</fileNamePattern>
 
-            <!-- Храним файлы логов 10 дней -->
             <maxHistory>10</maxHistory>
 
-            <!-- Максимальный размер файлов лога 30 гигабайт -->
             <totalSizeCap>10GB</totalSizeCap>
 
         </rollingPolicy>
         <encoder>
             <pattern>%d{dd.MM.yyyy HH:mm:ss.SSS} [%thread] %-5level  %logger{20} - %msg%n</pattern>
         </encoder>
-    </appender>
+    </appender> -->
 
     <root level="debug">
         <appender-ref ref="STDOUT" />
-        <appender-ref ref="FILE" />
+        <!-- Вывод в файл убрать для контейнера <appender-ref ref="FILE" /> -->
     </root>
 </configuration>

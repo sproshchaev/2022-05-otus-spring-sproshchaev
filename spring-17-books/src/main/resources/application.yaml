@@ -27,7 +27,7 @@ management:
     health:
       show-details: always # дополнительная информация показывается всем пользователям
 logging:
-  file:
-    name: spring-17-book.log
+  # file:
+  #  name: spring-17-book.log
   level:
     root: info # Logging Level
