@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * Приложение "Библиотека" c Spring Boot Actuator, Spring AOP на Spring Security, Spring Web, Thymeleaf, Spring Data JPA,
- * MS SQL Server, Flyway
+ * PostgreSQL, Flyway
  * (authentication and authorization)
  *
  * @author Sergey Proshchaev
