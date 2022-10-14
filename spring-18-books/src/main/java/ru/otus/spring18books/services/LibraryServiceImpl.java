@@ -1,5 +1,7 @@
 package ru.otus.spring18books.services;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,9 +28,11 @@ public class LibraryServiceImpl implements LibraryService {
     /**
      * Метод aboutLibrary выводит пользователю строку с приглашением и числом книг в библиотеке
      * Метод не изменяет данные
-     *
+     * Метод обернут в Hystrix Javanica
      * @return
      */
+    @HystrixCommand(commandProperties= {
+            @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value="7000")})
     @Transactional(readOnly = true)
     @Override
     public String aboutLibrary() {

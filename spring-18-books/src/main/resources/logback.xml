@@ -11,11 +11,11 @@
 
     <appender name="FILE"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>spring-17-book.log</file>
+        <file>spring-18-book.log</file>
         <rollingPolicy
                 class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 
-            <fileNamePattern>spring-17-book.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>spring-18-book.%d{yyyy-MM-dd}.log</fileNamePattern>
 
             <maxHistory>10</maxHistory>
 

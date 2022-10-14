@@ -7,7 +7,7 @@
 [![Spring Data JPA](https://img.shields.io/badge/Spring_Data_JPA-FFFFFF??style=for-the-badge&logo=Spring)](https://spring.io/projects/spring-data-jpa)
 [![Flyway](https://img.shields.io/badge/Flyway-FFFFFF??style=for-the-badge&logo=Flyway&logoColor=CC0100)](https://flywaydb.org/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-3E6389??style=for-the-badge&logo=PostgreSQL&logoColor=FFFFFF)](https://www.postgresql.org/)
-[![Docker](https://img.shields.io/badge/Docker-0E2B62??style=for-the-badge&logo=Docker&logoColor=FFFFFF)](https://www.docker.com/)
+[![Spring Cloud Netflix](https://img.shields.io/badge/Spring_Cloud_Netflix-FFFFFF??style=for-the-badge&logo=Spring)](https://spring.io/projects/spring-cloud-netflix)
 
 # 2022-05-otus-spring-sproshchaev
 Development on the Spring Framework
@@ -66,15 +66,11 @@ Spring Data JPA, PostgreSQL Driver, Flyway Migration
 7. Java: 11
 8. Dependencies: Spring Boot Actuator, Spring Security, Spring Web, Thymeleaf, Spring Data JPA, PostgreSQL Driver, 
 Flyway Migration
-
 9. Сохранить spring-18-books.zip в Java\2022-05-otus-spring-sproshchaev
 10. Разархивировать архив Java\2022-05-otus-spring-sproshchaev\spring-18-books.zip (файл .zip удалить)
 11. Открыть проект в IDE
-
 13. Актуализировать файл .gitignore
-
 14. Актуализировать файл README.md
-
 15. Проверить в pom.xml наличие зависимостей: 
   - spring-boot-starter-actuator
   - spring-boot-starter-data-jpa 
@@ -102,12 +98,12 @@ Flyway Migration
   - Проверить в Docker в "Containers": Image "postgresql:14.5", Status "Running", Port(s) "5432"
 
 17. Проверить соединение с БД в IntelliJ IDEA
-- "Database" - "Data Source" - "PostgreSQL":
+  - "Database" - "Data Source" - "PostgreSQL":
     - Port=5432
     - User=postgres
     - Password=12345
     - Url=jdbc:postgresql://localhost:5432/library
-- "Test Connection"
+  - "Test Connection"
 
 18. Добавить файл application.yaml:
     spring.datasource.url: jdbc:postgresql://localhost:5432/library
@@ -128,12 +124,8 @@ Flyway Migration
     management.health.defaults.enabled: true # включение health
     logging.file.name: spring-18-book.log
     logging.level.root: info # Logging Level
-19. Создать БД
-    Система миграций flyway не поддерживает транзакции по созданию базы данных, поэтому ее необходимо создать вручную, 
-    введя в "Query console" команду: create database library
-    Далее все ChengeLog-и будут создаваться в базе данных, определенной в файле application.yaml
 
-20. Добавить в resources\db.migration ChengeLog-и:
+19. Добавить в resources\db.migration ChengeLog-и:
       - 1.0 
       - 2.0
       - 3.0
@@ -142,7 +134,20 @@ Flyway Migration
       - P - префикс "V" - версионные миграции, "U" - undo-миграции (только в Enterprise версии), "R" - повторяемые;
       - N - версия. Разделяется точками или единичными подчеркиваниями, может быть достаточно длинной;
       - <Description> - описание версии.
-    
+
+### Hystrix
+1) pom.xml
+  - dependencyManagement: spring-cloud-dependencies
+  - spring-cloud-starter-config
+  - spring-cloud-starter-netflix-hystrix
+  - spring-cloud-starter-openfeign
+2) bootstrap.yaml
+  - spring.application.name: spring-18-books
+  - server.port: 8080
+  - spring.cloud.config.uri: http://localhost:5000
+3) Main
+  - @EnableCircuitBreaker
+
 ### Логирование 
   resources\logback.xml
 
@@ -151,3 +156,8 @@ Flyway Migration
 [INFO] Tests run: 20, Failures: 0, Errors: 0, Skipped: 0
 
 ### Статьи по теме
+1. Spring Cloud Netflix: Hystrix по-русски + Feign Client https://bit.ly/3TkkhiL
+2. Руководство по Spring Cloud Netflix – Hystrix https://javascopes.com/spring-cloud-netflix-hystrix-a32b3b9b/
+3. A Guide to Spring Cloud Netflix – Hystrix https://www.baeldung.com/spring-cloud-netflix-hystrix
+4. bootstrap.yml загружается до application.yml https://bit.ly/3TnV07C
+5. Различия между bootstrap.properties и application.properties https://www.baeldung.com/spring-cloud-bootstrap-properties 
