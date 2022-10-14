@@ -1,0 +1,25 @@
+version: '3'
+services:
+  db-postgresql:
+    image: "postgresql:14.5"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=library
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=12345
+  spring-17-books:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: "spring-17-books:0.0.1-SNAPSHOT"
+    privileged: true
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db-postgresql:5432/library
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 12345
+      SPRING_DRIVER-CLASS-NAME: org.postgresql.Driver
+    depends_on:
+      - db-postgresql
