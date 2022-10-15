@@ -141,12 +141,15 @@ Flyway Migration
   - spring-cloud-starter-config
   - spring-cloud-starter-netflix-hystrix
   - spring-cloud-starter-openfeign
+  - spring-cloud-config-server
 2) bootstrap.yaml
   - spring.application.name: spring-18-books
   - server.port: 8080
   - spring.cloud.config.uri: http://localhost:5000
 3) Main
   - @EnableCircuitBreaker
+4) LibraryServiceImpl
+  - @HystrixCommand
 
 ### Логирование 
   resources\logback.xml
