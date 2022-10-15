@@ -15,7 +15,8 @@
 	<description>Demo project for Spring Boot, Spring Boot Actuator, Spring Security, Spring Web, Thymeleaf, Spring Data JPA, PostgreSQL Driver, Flyway Migration</description>
 	<properties>
 		<java.version>11</java.version>
-		<spring-cloud.version>Greenwich.SR1</spring-cloud.version>
+   <!-- <spring-cloud.version>Greenwich.SR1</spring-cloud.version> -->
+		<spring-cloud.version>Greenwich.SR6</spring-cloud.version>
 	</properties>
 	<dependencies>
 		<dependency>
