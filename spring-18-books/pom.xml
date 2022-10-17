@@ -5,9 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<!-- <version>2.7.4</version> -->
-		<!-- https://github.com/realcorwin/rent-a-hippo/blob/master/rent-fare/pom.xml -->
-		<version>2.1.5.RELEASE</version>
+		<version>2.7.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ru.otus</groupId>
@@ -17,8 +15,7 @@
 	<description>Demo project for Spring Boot, Spring Boot Actuator, Spring Security, Spring Web, Thymeleaf, Spring Data JPA, PostgreSQL Driver, Flyway Migration</description>
 	<properties>
 		<java.version>11</java.version>
-		<!-- https://github.com/realcorwin/rent-a-hippo/blob/master/rent-fare/pom.xml -->
-		<!-- <spring-cloud.version>Greenwich.SR1</spring-cloud.version> -->
+		<spring-cloud.version>Greenwich.SR1</spring-cloud.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -49,13 +46,11 @@
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-registry-prometheus</artifactId>
@@ -83,7 +78,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -94,63 +88,24 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<!-- Для Spring boot 2.1.5.RELEASE -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>4.1.4.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>5.2.3.Final</version>
-		</dependency>
-
-
-		<!-- Spring Cloud dependencies
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-config</artifactId>
-		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-		</dependency> -->
-		<!-- <dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-hystrix</artifactId>
-			<version>1.4.7.RELEASE</version>
-		</dependency> -->
-
-		<!--
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-openfeign</artifactId>
-		</dependency> -->
-
-		<!-- Согласно этой документации в Spring Cloud начиная с версии 2020.0.0-M4 (Ilford) загрузчик bootstrap отключен по умолчанию. Для того, чтобы активировать загрузку bootstrap, добавь в pom файл модуля следующую зависимость
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-bootstrap</artifactId>
-		</dependency> -->
-
+			<version>2.2.10.RELEASE</version>
+		</dependency>
 	</dependencies>
 
-	<!-- Dependency Management Spring Cloud
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
+				<version>2021.0.4</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-		-->
 
 	<build>
 		<plugins>

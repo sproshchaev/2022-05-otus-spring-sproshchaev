@@ -164,3 +164,4 @@ Flyway Migration
 3. A Guide to Spring Cloud Netflix – Hystrix https://www.baeldung.com/spring-cloud-netflix-hystrix
 4. bootstrap.yml загружается до application.yml https://bit.ly/3TnV07C
 5. Различия между bootstrap.properties и application.properties https://www.baeldung.com/spring-cloud-bootstrap-properties 
+6. "Решение в конце" (от Александра) https://stackoverflow.com/questions/67507452/no-spring-config-import-property-has-been-defined
