@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: spring-18-book
   datasource:
     url: jdbc:postgresql://localhost:5432/library
     username: postgres
@@ -31,3 +33,5 @@ logging:
     name: spring-18-book.log
   level:
     root: info # Logging Level
+server:
+  port: 8080

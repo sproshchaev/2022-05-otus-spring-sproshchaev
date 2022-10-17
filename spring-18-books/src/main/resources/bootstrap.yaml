@@ -1,8 +1,0 @@
-spring:
-  application:
-    name: spring-18-books
-  cloud:
-    config:
-      uri: http://localhost:5000
-server:
-  port: 8080
