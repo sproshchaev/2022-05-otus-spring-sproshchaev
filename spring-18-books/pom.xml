@@ -108,9 +108,16 @@
 			<version>1.4.7.RELEASE</version>
 		</dependency>
 
+		<!--
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency> -->
+
+		<!-- Согласно этой документации в Spring Cloud начиная с версии 2020.0.0-M4 (Ilford) загрузчик bootstrap отключен по умолчанию. Для того, чтобы активировать загрузку bootstrap, добавь в pom файл модуля следующую зависимость -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bootstrap</artifactId>
 		</dependency>
 
 	</dependencies>
