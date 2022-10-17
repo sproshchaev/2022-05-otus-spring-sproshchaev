@@ -46,7 +46,8 @@ public class BookController {
     }
 
     @GetMapping(value = "/booksadmin", params = {"filter", "value"})
-    public String booksAdminFilter(@RequestParam("filter") String filter, @RequestParam("value") String value, Model model) {
+    public String booksAdminFilter(@RequestParam("filter") String filter, @RequestParam("value") String value,
+                                   Model model) {
         if (filter.equals("allbook")) {
             model.addAttribute("books", bookService.getAllBook());
             model.addAttribute("authors", authorService.getAllAuthors());
@@ -68,7 +69,8 @@ public class BookController {
     }
 
     @GetMapping(value = "/booksadmin", params = {"operation", "id"})
-    public String booksAdminOperation(@RequestParam("operation") String operation, @RequestParam("id") long id, Model model) {
+    public String booksAdminOperation(@RequestParam("operation") String operation, @RequestParam("id") long id,
+                                      Model model) {
         String templateName = null;
         if (operation.equals("new")) {
             model.addAttribute("book_dto", new BookDto("", "", ""));

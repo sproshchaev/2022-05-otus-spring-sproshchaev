@@ -38,11 +38,6 @@ public class LibraryServiceImpl implements LibraryService {
     @Transactional(readOnly = true)
     @Override
     public String aboutLibrary() {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         long countOfBooks = bookService.countBooks();
         long countOfAuthors = authorService.countAuthors();
         long countOfGenres = genreService.countGenres();

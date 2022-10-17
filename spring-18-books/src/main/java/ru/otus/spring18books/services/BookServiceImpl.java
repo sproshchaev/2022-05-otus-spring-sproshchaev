@@ -1,5 +1,7 @@
 package ru.otus.spring18books.services;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring18books.domain.Author;
@@ -7,6 +9,7 @@ import ru.otus.spring18books.domain.Book;
 import ru.otus.spring18books.domain.Genre;
 import ru.otus.spring18books.repositories.BookRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +43,10 @@ public class BookServiceImpl implements BookService {
      * @param genreName      (genre.name)
      * @return
      */
+    @HystrixCommand(commandProperties= {
+            @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value="3000")},
+            commandKey="bookService",
+            fallbackMethod="getBookWithoutDatabase")
     @Transactional
     @Override
     public Book createNewBook(String title, String authorFullName, String genreName) {
@@ -56,10 +63,20 @@ public class BookServiceImpl implements BookService {
      * @param id
      * @return
      */
+    @HystrixCommand(commandProperties= {
+            @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value="3000")},
+            commandKey="bookService",
+            fallbackMethod="getBookWithoutDatabase")
     @Transactional(readOnly = true)
     @Override
     public Book getBookById(long id) {
         return bookRepository.findBookById(id).orElse(null);
+    }
+
+    public Book getBookWithoutDatabase(long id) {
+        return new Book(id, "Sorry, something went wrong...",
+                new Author(0, "No Author"),
+                new Genre(0, "No Genre"));
     }
 
     /**
@@ -68,10 +85,22 @@ public class BookServiceImpl implements BookService {
      *
      * @return
      */
+    @HystrixCommand(commandProperties= {
+            @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value="3000")},
+            commandKey="bookService",
+            fallbackMethod="getListBookWithoutDatabase")
     @Transactional(readOnly = true)
     @Override
     public List<Book> getAllBook() {
         return bookRepository.findAll();
+    }
+
+    public List<Book> getListBookWithoutDatabase() {
+        List<Book> bookList = new ArrayList<>();
+        bookList.add(new Book(0, "Sorry, something went wrong...",
+                new Author(0, "No Author"),
+                new Genre(0, "No Genre")));
+        return bookList;
     }
 
     /**
@@ -81,6 +110,10 @@ public class BookServiceImpl implements BookService {
      * @param authorFullName
      * @return
      */
+    @HystrixCommand(commandProperties= {
+            @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value="3000")},
+            commandKey="bookService",
+            fallbackMethod="getListBookWithoutDatabase")
     @Transactional(readOnly = true)
     @Override
     public List<Book> getAllBookByAuthor(String authorFullName) {
@@ -100,6 +133,10 @@ public class BookServiceImpl implements BookService {
      * @param genreName
      * @return
      */
+    @HystrixCommand(commandProperties= {
+            @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value="3000")},
+            commandKey="bookService",
+            fallbackMethod="updateBookByIdWithoutDatabase")
     @Transactional
     @Override
     public int updateBookById(long id, String title, String authorFullName, String genreName) {
@@ -113,6 +150,11 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    public int updateBookByIdWithoutDatabase() {
+        return 0;
+    }
+
+
     /**
      * Метод deleteBookById (cruD)
      * Перед удалением выполняется проверка на наличие книги с данным id в библиотеке,
@@ -123,6 +165,10 @@ public class BookServiceImpl implements BookService {
      * @param id
      * @return
      */
+    @HystrixCommand(commandProperties= {
+            @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value="3000")},
+            commandKey="bookService",
+            fallbackMethod="deleteBookByIdWithoutDatabase")
     @Transactional
     @Override
     public String deleteBookById(long id) {
@@ -132,6 +178,10 @@ public class BookServiceImpl implements BookService {
         } else {
             return "Book id=" + id + " not found";
         }
+    }
+
+    public String deleteBookByIdWithoutDatabase (long id) {
+        return "Sorry, something went wrong!...";
     }
 
     /**

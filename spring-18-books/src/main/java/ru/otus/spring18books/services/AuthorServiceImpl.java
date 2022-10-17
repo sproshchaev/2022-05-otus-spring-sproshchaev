@@ -1,11 +1,14 @@
 package ru.otus.spring18books.services;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring18books.domain.Author;
 import ru.otus.spring18books.repositories.AuthorRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,10 +46,20 @@ public class AuthorServiceImpl implements AuthorService {
      *
      * @return
      */
+    @HystrixCommand(commandProperties= {
+            @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value="3000")},
+            commandKey="authorService",
+            fallbackMethod="getAllAuthorsWithoutDatabase")
     @Transactional(readOnly = true)
     @Override
     public List<Author> getAllAuthors() {
         return authorRepository.findAll();
+    }
+
+    public List<Author> getAllAuthorsWithoutDatabase() {
+        List<Author> authorList = new ArrayList<>();
+        authorList.add(new Author(1, "Sorry, something went wrong"));
+        return authorList;
     }
 
     /**

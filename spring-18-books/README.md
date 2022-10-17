@@ -124,6 +124,7 @@ Flyway Migration
     management.health.defaults.enabled: true # включение health
     logging.file.name: spring-18-book.log
     logging.level.root: info # Logging Level
+    hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 5000
 
 19. Добавить в resources\db.migration ChengeLog-и:
       - 1.0 
@@ -149,6 +150,15 @@ Flyway Migration
 4) LibraryServiceImpl
   - @HystrixCommand
 
+### Hystrix fallbackMethod
+  authorService.getAllAuthors
+  bookService.getAllBook
+  bookService.getAllBookByAuthor
+  bookService.getBookById
+  bookService.createNewBook
+  bookService.updateBookById
+  bookService.deleteBookById
+
 ### Логирование 
   resources\logback.xml
 
@@ -163,3 +173,4 @@ Flyway Migration
 4. bootstrap.yml загружается до application.yml https://bit.ly/3TnV07C
 5. Различия между bootstrap.properties и application.properties https://www.baeldung.com/spring-cloud-bootstrap-properties 
 6. "Решение в конце" (от Александра) https://stackoverflow.com/questions/67507452/no-spring-config-import-property-has-been-defined
+
