@@ -1,7 +1,5 @@
 package ru.otus.spring18books.services;
 
-//import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-//import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +32,17 @@ public class LibraryServiceImpl implements LibraryService {
      * @return
      */
     @HystrixCommand(commandProperties= {
-            @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value="7000")})
+            @HystrixProperty(name="execution.isolation.thread.timeoutInMilliseconds", value="3000")},
+            commandKey="libraryService",
+            fallbackMethod="aboutLibraryWithoutDatabase")
     @Transactional(readOnly = true)
     @Override
     public String aboutLibrary() {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         long countOfBooks = bookService.countBooks();
         long countOfAuthors = authorService.countAuthors();
         long countOfGenres = genreService.countGenres();
@@ -47,4 +52,9 @@ public class LibraryServiceImpl implements LibraryService {
                 "Our readers have left more than " + countOfComment + " comments on the books!";
     }
 
+    public String aboutLibraryWithoutDatabase() {
+        return "Welcome to our library! We have more than ..."
+                + " books by ... authors and ... genres in our library. " +
+                "Our readers have left more than ... comments on the books!";
+    }
 }

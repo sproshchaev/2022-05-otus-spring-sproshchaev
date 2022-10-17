@@ -137,15 +137,13 @@ Flyway Migration
 
 ### Hystrix
 1) pom.xml
-  - dependencyManagement: spring-cloud-dependencies
-  - spring-cloud-starter-config
+  - dependencyManagement: spring-cloud-dependencies, version 2021.0.4
+  - spring-cloud-starter-config, version Greenwich.SR1
   - spring-cloud-starter-netflix-hystrix
-  - spring-cloud-starter-openfeign
   - spring-cloud-config-server
 2) bootstrap.yaml
   - spring.application.name: spring-18-books
   - server.port: 8080
-  - spring.cloud.config.uri: http://localhost:5000
 3) Main
   - @EnableCircuitBreaker
 4) LibraryServiceImpl
