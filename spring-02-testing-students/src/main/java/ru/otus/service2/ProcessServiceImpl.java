@@ -49,6 +49,7 @@ public class ProcessServiceImpl implements ProcessService {
         for (int testNumber = 0; testNumber < totalQuestionsInTest; testNumber++) {
 
             selectedAnswerId = showQuestionProcessor.doPrintQuestionAndAnswers(testNumber);
+            // Передаем в ResultService selectedAnswerId, testNumber
 
 /*
             ioService.doPrintQuestionAndAnswers(testNumber);
