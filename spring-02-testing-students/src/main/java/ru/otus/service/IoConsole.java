@@ -2,7 +2,7 @@ package ru.otus.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ru.otus.dao.Reading;
+import ru.otus.dao.QuestionDao;
 
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -14,14 +14,14 @@ import java.util.Scanner;
 public class IoConsole implements IoService {
     private final PrintStream output;
     private final Scanner input;
-    private final CheckAnswer checkAnswer;
-    private final Reading reading;
+    private final AnswerService answerService;
+    private final QuestionDao questionDao;
     private final int totalQuestionsInTest;
 
-    public IoConsole(CheckAnswer checkAnswer, Reading reading,
+    public IoConsole(AnswerService answerService, QuestionDao questionDao,
                      @Value("${totalQuestionsInTest}") int totalQuestionsInTest) {
-        this.checkAnswer = checkAnswer;
-        this.reading = reading;
+        this.answerService = answerService;
+        this.questionDao = questionDao;
         this.output = System.out;
         this.input = new Scanner(System.in);
         this.totalQuestionsInTest = totalQuestionsInTest;
@@ -79,7 +79,7 @@ public class IoConsole implements IoService {
         while (!isValidInput) {
             doPrintExpectedInput(testNumber);
             selectedAnswerId = readInt();
-            if (checkAnswer.isCorrectInput(selectedAnswerId, testNumber)) {
+            if (answerService.isCorrectInput(selectedAnswerId, testNumber)) {
                 isValidInput = true;
             } else {
                 doPrintInvalidInput();
@@ -94,12 +94,14 @@ public class IoConsole implements IoService {
      * @param testNumber номер теста
      */
     public void doPrintExpectedInput(int testNumber) {
-        int countQuestions = reading.getQuestionById(testNumber).getListAnswer().size();
+/*
+        int countQuestions = questionDao.getQuestionById(testNumber).getListAnswer().size();
         writeString("Enter ");
         for (int i = 0; i < countQuestions; i++) {
             writeString((i + 1) + getSeparator(i, countQuestions));
         }
         writeString(": ");
+*/
     }
 
     /**
@@ -152,10 +154,10 @@ public class IoConsole implements IoService {
      * @param testNumber номер теста
      */
     public void doPrintQuestionAndAnswers(int testNumber) {
-        writeLnString(reading.getQuestionById(testNumber).getQuestionText());
-        for (int i = 0; i < reading.getQuestionById(testNumber).getListAnswer().size(); i++) {
-            writeLnString(" " + (i + 1) + ") " + reading.getQuestionById(testNumber).getListAnswer().get(i));
-        }
+    //    writeLnString(questionDao.getQuestionById(testNumber).getQuestionText());
+    //    for (int i = 0; i < questionDao.getQuestionById(testNumber).getListAnswer().size(); i++) {
+    //        writeLnString(" " + (i + 1) + ") " + questionDao.getQuestionById(testNumber).getListAnswer().get(i));
+    //    }
     }
 
     /**
@@ -167,7 +169,7 @@ public class IoConsole implements IoService {
     public void doPrintTestResults(String studentsName, int countCorrectAnswers) {
         writeLnString("Dear " + studentsName + ", your result: " + countCorrectAnswers + " out of "
                 + totalQuestionsInTest);
-        if (checkAnswer.testPassed(countCorrectAnswers)) {
+        if (answerService.testPassed(countCorrectAnswers)) {
             writeLnString("Test passed successfully!");
         } else {
             writeLnString("Test failed!");

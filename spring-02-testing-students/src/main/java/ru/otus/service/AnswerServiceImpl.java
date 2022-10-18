@@ -3,20 +3,20 @@ package ru.otus.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ru.otus.dao.Reading;
+import ru.otus.dao.QuestionDao;
 
 /**
- * Класс CheckAnswerImpl содержит методы контроля ввода данных из консоли
+ * Класс AnswerServiceImpl содержит методы контроля ввода данных из консоли
  */
 @Service
-public class CheckAnswerImpl implements CheckAnswer {
+public class AnswerServiceImpl implements AnswerService {
     private final int numberCorrectAnswers;
-    private final Reading reading;
+    private final QuestionDao questionDao;
 
     @Autowired
-    public CheckAnswerImpl(@Value("${numberCorrectAnswers}") int numberCorrectAnswers, Reading reading) {
+    public AnswerServiceImpl(@Value("${numberCorrectAnswers}") int numberCorrectAnswers, QuestionDao questionDao) {
         this.numberCorrectAnswers = numberCorrectAnswers;
-        this.reading = reading;
+        this.questionDao = questionDao;
     }
 
     /**
@@ -27,7 +27,7 @@ public class CheckAnswerImpl implements CheckAnswer {
      * @return true если ответ верный, false - если ответ не правильный
      */
     public boolean checkCorrectAnswer(int testNumber, int selectedAnswerId) {
-        return selectedAnswerId == reading.getQuestionById(testNumber).getRightAnswer();
+        return true; // todo убрать заглушку //selectedAnswerId == questionDao.getQuestionById(testNumber).getRightAnswer();
     }
 
     /**
@@ -38,8 +38,8 @@ public class CheckAnswerImpl implements CheckAnswer {
      * @return
      */
     public boolean isCorrectInput(int selectedAnswerId, int testNumber) {
-        int countAnswer = reading.getQuestionById(testNumber).getListAnswer().size();
-        return (selectedAnswerId > 0) && (selectedAnswerId <= countAnswer);
+        //int countAnswer = questionDao.getQuestionById(testNumber).getListAnswer().size();
+        return true; // todo убрать заглушку  // (selectedAnswerId > 0) && (selectedAnswerId <= countAnswer);
     }
 
     /**

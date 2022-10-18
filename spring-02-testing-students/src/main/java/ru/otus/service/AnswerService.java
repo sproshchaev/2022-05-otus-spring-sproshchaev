@@ -1,9 +1,9 @@
 package ru.otus.service;
 
 /**
- * Интерфейс CheckAnswer
+ * Интерфейс AnswerService
  */
-public interface CheckAnswer {
+public interface AnswerService {
 
     /**
      * Метод checkCorrectAnswer выполняет проверку правильности ответа по номеру теста

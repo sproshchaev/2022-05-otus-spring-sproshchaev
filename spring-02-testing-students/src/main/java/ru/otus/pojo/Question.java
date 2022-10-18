@@ -3,88 +3,61 @@ package ru.otus.pojo;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Класс Question - POJO-класс, содержащий вопрос теста
- */
 public class Question {
 
     /**
      * Поле "Номер вопроса"
      */
-    private final int questionId;
+    private final int id;
 
     /**
      * Поле "Текст вопроса"
      */
-    private final String questionText;
+    private final String textQuestion;
 
     /**
      * Поле "Варианты ответов"
      */
-    private final List<String> listAnswer;
+    private final List<Answer> listAnswer;
 
-    /**
-     * Поле "Номер правильного варианта ответа"
-     */
-    private final int rightAnswer;
-
-    public Question(int questionId, String questionText, List<String> listAnswer, int rightAnswer) {
-        this.questionId = questionId;
-        this.questionText = questionText;
+    public Question(int id, String textQuestion, List<Answer> listAnswer) {
+        this.id = id;
+        this.textQuestion = textQuestion;
         this.listAnswer = listAnswer;
-        this.rightAnswer = rightAnswer;
     }
 
-    public int getQuestionId() {
-        return questionId;
+    public int getId() {
+        return id;
     }
 
-    public String getQuestionText() {
-        return questionText;
+    public String getTextQuestion() {
+        return textQuestion;
     }
 
-    public List<String> getListAnswer() {
+    public List<Answer> getListAnswer() {
         return listAnswer;
     }
 
-    public int getRightAnswer() {
-        return rightAnswer;
-    }
-
-    /**
-     * Переопределение метода toString()
-     *
-     * @return
-     */
-    @Override
-    public String toString() {
-        return "Question{" +
-                "questionId=" + questionId +
-                ", questionText='" + questionText + '\'' +
-                ", listAnswer=" + listAnswer +
-                ", rightAnswer=" + rightAnswer +
-                '}';
-    }
-
-    /**
-     * Переопределение метода equals()
-     * @param o
-     * @return
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Question question = (Question) o;
-        return questionId == question.questionId && rightAnswer == question.rightAnswer && questionText.equals(question.questionText) && listAnswer.equals(question.listAnswer);
+        return id == question.id && textQuestion.equals(question.textQuestion) && listAnswer.equals(question.listAnswer);
     }
 
-    /**
-     * Переопределение метода hashCode()
-     * @return
-     */
     @Override
     public int hashCode() {
-        return Objects.hash(questionId, questionText, listAnswer, rightAnswer);
+        return Objects.hash(id, textQuestion, listAnswer);
     }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", textQuestion='" + textQuestion + '\'' +
+                ", listAnswer=" + listAnswer +
+                '}';
+    }
+
 }
