@@ -26,39 +26,18 @@ public class Comment {
     @JoinColumn(name = "book_id")
     private Book book;
 
-    /**
-     * Конструктор класса без параметров
-     */
     public Comment() {
     }
 
-    /**
-     * Конструктор класса с параметром commentText
-     *
-     * @param commentText
-     */
     public Comment(String commentText) {
         this.commentText = commentText;
     }
 
-    /**
-     * Конструктор класса с параметрами book, commentText
-     *
-     * @param book
-     * @param commentText
-     */
     public Comment(Book book, String commentText) {
         this.book = book;
         this.commentText = commentText;
     }
 
-    /**
-     * Конструктор класса с параметрами id, book, commentText
-     *
-     * @param id
-     * @param commentText
-     * @param book
-     */
     public Comment(long id, String commentText, Book book) {
         this.id = id;
         this.commentText = commentText;

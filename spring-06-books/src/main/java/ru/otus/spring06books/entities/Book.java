@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * Класс Книга
- * Использование @Table, @Column - хорошая практика, даже когда устраивает автонейминг!
+ * Примечание: Использование @Table, @Column - хорошая практика, даже когда устраивает автонейминг!
  * Для полей-классов вместо @Column используется @JoinColumn()
  * Поле комментарии к книге
  *
@@ -18,7 +18,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "book")
-@NamedEntityGraph(name = "book-author-genre-entity-graph", attributeNodes = {@NamedAttributeNode("comments"), @NamedAttributeNode("author"), @NamedAttributeNode("genre")})
+@NamedEntityGraph(name = "book-author-genre-entity-graph", attributeNodes = {@NamedAttributeNode("author"),
+        @NamedAttributeNode("genre")})
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,45 +33,24 @@ public class Book {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "genre_id")
     private Genre genre;
-    @OneToMany(mappedBy = "id", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, orphanRemoval = true)
     @Fetch(FetchMode.SUBSELECT)
     @BatchSize(size = 10)
     private List<Comment> comments;
 
-    /**
-     * Конструктор класса без параметров
-     */
     public Book() {
     }
 
-    /**
-     * Конструктор класса c параметром id
-     */
     public Book(long id) {
         this.id = id;
     }
 
-    /**
-     * Конструктор класса с параметрами title, author, genre
-     *
-     * @param title
-     * @param author
-     * @param genre
-     */
     public Book(String title, Author author, Genre genre) {
         this.title = title;
         this.author = author;
         this.genre = genre;
     }
 
-    /**
-     * Конструктор класса с параметрами id, title, author, genre
-     *
-     * @param id
-     * @param title
-     * @param author
-     * @param genre
-     */
     public Book(long id, String title, Author author, Genre genre) {
         this.id = id;
         this.title = title;
@@ -118,12 +98,6 @@ public class Book {
         this.comments = comments;
     }
 
-    /**
-     * Метод toString()
-     * Выводит все комментарии к книге
-     *
-     * @return
-     */
     @Override
     public String toString() {
         String commentsStr = "";

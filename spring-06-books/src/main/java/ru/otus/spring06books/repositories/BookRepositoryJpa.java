@@ -17,26 +17,12 @@ import java.util.List;
 @Repository
 public class BookRepositoryJpa implements BookRepository {
 
-    /**
-     * Внедрение зависимости EntityManager (отвечает за все сущности)
-     */
     @PersistenceContext
     private final EntityManager entityManager;
-    private final AuthorRepositoryJpa authorRepositoryJpa;
-    private final GenreRepositoryJpa genreRepositoryJpa;
 
-    /**
-     * Конструктор класса
-     *
-     * @param entityManager
-     * @param genreRepositoryJpa
-     * @param authorRepositoryJpa
-     */
     @Autowired
-    public BookRepositoryJpa(EntityManager entityManager, AuthorRepositoryJpa authorRepositoryJpa, GenreRepositoryJpa genreRepositoryJpa) {
+    public BookRepositoryJpa(EntityManager entityManager) {
         this.entityManager = entityManager;
-        this.authorRepositoryJpa = authorRepositoryJpa;
-        this.genreRepositoryJpa = genreRepositoryJpa;
     }
 
     /**
@@ -53,13 +39,17 @@ public class BookRepositoryJpa implements BookRepository {
      */
     @Override
     public long createBook(Book book) {
-        long idAuthor = authorRepositoryJpa.getIdByAuthor(book.getAuthor());
-        if (idAuthor != 0) {
-            book.setAuthor(entityManager.find(Author.class, idAuthor));
+        List<Author> authorList = getAuthorList(book);
+        if (authorList.isEmpty()) {
+            entityManager.persist(book.getAuthor());
+        } else {
+            book.setAuthor(authorList.get(0));
         }
-        long idGenre = genreRepositoryJpa.getIdByGenre(book.getGenre());
-        if (idGenre != 0) {
-            book.setGenre(entityManager.find(Genre.class, idGenre));
+        List<Genre> genreList = getGenreList(book);
+        if (genreList.isEmpty()) {
+            entityManager.persist(book.getGenre());
+        } else {
+            book.setGenre(genreList.get(0));
         }
         if (getIdByBook(book) == 0) {
             entityManager.persist(book);
@@ -83,21 +73,20 @@ public class BookRepositoryJpa implements BookRepository {
      */
     @Override
     public boolean updateBookById(long id, Book book) {
-        long authorId = authorRepositoryJpa.getIdByAuthor(book.getAuthor());
-        if (authorId == 0) {
+        List<Author> authorList = getAuthorList(book);
+        if (authorList.isEmpty()) {
             entityManager.persist(book.getAuthor());
         } else {
-            book.setAuthor(authorRepositoryJpa.getAuthorById(authorId));
+            book.setAuthor(authorList.get(0));
         }
-        long genreId = genreRepositoryJpa.getIdByGenre(book.getGenre());
-        if (genreId == 0) {
+        List<Genre> genreList = getGenreList(book);
+        if (genreList.isEmpty()) {
             entityManager.persist(book.getGenre());
         } else {
-            book.setGenre(genreRepositoryJpa.getGenreById(genreId));
+            book.setGenre(genreList.get(0));
         }
         Query query = entityManager.createQuery("update Book b " +
-                "set b.title = :title, b.author = :author, b.genre = :genre " +
-                "where b.id = :id");
+                "set b.title = :title, b.author = :author, b.genre = :genre where b.id = :id");
         query.setParameter("id", id);
         query.setParameter("title", book.getTitle());
         query.setParameter("author", book.getAuthor());
@@ -114,9 +103,7 @@ public class BookRepositoryJpa implements BookRepository {
      */
     @Override
     public boolean deleteBookById(long id) {
-        Query query = entityManager.createQuery("delete " +
-                "from Book b " +
-                "where b.id = :id");
+        Query query = entityManager.createQuery("delete " + "from Book b " + "where b.id = :id");
         query.setParameter("id", id);
         int result = query.executeUpdate();
         return result == 1;
@@ -142,8 +129,7 @@ public class BookRepositoryJpa implements BookRepository {
      */
     @Override
     public long getIdByBook(Book book) {
-        TypedQuery<Long> query = entityManager.createQuery("select b.id " +
-                        "from Book b, Author a, Genre g " +
+        TypedQuery<Long> query = entityManager.createQuery("select b.id " + "from Book b, Author a, Genre g " +
                         "where (b.title = :title) and (b.author.fullName = :fullName) and (b.genre.name = :name)",
                 Long.class);
         query.setParameter("title", book.getTitle());
@@ -177,4 +163,21 @@ public class BookRepositoryJpa implements BookRepository {
         Long result = entityManager.createQuery("select count(b) from Book b", Long.class).getSingleResult();
         return Math.toIntExact(result);
     }
+
+    private List<Author> getAuthorList(Book book) {
+        TypedQuery<Author> authorTypedQuery = entityManager.createQuery("select a from Author a " +
+                "where a.fullName = :fullname", Author.class);
+        authorTypedQuery.setParameter("fullname", book.getAuthor().getFullName());
+        List<Author> authorList = authorTypedQuery.getResultList();
+        return authorList;
+    }
+
+    private List<Genre> getGenreList(Book book) {
+        TypedQuery<Genre> genreTypedQuery = entityManager.createQuery("select g from Genre g where g.name = :name",
+                Genre.class);
+        genreTypedQuery.setParameter("name", book.getGenre().getName());
+        List<Genre> genreList = genreTypedQuery.getResultList();
+        return genreList;
+    }
+
 }

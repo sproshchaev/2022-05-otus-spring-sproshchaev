@@ -16,11 +16,6 @@ public class AuthorService {
 
     private final AuthorRepositoryJpa authorRepositoryJpa;
 
-    /**
-     * Конструктор класса
-     *
-     * @param authorRepositoryJpa
-     */
     @Autowired
     public AuthorService(AuthorRepositoryJpa authorRepositoryJpa) {
         this.authorRepositoryJpa = authorRepositoryJpa;
@@ -44,6 +39,9 @@ public class AuthorService {
      * Метод getAuthorById получает данные об авторе по его id (cRud)
      * Аннотация @Transactional(readOnly = true) - метод не изменяет данные
      * Метод не подразумевает изменения данных в БД, используется рекомендуемая аннотация @Transactional(readOnly = true)
+     *
+     * @param id
+     * @return
      */
     @Transactional(readOnly = true)
     public String getAuthorById(long id) {
@@ -55,16 +53,24 @@ public class AuthorService {
      * Метод getIdByAuthor возвращает id для полного имени данного автора, если он есть в библиотеке
      * Аннотация @Transactional(readOnly = true) - метод не изменяет данные
      * Метод не подразумевает изменения данных в БД, используется рекомендуемая аннотация @Transactional(readOnly = true)
+     *
+     * @param fullName
+     * @return
      */
     @Transactional(readOnly = true)
     public String getIdByAuthor(String fullName) {
         long id = authorRepositoryJpa.getIdByAuthor(new Author(fullName));
-        return id == 0 ? "Author '" + fullName + "' not found in the library!" : "Author '" + fullName + "' has an id=" + id;
+        return id == 0 ? "Author '" + fullName + "' not found in the library!" : "Author '" + fullName + "' has an id="
+                + id;
     }
 
     /**
      * Метод updateAuthor обновляет данные об авторе в библиотеке (crUd)
      * Аннотация @Transactional - метод изменяет данные
+     *
+     * @param id
+     * @param fullName
+     * @return
      */
     @Transactional
     public String updateAuthor(long id, String fullName) {
@@ -76,6 +82,10 @@ public class AuthorService {
     /**
      * Метод deleteAuthor удаляет данные об авторе в библиотеке (cruD)
      * Аннотация @Transactional - метод изменяет данные
+     *
+     * @param id
+     * @param fullName
+     * @return
      */
     @Transactional
     public String deleteAuthor(long id, String fullName) {
@@ -87,6 +97,8 @@ public class AuthorService {
     /**
      * Метод getAllAuthors получает список всех авторов из библиотеки (cRud)
      * Аннотация @Transactional(readOnly = true) - метод не изменяет данные
+     *
+     * @return
      */
     @Transactional(readOnly = true)
     public String getAllAuthors() {

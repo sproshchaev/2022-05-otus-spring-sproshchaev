@@ -18,11 +18,6 @@ public class BookService {
 
     private final BookRepositoryJpa bookRepositoryJpa;
 
-    /**
-     * Конструктор класса
-     *
-     * @param bookRepositoryJpa
-     */
     @Autowired
     public BookService(BookRepositoryJpa bookRepositoryJpa) {
         this.bookRepositoryJpa = bookRepositoryJpa;
@@ -60,6 +55,11 @@ public class BookService {
      * Метод getIdByBook возвращает id для книги, если она есть в библиотеке (cRud)
      * Аннотация @Transactional(readOnly = true) - метод не изменяет данные.
      * Поиск выполняется по названию, автору и жанру книги.
+     *
+     * @param title
+     * @param fullName
+     * @param name
+     * @return
      */
     @Transactional(readOnly = true)
     public String getIdByBook(String title, String fullName, String name) {
@@ -94,9 +94,9 @@ public class BookService {
      */
     @Transactional
     public String updateBookById(long id, String title, String author, String genre) {
-        return bookRepositoryJpa.updateBookById(id, new Book(title, new Author(author), new Genre(genre))) ? "The book id="
-                + id + " has " + "been updated (title: " + title + ", author: " + author + ", genre: " + genre + ")"
-                : "Error: Something went wrong!";
+        return bookRepositoryJpa.updateBookById(id, new Book(title, new Author(author), new Genre(genre))) ?
+                "The book id=" + id + " has " + "been updated (title: " + title + ", author: " + author + ", genre: "
+                        + genre + ")" : "Error: Something went wrong!";
     }
 
     /**

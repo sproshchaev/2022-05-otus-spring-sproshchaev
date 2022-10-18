@@ -16,11 +16,6 @@ public class GenreService {
 
     private final GenreRepositoryJpa genreRepositoryJpa;
 
-    /**
-     * Конструктор класса
-     *
-     * @param genreRepositoryJpa
-     */
     @Autowired
     public GenreService(GenreRepositoryJpa genreRepositoryJpa) {
         this.genreRepositoryJpa = genreRepositoryJpa;
@@ -42,6 +37,9 @@ public class GenreService {
     /**
      * Метод getIdByGenre возвращает id для жанра, если он есть в библиотеке
      * Аннотация @Transactional(readOnly = true) - метод не изменяет данные
+     *
+     * @param name
+     * @return
      */
     @Transactional(readOnly = true)
     public String getIdByGenre(String name) {
@@ -52,6 +50,10 @@ public class GenreService {
     /**
      * Метод updateGenre обновляет данные о жанре в библиотеке
      * Аннотация @Transactional - метод изменяет данные
+     *
+     * @param id
+     * @param name
+     * @return
      */
     @Transactional
     public String updateGenre(long id, String name) {
@@ -63,11 +65,13 @@ public class GenreService {
     /**
      * Метод deleteGenre удаляет данные о жанре в библиотеке
      * Аннотация @Transactional - метод изменяет данные
+     *
+     * @param id
+     * @param name
+     * @return
      */
     @Transactional
-    public String deleteGenre(
-            long id,
-            String name) {
+    public String deleteGenre(long id, String name) {
         boolean result = genreRepositoryJpa.deleteGenre(new Genre(id, name));
         return result ? "Genre (id=" + id + " " + name + ") removed from the library"
                 : "Delete error: Something went wrong!";
@@ -76,6 +80,9 @@ public class GenreService {
     /**
      * Метод getGenreById получает данные о жанре по его id
      * Аннотация @Transactional(readOnly = true) - метод не изменяет данные
+     *
+     * @param id
+     * @return
      */
     @Transactional(readOnly = true)
     public String getGenreById(long id) {
@@ -86,6 +93,8 @@ public class GenreService {
     /**
      * Метод getAllGenres получает список всех жанров из библиотеки (cRud)
      * Аннотация @Transactional(readOnly = true) - метод не изменяет данные
+     *
+     * @return
      */
     @Transactional(readOnly = true)
     public String getAllGenres() {

@@ -1,5 +1,8 @@
 [![Java](https://img.shields.io/badge/Java-E43222??style=for-the-badge&logo=java&logoColor=FFFFFF)](https://java.com/)
-[![Spring](https://img.shields.io/badge/Spring-FFFFFF??style=for-the-badge&logo=Spring)](https://spring.io/)
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-FFFFFF??style=for-the-badge&logo=Spring)](https://spring.io/projects/spring-boot/)
+[![Spring Shell](https://img.shields.io/badge/Spring_Shell-FFFFFF??style=for-the-badge&logo=Spring)](https://spring.io/projects/spring-shell/)
+[![Hibernate](https://img.shields.io/badge/Hibernate-5B666B??style=for-the-badge&logo=Hibernate)](http://hibernate.org/)
+[![H2](https://img.shields.io/badge/H2-0618D5??style=for-the-badge&logo=H2&logoColor=FFFFFF)](https://www.h2database.com/)
 
 # 2022-05-otus-spring-sproshchaev
 Development on the Spring Framework
@@ -67,12 +70,15 @@ Development on the Spring Framework
 11. Открыть проект в IDE
 12. Актуализировать файл .gitignore
 13. Актуализировать файл README.md
-14. Проверить в pom.xml наличие зависимостей: spring-shell-starter, spring-boot-starter-data-jpa
-15. Добавить в pom.xml зависимость H2: artifactId h2 (version>2.1.212) 
-16. Добавить файлы application.yml, data.sql, schema.sql
+14. Проверить в pom.xml наличие зависимостей: 
+  - spring-shell-starter, 
+  - spring-boot-starter-data-jpa
+15. Добавить в pom.xml зависимость H2: 
+  - artifactId h2 (version>2.1.212) 
+16. Добавить файлы application.yaml, data.sql, schema.sql
 17. При создании таблицы comment необходимо указать для этого поля каскадное удаление "references book(id) on delete cascade",
 которое будет удалять все комментарии в БД при удалении книги
-18. Добавить в файл application.yml: 
+18. Добавить в файл application.yaml: 
       url=jdbc:h2:mem:books, 
       username=sa, password, 
       driver-class-name=org.h2.Driver, 
@@ -94,8 +100,6 @@ create table t (id bigint auto_increment primary key,...), то эта опци�
 - @Transactional - если метод изменяет данные (чтение)
 - @Transactional(readOnly = true) - если метод не изменяет данные (чтение) 
 21. В репозитории предпочтительнее использовать TypedQuery
-
-### Примечания
 
 ### Вызов методов (@ShellMethod)
 "a" - Information about the library, example: a
@@ -135,32 +139,9 @@ create table t (id bigint auto_increment primary key,...), то эта опци�
 3. В ресурсы тестов необходимо скопировать только: application.yml и data.sql. (файл schema.sql в ресурсы тестов 
 переносить нельзя иначе тесты будут тестировать не то, что находится в базе!)   
 
-### Статьи по теме
-1) проблема N+1 https://habr.com/ru/company/otus/blog...
-2) использование @Fetch(FetchMode.SUBSELECT) https://www.baeldung.com/hibernate-fetchmode
+[INFO] Tests run: 29, Failures: 0, Errors: 0, Skipped: 0
 
-### Устранение замечаний PR 
-Список: https://bit.ly/3bAf722
-1. Book.java "CascadeType.ALL означает, что удалятся авторы и жанры при удалении книги"
-- Исправлено: у полей Author, Genre в аннотация @ManyToOne() заменена опция cascade = CascadeType.ALL, 
-на cascade = {CascadeType.PERSIST, CascadeType.MERGE} чтобы при удалении книги не удалялись авторы и жанры
-2. Book.java "Зачем столько графов? attributeNodes это массив. Ну и мы вроде определились на лекции и разборе, 
-что добавлять комментарии в основной запрос, плохая идея"
-- Исправлено: сформирован один граф, комментарии теперь не тянуться вместе с книгой (убраны из запроса)
-3. Book.java "Собственно я вообще не уверен, что они часть книги. Точнее я уверен, что нет, но существуют и другие мнения. 
-Но вот, то что при указании двунаправленной связи нужно обязательно указывать mappedBy, это точно (слайд с красным текстом 
-в первом занятии по ORM)"
-- Исправлено: в связи @OneToMany() добавлено mappedBy = "id"
-4. AuthorRepositoryJpa.java "Зачем тянуть целого автора, чтобы взять только его id? Можно затянуть только id"
-- Исправлено: с "select a from Author a where a.fullName = :fullname" на ""select a.id from Author a where a.fullName = :fullname",
-аналогично исправлено в методах классов GenreRepositoryJpa.java (getIdByGenre), BookRepositoryJpa.java (getIdByBook), 
-CommentRepositoryJpa(getIdByComment)
-5. AuthorRepositoryJpa.java "Ну или раз уж мы тут тянем автора, то можно его целиком и отдать в строке 50"
-- Исправлено: "return author"
-6. BookRepositoryJpa.java (updateBookById) "Зачем нужен этот вызов? - entityManager.find(Book.class, id);"
-- Исправлено: вызов убран
-7. BookRepositoryJpa.java (getAllBooks) "Не стоит включать комментарии в основной запрос. Это размножит каждую книгу в результирующем 
-наборе по количеству комментариев к ней, коих могут быть сотни. См. пример в занятии по разбору ДЗ"
-- Исправлено: убран запрос комментариев, оставлен один query.set
-8. getAllComment() - Скорее всего нам этот метод никогда не понадобится. Редко когда нужны прямо все комментарии. Обычно нужны все по книге. Косвенно это подтверждается тем, что для него нет команды шелл
-- Исправлено: добавлен метод getAllCommentsBookById возвращает все комментарии к книге
+### Статьи по теме
+1. Проблема N+1 https://habr.com/ru/company/otus/blog...
+2. Использование @Fetch(FetchMode.SUBSELECT) https://www.baeldung.com/hibernate-fetchmode
+3. Hibernate для самых маленьких и не только https://habr.com/ru/post/132385/

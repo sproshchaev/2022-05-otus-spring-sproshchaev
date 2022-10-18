@@ -16,11 +16,6 @@ import java.util.List;
 public class CommentService {
     private final CommentRepositoryJpa commentRepositoryJpa;
 
-    /**
-     * Конструктор класса
-     *
-     * @param commentRepositoryJpa
-     */
     @Autowired
     public CommentService(CommentRepositoryJpa commentRepositoryJpa) {
         this.commentRepositoryJpa = commentRepositoryJpa;
@@ -85,6 +80,9 @@ public class CommentService {
      * Метод getIdByComment возвращает id для комментария
      * Аннотация @Transactional(readOnly = true) - метод не изменяет данные
      * Метод не подразумевает изменения данных в БД, используется рекомендуемая аннотация @Transactional(readOnly = true)
+     *
+     * @param comment
+     * @return
      */
     @Transactional(readOnly = true)
     public String getIdByComment(Comment comment) {
@@ -99,7 +97,7 @@ public class CommentService {
      * Аннотация @Transactional(readOnly = true) - метод не изменяет данные
      * Метод не подразумевает изменения данных в БД, используется рекомендуемая аннотация @Transactional(readOnly = true)
      *
-     * @param id
+     * @param idBook
      * @return
      */
     @Transactional(readOnly = true)
@@ -107,10 +105,10 @@ public class CommentService {
         List<Comment> commentList = commentRepositoryJpa.getAllCommentsBookById(idBook);
         String commentsString = "All comments on this book: ";
         for (int i = 0; i < commentList.size(); i++) {
-            commentsString = commentsString + " " + commentList.get(i).getCommentText() + (i < (commentList.size() - 1) ? ", " : ".");
+            commentsString = commentsString + " " + commentList.get(i).getCommentText() + (i < (commentList.size() - 1)
+                    ? ", " : ".");
         }
         return commentList.size() == 0 ? "Genres not found!" : commentsString;
     }
-
 
 }

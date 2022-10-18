@@ -5,12 +5,14 @@ import ru.otus.spring06books.entities.Author;
 import java.util.List;
 
 /**
- * Интерфейс AuthorRepository
+ * Интерфейс AuthorRepository содержит методы для сущности Author
+ *
+ * @see ru.otus.spring06books.entities.Author
  */
 public interface AuthorRepository {
 
     /**
-     * Метод createAuthor
+     * Метод createAuthor создает нового автора
      *
      * @param author
      * @return
@@ -18,7 +20,7 @@ public interface AuthorRepository {
     Author createAuthor(Author author);
 
     /**
-     * Метод getAuthorById
+     * Метод getAuthorById возвращает автора по его идентификатору
      *
      * @param id
      * @return

@@ -5,21 +5,22 @@ import ru.otus.spring06books.entities.Comment;
 import java.util.List;
 
 /**
- * Интерфейс CommentRepository
+ * Интерфейс CommentRepository содержит методы для сущности Comment
+ *
+ * @see ru.otus.spring06books.entities.Comment
  */
 public interface CommentRepository {
 
     /**
-     * Метод createComment
+     * Метод createComment добавляет новый комментарий к книге
      *
-     * @param book
-     * @param commentText
+     * @param comment
      * @return
      */
     long createComment(Comment comment);
 
     /**
-     * Метод getCommentById возвращает текст комментария по его id
+     * Метод getCommentById возвращает сущность Comment по его id
      *
      * @param id
      * @return
@@ -45,7 +46,7 @@ public interface CommentRepository {
     /**
      * Метод deleteCommentById удаляет комментарий к книге
      *
-     * @param comment
+     * @param id
      * @return
      */
     boolean deleteCommentById(long id);

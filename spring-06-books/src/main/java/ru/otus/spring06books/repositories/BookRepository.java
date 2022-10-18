@@ -5,7 +5,9 @@ import ru.otus.spring06books.entities.Book;
 import java.util.List;
 
 /**
- * Интерфейс BookRepository
+ * Интерфейс BookRepository содержит методы для сущности Book
+ *
+ * @see ru.otus.spring06books.entities.Book
  */
 public interface BookRepository {
 

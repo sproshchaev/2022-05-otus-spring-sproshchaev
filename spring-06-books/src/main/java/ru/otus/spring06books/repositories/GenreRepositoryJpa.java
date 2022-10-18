@@ -17,24 +17,15 @@ import java.util.List;
 @Repository
 public class GenreRepositoryJpa implements GenreRepository {
 
-    /**
-     * Внедрение зависимости EntityManager (отвечает за все сущности)
-     */
     @PersistenceContext
     private final EntityManager entityManager;
 
-    /**
-     * Конструктор класса
-     *
-     * @param entityManager
-     */
     public GenreRepositoryJpa(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
     /**
      * Метод createGenre создает новый жанр в библиотеке
-     * <p>
      * Метод persist кладет сущность в БД, при этом эта сущность должна быть без id
      *
      * @param genre
@@ -86,7 +77,6 @@ public class GenreRepositoryJpa implements GenreRepository {
 
     /**
      * Метод getGenreById формирует сведения о жанре по id
-     * <p>
      * Метод find осуществляет поиск и загрузку сущности по id
      *
      * @param id
@@ -137,4 +127,5 @@ public class GenreRepositoryJpa implements GenreRepository {
         Long result = entityManager.createQuery("select count(g) from Genre g", Long.class).getSingleResult();
         return Math.toIntExact(result);
     }
+
 }

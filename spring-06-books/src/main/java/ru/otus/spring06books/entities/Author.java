@@ -17,28 +17,14 @@ public class Author {
     @Column(name = "fullname")
     private String fullName;
 
-    /**
-     * Конструктор класса без параметров
-     */
     public Author() {
 
     }
 
-    /**
-     * Конструктор класса с параметром fullName
-     *
-     * @param fullName
-     */
     public Author(String fullName) {
         this.fullName = fullName;
     }
 
-    /**
-     * Конструктор класса с параметрами id, fullName
-     *
-     * @param id
-     * @param fullName
-     */
     public Author(long id, String fullName) {
         this.id = id;
         this.fullName = fullName;

@@ -17,17 +17,9 @@ import java.util.List;
 @Repository
 public class AuthorRepositoryJpa implements AuthorRepository {
 
-    /**
-     * Внедрение зависимости EntityManager (отвечает за все сущности)
-     */
     @PersistenceContext
     private final EntityManager entityManager;
 
-    /**
-     * Конструктор класса
-     *
-     * @param entityManager
-     */
     public AuthorRepositoryJpa(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
@@ -71,9 +63,7 @@ public class AuthorRepositoryJpa implements AuthorRepository {
      */
     @Override
     public long getIdByAuthor(Author author) {
-        TypedQuery<Long> query = entityManager.createQuery("select a.id " +
-                        "from Author a " +
-                        "where a.fullName = :fullname",
+        TypedQuery<Long> query = entityManager.createQuery("select a.id from Author a where a.fullName = :fullname",
                 Long.class);
         query.setParameter("fullname", author.getFullName());
         List<Long> idList = query.getResultList();
@@ -136,6 +126,5 @@ public class AuthorRepositoryJpa implements AuthorRepository {
         Long result = entityManager.createQuery("select count(a) from Author a", Long.class).getSingleResult();
         return Math.toIntExact(result);
     }
-
 
 }

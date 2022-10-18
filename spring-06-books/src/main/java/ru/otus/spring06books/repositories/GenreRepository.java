@@ -5,7 +5,9 @@ import ru.otus.spring06books.entities.Genre;
 import java.util.List;
 
 /**
- * Интерфейс DAO для класса Genre
+ * Интерфейс GenreRepository содержит методы для сущности Author
+ *
+ * @see ru.otus.spring06books.entities.Genre
  */
 public interface GenreRepository {
 

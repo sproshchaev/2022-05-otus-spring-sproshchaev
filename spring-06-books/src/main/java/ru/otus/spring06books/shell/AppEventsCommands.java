@@ -11,7 +11,7 @@ import ru.otus.spring06books.services.*;
 import java.sql.SQLException;
 
 /**
- * Класс ApplicationEventsCommands содержит набор методов-команд (аннотация @ShellComponent)
+ * Класс ApplicationEventsCommands содержит набор методов-команд Spring Shell (аннотация @ShellComponent)
  */
 @ShellComponent
 public class AppEventsCommands {
@@ -21,15 +21,6 @@ public class AppEventsCommands {
     private final BookService bookService;
     private final CommentService commentService;
 
-    /**
-     * Конструктор класса
-     *
-     * @param libraryService
-     * @param authorService
-     * @param genreService
-     * @param bookService
-     * @param commentService
-     */
     @Autowired
     public AppEventsCommands(LibraryService libraryService, AuthorService authorService, GenreService genreService, BookService bookService, CommentService commentService) {
         this.libraryService = libraryService;
@@ -40,8 +31,9 @@ public class AppEventsCommands {
     }
 
     /**
-     * Метод aboutLibrary выводит пользователю строку с приглашением и числом книг в библиотеке
+     * Метод aboutLibrary выводит пользователю строку с приглашением и информацией о библиотеке
      * Сокращенный вызов: "a", "about"
+     * Пример: a
      *
      * @return
      */
@@ -67,6 +59,9 @@ public class AppEventsCommands {
      * Метод getAuthorById получает данные об авторе по его id (cRud)
      * Сокращенный вызов: "gabi", "getauthorbyid" --id id
      * Пример: gabi --id 2
+     *
+     * @param id
+     * @return
      */
     @ShellMethod(value = "Getting information about the author from the library by id", key = {"gabi", "getAuthorById"})
     public String getAuthorById(@ShellOption(defaultValue = "2") long id) {
@@ -77,6 +72,9 @@ public class AppEventsCommands {
      * Метод getIdByAuthor возвращает id для полного имени данного автора, если он есть в библиотеке
      * Сокращенный вызов: "giba", "getidbyauthor" --fullName author_fullname
      * Пример: giba --fullName 'Daniel Defoe'
+     *
+     * @param fullName
+     * @return
      */
     @ShellMethod(value = "Getting an id by author", key = {"giba", "getidbyauthor"})
     public String getIdByAuthor(@ShellOption(defaultValue = "Daniel Defoe") String fullName) {
@@ -87,6 +85,10 @@ public class AppEventsCommands {
      * Метод updateAuthor обновляет данные об авторе в библиотеке (crUd)
      * Сокращенный вызов: "ua", "updateauthor" --id id --fullName full_name
      * Пример: ua --id 1 --fullName 'Gianni Rodari'
+     *
+     * @param id
+     * @param fullName
+     * @return
      */
     @ShellMethod(value = "Updating information about the author", key = {"ua", "updateauthor"})
     public String updateAuthor(
@@ -99,6 +101,10 @@ public class AppEventsCommands {
      * Метод deleteAuthor удаляет данные об авторе в библиотеке (cruD)
      * Сокращенный вызов: "da", "deleteauthor" --id id --fullName full_name
      * Пример: da --id 3 --fullName 'Gianni Rodari'
+     *
+     * @param id
+     * @param fullName
+     * @return
      */
     @ShellMethod(value = "Deleting author data from the library", key = {"da", "deleteauthor"})
     public String deleteAuthor(
@@ -111,6 +117,8 @@ public class AppEventsCommands {
      * Метод getAllAuthors получает список всех авторов из библиотеки (cRud)
      * Сокращенный вызов: "gaa", "getallauthors"
      * Пример: getallauthors
+     *
+     * @return
      */
     @ShellMethod(value = "Getting a list of all authors from the library", key = {"gaa", "getallauthors"})
     public String getAllAuthors() {
@@ -134,6 +142,9 @@ public class AppEventsCommands {
      * Метод getIdByGenre возвращает id для жанра, если он есть в библиотеке
      * Сокращенный вызов: "gibg", "getidbygenre" --name genre_name
      * Пример: gibg --name 'History'
+     *
+     * @param name
+     * @return
      */
     @ShellMethod(value = "Getting a genre id", key = {"gibg", "getidbygenre"})
     public String getIdByGenre(@ShellOption(defaultValue = "History") String name) {
@@ -144,6 +155,10 @@ public class AppEventsCommands {
      * Метод updateGenre обновляет данные о жанре в библиотеке
      * Сокращенный вызов: "ug", "updategenre" --id id --name name
      * Пример: ug --id 1 --name 'Politics'
+     *
+     * @param id
+     * @param name
+     * @return
      */
     @ShellMethod(value = "Updating information about the genre", key = {"ug", "updategenre"})
     public String updateGenre(
@@ -156,6 +171,10 @@ public class AppEventsCommands {
      * Метод deleteGenre удаляет данные о жанре в библиотеке
      * Сокращенный вызов: "dg", "deletegenre" --id id --name name
      * Пример: dg --id 5 --name 'Fiction'
+     *
+     * @param id
+     * @param name
+     * @return
      */
     @ShellMethod(value = "Deleting genre data from the library", key = {"dg", "deletegenre"})
     public String deleteGenre(
@@ -168,6 +187,9 @@ public class AppEventsCommands {
      * Метод getGenreById получает данные о жанре по его id
      * Сокращенный вызов: "ggbi", "getgenrebyid" --id id
      * Пример: ggbi --id 2
+     *
+     * @param id
+     * @return
      */
     @ShellMethod(value = "Getting information about the author from the library by id", key = {"ggbi", "getgenrebyid"})
     public String getGenreById(
@@ -179,6 +201,8 @@ public class AppEventsCommands {
      * Метод getAllGenres получает список всех жанров из библиотеки (cRud)
      * Сокращенный вызов: "gag", "getallgenres"
      * Пример: getallgenres
+     *
+     * @return
      */
     @ShellMethod(value = "Getting a list of all genres from the library", key = {"gag", "getallgenres"})
     public String getAllGenres() {
@@ -220,6 +244,11 @@ public class AppEventsCommands {
      * Поиск выполняется по названию, автору и жанру книги
      * Сокращенный вызов: "gibb", "getidbybook" --title title --fullName fullName --genre name
      * Пример: gibb --title 'The Pilgrim’s Progress' --fullName 'John Bunyan' --name 'History'
+     *
+     * @param title
+     * @param fullName
+     * @param name
+     * @return
      */
     @ShellMethod(value = "Getting an id by book", key = {"gibb", "getidbybook"})
     public String getIdByBook(@ShellOption(defaultValue = "The Pilgrim’s Progress") String title,
@@ -330,6 +359,9 @@ public class AppEventsCommands {
      * Метод getIdByComment возвращает id для комментария (cRud)
      * Сокращенный вызов: "gibс", "getidbycomment" --comment comment_text
      * Пример: gibс --comment 'The Pilgrims Progress — is a very interesting book!'
+     *
+     * @param comment
+     * @return
      */
     @ShellMethod(value = "Getting an id by comment", key = {"gibс", "getidbycomment"})
     public String getIdByComment(@ShellOption(defaultValue = "The Pilgrims Progress — is a very interesting book!") String comment) {

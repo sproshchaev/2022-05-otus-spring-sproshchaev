@@ -1,7 +1,6 @@
 package ru.otus.spring06books.repositories;
 
 import org.springframework.stereotype.Repository;
-import ru.otus.spring06books.entities.Book;
 import ru.otus.spring06books.entities.Comment;
 
 import javax.persistence.EntityManager;
@@ -18,19 +17,10 @@ import java.util.List;
 @Repository
 public class CommentRepositoryJpa implements CommentRepository {
 
-    /**
-     * Внедрение зависимости EntityManager (отвечает за все сущности)
-     */
     @PersistenceContext
     private final EntityManager entityManager;
     private final BookRepositoryJpa bookRepositoryJpa;
 
-    /**
-     * Конструктор класса
-     *
-     * @param entityManager
-     * @param bookRepositoryJpa
-     */
     public CommentRepositoryJpa(EntityManager entityManager, BookRepositoryJpa bookRepositoryJpa) {
         this.entityManager = entityManager;
         this.bookRepositoryJpa = bookRepositoryJpa;
@@ -38,13 +28,11 @@ public class CommentRepositoryJpa implements CommentRepository {
 
     /**
      * Метод createComment создает новый комментарий к книге
+     * Метод persist кладет сущность в БД, при этом эта сущность должна быть без id
+     * В аннотации поля сущности book необходимо указать @ManyToOne(cascade = CascadeType.ALL)
      *
      * @param comment
      * @return
-     * @see ru.otus.spring06books.entities.Comment#Comment(Book, String)
-     * <p>
-     * Метод persist кладет сущность в БД, при этом эта сущность должна быть без id
-     * В аннотации поля сущности book необходимо указать @ManyToOne(cascade = CascadeType.ALL)
      */
     @Override
     public long createComment(Comment comment) {
@@ -78,10 +66,8 @@ public class CommentRepositoryJpa implements CommentRepository {
      */
     @Override
     public long getIdByComment(Comment comment) {
-        TypedQuery<Long> query = entityManager.createQuery("select c.id " +
-                        "from Comment c " +
-                        "where c.commentText = :commentText",
-                Long.class);
+        TypedQuery<Long> query = entityManager.createQuery("select c.id from Comment c " +
+                "where c.commentText = :commentText", Long.class);
         query.setParameter("commentText", comment.getCommentText());
         List<Long> idList = query.getResultList();
         return idList.size() == 0 ? 0 : idList.get(0);
@@ -95,8 +81,7 @@ public class CommentRepositoryJpa implements CommentRepository {
      */
     @Override
     public boolean updateComment(Comment comment) {
-        Query query = entityManager.createQuery("update Comment c " +
-                "set c.commentText = :commentText " +
+        Query query = entityManager.createQuery("update Comment c " + "set c.commentText = :commentText " +
                 "where c.id = :id");
         query.setParameter("id", comment.getId());
         query.setParameter("commentText", comment.getCommentText());
@@ -112,9 +97,7 @@ public class CommentRepositoryJpa implements CommentRepository {
      */
     @Override
     public boolean deleteCommentById(long id) {
-        Query query = entityManager.createQuery("delete " +
-                "from Comment c " +
-                "where c.id = :id");
+        Query query = entityManager.createQuery("delete from Comment c where c.id = :id");
         query.setParameter("id", id);
         int result = query.executeUpdate();
         return result == 1;
@@ -129,9 +112,8 @@ public class CommentRepositoryJpa implements CommentRepository {
      */
     @Override
     public List<Comment> getAllCommentsBookById(long idBook) {
-        TypedQuery<Comment> query = entityManager.createQuery("select c " +
-                "from Comment c " +
-                "where c.book.id = :idBook", Comment.class);
+        TypedQuery<Comment> query = entityManager.createQuery("select c from Comment c where c.book.id = :idBook",
+                Comment.class);
         query.setParameter("idBook", idBook);
         List<Comment> commentsList = query.getResultList();
         return commentsList;
@@ -147,4 +129,5 @@ public class CommentRepositoryJpa implements CommentRepository {
         Long result = entityManager.createQuery("select count(с) from Comment с", Long.class).getSingleResult();
         return Math.toIntExact(result);
     }
+
 }

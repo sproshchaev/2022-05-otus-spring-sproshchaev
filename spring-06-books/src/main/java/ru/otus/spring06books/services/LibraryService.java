@@ -18,16 +18,9 @@ public class LibraryService {
     private final CommentRepositoryJpa commentRepositoryJpa;
     private final BookRepositoryJpa bookRepositoryJpa;
 
-    /**
-     * Конструктор класса
-     *
-     * @param authorRepositoryJpa
-     * @param genreRepositoryJpa
-     * @param commentRepositoryJpa
-     * @param bookRepositoryJpa
-     */
     @Autowired
-    public LibraryService(AuthorRepositoryJpa authorRepositoryJpa, GenreRepositoryJpa genreRepositoryJpa, CommentRepositoryJpa commentRepositoryJpa, BookRepositoryJpa bookRepositoryJpa) {
+    public LibraryService(AuthorRepositoryJpa authorRepositoryJpa, GenreRepositoryJpa genreRepositoryJpa,
+                          CommentRepositoryJpa commentRepositoryJpa, BookRepositoryJpa bookRepositoryJpa) {
         this.authorRepositoryJpa = authorRepositoryJpa;
         this.genreRepositoryJpa = genreRepositoryJpa;
         this.commentRepositoryJpa = commentRepositoryJpa;
