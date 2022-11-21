@@ -24,13 +24,6 @@ public class GenreRepositoryJpa implements GenreRepository {
         this.entityManager = entityManager;
     }
 
-    /**
-     * Метод createGenre создает новый жанр в библиотеке
-     * Метод persist кладет сущность в БД, при этом эта сущность должна быть без id
-     *
-     * @param genre
-     * @return
-     */
     @Override
     public long createGenre(Genre genre) {
         long genreId = getIdByGenre(genre);
@@ -42,12 +35,6 @@ public class GenreRepositoryJpa implements GenreRepository {
         }
     }
 
-    /**
-     * Метод updateGenre обновляет сведения о жанре в библиотеке
-     *
-     * @param genre
-     * @return
-     */
     @Override
     public boolean updateGenre(Genre genre) {
         Query query = entityManager.createQuery("update Genre g " +
@@ -59,12 +46,6 @@ public class GenreRepositoryJpa implements GenreRepository {
         return result == 1;
     }
 
-    /**
-     * Метод deleteGenre удаляет сведения об жанре из библиотеки
-     *
-     * @param genre
-     * @return
-     */
     @Override
     public boolean deleteGenre(Genre genre) {
         Query query = entityManager.createQuery("delete " +
@@ -75,24 +56,11 @@ public class GenreRepositoryJpa implements GenreRepository {
         return result == 1;
     }
 
-    /**
-     * Метод getGenreById формирует сведения о жанре по id
-     * Метод find осуществляет поиск и загрузку сущности по id
-     *
-     * @param id
-     * @return
-     */
     @Override
     public Genre getGenreById(long id) {
         return entityManager.find(Genre.class, id);
     }
 
-    /**
-     * Метод getIdByGenre возвращает id передаваемого жанра
-     *
-     * @param genre
-     * @return
-     */
     @Override
     public long getIdByGenre(Genre genre) {
         TypedQuery<Long> query = entityManager.createQuery("select g.id " +
@@ -104,11 +72,6 @@ public class GenreRepositoryJpa implements GenreRepository {
         return idList.size() == 0 ? 0 : idList.get(0);
     }
 
-    /**
-     * Метод getAllGenres формирует сведения по всем жанрам из библиотеки
-     *
-     * @return
-     */
     @Override
     public List<Genre> getAllGenres() {
         TypedQuery<Genre> query = entityManager.createQuery("select g " +
@@ -117,11 +80,6 @@ public class GenreRepositoryJpa implements GenreRepository {
         return genreList;
     }
 
-    /**
-     * Метод getCountOfGenres возвращает число жанров, которые есть в библиотеке
-     *
-     * @return
-     */
     @Override
     public int getCountOfGenres() {
         Long result = entityManager.createQuery("select count(g) from Genre g", Long.class).getSingleResult();

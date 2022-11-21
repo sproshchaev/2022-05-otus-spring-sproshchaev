@@ -16,7 +16,6 @@ import java.util.List;
  */
 @Repository
 public class BookRepositoryJpa implements BookRepository {
-
     @PersistenceContext
     private final EntityManager entityManager;
 
@@ -25,65 +24,44 @@ public class BookRepositoryJpa implements BookRepository {
         this.entityManager = entityManager;
     }
 
-    /**
-     * Метод createBook создает новую книгу в библиотеке
-     * <p>
-     * Метод find осуществляет поиск и загрузку сущности по id
-     * Метод persist кладет сущность в БД, при этом эта сущность должна быть без id
-     * Поля сущности Book должны иметь в аннотации @ManyToOne значение cascade: @ManyToOne(cascade = CascadeType.ALL)
-     * Метод выполняет поиск автора и жанра - если они уже есть, то добавляются в поля книги,
-     * что обеспечивает исключение дублирования авторов и жанров в справочниках библиотеки
-     *
-     * @param book
-     * @return
-     */
     @Override
     public long createBook(Book book) {
-        List<Author> authorList = getAuthorList(book);
-        if (authorList.isEmpty()) {
-            entityManager.persist(book.getAuthor());
+/*
+        Author author = book.getAuthor();
+        if (author.getId() <= 0) {
+            System.out.println("author.getId()=" + author.getId());
+            entityManager.persist(author);
         } else {
-            book.setAuthor(authorList.get(0));
+            entityManager.merge(author);
         }
-        List<Genre> genreList = getGenreList(book);
-        if (genreList.isEmpty()) {
-            entityManager.persist(book.getGenre());
+        Genre genre = book.getGenre();
+        if (genre.getId() <= 0) {
+            entityManager.persist(genre);
         } else {
-            book.setGenre(genreList.get(0));
+            entityManager.merge(genre);
         }
-        if (getIdByBook(book) == 0) {
+*/
+        if (book.getId() <= 0) {
             entityManager.persist(book);
         } else {
-            book = entityManager.find(Book.class, getIdByBook(book));
+            entityManager.merge(book);
         }
         return book.getId();
     }
 
-    /**
-     * Метод updateBookById обновляет сведения о книге в библиотеке
-     * Первоначально проверяется автор книги по полному имени - есть ли такой в справочнике авторов,
-     * если есть то получаем его id, если нет - то добавляем.
-     * Аналогично производится по жанру.
-     * Это исключает дублирование в справочниках авторов и жанров
-     * После чего производится update книги
-     *
-     * @param id
-     * @param book
-     * @return
-     */
     @Override
     public boolean updateBookById(long id, Book book) {
-        List<Author> authorList = getAuthorList(book);
-        if (authorList.isEmpty()) {
-            entityManager.persist(book.getAuthor());
+        Author author = book.getAuthor();
+        if (author.getId() <= 0) {
+            entityManager.persist(author);
         } else {
-            book.setAuthor(authorList.get(0));
+            entityManager.merge(author);
         }
-        List<Genre> genreList = getGenreList(book);
-        if (genreList.isEmpty()) {
-            entityManager.persist(book.getGenre());
+        Genre genre = book.getGenre();
+        if (genre.getId() <= 0) {
+            entityManager.persist(genre);
         } else {
-            book.setGenre(genreList.get(0));
+            entityManager.merge(genre);
         }
         Query query = entityManager.createQuery("update Book b " +
                 "set b.title = :title, b.author = :author, b.genre = :genre where b.id = :id");
@@ -95,12 +73,6 @@ public class BookRepositoryJpa implements BookRepository {
         return result == 1;
     }
 
-    /**
-     * Метод deleteBookById удаляет сведения о книге из библиотеки
-     *
-     * @param id
-     * @return
-     */
     @Override
     public boolean deleteBookById(long id) {
         Query query = entityManager.createQuery("delete " + "from Book b " + "where b.id = :id");
@@ -109,24 +81,11 @@ public class BookRepositoryJpa implements BookRepository {
         return result == 1;
     }
 
-    /**
-     * Метод getBookById возвращает сведения о книге по ее id
-     * Здесь не применяется оптимизация для N+1
-     *
-     * @param id
-     * @return
-     */
     @Override
     public Book getBookById(long id) {
         return entityManager.find(Book.class, id);
     }
 
-    /**
-     * Метод getIdByBook возвращает id переданной ему книги
-     *
-     * @param book
-     * @return
-     */
     @Override
     public long getIdByBook(Book book) {
         TypedQuery<Long> query = entityManager.createQuery("select b.id " + "from Book b, Author a, Genre g " +
@@ -139,12 +98,6 @@ public class BookRepositoryJpa implements BookRepository {
         return idBookList.size() == 0 ? 0 : idBookList.get(0);
     }
 
-    /**
-     * Метод getAllBooks возвращает коллекцию из всех книг, имеющиеся в библиотеке
-     * Проблема N+1 решается с использованием @NamedEntityGraph для комментария, автора и жанра.
-     *
-     * @return
-     */
     @Override
     public List<Book> getAllBooks() {
         EntityGraph<?> bookEntityGraph = entityManager.getEntityGraph("book-author-genre-entity-graph");
@@ -153,11 +106,6 @@ public class BookRepositoryJpa implements BookRepository {
         return query.getResultList();
     }
 
-    /**
-     * Метод getCountOfBooks возвращает число всех книг, имеющихся в библиотеке
-     *
-     * @return
-     */
     @Override
     public int getCountOfBooks() {
         Long result = entityManager.createQuery("select count(b) from Book b", Long.class).getSingleResult();

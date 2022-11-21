@@ -24,14 +24,6 @@ public class AuthorRepositoryJpa implements AuthorRepository {
         this.entityManager = entityManager;
     }
 
-    /**
-     * Метод createAuthor
-     * <p>
-     * Метод persist кладет сущность в БД, при этом эта сущность должна быть без id
-     *
-     * @param author
-     * @return
-     */
     @Override
     public Author createAuthor(Author author) {
         long authorId = getIdByAuthor(author);
@@ -41,26 +33,11 @@ public class AuthorRepositoryJpa implements AuthorRepository {
         return author;
     }
 
-    /**
-     * Метод getAuthorById
-     * <p>
-     * Метод find осуществляет поиск и загрузку сущности по id
-     *
-     * @param id
-     * @return
-     */
     @Override
     public Author getAuthorById(long id) {
         return entityManager.find(Author.class, id);
     }
 
-    /**
-     * Метод getIdByAuthor получает id автора
-     * Для получения id используется TypedQuery<Long>
-     *
-     * @param author
-     * @return
-     */
     @Override
     public long getIdByAuthor(Author author) {
         TypedQuery<Long> query = entityManager.createQuery("select a.id from Author a where a.fullName = :fullname",
@@ -70,12 +47,6 @@ public class AuthorRepositoryJpa implements AuthorRepository {
         return idList.size() == 0 ? 0 : idList.get(0);
     }
 
-    /**
-     * Метод updateAuthor обновляет сведения об авторе в библиотеке
-     *
-     * @param author
-     * @return
-     */
     @Override
     public boolean updateAuthor(Author author) {
         Query query = entityManager.createQuery("update Author a " +
@@ -87,12 +58,6 @@ public class AuthorRepositoryJpa implements AuthorRepository {
         return result == 1;
     }
 
-    /**
-     * Метод deleteAuthor удаляет сведения об авторе из библиотеки
-     *
-     * @param author
-     * @return
-     */
     @Override
     public boolean deleteAuthor(Author author) {
         Query query = entityManager.createQuery("delete " +
@@ -103,11 +68,6 @@ public class AuthorRepositoryJpa implements AuthorRepository {
         return result == 1;
     }
 
-    /**
-     * Метод getAllAuthors получает сведения по всем авторам из библиотеки
-     *
-     * @return
-     */
     @Override
     public List<Author> getAllAuthors() {
         TypedQuery<Author> query = entityManager.createQuery("select a " +
@@ -116,11 +76,6 @@ public class AuthorRepositoryJpa implements AuthorRepository {
         return authorList;
     }
 
-    /**
-     * Метод getCountOfAuthors получает число авторов, чьи сведения есть в библиотеке
-     *
-     * @return
-     */
     @Override
     public int getCountOfAuthors() {
         Long result = entityManager.createQuery("select count(a) from Author a", Long.class).getSingleResult();

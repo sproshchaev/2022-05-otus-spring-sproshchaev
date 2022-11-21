@@ -22,7 +22,8 @@ public class AppEventsCommands {
     private final CommentService commentService;
 
     @Autowired
-    public AppEventsCommands(LibraryService libraryService, AuthorService authorService, GenreService genreService, BookService bookService, CommentService commentService) {
+    public AppEventsCommands(LibraryService libraryService, AuthorService authorService, GenreService genreService,
+                             BookService bookService, CommentService commentService) {
         this.libraryService = libraryService;
         this.authorService = authorService;
         this.genreService = genreService;

@@ -26,17 +26,8 @@ public class CommentRepositoryJpa implements CommentRepository {
         this.bookRepositoryJpa = bookRepositoryJpa;
     }
 
-    /**
-     * Метод createComment создает новый комментарий к книге
-     * Метод persist кладет сущность в БД, при этом эта сущность должна быть без id
-     * В аннотации поля сущности book необходимо указать @ManyToOne(cascade = CascadeType.ALL)
-     *
-     * @param comment
-     * @return
-     */
     @Override
     public long createComment(Comment comment) {
-        System.out.println(comment.toString());
         if (bookRepositoryJpa.getBookById(comment.getBook().getId()) != null) {
             if (comment.getId() <= 0) {
                 entityManager.persist(comment);
@@ -47,23 +38,11 @@ public class CommentRepositoryJpa implements CommentRepository {
         } else return 0;
     }
 
-    /**
-     * Метод getCommentById возвращает текст комментария по его id
-     *
-     * @param id
-     * @return
-     */
     @Override
     public Comment getCommentById(long id) {
         return entityManager.find(Comment.class, id);
     }
 
-    /**
-     * Метод getIdByComment возвращает id для комментария
-     *
-     * @param comment
-     * @return
-     */
     @Override
     public long getIdByComment(Comment comment) {
         TypedQuery<Long> query = entityManager.createQuery("select c.id from Comment c " +
@@ -73,12 +52,6 @@ public class CommentRepositoryJpa implements CommentRepository {
         return idList.size() == 0 ? 0 : idList.get(0);
     }
 
-    /**
-     * Метод updateComment обновляет комментарий к книге
-     *
-     * @param comment
-     * @return
-     */
     @Override
     public boolean updateComment(Comment comment) {
         Query query = entityManager.createQuery("update Comment c " + "set c.commentText = :commentText " +
@@ -89,12 +62,6 @@ public class CommentRepositoryJpa implements CommentRepository {
         return result == 1;
     }
 
-    /**
-     * Метод deleteCommentById удаляет комментарий к книге
-     *
-     * @param id
-     * @return
-     */
     @Override
     public boolean deleteCommentById(long id) {
         Query query = entityManager.createQuery("delete from Comment c where c.id = :id");
@@ -103,13 +70,6 @@ public class CommentRepositoryJpa implements CommentRepository {
         return result == 1;
     }
 
-    /**
-     * Метод getAllCommentsBookById получает все комментарии к книге из библиотеки
-     * Если книга не найдена - метод возвращает пустую коллекцию комментариев
-     *
-     * @param idBook
-     * @return
-     */
     @Override
     public List<Comment> getAllCommentsBookById(long idBook) {
         TypedQuery<Comment> query = entityManager.createQuery("select c from Comment c where c.book.id = :idBook",
@@ -119,11 +79,6 @@ public class CommentRepositoryJpa implements CommentRepository {
         return commentsList;
     }
 
-    /**
-     * Метод getCountOfComment получает число комментариев к книгам в библиотеке
-     *
-     * @return
-     */
     @Override
     public int getCountOfComment() {
         Long result = entityManager.createQuery("select count(с) from Comment с", Long.class).getSingleResult();
