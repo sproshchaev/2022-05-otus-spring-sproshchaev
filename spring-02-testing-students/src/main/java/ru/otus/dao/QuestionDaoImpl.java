@@ -11,22 +11,27 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-/**
- * Класс QuestionDaoImpl осуществляет чтение файла с вопросами, находящегося в папке \resources\questions.csv
- */
 @Component
 public class QuestionDaoImpl implements QuestionDao {
     private final String fileCsvName;
-
+    private final List<Question> questionList;
     public QuestionDaoImpl(@Value("${fileCsvName}") String fileCsvName) {
         this.fileCsvName = fileCsvName;
+        this.questionList = fillQuestionList();
+    }
+
+    @Override
+    public List<Question> getQuestionList() {
+        return questionList;
     }
 
     private List<Question> fillQuestionList() {
         List<Question> questionsList = new ArrayList<>();
         Question currentQuestion;
-        File file = new File(QuestionDaoImpl.class.getClassLoader().getResource(fileCsvName).getFile());
+        File file = new File(Objects.requireNonNull(QuestionDaoImpl.class.getClassLoader().getResource(fileCsvName))
+                .getFile());
         try (FileReader reader = new FileReader(file);
              BufferedReader br = new BufferedReader(reader)) {
             String line;
@@ -48,7 +53,6 @@ public class QuestionDaoImpl implements QuestionDao {
         String[] words = line.split(";");
         int indexAnswer;
         if ((Character.isDigit(line.charAt(0)))) {
-
             indexAnswer = 0;
             for (int i = 2; i < words.length - 1; i++) {
                 indexAnswer++;
@@ -59,10 +63,5 @@ public class QuestionDaoImpl implements QuestionDao {
                     words[1],
                     listAnswer);
         } else return null;
-    }
-
-    @Override
-    public List<Question> getQuestions() {
-        return fillQuestionList();
     }
 }

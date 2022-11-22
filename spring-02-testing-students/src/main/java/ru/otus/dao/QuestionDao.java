@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface QuestionDao {
 
-    List<Question> getQuestions();
+    List<Question> getQuestionList();
 
 }

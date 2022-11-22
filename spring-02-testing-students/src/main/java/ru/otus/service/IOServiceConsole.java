@@ -1,4 +1,4 @@
-package ru.otus.service2;
+package ru.otus.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 @Service
 public class IOServiceConsole implements IOService {
-
     private final PrintStream output;
     private final Scanner input;
 

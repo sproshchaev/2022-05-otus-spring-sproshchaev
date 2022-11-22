@@ -1,4 +1,4 @@
-package ru.otus.service2;
+package ru.otus.service;
 
 public interface IOService extends InputService, OutputService {
 

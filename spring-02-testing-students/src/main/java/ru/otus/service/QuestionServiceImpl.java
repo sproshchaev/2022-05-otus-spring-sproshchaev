@@ -1,27 +1,25 @@
-package ru.otus.processors;
+package ru.otus.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.otus.dao.QuestionDao;
 import ru.otus.pojo.Question;
-import ru.otus.service2.IOService;
 
 import java.util.List;
 
 @Component
-public class ShowQuestionProcessor {
-
+public class QuestionServiceImpl implements QuestionService {
     private final IOService ioService;
-
     private final List<Question> questionList;
 
     @Autowired
-    public ShowQuestionProcessor(IOService ioService, QuestionDao questionDao) {
+    public QuestionServiceImpl(IOService ioService, QuestionDao questionDao) {
         this.ioService = ioService;
-        this.questionList = questionDao.getQuestions();
+        this.questionList = questionDao.getQuestionList();
     }
 
-    public int doPrintQuestionAndAnswers(int testNumber) {
+    @Override
+    public int doPrintQuestionAndGetAnswers(int testNumber) {
         return ioService.readIntWithPrompt("Question " + (testNumber + 1) + ": "
                 + questionList.get(testNumber).getTextQuestion() + "\n"
                 + "1) " + questionList.get(testNumber).getListAnswer().get(0).getTextAnswer() + "\n"

@@ -1,7 +1,6 @@
 package ru.otus.pojo;
 
 public class Answer {
-
     private final int id;
     private final String textAnswer;
     private final boolean rightAnswer;
