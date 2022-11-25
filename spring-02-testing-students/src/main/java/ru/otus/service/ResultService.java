@@ -1,7 +1,9 @@
 package ru.otus.service;
 
-public interface ResultService {
-    void saveAnswerResult(int testNumber, int selectedAnswerId);
+import ru.otus.pojo.Result;
 
-    String getResult();
+public interface ResultService {
+    void saveAnswerResult(int testNumber, int selectedAnswerId, Result result);
+
+    String getResult(Result result);
 }

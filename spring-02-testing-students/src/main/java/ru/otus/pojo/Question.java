@@ -1,7 +1,6 @@
 package ru.otus.pojo;
 
 import java.util.List;
-import java.util.Objects;
 
 public class Question {
     private final int id;

@@ -2,6 +2,7 @@ package ru.otus.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.otus.pojo.Result;
 
 
 @Component
@@ -17,8 +18,8 @@ public class TotalResultServiceImpl implements TotalResultService{
     }
 
     @Override
-    public void doPrintResult() {
-        ioService.outputString("Your result: " + resultService.getResult());
+    public void doPrintResult(Result result) {
+        ioService.outputString("Your result: " + resultService.getResult(result));
     }
 
 }

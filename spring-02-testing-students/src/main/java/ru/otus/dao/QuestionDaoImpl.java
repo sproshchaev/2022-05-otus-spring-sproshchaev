@@ -16,19 +16,13 @@ import java.util.Objects;
 @Component
 public class QuestionDaoImpl implements QuestionDao {
     private final String fileCsvName;
-    private final List<Question> questionList;
 
     public QuestionDaoImpl(@Value("${fileCsvName}") String fileCsvName) {
         this.fileCsvName = fileCsvName;
-        this.questionList = fillQuestionList();
     }
 
     @Override
     public List<Question> getQuestionList() {
-        return questionList;
-    }
-
-    private List<Question> fillQuestionList() {
         List<Question> questionsList = new ArrayList<>();
         Question currentQuestion;
         try (InputStream fileCsv = QuestionDaoImpl.class.getResourceAsStream("/" + fileCsvName);

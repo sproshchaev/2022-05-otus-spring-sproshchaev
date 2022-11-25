@@ -11,6 +11,10 @@ public class Answer {
         this.rightAnswer = rightAnswer;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getTextAnswer() {
         return textAnswer;
     }
