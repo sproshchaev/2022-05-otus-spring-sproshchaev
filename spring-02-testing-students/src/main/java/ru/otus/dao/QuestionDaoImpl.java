@@ -6,9 +6,9 @@ import ru.otus.pojo.Answer;
 import ru.otus.pojo.Question;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -17,6 +17,7 @@ import java.util.Objects;
 public class QuestionDaoImpl implements QuestionDao {
     private final String fileCsvName;
     private final List<Question> questionList;
+
     public QuestionDaoImpl(@Value("${fileCsvName}") String fileCsvName) {
         this.fileCsvName = fileCsvName;
         this.questionList = fillQuestionList();
@@ -30,10 +31,8 @@ public class QuestionDaoImpl implements QuestionDao {
     private List<Question> fillQuestionList() {
         List<Question> questionsList = new ArrayList<>();
         Question currentQuestion;
-        File file = new File(Objects.requireNonNull(QuestionDaoImpl.class.getClassLoader().getResource(fileCsvName))
-                .getFile());
-        try (FileReader reader = new FileReader(file);
-             BufferedReader br = new BufferedReader(reader)) {
+        try (InputStream fileCsv = QuestionDaoImpl.class.getResourceAsStream("/" + fileCsvName);
+             BufferedReader br = new BufferedReader(new InputStreamReader(Objects.requireNonNull(fileCsv)))) {
             String line;
             while ((line = br.readLine()) != null) {
                 currentQuestion = readQuestionFromLine(line);

@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Main-Class: ru.otus.Main
+Class-Path: spring-beans-5.3.20.jar spring-jcl-5.3.20.jar spring-context
+ -5.3.20.jar spring-aop-5.3.20.jar spring-expression-5.3.20.jar spring-c
+ ore-5.3.20.jar
+

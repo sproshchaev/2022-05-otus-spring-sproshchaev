@@ -61,4 +61,11 @@ Scanner, PrintStream и другие стандартные типы в конт
 2. Java Properties file examples https://bit.ly/3MlGj0X
 3. Обсуждение вопроса по неймингу интерфейсов и классов реализаций в "Otus spring-2022-05" https://bit.ly/399Hraf
 4. Библиотека AssertJ https://bit.ly/3aOkJoE
-
+5. How to build JARs from IntelliJ properly? https://stackoverflow.com/questions/1082580/how-to-build-jars-from-intellij-properly/54992931#54992931
+6. java.io.FileNotFoundException: (Синтаксическая ошибка в имени файла, имени папки или метке тома) http://bit.ly/3F1WxMj
+7. Java.lang.ClassLoader.getResourceAsStream() Method http://bit.ly/3XzVGtd
+8. How to use getResourceAsStream method in java.lang.Class http://bit.ly/3U6rIKB
+9. BufferedReader readLine() метод http://bit.ly/3Vq0saZ
+10. Доступ к ресурсам jar файла http://bit.ly/3V6ePBz
+11. Файл манифеста MANIFEST.MF http://bit.ly/3OC28f7
+12. Artifacts https://www.jetbrains.com/help/idea/working-with-artifacts.html#run_jar_artifact
