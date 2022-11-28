@@ -18,8 +18,8 @@ class QuestionDaoImplTest {
     }
 
     @Test
-    @DisplayName("must return a method")
-    void testGetQuestionList() {
+    @DisplayName("must return a list of questions")
+    void shouldGetQuestionList() {
         assertThat(questionDao.getQuestionList().size()).isEqualTo(TOTAL_QUESTIONS_IN_TEST);
     }
 

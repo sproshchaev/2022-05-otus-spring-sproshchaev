@@ -4,22 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.otus.dao.QuestionDao;
+import ru.otus.pojo.Question;
 import ru.otus.pojo.Result;
 
 @Service
 public class ResultServiceImpl implements ResultService {
     private final int minNumberCorrectAnswers;
-    private final QuestionDao questionDao;
 
     @Autowired
-    public ResultServiceImpl(@Value("${minNumberCorrectAnswers}") int minNumberCorrectAnswers, QuestionDao questionDao) {
+    public ResultServiceImpl(@Value("${minNumberCorrectAnswers}") int minNumberCorrectAnswers) {
         this.minNumberCorrectAnswers = minNumberCorrectAnswers;
-        this.questionDao = questionDao;
     }
 
     @Override
-    public void saveAnswerResult(int testNumber, int selectedAnswerId, Result result) {
-        if (questionDao.getQuestionList().get(testNumber).getListAnswer().get(selectedAnswerId - 1).isRightAnswer()) {
+    public void saveAnswerResult(Question question, int selectedAnswerId, Result result) {
+        if (question.getListAnswer().get(selectedAnswerId - 1).isRightAnswer()) {
             result.addTrueAnswer();
         }
     }
