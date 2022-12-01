@@ -1,0 +1,6 @@
+Question number;Question;Answer option 1;Answer option 2;Answer option 3;Right answerService
+1;An object is an instance:;programs;class;method;2
+2;A keyword is required to declare a class:;public;private;class;3
+3;To create an object, it is called:;constructor;method main();method that returns a value;1
+4;The method associated with a specific object is called:;static method;by the method of the class;instance method;1
+5;To prevent the creation of a class instance, …;do not use any modifiers in the constructor;use the public modifier in the constructor;use the private modifier in the constructor;3
