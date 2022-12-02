@@ -1,5 +1,8 @@
 package ru.otus.spring03testingstudentsnew.pojo;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Result {
     private int countTrueAnswer;
 

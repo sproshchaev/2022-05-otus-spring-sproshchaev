@@ -23,8 +23,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Result doPrintQuestionAndGetAnswers() {
-        var result = new Result();
+    public void doPrintQuestionAndGetAnswers() {
         List<Question> questionList = questionDao.getQuestionList();
         int selectedAnswerId;
         for (Question question: questionList) {
@@ -32,8 +31,8 @@ public class QuestionServiceImpl implements QuestionService {
                     + question.getListAnswer().stream()
                     .map(a -> a.getId() + ") " + a.getTextAnswer()).collect(Collectors.joining("\n"))
                     + "\nEnter 1, 2 or ... " + question.getListAnswer().size() + ":");
-            resultService.saveAnswerResult(question, selectedAnswerId, result);
+            resultService.saveAnswerResult(question, selectedAnswerId);
         }
-        return result;
     }
+
 }

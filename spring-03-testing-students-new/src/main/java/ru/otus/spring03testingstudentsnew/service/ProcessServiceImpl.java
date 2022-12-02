@@ -6,13 +6,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProcessServiceImpl implements ProcessService {
+    private final LanguageService languageService;
     private final WelcomeService welcomeService;
     private final QuestionService questionService;
     private final TotalResultService resultProcessor;
 
     @Autowired
-    public ProcessServiceImpl(WelcomeService welcomeService, QuestionService questionService,
-                              TotalResultService resultProcessor) {
+    public ProcessServiceImpl(LanguageService languageService, WelcomeService welcomeService,
+                              QuestionService questionService, TotalResultService resultProcessor) {
+        this.languageService = languageService;
         this.welcomeService = welcomeService;
         this.questionService = questionService;
         this.resultProcessor = resultProcessor;
@@ -20,8 +22,9 @@ public class ProcessServiceImpl implements ProcessService {
 
     @Override
     public void runProcess() {
-        welcomeService.doPrintWelcomeAndWaitGetYouName();
-        var result = questionService.doPrintQuestionAndGetAnswers();
-        resultProcessor.doPrintResult(result);
+        languageService.doPrintSelectLanguageAndGetLocale();
+        welcomeService.doPrintWelcomeAndGetYouName();
+        questionService.doPrintQuestionAndGetAnswers();
+        resultProcessor.doPrintResult();
     }
 }

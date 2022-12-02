@@ -13,7 +13,7 @@ public class WelcomeServiceImpl implements WelcomeService {
     }
 
     @Override
-    public void doPrintWelcomeAndWaitGetYouName() {
+    public void doPrintWelcomeAndGetYouName() {
         ioService.readStringWithPrompt("Testing on the basics of Java. \nPlease enter your name:");
     }
 
