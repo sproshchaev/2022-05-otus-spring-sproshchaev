@@ -3,7 +3,6 @@ package ru.otus.spring03testingstudentsnew.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ru.otus.spring03testingstudentsnew.dao.QuestionDao;
 import ru.otus.spring03testingstudentsnew.pojo.Question;
 import ru.otus.spring03testingstudentsnew.pojo.Result;
 
