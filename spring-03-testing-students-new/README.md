@@ -64,29 +64,9 @@ Development on the Spring Framework
 7. Java: 11
 8. Dependencies: No dependency selected
 
-### Изменения в проекте после переноса логики 
-1. Изменения в "точке входа" (в spring-03-testing-students по сравнению с spring-02-testing-students):
+### Тестирование
 
-a) Изменяется порядок вызова контекста приложения
-
-   В spring-02-testing-students поднятие контекста:
-   public static void main(String[] args) {
-       AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
-       TestsForStudents testsForStudents = context.getBean(TestsForStudents.class);
-       testsForStudents.runTest();
-   }
-
-   В spring-03-testing-students поднятие контекста::
-   public static void main(String[] args) {
-       ApplicationContext context = SpringApplication.run(Main.class, args);
-       TestsForStudents testsForStudents = context.getBean(TestsForStudents.class);
-       testsForStudents.runTest();
-   }
-
-b) Отсутствие необходимости аннотации @PropertySource("classpath:application.properties") для application.properties (файла)
-Spring сам находит файл application.properties и читает из него настройки автоматически
-
-c) Отсутствие необходимости аннотации @ComponentScan(basePackages = "ru.otus")
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0
 
 ### Статьи по теме
 1. Spring: @Value aннотация https://bit.ly/3tT6ZzL
@@ -96,3 +76,6 @@ c) Отсутствие необходимости аннотации @Component
 5. Русские имена фамилии по-английски. Перевод русских букв в английские https://bit.ly/3HL1Vmq
 6. ISO 639-2 Language Code List https://bit.ly/3OC8BWj
 7. Перечисления Enum в Java https://bit.ly/3Nh6nuA
+8. Юникод-кодировщик https://unicode-table.com/ru/tools/decoder/
+9. Spring Boot + JUnit 5 + Mockito https://mkyong.com/spring-boot/spring-boot-junit-5-mockito/
+10. Spring Boot Junit 5 test example https://javabydeveloper.com/spring-boot-junit-5-test-example/ 

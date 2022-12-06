@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 public class Language {
     private int languageId;
 
+    private String isoCode;
+
     public int getLanguageId() {
         return languageId;
     }
@@ -14,10 +16,19 @@ public class Language {
         this.languageId = languageId;
     }
 
+    public String getIsoCode() {
+        return isoCode;
+    }
+
+    public void setIsoCode(String isoCode) {
+        this.isoCode = isoCode;
+    }
+
     @Override
     public String toString() {
         return "Language{" +
                 "languageId=" + languageId +
+                ", isoCode='" + isoCode + '\'' +
                 '}';
     }
 }

@@ -6,15 +6,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class WelcomeServiceImpl implements WelcomeService {
     private final IOService ioService;
+    private final LanguageService languageService;
 
     @Autowired
-    public WelcomeServiceImpl(IOService ioService) {
+    public WelcomeServiceImpl(IOService ioService, LanguageService languageService) {
         this.ioService = ioService;
+        this.languageService = languageService;
     }
 
     @Override
     public void doPrintWelcomeAndGetYouName() {
-        ioService.readStringWithPrompt("Testing on the basics of Java. \nPlease enter your name:");
+        ioService.readStringWithPrompt(languageService.getLocalString("heading.testsName") + "\n"
+                + languageService.getLocalString("heading.welcome"));
     }
 
 }

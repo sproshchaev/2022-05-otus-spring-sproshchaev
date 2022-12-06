@@ -16,4 +16,10 @@ public class Result {
         countTrueAnswer++;
     }
 
+    @Override
+    public String toString() {
+        return "Result{" +
+                "countTrueAnswer=" + countTrueAnswer +
+                '}';
+    }
 }

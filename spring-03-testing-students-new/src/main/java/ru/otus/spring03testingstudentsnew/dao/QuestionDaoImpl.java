@@ -15,17 +15,22 @@ import java.util.Objects;
 
 @Component
 public class QuestionDaoImpl implements QuestionDao {
-    private final String fileCsvName;
+    private String fileCsvNameCurrent;
+    private final String fileCsvNameOne;
+    private final String fileCsvNameTwo;
 
-    public QuestionDaoImpl(@Value("${fileCsvName}") String fileCsvName) {
-        this.fileCsvName = fileCsvName;
+    public QuestionDaoImpl(@Value("${fileCsvName.One}") String fileCsvNameOne,
+                           @Value("${fileCsvName.Two}") String fileCsvNameTwo) {
+        this.fileCsvNameOne = fileCsvNameOne;
+        this.fileCsvNameTwo = fileCsvNameTwo;
+        this.fileCsvNameCurrent = fileCsvNameOne;
     }
 
     @Override
     public List<Question> getQuestionList() {
         List<Question> questionsList = new ArrayList<>();
         Question currentQuestion;
-        try (InputStream fileCsv = QuestionDaoImpl.class.getResourceAsStream("/" + fileCsvName);
+        try (InputStream fileCsv = QuestionDaoImpl.class.getResourceAsStream("/" + fileCsvNameCurrent);
              BufferedReader br = new BufferedReader(new InputStreamReader(Objects.requireNonNull(fileCsv)))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -57,4 +62,14 @@ public class QuestionDaoImpl implements QuestionDao {
                     listAnswer);
         } else return null;
     }
+
+    @Override
+    public void setFileCsvNameCurrent(int languageId) {
+        if (languageId == 1) {
+            fileCsvNameCurrent = fileCsvNameOne;
+        } else {
+            fileCsvNameCurrent = fileCsvNameTwo;
+        }
+    }
+
 }

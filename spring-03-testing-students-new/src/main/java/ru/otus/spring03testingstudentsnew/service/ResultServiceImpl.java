@@ -10,11 +10,14 @@ import ru.otus.spring03testingstudentsnew.pojo.Result;
 public class ResultServiceImpl implements ResultService {
     private final int minNumberCorrectAnswers;
     private final Result result;
+    private final LanguageService languageService;
 
     @Autowired
-    public ResultServiceImpl(@Value("${minNumberCorrectAnswers}") int minNumberCorrectAnswers, Result result) {
+    public ResultServiceImpl(@Value("${minNumberCorrectAnswers}") int minNumberCorrectAnswers, Result result,
+                             LanguageService languageService) {
         this.minNumberCorrectAnswers = minNumberCorrectAnswers;
         this.result = result;
+        this.languageService = languageService;
     }
 
     @Override
@@ -26,7 +29,9 @@ public class ResultServiceImpl implements ResultService {
 
     @Override
     public String getResult() {
-        return result.getCountTrueAnswer() >= minNumberCorrectAnswers ? "Test passed" : "Test failed, try again";
+        return result.getCountTrueAnswer() >= minNumberCorrectAnswers
+                ? languageService.getLocalString("result.passed")
+                : languageService.getLocalString("result.failed");
     }
 
 }

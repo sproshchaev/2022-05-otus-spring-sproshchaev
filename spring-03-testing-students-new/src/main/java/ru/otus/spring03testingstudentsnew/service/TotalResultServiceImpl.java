@@ -10,8 +10,7 @@ public class TotalResultServiceImpl implements TotalResultService {
     private final IOService ioService;
 
     @Autowired
-    public TotalResultServiceImpl(ResultService resultService,
-                                  IOService ioService) {
+    public TotalResultServiceImpl(ResultService resultService, IOService ioService) {
         this.resultService = resultService;
         this.ioService = ioService;
     }

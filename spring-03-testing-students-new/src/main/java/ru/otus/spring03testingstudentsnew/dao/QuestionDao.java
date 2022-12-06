@@ -8,4 +8,5 @@ public interface QuestionDao {
 
     List<Question> getQuestionList();
 
+    void setFileCsvNameCurrent(int languageId);
 }

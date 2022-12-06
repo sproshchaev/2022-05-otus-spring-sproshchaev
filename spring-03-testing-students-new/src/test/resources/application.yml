@@ -1,2 +1,6 @@
-fileCsvName: questions.csv
+language:
+  Two: ru
+fileCsvName:
+  One: questions.csv
+  Two: questions_ru.csv
 minNumberCorrectAnswers: 3
